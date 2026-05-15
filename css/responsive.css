@@ -1,0 +1,12 @@
+/* Responsive overrides if needed */
+@media (max-width: 768px) {
+  .mesh-blob {
+    filter: blur(60px);
+  }
+}
+
+@media (min-width: 768px) {
+    .md\:text-5xl {
+        line-height: 1.2 !important;
+    }
+}

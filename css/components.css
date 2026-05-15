@@ -1,0 +1,25 @@
+.glass-card {
+  @apply bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-md shadow-xl transition-all duration-300;
+}
+
+.glass-card:hover {
+  @apply bg-white/10 border-white/20 transform -translate-y-1;
+}
+
+.btn-primary {
+  @apply px-6 py-3 rounded-full font-semibold text-white transition-all duration-300 relative overflow-hidden inline-flex items-center justify-center gap-2;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  background-size: 200% 200%;
+}
+
+.btn-primary:hover {
+  background-position: right bottom;
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
+}
+
+.text-gradient {
+  background: linear-gradient(to right, #ffffff, var(--color-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
