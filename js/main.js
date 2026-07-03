@@ -1,4 +1,9 @@
+import { initGithubRelease } from './github-release.js';
+
 document.addEventListener('DOMContentLoaded', () => {
+  // Khởi tạo tải thông tin Release từ GitHub
+  initGithubRelease();
+
   // Reveal animation on scroll
   const revealElements = document.querySelectorAll('.reveal');
 

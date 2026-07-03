@@ -200,62 +200,33 @@
     <section id="download" class="page-section hidden">
       <div class="max-w-4xl mx-auto mt-10">
         
-        <div class="text-center mb-16 reveal">
-          <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gradient">Tải CTU Scheduler</h2>
-          <p class="text-lg text-gray-300 mb-10">Phiên bản mới nhất luôn được cập nhật trên GitHub Releases.</p>
-          <a href="https://github.com/d3nhatv0lam/CTU-Scheduler/releases" target="_blank" class="btn-primary text-lg !px-10 !py-4 shadow-2xl shadow-secondary/20">
-            <i class="fa-brands fa-github text-xl"></i> Đi Tới Trang Tải Xuống
-          </a>
+        <div class="text-center mb-12 reveal">
+          <h2 class="text-4xl md:text-5xl font-bold mb-4 text-gradient">Tải CTU Scheduler</h2>
+          <p class="text-base text-gray-300">Tải xuống phiên bản mới nhất phù hợp với thiết bị của bạn.</p>
         </div>
 
-        <div class="glass-card reveal">
-          <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
-            <i class="fa-solid fa-file-contract text-secondary"></i> Điều Khoản Sử Dụng & Miễn Trừ Trách Nhiệm
-          </h3>
-          
-          <div class="space-y-6 text-gray-300 text-sm leading-relaxed">
-            <p>Bằng việc tải xuống và sử dụng <strong>CTU Scheduler</strong>, bạn đồng ý với các điều khoản sau:</p>
+        <!-- Trạng thái Loading Skeleton -->
+        <div id="download-loading" class="glass-card mb-12 reveal text-center py-16">
+          <div class="inline-block w-12 h-12 border-4 border-secondary border-t-transparent rounded-full animate-spin mb-4"></div>
+          <p class="text-gray-400 animate-pulse">Đang tải cấu hình cài đặt từ GitHub...</p>
+        </div>
 
-            <div>
-              <h4 class="text-white font-semibold text-base mb-2">1. Bảo mật và Quyền riêng tư (Privacy & Security)</h4>
-              <ul class="list-disc pl-5 space-y-1">
-                <li>Ứng dụng hoạt động hoàn toàn cục bộ (local) trên thiết bị của bạn.</li>
-                <li>Mọi thông tin đăng nhập (Tài khoản, Mật khẩu hệ thống MyCTU) và dữ liệu cá nhân (Hồ sơ, Thời khóa biểu) chỉ được lưu trữ trên máy của bạn và trao đổi trực tiếp với hệ thống của trường.</li>
-                <li>Đội ngũ phát triển <strong>KHÔNG</strong> thu thập, lưu trữ hay truyền tải bất kỳ dữ liệu cá nhân nào của bạn tới máy chủ bên thứ ba. Nhằm tăng tính bảo mật, dữ liệu đăng nhập sẽ được tiêu hủy sau khi xác thực thành công.</li>
-              </ul>
-            </div>
-            
-            <div>
-              <h4 class="text-white font-semibold text-base mb-2">2. Miễn trừ trách nhiệm (Disclaimer of Liability)</h4>
-              <ul class="list-disc pl-5 space-y-1">
-                <li>Ứng dụng được cung cấp dưới dạng "AS IS" (Có sao dùng vậy) theo Giấy phép mã nguồn mở MIT, không kèm theo bất kỳ cam kết hay bảo hành nào.</li>
-                <li>Mặc dù hệ thống tính toán chính xác, đội ngũ phát triển <strong>KHÔNG CHỊU TRÁCH NHIỆM</strong> đối với các sự cố phát sinh ngoài ý muốn trong quá trình sử dụng. Các trường hợp miễn trừ bao gồm:
-                  <ul class="list-[circle] pl-5 mt-1 space-y-1 text-gray-300">
-                    <li>Sự cố rớt mạng, chậm trễ hệ thống hoặc lỗi không truy cập được ứng dụng vào giờ cao điểm trên hệ thống MyCTU.</li>
-                    <li>Tài khoản bị khóa tạm thời do nhập sai thông tin hoặc kẹt xác thực Captcha.</li>
-                    <li>Các thay đổi cấu trúc dữ liệu đột ngột từ phía hệ thống MyCTU làm ứng dụng tạm thời ngừng hoạt động.</li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 class="text-white font-semibold text-base mb-2">3. Mục đích sử dụng</h4>
-              <ul class="list-disc pl-5 space-y-1">
-                <li>CTU Scheduler được tạo ra với mục đích phi lợi nhuận, hỗ trợ sinh viên tối ưu hóa thời gian và công sức xếp lịch học.</li>
-                <li>Tuyệt đối nghiêm cấm việc lạm dụng ứng dụng (như sử dụng chức năng cập nhật sĩ số để spam request, tấn công làm quá tải hệ thống máy chủ của trường) hoặc sử dụng với mục đích thương mại.</li>
-              </ul>
-            </div>
-
-            <div class="p-4 bg-white/5 rounded-xl border border-secondary/20 mt-6">
-              <h4 class="text-secondary font-bold text-base mb-2 flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation"></i> Hướng dẫn & Lưu ý quan trọng</h4>
-              <ul class="list-disc pl-5 space-y-1">
-                <li>Ứng dụng sẽ mở một trình duyệt ảo ngầm phía sau để thao tác lấy dữ liệu một cách hợp lệ. <strong>Tuyệt đối không được tắt cửa sổ này</strong>, nếu không ứng dụng sẽ ngừng hoạt động.</li>
-                <li>Nếu hệ thống MyCTU bắt xác thực Captcha, hãy giải Captcha trên cửa sổ trình duyệt ngầm đó trước khi tiếp tục thao tác trên app. (Khuyến nghị sử dụng VPN như 1.1.1.1 nếu bị kẹt Captcha liên tục).</li>
-                <li>Chờ hệ thống tải và đồng bộ xong thông tin sinh viên hoàn toàn rồi mới chuyển trang để ứng dụng hoạt động ổn định nhất.</li>
-              </ul>
-            </div>
+        <!-- Trạng thái lỗi / Fallback -->
+        <div id="download-error" class="glass-card mb-12 reveal hidden text-center py-12 border-red-500/20 bg-red-500/5">
+          <div class="w-16 h-16 bg-red-500/10 text-red-400 border border-red-500/30 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
+            <i class="fa-solid fa-triangle-exclamation"></i>
           </div>
+          <h3 class="text-xl font-bold text-white mb-2">Không Thể Kết Nối Đến GitHub</h3>
+          <p class="text-gray-400 text-sm max-w-md mx-auto mb-6">Không thể lấy thông tin trực tiếp.<br> Bạn có thể tải thủ công trên trang Releases chính thức.</p>
+          <a href="https://github.com/d3nhatv0lam/CTU-Scheduler/releases" target="_blank" class="btn-primary">
+            <i class="fa-brands fa-github text-lg"></i> Đi Tới Trang Tải Xuống Thủ Công
+          </a>
+          <p class="text-xs text-white mt-6">Bằng việc tải xuống và sử dụng CTU Scheduler, bạn đồng ý với <a href="https://github.com/d3nhatv0lam/CTU-Scheduler/blob/main/TERMS.md" target="_blank" class="text-secondary hover:underline">Điều khoản sử dụng & Miễn trừ trách nhiệm</a> của dự án.</p>
+        </div>
+
+        <!-- Trạng thái hiển thị liên kết động -->
+        <div id="download-content" class="hidden mb-12">
+          <!-- Sẽ được fill bằng JavaScript -->
         </div>
 
         <div class="mt-16 reveal">
