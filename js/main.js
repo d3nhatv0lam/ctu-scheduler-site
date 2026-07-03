@@ -47,12 +47,17 @@ document.addEventListener('DOMContentLoaded', () => {
     sections.forEach(section => {
       if (section.id === targetId) {
         section.classList.remove('hidden');
-        // Trigger reveal animations inside the section immediately
-        setTimeout(() => {
-          section.querySelectorAll('.reveal').forEach(el => el.classList.add('active'));
-        }, 50);
+        // Reset và kích hoạt lại hoạt ảnh reveal thông qua IntersectionObserver
+        section.querySelectorAll('.reveal').forEach(el => {
+          el.classList.remove('active');
+          revealOnScroll.observe(el);
+        });
       } else {
         section.classList.add('hidden');
+        // Reset trạng thái reveal của trang ẩn để chuẩn bị cho lần quay lại tiếp theo
+        section.querySelectorAll('.reveal').forEach(el => {
+          el.classList.remove('active');
+        });
       }
     });
 
