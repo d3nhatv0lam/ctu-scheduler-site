@@ -1,4 +1,5 @@
 // github-release.js
+// 80% vibe - mình không giỏi web, đừng var mình huhu
 
 const REPO_OWNER = "d3nhatv0lam";
 const REPO_NAME = "CTU-Scheduler";
@@ -18,6 +19,19 @@ function detectOS() {
   if (userAgent.indexOf("linux") !== -1 || platform.indexOf("linux") !== -1)
     return "Linux";
   return "Windows"; // Mặc định là Windows nếu không rõ
+}
+
+function detectArch() {
+  const userAgent = window.navigator.userAgent.toLowerCase();
+  const platform = window.navigator.platform?.toLowerCase() || "";
+  if (userAgent.indexOf("arm64") !== -1 || userAgent.indexOf("aarch64") !== -1 || platform.indexOf("arm64") !== -1) {
+    return "arm64";
+  }
+  // Kiểm tra chip Apple Silicon trên macOS
+  if (userAgent.indexOf("macintosh") !== -1 && "maxTouchPoints" in navigator && navigator.maxTouchPoints > 0) {
+    return "arm64";
+  }
+  return "x64";
 }
 
 function formatDate(dateString) {
@@ -187,36 +201,44 @@ function renderRelease(data) {
   const errorEl = document.getElementById("download-error");
   const contentEl = document.getElementById("download-content");
 
-  // Phát hiện OS của người dùng
+  // Phát hiện OS và Kiến trúc CPU của người dùng
   const userOS = detectOS();
+  const userArch = detectArch();
 
   const assets = data.assets || [];
   let mainAsset = null;
   const otherAssets = [];
 
-  // Định nghĩa các Regex để lọc tệp theo HDH
-  const winInstallerPattern = /\.exe$/i;
-  const winPortablePattern = /win.*\.zip$/i;
-  const macPattern = /\.(dmg|pkg)$/i;
-  const macZipPattern = /mac.*\.zip$/i;
-  const linuxPattern = /\.(appimage|deb|rpm|tar\.gz)$/i;
+  // Định nghĩa các Regex để lọc tệp theo HDH & Kiến trúc
+  const winX64Pattern = /win.*x64/i;
+  const winArm64Pattern = /win.*(arm64|aarch64)/i;
+  const macX64Pattern = /(mac|osx).*x64/i;
+  const macArm64Pattern = /(mac|osx).*(arm64|aarch64)/i;
+  const linuxX64Pattern = /linux.*x64/i;
+  const linuxArm64Pattern = /linux.*(arm64|aarch64)/i;
 
-  let winInstaller = null;
-  let winPortable = null;
-  let macAsset = null;
-  let linuxAsset = null;
+  let winX64 = null;
+  let winArm64 = null;
+  let macX64 = null;
+  let macArm64 = null;
+  let linuxX64 = null;
+  let linuxArm64 = null;
 
   // Phân loại tài nguyên tải xuống
   assets.forEach((asset) => {
     const name = asset.name.toLowerCase();
-    if (winInstallerPattern.test(name)) {
-      winInstaller = asset;
-    } else if (winPortablePattern.test(name)) {
-      winPortable = asset;
-    } else if (macPattern.test(name) || macZipPattern.test(name)) {
-      macAsset = asset;
-    } else if (linuxPattern.test(name)) {
-      linuxAsset = asset;
+    if (winX64Pattern.test(name)) {
+      winX64 = asset;
+    } else if (winArm64Pattern.test(name)) {
+      winArm64 = asset;
+    } else if (macX64Pattern.test(name)) {
+      macX64 = asset;
+    } else if (macArm64Pattern.test(name)) {
+      macArm64 = asset;
+    } else if (linuxX64Pattern.test(name)) {
+      linuxX64 = asset;
+    } else if (linuxArm64Pattern.test(name)) {
+      linuxArm64 = asset;
     } else {
       otherAssets.push({
         name: asset.name,
@@ -228,64 +250,86 @@ function renderRelease(data) {
     }
   });
 
-  // Lựa chọn file tải chính phù hợp với OS của user
+  // Lựa chọn file tải chính phù hợp với OS và Arch của user
   if (userOS === "Windows") {
-    mainAsset = winInstaller || winPortable;
+    mainAsset = userArch === "arm64" ? (winArm64 || winX64) : (winX64 || winArm64);
   } else if (userOS === "macOS") {
-    mainAsset = macAsset;
+    mainAsset = userArch === "arm64" ? (macArm64 || macX64) : (macX64 || macArm64);
   } else if (userOS === "Linux") {
-    mainAsset = linuxAsset;
+    mainAsset = userArch === "arm64" ? (linuxArm64 || linuxX64) : (linuxX64 || linuxArm64);
   }
 
   // Fallback mặc định nếu không khớp được file phù hợp
   if (!mainAsset) {
-    mainAsset = winInstaller || winPortable || assets[0];
+    mainAsset = winX64 || winArm64 || macArm64 || macX64 || linuxX64 || linuxArm64 || assets[0];
   }
 
   // Tạo danh sách "Các tùy chọn tải khác"
   const otherDownloadsList = [];
 
-  if (winInstaller && winInstaller !== mainAsset) {
+  if (winX64 && winX64 !== mainAsset) {
     otherDownloadsList.push({
-      name: "Windows Installer (.exe)",
-      filename: winInstaller.name,
-      url: winInstaller.browser_download_url,
-      size: winInstaller.size,
-      downloads: winInstaller.download_count,
+      name: "Windows (x64) - Portable",
+      filename: winX64.name,
+      url: winX64.browser_download_url,
+      size: winX64.size,
+      downloads: winX64.download_count,
       icon: "fa-brands fa-windows text-blue-400",
     });
   }
 
-  if (winPortable && winPortable !== mainAsset) {
+  if (winArm64 && winArm64 !== mainAsset) {
     otherDownloadsList.push({
-      name: "Windows Portable (.zip)",
-      filename: winPortable.name,
-      url: winPortable.browser_download_url,
-      size: winPortable.size,
-      downloads: winPortable.download_count,
+      name: "Windows (ARM64) - Portable",
+      filename: winArm64.name,
+      url: winArm64.browser_download_url,
+      size: winArm64.size,
+      downloads: winArm64.download_count,
       icon: "fa-brands fa-windows text-slate-400",
     });
   }
 
-  if (macAsset && macAsset !== mainAsset) {
+  if (macArm64 && macArm64 !== mainAsset) {
     otherDownloadsList.push({
-      name: "macOS (.dmg / .zip)",
-      filename: macAsset.name,
-      url: macAsset.browser_download_url,
-      size: macAsset.size,
-      downloads: macAsset.download_count,
+      name: "macOS (Apple Silicon / ARM64)",
+      filename: macArm64.name,
+      url: macArm64.browser_download_url,
+      size: macArm64.size,
+      downloads: macArm64.download_count,
       icon: "fa-brands fa-apple text-white",
     });
   }
 
-  if (linuxAsset && linuxAsset !== mainAsset) {
+  if (macX64 && macX64 !== mainAsset) {
     otherDownloadsList.push({
-      name: "Linux (.AppImage / .deb)",
-      filename: linuxAsset.name,
-      url: linuxAsset.browser_download_url,
-      size: linuxAsset.size,
-      downloads: linuxAsset.download_count,
+      name: "macOS (Intel / x64)",
+      filename: macX64.name,
+      url: macX64.browser_download_url,
+      size: macX64.size,
+      downloads: macX64.download_count,
+      icon: "fa-brands fa-apple text-slate-400",
+    });
+  }
+
+  if (linuxX64 && linuxX64 !== mainAsset) {
+    otherDownloadsList.push({
+      name: "Linux (x64)",
+      filename: linuxX64.name,
+      url: linuxX64.browser_download_url,
+      size: linuxX64.size,
+      downloads: linuxX64.download_count,
       icon: "fa-brands fa-linux text-amber-400",
+    });
+  }
+
+  if (linuxArm64 && linuxArm64 !== mainAsset) {
+    otherDownloadsList.push({
+      name: "Linux (ARM64)",
+      filename: linuxArm64.name,
+      url: linuxArm64.browser_download_url,
+      size: linuxArm64.size,
+      downloads: linuxArm64.download_count,
+      icon: "fa-brands fa-linux text-orange-400",
     });
   }
 
@@ -302,16 +346,16 @@ function renderRelease(data) {
   });
 
   // Bổ sung link Source Code
-  if (data.zipball_url) {
-    otherDownloadsList.push({
-      name: "Mã nguồn dự án (zip)",
-      filename: `${data.tag_name}.zip`,
-      url: data.zipball_url,
-      size: null,
-      downloads: null,
-      icon: "fa-solid fa-code text-gray-400",
-    });
-  }
+  // if (data.zipball_url) {
+  //   otherDownloadsList.push({
+  //     name: "Mã nguồn dự án (zip)",
+  //     filename: `${data.tag_name}.zip`,
+  //     url: data.zipball_url,
+  //     size: null,
+  //     downloads: null,
+  //     icon: "fa-solid fa-code text-gray-400",
+  //   });
+  // }
 
   // Tính tổng số lượt tải
   const totalDownloads = assets.reduce(
@@ -323,18 +367,17 @@ function renderRelease(data) {
   let mainIcon = "fa-brands fa-windows";
   let mainOSName = "Windows";
 
-  if (mainAsset === macAsset) {
+  if (mainAsset === macX64 || mainAsset === macArm64) {
     mainIcon = "fa-brands fa-apple";
     mainOSName = "macOS";
-  } else if (mainAsset === linuxAsset) {
+  } else if (mainAsset === linuxX64 || mainAsset === linuxArm64) {
     mainIcon = "fa-brands fa-linux";
     mainOSName = "Linux";
   }
 
-  const mainBtnLabel =
-    mainAsset === winPortable
-      ? `<i class="${mainIcon} text-xl"></i> Tải Cho ${mainOSName} (Portable)`
-      : `<i class="${mainIcon} text-xl"></i> Tải Bản Mới Nhất Cho ${mainOSName}`;
+  const isPortable = mainAsset.name.toLowerCase().endsWith(".zip") || mainAsset.name.toLowerCase().endsWith(".tar.gz");
+  const mainAssetArch = (mainAsset.name.toLowerCase().includes("arm64") || mainAsset.name.toLowerCase().includes("aarch64")) ? "ARM64" : "x64";
+  const mainBtnLabel = `<i class="${mainIcon} text-xl"></i> Tải Cho ${mainOSName} (${mainAssetArch}${isPortable ? " - Portable" : ""})`;
 
   // Render HTML động
   contentEl.innerHTML = `
@@ -368,7 +411,7 @@ function renderRelease(data) {
                 : ""
             }
           </div>
-          <p class="text-[11px] text-gray-500 mt-3">Bằng việc tải xuống và sử dụng CTU Scheduler, bạn đồng ý với <a href="https://github.com/d3nhatv0lam/CTU-Scheduler/blob/main/TERMS.md" target="_blank" class="text-secondary hover:underline">Điều khoản sử dụng & Miễn trừ trách nhiệm</a> của dự án.</p>
+          <p class="text-[11px] text-gray-500 mt-3">Bằng việc tải xuống và sử dụng CTU Scheduler, bạn đồng ý với <a href="https://github.com/d3nhatv0lam/CTU-Scheduler/blob/master/TERMS.md" target="_blank" class="text-secondary hover:underline">Điều khoản sử dụng & Miễn trừ trách nhiệm</a> của dự án.</p>
         </div>
 
         <!-- Right content: Stats widget -->
