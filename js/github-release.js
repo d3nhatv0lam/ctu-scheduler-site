@@ -549,7 +549,7 @@ function renderRelease(data, device) {
       <div class="relative z-10 space-y-4 mb-8">
         ${downloadAreaHtml}
         
-        <p class="text-[11px] text-gray-500 mt-3">Bằng việc tải xuống và sử dụng CTU Scheduler, bạn đồng ý với <a href="https://github.com/d3nhatv0lam/TERMS.md" target="_blank" class="text-secondary hover:underline">Điều khoản sử dụng & Miễn trừ trách nhiệm</a> của dự án.</p>
+        <p class="text-[11px] text-gray-500 mt-3">Bằng việc tải xuống và sử dụng CTU Scheduler, bạn đồng ý với <a href="https://github.com/d3nhatv0lam/CTU-Scheduler/blob/master/TERMS.md" target="_blank" class="text-secondary hover:underline">Điều khoản sử dụng & Miễn trừ trách nhiệm</a> của dự án.</p>
       </div>
 
       <!-- Secondary Downloads Section -->
