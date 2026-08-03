@@ -1,6 +1,8 @@
 // github-release.js
 // 80% vibe - mình không giỏi web, đừng var mình huhu
 
+import { detectDevice, OS, ARCH } from './detector.js';
+
 const REPO_OWNER = "d3nhatv0lam";
 const REPO_NAME = "CTU-Scheduler";
 const API_URL = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases/latest`;
@@ -8,31 +10,6 @@ const CACHE_KEY_DATA = "ctu_release_data";
 const CACHE_KEY_ETAG = "ctu_release_etag";
 const CACHE_KEY_TIME = "ctu_release_timestamp";
 const CACHE_DURATION = 10 * 60 * 1000; // 10 phút tính bằng mili-giây
-
-function detectOS() {
-  const userAgent = window.navigator.userAgent.toLowerCase();
-  const platform = window.navigator.platform?.toLowerCase() || "";
-  if (userAgent.indexOf("win") !== -1 || platform.indexOf("win") !== -1)
-    return "Windows";
-  if (userAgent.indexOf("mac") !== -1 || platform.indexOf("mac") !== -1)
-    return "macOS";
-  if (userAgent.indexOf("linux") !== -1 || platform.indexOf("linux") !== -1)
-    return "Linux";
-  return "Windows"; // Mặc định là Windows nếu không rõ
-}
-
-function detectArch() {
-  const userAgent = window.navigator.userAgent.toLowerCase();
-  const platform = window.navigator.platform?.toLowerCase() || "";
-  if (userAgent.indexOf("arm64") !== -1 || userAgent.indexOf("aarch64") !== -1 || platform.indexOf("arm64") !== -1) {
-    return "arm64";
-  }
-  // Kiểm tra chip Apple Silicon trên macOS
-  if (userAgent.indexOf("macintosh") !== -1 && "maxTouchPoints" in navigator && navigator.maxTouchPoints > 0) {
-    return "arm64";
-  }
-  return "x64";
-}
 
 function formatDate(dateString) {
   try {
@@ -184,7 +161,8 @@ export async function initGithubRelease() {
     }
 
     if (releaseData) {
-      renderRelease(releaseData);
+      const device = await detectDevice();
+      renderRelease(releaseData, device);
     } else {
       throw new Error("Không thể tải dữ liệu phát hành");
     }
@@ -196,14 +174,77 @@ export async function initGithubRelease() {
   }
 }
 
-function renderRelease(data) {
+function renderDownloadChooser(device, assetsInfo, data) {
+  let buttonsHtml = "";
+  let instructionsHtml = "";
+
+  if (device.os === OS.MACOS) {
+    const armUrl = assetsInfo.macArm64 ? assetsInfo.macArm64.browser_download_url : data.html_url;
+    const intelUrl = assetsInfo.macX64 ? assetsInfo.macX64.browser_download_url : data.html_url;
+    
+    buttonsHtml = `
+      <a href="${armUrl}" target="_blank" class="btn-primary !px-6 !py-3 text-sm flex items-center justify-center gap-2 shadow-lg shadow-secondary/5 w-full sm:w-auto">
+        <i class="fa-brands fa-apple text-lg"></i> Mac Apple Silicon (ARM64)
+      </a>
+      <a href="${intelUrl}" target="_blank" class="btn-primary !bg-slate-800 hover:!bg-slate-700 !text-slate-100 !px-6 !py-3 text-sm flex items-center justify-center gap-2 border border-white/10 hover:border-white/20 transition-all duration-300 w-full sm:w-auto">
+        <i class="fa-brands fa-apple text-lg"></i> Mac Intel Chip (x64)
+      </a>
+    `;
+    instructionsHtml = `
+      * Xem loại chip của bạn tại: Menu <i class="fa-brands fa-apple"></i> ở góc trái màn hình &gt; Giới thiệu về máy Mac này (About This Mac).
+    `;
+  } else if (device.os === OS.WINDOWS) {
+    const x64Url = assetsInfo.winX64 ? assetsInfo.winX64.browser_download_url : data.html_url;
+    const armUrl = assetsInfo.winArm64 ? assetsInfo.winArm64.browser_download_url : data.html_url;
+
+    buttonsHtml = `
+      <a href="${x64Url}" target="_blank" class="btn-primary !px-6 !py-3 text-sm flex items-center justify-center gap-2 shadow-lg shadow-secondary/5 w-full sm:w-auto">
+        <i class="fa-brands fa-windows text-lg"></i> Windows (x64)
+      </a>
+      <a href="${armUrl}" target="_blank" class="btn-primary !bg-slate-800 hover:!bg-slate-700 !text-slate-100 !px-6 !py-3 text-sm flex items-center justify-center gap-2 border border-white/10 hover:border-white/20 transition-all duration-300 w-full sm:w-auto">
+        <i class="fa-brands fa-windows text-lg"></i> Windows (ARM64)
+      </a>
+    `;
+    instructionsHtml = `
+      * Xem loại cấu hình máy tại: Settings (Cài đặt) &gt; System (Hệ thống) &gt; About (Giới thiệu) &gt; System type.
+    `;
+  } else if (device.os === OS.LINUX) {
+    const x64Url = assetsInfo.linuxX64 ? assetsInfo.linuxX64.browser_download_url : data.html_url;
+    const armUrl = assetsInfo.linuxArm64 ? assetsInfo.linuxArm64.browser_download_url : data.html_url;
+
+    buttonsHtml = `
+      <a href="${x64Url}" target="_blank" class="btn-primary !px-6 !py-3 text-sm flex items-center justify-center gap-2 shadow-lg shadow-secondary/5 w-full sm:w-auto">
+        <i class="fa-brands fa-linux text-lg"></i> Linux (x64)
+      </a>
+      <a href="${armUrl}" target="_blank" class="btn-primary !bg-slate-800 hover:!bg-slate-700 !text-slate-100 !px-6 !py-3 text-sm flex items-center justify-center gap-2 border border-white/10 hover:border-white/20 transition-all duration-300 w-full sm:w-auto">
+        <i class="fa-brands fa-linux text-lg"></i> Linux (ARM64)
+      </a>
+    `;
+    instructionsHtml = `
+      * Gõ lệnh <code>uname -m</code> hoặc <code>lscpu</code> trong terminal để kiểm tra kiến trúc CPU của bạn.
+    `;
+  }
+
+  const osNameFormatted = device.os === OS.MACOS ? "macOS" : device.os === OS.WINDOWS ? "Windows" : "Linux";
+
+  return `
+    <div class="space-y-4 pt-1 w-full">
+      <div class="text-xs text-gray-400 flex items-center gap-1.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+        Nhận dạng thiết bị: <strong class="text-slate-200">${osNameFormatted}</strong> (Chưa xác định được kiến trúc CPU)
+      </div>
+      <div class="flex flex-col sm:flex-row gap-3">
+        ${buttonsHtml}
+      </div>
+      <p class="text-[11px] text-gray-400 italic">${instructionsHtml}</p>
+    </div>
+  `;
+}
+
+function renderRelease(data, device) {
   const loadingEl = document.getElementById("download-loading");
   const errorEl = document.getElementById("download-error");
   const contentEl = document.getElementById("download-content");
-
-  // Phát hiện OS và Kiến trúc CPU của người dùng
-  const userOS = detectOS();
-  const userArch = detectArch();
 
   const assets = data.assets || [];
   let mainAsset = null;
@@ -251,12 +292,12 @@ function renderRelease(data) {
   });
 
   // Lựa chọn file tải chính phù hợp với OS và Arch của user
-  if (userOS === "Windows") {
-    mainAsset = userArch === "arm64" ? (winArm64 || winX64) : (winX64 || winArm64);
-  } else if (userOS === "macOS") {
-    mainAsset = userArch === "arm64" ? (macArm64 || macX64) : (macX64 || macArm64);
-  } else if (userOS === "Linux") {
-    mainAsset = userArch === "arm64" ? (linuxArm64 || linuxX64) : (linuxX64 || linuxArm64);
+  if (device.os === OS.WINDOWS) {
+    mainAsset = device.arch === ARCH.ARM64 ? (winArm64 || winX64) : (winX64 || winArm64);
+  } else if (device.os === OS.MACOS) {
+    mainAsset = device.arch === ARCH.ARM64 ? (macArm64 || macX64) : (macX64 || macArm64);
+  } else if (device.os === OS.LINUX) {
+    mainAsset = device.arch === ARCH.ARM64 ? (linuxArm64 || linuxX64) : (linuxX64 || linuxArm64);
   }
 
   // Fallback mặc định nếu không khớp được file phù hợp
@@ -264,10 +305,19 @@ function renderRelease(data) {
     mainAsset = winX64 || winArm64 || macArm64 || macX64 || linuxX64 || linuxArm64 || assets[0];
   }
 
+  // Lưu thông tin các file chính
+  const assetsInfo = {
+    winX64, winArm64, macX64, macArm64, linuxX64, linuxArm64
+  };
+
+  const isMacAmbiguous = device.os === OS.MACOS && device.arch === ARCH.UNKNOWN;
+  const isWinAmbiguous = device.os === OS.WINDOWS && device.arch === ARCH.UNKNOWN;
+  const isLinuxAmbiguous = device.os === OS.LINUX && device.arch === ARCH.UNKNOWN;
+
   // Tạo danh sách "Các tùy chọn tải khác"
   const otherDownloadsList = [];
 
-  if (winX64 && winX64 !== mainAsset) {
+  if (winX64 && winX64 !== mainAsset && !isWinAmbiguous) {
     otherDownloadsList.push({
       name: "Windows (x64) - Portable",
       filename: winX64.name,
@@ -278,7 +328,7 @@ function renderRelease(data) {
     });
   }
 
-  if (winArm64 && winArm64 !== mainAsset) {
+  if (winArm64 && winArm64 !== mainAsset && !isWinAmbiguous) {
     otherDownloadsList.push({
       name: "Windows (ARM64) - Portable",
       filename: winArm64.name,
@@ -289,7 +339,7 @@ function renderRelease(data) {
     });
   }
 
-  if (macArm64 && macArm64 !== mainAsset) {
+  if (macArm64 && macArm64 !== mainAsset && !isMacAmbiguous) {
     otherDownloadsList.push({
       name: "macOS (Apple Silicon / ARM64)",
       filename: macArm64.name,
@@ -300,7 +350,7 @@ function renderRelease(data) {
     });
   }
 
-  if (macX64 && macX64 !== mainAsset) {
+  if (macX64 && macX64 !== mainAsset && !isMacAmbiguous) {
     otherDownloadsList.push({
       name: "macOS (Intel / x64)",
       filename: macX64.name,
@@ -311,7 +361,7 @@ function renderRelease(data) {
     });
   }
 
-  if (linuxX64 && linuxX64 !== mainAsset) {
+  if (linuxX64 && linuxX64 !== mainAsset && !isLinuxAmbiguous) {
     otherDownloadsList.push({
       name: "Linux (x64)",
       filename: linuxX64.name,
@@ -322,7 +372,7 @@ function renderRelease(data) {
     });
   }
 
-  if (linuxArm64 && linuxArm64 !== mainAsset) {
+  if (linuxArm64 && linuxArm64 !== mainAsset && !isLinuxAmbiguous) {
     otherDownloadsList.push({
       name: "Linux (ARM64)",
       filename: linuxArm64.name,
@@ -345,39 +395,90 @@ function renderRelease(data) {
     });
   });
 
-  // Bổ sung link Source Code
-  // if (data.zipball_url) {
-  //   otherDownloadsList.push({
-  //     name: "Mã nguồn dự án (zip)",
-  //     filename: `${data.tag_name}.zip`,
-  //     url: data.zipball_url,
-  //     size: null,
-  //     downloads: null,
-  //     icon: "fa-solid fa-code text-gray-400",
-  //   });
-  // }
-
   // Tính tổng số lượt tải
   const totalDownloads = assets.reduce(
     (sum, asset) => sum + (asset.download_count || 0),
     0,
   );
 
-  // Xác định text và icon phù hợp cho nút chính
-  let mainIcon = "fa-brands fa-windows";
-  let mainOSName = "Windows";
+  // Tạo khối giao diện Tải xuống dựa trên OS & Arch của người dùng
+  let downloadAreaHtml = "";
 
-  if (mainAsset === macX64 || mainAsset === macArm64) {
-    mainIcon = "fa-brands fa-apple";
-    mainOSName = "macOS";
-  } else if (mainAsset === linuxX64 || mainAsset === linuxArm64) {
-    mainIcon = "fa-brands fa-linux";
-    mainOSName = "Linux";
+  if (device.os === OS.ANDROID || device.os === OS.IOS) {
+    downloadAreaHtml = `
+      <div class="p-5 rounded-xl border border-secondary/20 bg-secondary/5 text-sm space-y-2 mt-2">
+        <div class="font-bold text-white flex items-center gap-2">
+          <i class="fa-solid fa-laptop text-secondary text-base"></i> Ứng Dụng Dành Cho Máy Tính
+        </div>
+        <p class="text-gray-300 text-xs leading-relaxed">
+          CTU Scheduler hiện chỉ hỗ trợ các hệ điều hành máy tính (Windows, macOS, Linux). 
+          Vui lòng mở trang web này trên máy tính của bạn để tải ứng dụng.
+        </p>
+        <div class="pt-1">
+          <a href="${data.html_url}" target="_blank" class="text-xs text-secondary hover:underline font-medium flex items-center gap-1">
+            Xem bản phát hành trên GitHub <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+          </a>
+        </div>
+      </div>
+    `;
+  } else if (device.os === OS.UNKNOWN) {
+    downloadAreaHtml = `
+      <div class="p-5 rounded-xl border border-white/10 bg-white/5 space-y-3 mt-2">
+        <div class="text-xs text-amber-400 font-semibold flex items-center gap-1.5">
+          <i class="fa-solid fa-triangle-exclamation"></i> Không thể nhận dạng Hệ điều hành
+        </div>
+        <p class="text-xs text-gray-300 leading-relaxed">
+          Chúng tôi không thể tự động phát hiện hệ điều hành của bạn. Vui lòng tải xuống thủ công:
+        </p>
+        <div class="flex flex-wrap gap-3 pt-1">
+          ${winX64 ? `<a href="${winX64.browser_download_url}" target="_blank" class="btn-primary !px-5 !py-2.5 !text-xs flex items-center gap-1.5"><i class="fa-brands fa-windows"></i> Windows x64</a>` : ""}
+          ${macArm64 ? `<a href="${macArm64.browser_download_url}" target="_blank" class="btn-primary !px-5 !py-2.5 !text-xs flex items-center gap-1.5"><i class="fa-brands fa-apple"></i> macOS ARM64</a>` : ""}
+          ${linuxX64 ? `<a href="${linuxX64.browser_download_url}" target="_blank" class="btn-primary !px-5 !py-2.5 !text-xs flex items-center gap-1.5"><i class="fa-brands fa-linux"></i> Linux x64</a>` : ""}
+        </div>
+        <div class="pt-1">
+          <a href="${data.html_url}" target="_blank" class="text-xs text-secondary hover:underline font-medium">
+            Đi tới trang GitHub Releases chính thức <i class="fa-solid fa-chevron-right text-[9px]"></i>
+          </a>
+        </div>
+      </div>
+    `;
+  } else if (device.arch === ARCH.UNKNOWN) {
+    downloadAreaHtml = renderDownloadChooser(device, assetsInfo, data);
+  } else {
+    // Xác định text và icon phù hợp cho nút chính
+    let mainIcon = "fa-brands fa-windows";
+    let mainOSName = "Windows";
+
+    if (device.os === OS.MACOS) {
+      mainIcon = "fa-brands fa-apple";
+      mainOSName = "macOS";
+    } else if (device.os === OS.LINUX) {
+      mainIcon = "fa-brands fa-linux";
+      mainOSName = "Linux";
+    }
+
+    const isPortable = mainAsset.name.toLowerCase().endsWith(".zip") || mainAsset.name.toLowerCase().endsWith(".tar.gz");
+    const mainAssetArch = device.arch === ARCH.ARM64 ? "ARM64" : "x64";
+    const mainBtnLabel = `<i class="${mainIcon} text-xl"></i> Tải Cho ${mainOSName} (${mainAssetArch}${isPortable ? " - Portable" : ""})`;
+
+    downloadAreaHtml = `
+      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-2">
+        <a href="${mainAsset ? mainAsset.browser_download_url : data.html_url}" target="_blank" class="btn-primary !px-8 !py-4 text-base shadow-xl shadow-secondary/10 w-full sm:w-auto">
+          ${mainBtnLabel}
+        </a>
+        ${
+          mainAsset
+            ? `
+          <div class="text-xs text-gray-400">
+            <div class="font-medium text-slate-300">✓ Detected: ${mainOSName} (${mainAssetArch})</div>
+            <div class="mt-0.5"><i class="fa-solid fa-download mr-1"></i> ${mainAsset.download_count.toLocaleString("vi-VN")} lượt tải bản này</div>
+          </div>
+        `
+            : ""
+        }
+      </div>
+    `;
   }
-
-  const isPortable = mainAsset.name.toLowerCase().endsWith(".zip") || mainAsset.name.toLowerCase().endsWith(".tar.gz");
-  const mainAssetArch = (mainAsset.name.toLowerCase().includes("arm64") || mainAsset.name.toLowerCase().includes("aarch64")) ? "ARM64" : "x64";
-  const mainBtnLabel = `<i class="${mainIcon} text-xl"></i> Tải Cho ${mainOSName} (${mainAssetArch}${isPortable ? " - Portable" : ""})`;
 
   // Render HTML động
   contentEl.innerHTML = `
@@ -387,7 +488,7 @@ function renderRelease(data) {
 
       <div class="flex flex-col md:flex-row gap-8 items-start justify-between relative z-10">
         <!-- Left content: Action buttons and details -->
-        <div class="flex-grow space-y-4">
+        <div class="flex-grow space-y-4 w-full">
           <div class="flex flex-wrap items-center gap-3">
             <span class="px-3 py-1 text-xs font-semibold rounded-full bg-secondary/15 text-secondary border border-secondary/30">Phiên Bản Mới Nhất</span>
             <span class="text-white font-bold text-lg">${data.tag_name}</span>
@@ -396,22 +497,9 @@ function renderRelease(data) {
           
           <h3 class="text-3xl font-extrabold text-white tracking-tight">${data.name || `CTU Scheduler ${data.tag_name}`}</h3>
           
-          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-2">
-            <a href="${mainAsset ? mainAsset.browser_download_url : data.html_url}" target="_blank" class="btn-primary !px-8 !py-4 text-base shadow-xl shadow-secondary/10 w-full sm:w-auto">
-              ${mainBtnLabel}
-            </a>
-            ${
-              mainAsset
-                ? `
-              <div class="text-xs text-gray-400">
-                <div class="font-medium text-slate-300">File: ${mainAsset.name} (${formatBytes(mainAsset.size)})</div>
-                <div class="mt-0.5"><i class="fa-solid fa-download mr-1"></i> ${mainAsset.download_count.toLocaleString("vi-VN")} lượt tải bản này</div>
-              </div>
-            `
-                : ""
-            }
-          </div>
-          <p class="text-[11px] text-gray-500 mt-3">Bằng việc tải xuống và sử dụng CTU Scheduler, bạn đồng ý với <a href="https://github.com/d3nhatv0lam/CTU-Scheduler/blob/master/TERMS.md" target="_blank" class="text-secondary hover:underline">Điều khoản sử dụng & Miễn trừ trách nhiệm</a> của dự án.</p>
+          ${downloadAreaHtml}
+          
+          <p class="text-[11px] text-gray-500 mt-3">Bằng việc tải xuống và sử dụng CTU Scheduler, bạn đồng ý với <a href="https://github.com/d3nhatv0lam/TERMS.md" target="_blank" class="text-secondary hover:underline">Điều khoản sử dụng & Miễn trừ trách nhiệm</a> của dự án.</p>
         </div>
 
         <!-- Right content: Stats widget -->
