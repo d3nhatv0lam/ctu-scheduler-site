@@ -31,6 +31,26 @@ function formatBytes(bytes) {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + " " + sizes[i];
 }
 
+function generateAssetCardHtml(asset) {
+  return `
+    <a href="${asset.url}" target="_blank" class="flex items-center gap-4 p-4 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/15 transition-all duration-300 group">
+      <div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shrink-0">
+        <i class="${asset.icon} fa-fw text-xl"></i>
+      </div>
+      <div class="min-w-0 flex-grow">
+        <div class="text-sm font-bold text-white break-words">${asset.name}</div>
+        <div class="text-xs text-gray-400 mt-1 flex flex-wrap items-center gap-2">
+          <span>${asset.size ? formatBytes(asset.size) : "Mã nguồn"}</span>
+          ${asset.downloads !== null ? `<span class="w-1 h-1 rounded-full bg-gray-500"></span> <span><i class="fa-solid fa-download text-[10px] mr-0.5"></i> ${asset.downloads.toLocaleString("vi-VN")} tải</span>` : ""}
+        </div>
+      </div>
+      <div class="text-gray-500 group-hover:text-secondary transition-colors pl-2">
+        <i class="fa-solid fa-arrow-down text-sm"></i>
+      </div>
+    </a>
+  `;
+}
+
 function parseMarkdown(md) {
   if (!md) return "";
 
@@ -310,14 +330,19 @@ function renderRelease(data, device) {
     winX64, winArm64, macX64, macArm64, linuxX64, linuxArm64
   };
 
+  const isMobile = device.os === OS.ANDROID || device.os === OS.IOS;
+  const isUnknownOS = device.os === OS.UNKNOWN;
+
   const isMacAmbiguous = device.os === OS.MACOS && device.arch === ARCH.UNKNOWN;
   const isWinAmbiguous = device.os === OS.WINDOWS && device.arch === ARCH.UNKNOWN;
   const isLinuxAmbiguous = device.os === OS.LINUX && device.arch === ARCH.UNKNOWN;
 
+  const isRenderingMainButton = !isMobile && !isUnknownOS && device.arch !== ARCH.UNKNOWN;
+
   // Tạo danh sách "Các tùy chọn tải khác"
   const otherDownloadsList = [];
 
-  if (winX64 && winX64 !== mainAsset && !isWinAmbiguous) {
+  if (winX64 && (winX64 !== mainAsset || !isRenderingMainButton) && !isWinAmbiguous) {
     otherDownloadsList.push({
       name: "Windows (x64) - Portable",
       filename: winX64.name,
@@ -328,7 +353,7 @@ function renderRelease(data, device) {
     });
   }
 
-  if (winArm64 && winArm64 !== mainAsset && !isWinAmbiguous) {
+  if (winArm64 && (winArm64 !== mainAsset || !isRenderingMainButton) && !isWinAmbiguous) {
     otherDownloadsList.push({
       name: "Windows (ARM64) - Portable",
       filename: winArm64.name,
@@ -339,7 +364,7 @@ function renderRelease(data, device) {
     });
   }
 
-  if (macArm64 && macArm64 !== mainAsset && !isMacAmbiguous) {
+  if (macArm64 && (macArm64 !== mainAsset || !isRenderingMainButton) && !isMacAmbiguous) {
     otherDownloadsList.push({
       name: "macOS (Apple Silicon / ARM64)",
       filename: macArm64.name,
@@ -350,7 +375,7 @@ function renderRelease(data, device) {
     });
   }
 
-  if (macX64 && macX64 !== mainAsset && !isMacAmbiguous) {
+  if (macX64 && (macX64 !== mainAsset || !isRenderingMainButton) && !isMacAmbiguous) {
     otherDownloadsList.push({
       name: "macOS (Intel / x64)",
       filename: macX64.name,
@@ -361,7 +386,7 @@ function renderRelease(data, device) {
     });
   }
 
-  if (linuxX64 && linuxX64 !== mainAsset && !isLinuxAmbiguous) {
+  if (linuxX64 && (linuxX64 !== mainAsset || !isRenderingMainButton) && !isLinuxAmbiguous) {
     otherDownloadsList.push({
       name: "Linux (x64)",
       filename: linuxX64.name,
@@ -372,7 +397,7 @@ function renderRelease(data, device) {
     });
   }
 
-  if (linuxArm64 && linuxArm64 !== mainAsset && !isLinuxAmbiguous) {
+  if (linuxArm64 && (linuxArm64 !== mainAsset || !isRenderingMainButton) && !isLinuxAmbiguous) {
     otherDownloadsList.push({
       name: "Linux (ARM64)",
       filename: linuxArm64.name,
@@ -414,10 +439,19 @@ function renderRelease(data, device) {
           CTU Scheduler hiện chỉ hỗ trợ các hệ điều hành máy tính (Windows, macOS, Linux). 
           Vui lòng mở trang web này trên máy tính của bạn để tải ứng dụng.
         </p>
-        <div class="pt-1">
+        <div class="flex flex-wrap items-center gap-4 pt-1">
           <a href="${data.html_url}" target="_blank" class="text-xs text-secondary hover:underline font-medium flex items-center gap-1">
-            Xem bản phát hành trên GitHub <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            Xem trên GitHub <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
           </a>
+          <button id="show-mobile-downloads-btn" class="text-xs text-gray-400 hover:text-white underline focus:outline-none transition-colors">
+            Vẫn hiển thị liên kết tải về
+          </button>
+        </div>
+        <div id="mobile-downloads-container" class="hidden pt-4 border-t border-white/5 space-y-3">
+          <p class="text-xs text-gray-400 italic">Chọn phiên bản máy tính bạn muốn tải về thiết bị di động:</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            ${otherDownloadsList.map(generateAssetCardHtml).join("")}
+          </div>
         </div>
       </div>
     `;
@@ -486,66 +520,43 @@ function renderRelease(data, device) {
       <!-- Glow effect in card background -->
       <div class="absolute -top-12 -right-12 w-48 h-48 bg-secondary/10 rounded-full blur-3xl pointer-events-none"></div>
 
-      <div class="flex flex-col md:flex-row gap-8 items-start justify-between relative z-10">
-        <!-- Left content: Action buttons and details -->
-        <div class="flex-grow space-y-4 w-full">
+      <div class="flex flex-col sm:flex-row gap-6 items-start sm:items-center justify-between pb-6 border-b border-white/10 mb-6 relative z-10">
+        <div class="space-y-3">
           <div class="flex flex-wrap items-center gap-3">
             <span class="px-3 py-1 text-xs font-semibold rounded-full bg-secondary/15 text-secondary border border-secondary/30">Phiên Bản Mới Nhất</span>
             <span class="text-white font-bold text-lg">${data.tag_name}</span>
             <span class="text-gray-400 text-sm">Cập nhật: ${formatDate(data.published_at)}</span>
           </div>
-          
           <h3 class="text-3xl font-extrabold text-white tracking-tight">${data.name || `CTU Scheduler ${data.tag_name}`}</h3>
-          
-          ${downloadAreaHtml}
-          
-          <p class="text-[11px] text-gray-500 mt-3">Bằng việc tải xuống và sử dụng CTU Scheduler, bạn đồng ý với <a href="https://github.com/d3nhatv0lam/TERMS.md" target="_blank" class="text-secondary hover:underline">Điều khoản sử dụng & Miễn trừ trách nhiệm</a> của dự án.</p>
         </div>
-
-        <!-- Right content: Stats widget -->
-        <div class="w-full md:w-auto bg-white/5 border border-white/5 rounded-xl p-4 flex md:flex-col gap-4 justify-around md:justify-center items-center text-center self-stretch md:self-auto min-w-[150px]">
+        
+        <!-- Stats widget: Tổng lượt tải & Trạng thái hoạt động -->
+        <div class="flex gap-6 bg-white/5 border border-white/5 rounded-xl p-3 px-6 items-center text-center self-stretch sm:self-auto justify-around shrink-0">
           <div>
-            <div class="text-xs text-gray-400 uppercase tracking-wider">Tổng lượt tải</div>
-            <div class="text-2xl font-bold text-secondary mt-0.5">${totalDownloads.toLocaleString("vi-VN")}</div>
+            <div class="text-[10px] text-gray-400 uppercase tracking-wider">Tổng lượt tải</div>
+            <div class="text-xl font-bold text-secondary mt-0.5">${totalDownloads.toLocaleString("vi-VN")}</div>
           </div>
-          <div class="hidden md:block border-t border-white/10 w-full"></div>
+          <div class="border-l border-white/10 h-8"></div>
           <div>
-            <div class="text-xs text-gray-400 uppercase tracking-wider">Trạng thái</div>
-            <div class="text-sm font-semibold text-emerald-400 mt-0.5 flex items-center gap-1.5 justify-center">
-              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> Hoạt động
+            <div class="text-[10px] text-gray-400 uppercase tracking-wider">Trạng thái</div>
+            <div class="text-xs font-semibold text-emerald-400 mt-0.5 flex items-center gap-1.5 justify-center">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> Hoạt động
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Separator -->
-      <hr class="border-white/10 my-8">
+      <div class="relative z-10 space-y-4 mb-8">
+        ${downloadAreaHtml}
+        
+        <p class="text-[11px] text-gray-500 mt-3">Bằng việc tải xuống và sử dụng CTU Scheduler, bạn đồng ý với <a href="https://github.com/d3nhatv0lam/TERMS.md" target="_blank" class="text-secondary hover:underline">Điều khoản sử dụng & Miễn trừ trách nhiệm</a> của dự án.</p>
+      </div>
 
       <!-- Secondary Downloads Section -->
-      <div class="relative z-10">
+      <div class="relative z-10 ${isMobile ? 'hidden' : ''}">
         <h4 class="text-sm font-semibold uppercase tracking-wider text-secondary/80 mb-4"><i class="fa-solid fa-cubes mr-2"></i> Các Tùy Chọn Tải Khác</h4>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          ${otherDownloadsList
-            .map(
-              (asset) => `
-            <a href="${asset.url}" target="_blank" class="flex items-center gap-4 p-4 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/15 transition-all duration-300 group">
-              <div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-lg group-hover:scale-110 transition-transform duration-300">
-                <i class="${asset.icon}"></i>
-              </div>
-              <div class="min-w-0 flex-grow">
-                <div class="text-sm font-bold text-white truncate">${asset.name}</div>
-                <div class="text-xs text-gray-400 truncate mt-0.5">
-                  ${asset.size ? formatBytes(asset.size) : "Mã nguồn"} 
-                  ${asset.downloads !== null ? `• ${asset.downloads.toLocaleString("vi-VN")} tải` : ""}
-                </div>
-              </div>
-              <div class="text-gray-500 group-hover:text-secondary transition-colors pl-2">
-                <i class="fa-solid fa-arrow-down text-sm"></i>
-              </div>
-            </a>
-          `,
-            )
-            .join("")}
+          ${otherDownloadsList.map(generateAssetCardHtml).join("")}
         </div>
       </div>
 
@@ -585,6 +596,22 @@ function renderRelease(data, device) {
       } else {
         changelogContent.classList.add("hidden");
         chevron.classList.remove("rotate-180");
+      }
+    });
+  }
+
+  // Gắn sự kiện hiển thị link tải trên mobile
+  const showMobileBtn = document.getElementById("show-mobile-downloads-btn");
+  const mobileDownloadsContainer = document.getElementById("mobile-downloads-container");
+  if (showMobileBtn && mobileDownloadsContainer) {
+    showMobileBtn.addEventListener("click", () => {
+      const isHidden = mobileDownloadsContainer.classList.contains("hidden");
+      if (isHidden) {
+        mobileDownloadsContainer.classList.remove("hidden");
+        showMobileBtn.textContent = "Ẩn liên kết tải về";
+      } else {
+        mobileDownloadsContainer.classList.add("hidden");
+        showMobileBtn.textContent = "Vẫn hiển thị liên kết tải về";
       }
     });
   }
