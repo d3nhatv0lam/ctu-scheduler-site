@@ -5,8 +5,8 @@ import { detectDevice, OS, ARCH } from './detector.js';
 
 const REPO_OWNER = "d3nhatv0lam";
 const REPO_NAME = "CTU-Scheduler";
-const API_URL = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases/latest`;
-const CACHE_KEY_DATA = "ctu_release_data";
+const API_URL = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/releases?per_page=100`;
+const CACHE_KEY_DATA = "ctu_release_data_v2";
 const CACHE_KEY_ETAG = "ctu_release_etag";
 const CACHE_KEY_TIME = "ctu_release_timestamp";
 const CACHE_DURATION = 10 * 60 * 1000; // 10 phút tính bằng mili-giây
@@ -29,6 +29,29 @@ function formatBytes(bytes) {
   const sizes = ["B", "KB", "MB", "GB"];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
   return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + " " + sizes[i];
+}
+
+function formatDownloadCount(count) {
+  if (count === null || count === undefined || isNaN(count)) return "0";
+  
+  if (count < 1000) {
+    return count.toLocaleString("vi-VN");
+  }
+  
+  if (count < 10000) {
+    const value = count / 1000;
+    const formatted = parseFloat(value.toFixed(1));
+    return `${formatted}K+`;
+  }
+  
+  if (count < 1000000) {
+    const value = Math.floor(count / 1000);
+    return `${value}K+`;
+  }
+  
+  const value = count / 1000000;
+  const formatted = value >= 10 ? Math.floor(value) : parseFloat(value.toFixed(1));
+  return `${formatted}M+`;
 }
 
 function generateAssetCardHtml(asset) {
@@ -182,7 +205,13 @@ export async function initGithubRelease() {
 
     if (releaseData) {
       const device = await detectDevice();
-      renderRelease(releaseData, device);
+      if (Array.isArray(releaseData)) {
+        // Tìm bản phát hành chính thức ổn định mới nhất (không phải pre-release hoặc nháp)
+        const latestRelease = releaseData.find((r) => !r.prerelease && !r.draft) || releaseData[0];
+        renderRelease(latestRelease, device, releaseData);
+      } else {
+        renderRelease(releaseData, device);
+      }
     } else {
       throw new Error("Không thể tải dữ liệu phát hành");
     }
@@ -261,7 +290,7 @@ function renderDownloadChooser(device, assetsInfo, data) {
   `;
 }
 
-function renderRelease(data, device) {
+function renderRelease(data, device, allReleases) {
   const loadingEl = document.getElementById("download-loading");
   const errorEl = document.getElementById("download-error");
   const contentEl = document.getElementById("download-content");
@@ -420,11 +449,10 @@ function renderRelease(data, device) {
     });
   });
 
-  // Tính tổng số lượt tải
-  const totalDownloads = assets.reduce(
-    (sum, asset) => sum + (asset.download_count || 0),
-    0,
-  );
+  // Tính tổng số lượt tải (Cộng dồn tất cả các lượt tải của tất cả các bản phát hành lịch sử)
+  const totalDownloads = Array.isArray(allReleases)
+    ? allReleases.reduce((sum, r) => sum + (r.assets ? r.assets.reduce((aSum, a) => aSum + (a.download_count || 0), 0) : 0), 0)
+    : assets.reduce((sum, asset) => sum + (asset.download_count || 0), 0);
 
   // Tạo khối giao diện Tải xuống dựa trên OS & Arch của người dùng
   let downloadAreaHtml = "";
@@ -534,7 +562,7 @@ function renderRelease(data, device) {
         <div class="flex gap-6 bg-white/5 border border-white/5 rounded-xl p-3 px-6 items-center text-center self-stretch sm:self-auto justify-around shrink-0">
           <div>
             <div class="text-[10px] text-gray-400 uppercase tracking-wider">Tổng lượt tải</div>
-            <div class="text-xl font-bold text-secondary mt-0.5">${totalDownloads.toLocaleString("vi-VN")}</div>
+            <div class="text-xl font-bold text-secondary mt-0.5">${formatDownloadCount(totalDownloads)}</div>
           </div>
           <div class="border-l border-white/10 h-8"></div>
           <div>
