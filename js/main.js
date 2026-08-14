@@ -85,4 +85,48 @@ document.addEventListener('DOMContentLoaded', () => {
     navigateTo(window.location.hash);
     window.scrollTo(0, 0);
   });
+
+  // Floating Action Buttons Logic
+  const scrollToTopBtn = document.getElementById('scroll-to-top');
+  const floatingFeedbackBtn = document.getElementById('floating-feedback');
+
+  if (scrollToTopBtn) {
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        scrollToTopBtn.classList.remove('opacity-0', 'translate-y-10', 'pointer-events-none');
+        scrollToTopBtn.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+      } else {
+        scrollToTopBtn.classList.add('opacity-0', 'translate-y-10', 'pointer-events-none');
+        scrollToTopBtn.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+      }
+    });
+
+    scrollToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  if (floatingFeedbackBtn) {
+    floatingFeedbackBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const currentHash = window.location.hash || '#home';
+      const feedbackSection = document.getElementById('feedback-section');
+
+      if (currentHash === '#home') {
+        if (feedbackSection) {
+          feedbackSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      } else {
+        window.location.hash = '#home';
+        // Đợi chuyển trang SPA hoàn tất trước khi cuộn
+        setTimeout(() => {
+          const targetSection = document.getElementById('feedback-section');
+          if (targetSection) {
+            targetSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 300);
+      }
+    });
+  }
 });
+
