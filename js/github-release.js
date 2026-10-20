@@ -1,5 +1,5 @@
 // github-release.js
-// 80% vibe - mình không giỏi web, đừng var mình huhu
+// Quản lý hiển thị bản phát hành GitHub Release & Tối ưu hóa cho Velopack
 
 import { detectDevice, OS, ARCH } from './detector.js';
 
@@ -24,7 +24,7 @@ function formatDate(dateString) {
 }
 
 function formatBytes(bytes) {
-  if (bytes === 0) return "0 B";
+  if (!bytes || bytes === 0) return "0 B";
   const k = 1024;
   const sizes = ["B", "KB", "MB", "GB"];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
@@ -54,20 +54,46 @@ function formatDownloadCount(count) {
   return `${formatted}M+`;
 }
 
+/**
+ * Kiểm tra các file nội bộ của Velopack cần loại trừ khỏi giao diện người dùng
+ */
+function isIgnoredAsset(filename) {
+  const name = filename.toLowerCase();
+  return (
+    name.endsWith(".nupkg") ||
+    name.endsWith(".json") ||
+    name === "releases" ||
+    name.endsWith(".blockmap")
+  );
+}
+
+/**
+ * Tạo HTML cho từng thẻ download card
+ */
 function generateAssetCardHtml(asset) {
+  const isSetup = asset.type === "setup";
+  const badgeHtml = isSetup
+    ? `<span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center gap-1 shrink-0"><i class="fa-solid fa-bolt text-[9px]"></i> Auto Update</span>`
+    : `<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-amber-500/10 text-amber-300/90 border border-amber-500/20 flex items-center gap-1 shrink-0"><i class="fa-solid fa-box-open text-[9px]"></i> Portable</span>`;
+
   return `
-    <a href="${asset.url}" target="_blank" class="flex items-center gap-4 p-4 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/15 transition-all duration-300 group">
+    <a href="${asset.url}" target="_blank" class="flex items-center gap-3.5 p-3.5 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/15 transition-all duration-300 group">
       <div class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shrink-0">
         <i class="${asset.icon} fa-fw text-xl"></i>
       </div>
       <div class="min-w-0 flex-grow">
-        <div class="text-sm font-bold text-white break-words">${asset.name}</div>
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="text-sm font-bold text-white break-words leading-snug group-hover:text-secondary transition-colors">${asset.name}</div>
+          ${badgeHtml}
+        </div>
         <div class="text-xs text-gray-400 mt-1 flex flex-wrap items-center gap-2">
+          <span class="font-mono text-[11px] text-gray-300 break-all">${asset.filename}</span>
+          <span class="w-1 h-1 rounded-full bg-gray-500"></span>
           <span>${asset.size ? formatBytes(asset.size) : "Mã nguồn"}</span>
-          ${asset.downloads !== null ? `<span class="w-1 h-1 rounded-full bg-gray-500"></span> <span><i class="fa-solid fa-download text-[10px] mr-0.5"></i> ${asset.downloads.toLocaleString("vi-VN")} tải</span>` : ""}
+          ${asset.downloads !== null && asset.downloads !== undefined ? `<span class="w-1 h-1 rounded-full bg-gray-500"></span> <span><i class="fa-solid fa-download text-[10px] mr-0.5"></i> ${asset.downloads.toLocaleString("vi-VN")}</span>` : ""}
         </div>
       </div>
-      <div class="text-gray-500 group-hover:text-secondary transition-colors pl-2">
+      <div class="text-gray-500 group-hover:text-secondary transition-colors pl-1 shrink-0">
         <i class="fa-solid fa-arrow-down text-sm"></i>
       </div>
     </a>
@@ -223,55 +249,47 @@ export async function initGithubRelease() {
   }
 }
 
+/**
+ * Hiển thị nút lựa chọn khi chưa xác định được kiến trúc CPU (x64 hay ARM64)
+ */
 function renderDownloadChooser(device, assetsInfo, data) {
   let buttonsHtml = "";
   let instructionsHtml = "";
 
   if (device.os === OS.MACOS) {
-    const armUrl = assetsInfo.macArm64 ? assetsInfo.macArm64.browser_download_url : data.html_url;
-    const intelUrl = assetsInfo.macX64 ? assetsInfo.macX64.browser_download_url : data.html_url;
-    
+    const pkgUrl = assetsInfo.macSetup ? assetsInfo.macSetup.browser_download_url : data.html_url;
     buttonsHtml = `
-      <a href="${armUrl}" target="_blank" class="btn-primary !px-6 !py-3 text-sm flex items-center justify-center gap-2 shadow-lg shadow-secondary/5 w-full sm:w-auto">
-        <i class="fa-brands fa-apple text-lg"></i> Mac Apple Silicon (ARM64)
-      </a>
-      <a href="${intelUrl}" target="_blank" class="btn-primary !bg-slate-800 hover:!bg-slate-700 !text-slate-100 !px-6 !py-3 text-sm flex items-center justify-center gap-2 border border-white/10 hover:border-white/20 transition-all duration-300 w-full sm:w-auto">
-        <i class="fa-brands fa-apple text-lg"></i> Mac Intel Chip (x64)
+      <a href="${pkgUrl}" target="_blank" class="btn-primary !px-6 !py-3 text-sm flex items-center justify-center gap-2 shadow-lg shadow-secondary/5 w-full sm:w-auto">
+        <i class="fa-brands fa-apple text-lg"></i> Tải macOS Setup (.pkg)
       </a>
     `;
-    instructionsHtml = `
-      * Xem loại chip của bạn tại: Menu <i class="fa-brands fa-apple"></i> ở góc trái màn hình &gt; Giới thiệu về máy Mac này (About This Mac).
-    `;
+    instructionsHtml = `* Gói cài đặt chuẩn .pkg tương thích cho cả Mac Apple Silicon (M1/M2/M3) và Mac Intel Chip.`;
   } else if (device.os === OS.WINDOWS) {
-    const x64Url = assetsInfo.winX64 ? assetsInfo.winX64.browser_download_url : data.html_url;
-    const armUrl = assetsInfo.winArm64 ? assetsInfo.winArm64.browser_download_url : data.html_url;
+    const x64Url = assetsInfo.winX64Setup ? assetsInfo.winX64Setup.browser_download_url : data.html_url;
+    const armUrl = assetsInfo.winArm64Setup ? assetsInfo.winArm64Setup.browser_download_url : data.html_url;
 
     buttonsHtml = `
       <a href="${x64Url}" target="_blank" class="btn-primary !px-6 !py-3 text-sm flex items-center justify-center gap-2 shadow-lg shadow-secondary/5 w-full sm:w-auto">
-        <i class="fa-brands fa-windows text-lg"></i> Windows (x64)
+        <i class="fa-brands fa-windows text-lg"></i> Windows (x64) - Khuyên dùng
       </a>
       <a href="${armUrl}" target="_blank" class="btn-primary !bg-slate-800 hover:!bg-slate-700 !text-slate-100 !px-6 !py-3 text-sm flex items-center justify-center gap-2 border border-white/10 hover:border-white/20 transition-all duration-300 w-full sm:w-auto">
         <i class="fa-brands fa-windows text-lg"></i> Windows (ARM64)
       </a>
     `;
-    instructionsHtml = `
-      * Xem loại cấu hình máy tại: Settings (Cài đặt) &gt; System (Hệ thống) &gt; About (Giới thiệu) &gt; System type.
-    `;
+    instructionsHtml = `* Hầu hết máy tính Windows là bản <strong>x64</strong>. Xem loại cấu hình tại: Settings &gt; System &gt; About &gt; System type.`;
   } else if (device.os === OS.LINUX) {
     const x64Url = assetsInfo.linuxX64 ? assetsInfo.linuxX64.browser_download_url : data.html_url;
     const armUrl = assetsInfo.linuxArm64 ? assetsInfo.linuxArm64.browser_download_url : data.html_url;
 
     buttonsHtml = `
       <a href="${x64Url}" target="_blank" class="btn-primary !px-6 !py-3 text-sm flex items-center justify-center gap-2 shadow-lg shadow-secondary/5 w-full sm:w-auto">
-        <i class="fa-brands fa-linux text-lg"></i> Linux (x64)
+        <i class="fa-brands fa-linux text-lg"></i> Linux (x64) - AppImage
       </a>
       <a href="${armUrl}" target="_blank" class="btn-primary !bg-slate-800 hover:!bg-slate-700 !text-slate-100 !px-6 !py-3 text-sm flex items-center justify-center gap-2 border border-white/10 hover:border-white/20 transition-all duration-300 w-full sm:w-auto">
         <i class="fa-brands fa-linux text-lg"></i> Linux (ARM64)
       </a>
     `;
-    instructionsHtml = `
-      * Gõ lệnh <code>uname -m</code> hoặc <code>lscpu</code> trong terminal để kiểm tra kiến trúc CPU của bạn.
-    `;
+    instructionsHtml = `* Gõ lệnh <code>uname -m</code> trong terminal để kiểm tra kiến trúc CPU của bạn.`;
   }
 
   const osNameFormatted = device.os === OS.MACOS ? "macOS" : device.os === OS.WINDOWS ? "Windows" : "Linux";
@@ -280,7 +298,7 @@ function renderDownloadChooser(device, assetsInfo, data) {
     <div class="space-y-4 pt-1 w-full">
       <div class="text-xs text-gray-400 flex items-center gap-1.5">
         <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-        Nhận dạng thiết bị: <strong class="text-slate-200">${osNameFormatted}</strong> (Chưa xác định được kiến trúc CPU)
+        Nhận dạng thiết bị: <strong class="text-slate-200">${osNameFormatted}</strong> (Vui lòng chọn bản cài đặt phù hợp với máy của bạn)
       </div>
       <div class="flex flex-col sm:flex-row gap-3">
         ${buttonsHtml}
@@ -296,176 +314,193 @@ function renderRelease(data, device, allReleases) {
   const contentEl = document.getElementById("download-content");
 
   const assets = data.assets || [];
-  let mainAsset = null;
-  const otherAssets = [];
 
-  // Định nghĩa các Regex để lọc tệp theo HDH & Kiến trúc
-  const winX64Pattern = /win.*x64/i;
-  const winArm64Pattern = /win.*(arm64|aarch64)/i;
-  const macX64Pattern = /(mac|osx).*x64/i;
-  const macArm64Pattern = /(mac|osx).*(arm64|aarch64)/i;
-  const linuxX64Pattern = /linux.*x64/i;
-  const linuxArm64Pattern = /linux.*(arm64|aarch64)/i;
-
-  let winX64 = null;
-  let winArm64 = null;
-  let macX64 = null;
-  let macArm64 = null;
+  // Phân loại các asset hợp lệ
+  let winX64Setup = null;
+  let winArm64Setup = null;
+  let winX64Portable = null;
+  let winArm64Portable = null;
+  let macSetup = null;
+  let macPortable = null;
   let linuxX64 = null;
   let linuxArm64 = null;
+  const unknownAssets = [];
 
-  // Phân loại tài nguyên tải xuống
   assets.forEach((asset) => {
     const name = asset.name.toLowerCase();
-    if (winX64Pattern.test(name)) {
-      winX64 = asset;
-    } else if (winArm64Pattern.test(name)) {
-      winArm64 = asset;
-    } else if (macX64Pattern.test(name)) {
-      macX64 = asset;
-    } else if (macArm64Pattern.test(name)) {
-      macArm64 = asset;
-    } else if (linuxX64Pattern.test(name)) {
-      linuxX64 = asset;
-    } else if (linuxArm64Pattern.test(name)) {
-      linuxArm64 = asset;
-    } else {
-      otherAssets.push({
-        name: asset.name,
-        url: asset.browser_download_url,
-        size: asset.size,
-        downloads: asset.download_count,
-        icon: "fa-regular fa-file-zipper text-gray-400",
-      });
+    // Bỏ qua các file cấu hình và delta cập nhật nội bộ của Velopack
+    if (isIgnoredAsset(name)) return;
+
+    const isArm = name.includes("arm64") || name.includes("aarch64");
+    const isPortable = name.includes("portable") || (name.endsWith(".zip") && !name.includes("setup"));
+
+    // 1. Windows
+    if (name.includes("win")) {
+      if (isPortable) {
+        if (isArm) winArm64Portable = asset;
+        else winX64Portable = asset;
+      } else {
+        if (isArm) winArm64Setup = asset;
+        else winX64Setup = asset;
+      }
+    }
+    // 2. macOS
+    else if (name.includes("osx") || name.includes("mac")) {
+      if (isPortable) {
+        macPortable = asset;
+      } else {
+        macSetup = asset;
+      }
+    }
+    // 3. Linux
+    else if (name.includes("linux") || name.endsWith(".appimage") || name.endsWith(".deb") || name.endsWith(".rpm")) {
+      if (isArm) {
+        linuxArm64 = asset;
+      } else {
+        linuxX64 = asset;
+      }
+    }
+    // File khác
+    else {
+      unknownAssets.push(asset);
     }
   });
 
-  // Lựa chọn file tải chính phù hợp với OS và Arch của user
-  if (device.os === OS.WINDOWS) {
-    mainAsset = device.arch === ARCH.ARM64 ? (winArm64 || winX64) : (winX64 || winArm64);
-  } else if (device.os === OS.MACOS) {
-    mainAsset = device.arch === ARCH.ARM64 ? (macArm64 || macX64) : (macX64 || macArm64);
-  } else if (device.os === OS.LINUX) {
-    mainAsset = device.arch === ARCH.ARM64 ? (linuxArm64 || linuxX64) : (linuxX64 || linuxArm64);
-  }
-
-  // Fallback mặc định nếu không khớp được file phù hợp
-  if (!mainAsset) {
-    mainAsset = winX64 || winArm64 || macArm64 || macX64 || linuxX64 || linuxArm64 || assets[0];
-  }
-
-  // Lưu thông tin các file chính
+  // Lưu thông tin các gói cài đặt chính
   const assetsInfo = {
-    winX64, winArm64, macX64, macArm64, linuxX64, linuxArm64
+    winX64Setup,
+    winArm64Setup,
+    winX64Portable,
+    winArm64Portable,
+    macSetup,
+    macPortable,
+    linuxX64,
+    linuxArm64,
   };
+
+  // Chọn Main Asset (ƯU TIÊN BẢN SETUP CÓ AUTO UPDATE)
+  let mainAsset = null;
+  let detectedLabelOS = "Windows";
+  let detectedLabelArch = "x64";
+  let mainIcon = "fa-brands fa-windows";
+
+  if (device.os === OS.WINDOWS) {
+    mainIcon = "fa-brands fa-windows";
+    detectedLabelOS = "Windows";
+    if (device.arch === ARCH.ARM64) {
+      detectedLabelArch = "ARM64";
+      mainAsset = winArm64Setup || winArm64Portable || winX64Setup;
+    } else if (device.arch === ARCH.X64) {
+      detectedLabelArch = "x64";
+      mainAsset = winX64Setup || winX64Portable || winArm64Setup;
+    }
+  } else if (device.os === OS.MACOS) {
+    mainIcon = "fa-brands fa-apple";
+    detectedLabelOS = "macOS";
+    detectedLabelArch = "Universal";
+    mainAsset = macSetup || macPortable;
+  } else if (device.os === OS.LINUX) {
+    mainIcon = "fa-brands fa-linux";
+    detectedLabelOS = "Linux";
+    if (device.arch === ARCH.ARM64) {
+      detectedLabelArch = "ARM64";
+      mainAsset = linuxArm64 || linuxX64;
+    } else if (device.arch === ARCH.X64) {
+      detectedLabelArch = "x64";
+      mainAsset = linuxX64 || linuxArm64;
+    }
+  }
+
+  // Fallback nếu không xác định được nhưng cần 1 file mặc định
+  if (!mainAsset) {
+    mainAsset = winX64Setup || macSetup || linuxX64 || winX64Portable || assets[0];
+  }
 
   const isMobile = device.os === OS.ANDROID || device.os === OS.IOS;
   const isUnknownOS = device.os === OS.UNKNOWN;
 
-  const isMacAmbiguous = device.os === OS.MACOS && device.arch === ARCH.UNKNOWN;
+  // Với macOS, vì gói .pkg là bản Universal hỗ trợ cả 2 dòng chip nên không bị ambiguous
   const isWinAmbiguous = device.os === OS.WINDOWS && device.arch === ARCH.UNKNOWN;
   const isLinuxAmbiguous = device.os === OS.LINUX && device.arch === ARCH.UNKNOWN;
+  const isAmbiguousArch = isWinAmbiguous || isLinuxAmbiguous;
 
-  const isRenderingMainButton = !isMobile && !isUnknownOS && device.arch !== ARCH.UNKNOWN;
+  // Điều kiện để render 1 nút download lớn tự động
+  const isRenderingMainButton = !isMobile && !isUnknownOS && !isAmbiguousArch && mainAsset;
 
-  // Tạo danh sách "Các tùy chọn tải khác"
-  const otherDownloadsList = [];
+  // DANH SÁCH 1: BỘ CÀI ĐẶT CHÍNH THỨC (SETUP / INSTALLER)
+  const setupDownloadsList = [];
 
-  if (winX64 && (winX64 !== mainAsset || !isRenderingMainButton) && !isWinAmbiguous) {
-    otherDownloadsList.push({
-      name: "Windows (x64) - Portable",
-      filename: winX64.name,
-      url: winX64.browser_download_url,
-      size: winX64.size,
-      downloads: winX64.download_count,
-      icon: "fa-brands fa-windows text-blue-400",
+  const addSetupItem = (asset, name, icon) => {
+    if (!asset) return;
+    // Nếu nút chính đã hiển thị file này thì không lặp lại ở mục tùy chọn khác
+    if (isRenderingMainButton && asset === mainAsset) return;
+    setupDownloadsList.push({
+      name,
+      filename: asset.name,
+      url: asset.browser_download_url,
+      size: asset.size,
+      downloads: asset.download_count,
+      icon,
+      type: "setup",
     });
-  }
+  };
 
-  if (winArm64 && (winArm64 !== mainAsset || !isRenderingMainButton) && !isWinAmbiguous) {
-    otherDownloadsList.push({
-      name: "Windows (ARM64) - Portable",
-      filename: winArm64.name,
-      url: winArm64.browser_download_url,
-      size: winArm64.size,
-      downloads: winArm64.download_count,
-      icon: "fa-brands fa-windows text-slate-400",
+  addSetupItem(winX64Setup, "Windows (x64) - Setup", "fa-brands fa-windows text-blue-400");
+  addSetupItem(winArm64Setup, "Windows (ARM64) - Setup", "fa-brands fa-windows text-slate-300");
+  addSetupItem(macSetup, "macOS - Setup (.pkg)", "fa-brands fa-apple text-white");
+  addSetupItem(linuxX64, "Linux (x64) - AppImage", "fa-brands fa-linux text-amber-400");
+  addSetupItem(linuxArm64, "Linux (ARM64) - AppImage", "fa-brands fa-linux text-orange-400");
+
+  // DANH SÁCH 2: BẢN CHẠY NGAY (PORTABLE - KHÔNG AUTO UPDATE)
+  const portableDownloadsList = [];
+
+  const addPortableItem = (asset, name, icon) => {
+    if (!asset) return;
+    portableDownloadsList.push({
+      name,
+      filename: asset.name,
+      url: asset.browser_download_url,
+      size: asset.size,
+      downloads: asset.download_count,
+      icon,
+      type: "portable",
     });
-  }
+  };
 
-  if (macArm64 && (macArm64 !== mainAsset || !isRenderingMainButton) && !isMacAmbiguous) {
-    otherDownloadsList.push({
-      name: "macOS (Apple Silicon / ARM64)",
-      filename: macArm64.name,
-      url: macArm64.browser_download_url,
-      size: macArm64.size,
-      downloads: macArm64.download_count,
-      icon: "fa-brands fa-apple text-white",
-    });
-  }
+  addPortableItem(winX64Portable, "Windows (x64) - Portable", "fa-brands fa-windows text-blue-300");
+  addPortableItem(winArm64Portable, "Windows (ARM64) - Portable", "fa-brands fa-windows text-slate-400");
+  addPortableItem(macPortable, "macOS - Portable (.zip)", "fa-brands fa-apple text-slate-300");
 
-  if (macX64 && (macX64 !== mainAsset || !isRenderingMainButton) && !isMacAmbiguous) {
-    otherDownloadsList.push({
-      name: "macOS (Intel / x64)",
-      filename: macX64.name,
-      url: macX64.browser_download_url,
-      size: macX64.size,
-      downloads: macX64.download_count,
-      icon: "fa-brands fa-apple text-slate-400",
-    });
-  }
-
-  if (linuxX64 && (linuxX64 !== mainAsset || !isRenderingMainButton) && !isLinuxAmbiguous) {
-    otherDownloadsList.push({
-      name: "Linux (x64)",
-      filename: linuxX64.name,
-      url: linuxX64.browser_download_url,
-      size: linuxX64.size,
-      downloads: linuxX64.download_count,
-      icon: "fa-brands fa-linux text-amber-400",
-    });
-  }
-
-  if (linuxArm64 && (linuxArm64 !== mainAsset || !isRenderingMainButton) && !isLinuxAmbiguous) {
-    otherDownloadsList.push({
-      name: "Linux (ARM64)",
-      filename: linuxArm64.name,
-      url: linuxArm64.browser_download_url,
-      size: linuxArm64.size,
-      downloads: linuxArm64.download_count,
-      icon: "fa-brands fa-linux text-orange-400",
-    });
-  }
-
-  // Gộp các file chưa phân loại khác
-  otherAssets.forEach((asset) => {
-    otherDownloadsList.push({
+  // Gộp các file chưa phân loại khác vào danh sách phụ nếu có
+  unknownAssets.forEach((asset) => {
+    setupDownloadsList.push({
       name: asset.name,
       filename: asset.name,
-      url: asset.url,
+      url: asset.browser_download_url,
       size: asset.size,
-      downloads: asset.downloads,
+      downloads: asset.download_count,
       icon: "fa-regular fa-file-zipper text-gray-400",
+      type: "other",
     });
   });
 
-  // Tính tổng số lượt tải (Cộng dồn tất cả các lượt tải của tất cả các bản phát hành lịch sử)
+  // Tính tổng số lượt tải (tích lũy tất cả các bản phát hành)
   const totalDownloads = Array.isArray(allReleases)
     ? allReleases.reduce((sum, r) => sum + (r.assets ? r.assets.reduce((aSum, a) => aSum + (a.download_count || 0), 0) : 0), 0)
     : assets.reduce((sum, asset) => sum + (asset.download_count || 0), 0);
 
-  // Tạo khối giao diện Tải xuống dựa trên OS & Arch của người dùng
+  // Tạo khối giao diện Tải xuống chính dựa trên OS & Arch
   let downloadAreaHtml = "";
 
-  if (device.os === OS.ANDROID || device.os === OS.IOS) {
+  if (isMobile) {
     downloadAreaHtml = `
       <div class="p-5 rounded-xl border border-secondary/20 bg-secondary/5 text-sm space-y-2 mt-2">
         <div class="font-bold text-white flex items-center gap-2">
-          <i class="fa-solid fa-laptop text-secondary text-base"></i> Ứng Dụng Dành Cho Máy Tính
+          <i class="fa-solid fa-laptop text-secondary text-base"></i> Ứng Dụng Dành Cho Máy Tính (Desktop)
         </div>
         <p class="text-gray-300 text-xs leading-relaxed">
-          CTU Scheduler hiện chỉ hỗ trợ các hệ điều hành máy tính (Windows, macOS, Linux). 
-          Vui lòng mở trang web này trên máy tính của bạn để tải ứng dụng.
+          CTU Scheduler hiện hỗ trợ các hệ điều hành máy tính (Windows, macOS, Linux). 
+          Vui lòng mở trang web này trên máy tính để cài đặt ứng dụng.
         </p>
         <div class="flex flex-wrap items-center gap-4 pt-1">
           <a href="${data.html_url}" target="_blank" class="text-xs text-secondary hover:underline font-medium flex items-center gap-1">
@@ -475,27 +510,44 @@ function renderRelease(data, device, allReleases) {
             Vẫn hiển thị liên kết tải về
           </button>
         </div>
-        <div id="mobile-downloads-container" class="hidden pt-4 border-t border-white/5 space-y-3">
+        <div id="mobile-downloads-container" class="hidden pt-4 border-t border-white/5 space-y-5">
           <p class="text-xs text-gray-400 italic">Chọn phiên bản máy tính bạn muốn tải về thiết bị di động:</p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            ${otherDownloadsList.map(generateAssetCardHtml).join("")}
-          </div>
+          ${setupDownloadsList.length > 0 ? `
+            <div class="space-y-2">
+              <div class="text-xs font-semibold text-secondary uppercase tracking-wider flex items-center gap-1.5">
+                <i class="fa-solid fa-box-archive"></i> Bộ Cài Đặt (Setup - Có Auto-update)
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                ${setupDownloadsList.map(generateAssetCardHtml).join("")}
+              </div>
+            </div>
+          ` : ""}
+          ${portableDownloadsList.length > 0 ? `
+            <div class="space-y-2 pt-2">
+              <div class="text-xs font-semibold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
+                <i class="fa-solid fa-box-open"></i> Bản Portable (Không Auto-update)
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                ${portableDownloadsList.map(generateAssetCardHtml).join("")}
+              </div>
+            </div>
+          ` : ""}
         </div>
       </div>
     `;
-  } else if (device.os === OS.UNKNOWN) {
+  } else if (isUnknownOS) {
     downloadAreaHtml = `
       <div class="p-5 rounded-xl border border-white/10 bg-white/5 space-y-3 mt-2">
         <div class="text-xs text-amber-400 font-semibold flex items-center gap-1.5">
           <i class="fa-solid fa-triangle-exclamation"></i> Không thể nhận dạng Hệ điều hành
         </div>
         <p class="text-xs text-gray-300 leading-relaxed">
-          Chúng tôi không thể tự động phát hiện hệ điều hành của bạn. Vui lòng tải xuống thủ công:
+          Chúng tôi không thể tự động phát hiện hệ điều hành của bạn. Vui lòng chọn tải xuống phiên bản cài đặt bên dưới:
         </p>
         <div class="flex flex-wrap gap-3 pt-1">
-          ${winX64 ? `<a href="${winX64.browser_download_url}" target="_blank" class="btn-primary !px-5 !py-2.5 !text-xs flex items-center gap-1.5"><i class="fa-brands fa-windows"></i> Windows x64</a>` : ""}
-          ${macArm64 ? `<a href="${macArm64.browser_download_url}" target="_blank" class="btn-primary !px-5 !py-2.5 !text-xs flex items-center gap-1.5"><i class="fa-brands fa-apple"></i> macOS ARM64</a>` : ""}
-          ${linuxX64 ? `<a href="${linuxX64.browser_download_url}" target="_blank" class="btn-primary !px-5 !py-2.5 !text-xs flex items-center gap-1.5"><i class="fa-brands fa-linux"></i> Linux x64</a>` : ""}
+          ${winX64Setup ? `<a href="${winX64Setup.browser_download_url}" target="_blank" class="btn-primary !px-5 !py-2.5 !text-xs flex items-center gap-1.5"><i class="fa-brands fa-windows"></i> Windows x64</a>` : ""}
+          ${macSetup ? `<a href="${macSetup.browser_download_url}" target="_blank" class="btn-primary !px-5 !py-2.5 !text-xs flex items-center gap-1.5"><i class="fa-brands fa-apple"></i> macOS (.pkg)</a>` : ""}
+          ${linuxX64 ? `<a href="${linuxX64.browser_download_url}" target="_blank" class="btn-primary !px-5 !py-2.5 !text-xs flex items-center gap-1.5"><i class="fa-brands fa-linux"></i> Linux AppImage</a>` : ""}
         </div>
         <div class="pt-1">
           <a href="${data.html_url}" target="_blank" class="text-xs text-secondary hover:underline font-medium">
@@ -504,36 +556,34 @@ function renderRelease(data, device, allReleases) {
         </div>
       </div>
     `;
-  } else if (device.arch === ARCH.UNKNOWN) {
+  } else if (isAmbiguousArch) {
     downloadAreaHtml = renderDownloadChooser(device, assetsInfo, data);
   } else {
-    // Xác định text và icon phù hợp cho nút chính
-    let mainIcon = "fa-brands fa-windows";
-    let mainOSName = "Windows";
-
-    if (device.os === OS.MACOS) {
-      mainIcon = "fa-brands fa-apple";
-      mainOSName = "macOS";
-    } else if (device.os === OS.LINUX) {
-      mainIcon = "fa-brands fa-linux";
-      mainOSName = "Linux";
-    }
-
-    const isPortable = mainAsset.name.toLowerCase().endsWith(".zip") || mainAsset.name.toLowerCase().endsWith(".tar.gz");
-    const mainAssetArch = device.arch === ARCH.ARM64 ? "ARM64" : "x64";
-    const mainBtnLabel = `<i class="${mainIcon} text-xl"></i> Tải Cho ${mainOSName} (${mainAssetArch}${isPortable ? " - Portable" : ""})`;
+    // NÚT DOWNLOAD LỚN TỰ ĐỘNG THEO THIẾT BỊ ĐƯỢC NHẬN DIỆN
+    const mainBtnLabel = `Tải Cho ${detectedLabelOS} (${detectedLabelArch})`;
 
     downloadAreaHtml = `
       <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 pt-2">
         <a href="${mainAsset ? mainAsset.browser_download_url : data.html_url}" target="_blank" class="btn-primary !px-8 !py-4 text-base shadow-xl shadow-secondary/10 w-full sm:w-auto">
-          ${mainBtnLabel}
+          <i class="${mainIcon} text-xl"></i> ${mainBtnLabel}
         </a>
         ${
           mainAsset
             ? `
-          <div class="text-xs text-gray-400">
-            <div class="font-medium text-slate-300">✓ Detected: ${mainOSName} (${mainAssetArch})</div>
-            <div class="mt-0.5"><i class="fa-solid fa-download mr-1"></i> ${mainAsset.download_count.toLocaleString("vi-VN")} lượt tải bản này</div>
+          <div class="text-xs space-y-1 text-gray-400">
+            <div class="font-medium text-slate-200 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              Đã nhận diện: <strong class="text-white">${detectedLabelOS} (${detectedLabelArch})</strong>
+              <span class="text-gray-500">•</span>
+              <span class="text-gray-400">${formatBytes(mainAsset.size)}</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 text-[11px]">
+              <span class="text-emerald-400 font-medium flex items-center gap-1">
+                <i class="fa-solid fa-bolt text-[10px]"></i> Hỗ trợ tự động cập nhật
+              </span>
+              <span class="text-gray-500">•</span>
+              <span><i class="fa-solid fa-download text-[10px] mr-0.5"></i> ${mainAsset.download_count.toLocaleString("vi-VN")} lượt tải</span>
+            </div>
           </div>
         `
             : ""
@@ -542,10 +592,10 @@ function renderRelease(data, device, allReleases) {
     `;
   }
 
-  // Render HTML động
+  // Render HTML toàn bộ giao diện Release
   contentEl.innerHTML = `
     <div class="glass-card reveal !p-8 border border-white/10 bg-slate-900/40 relative overflow-hidden active">
-      <!-- Glow effect in card background -->
+      <!-- Hiệu ứng Glow nền thẻ -->
       <div class="absolute -top-12 -right-12 w-48 h-48 bg-secondary/10 rounded-full blur-3xl pointer-events-none"></div>
 
       <div class="flex flex-col sm:flex-row gap-6 items-start sm:items-center justify-between pb-6 border-b border-white/10 mb-6 relative z-10">
@@ -558,7 +608,7 @@ function renderRelease(data, device, allReleases) {
           <h3 class="text-3xl font-extrabold text-white tracking-tight">${data.name || `CTU Scheduler ${data.tag_name}`}</h3>
         </div>
         
-        <!-- Stats widget: Tổng lượt tải & Trạng thái hoạt động -->
+        <!-- Widget thống kê: Tổng lượt tải & Trạng thái hoạt động -->
         <div class="flex gap-6 bg-white/5 border border-white/5 rounded-xl p-3 px-6 items-center text-center self-stretch sm:self-auto justify-around shrink-0">
           <div>
             <div class="text-[10px] text-gray-400 uppercase tracking-wider">Tổng lượt tải</div>
@@ -574,21 +624,62 @@ function renderRelease(data, device, allReleases) {
         </div>
       </div>
 
+      <!-- Khu vực nút tải chính -->
       <div class="relative z-10 space-y-4 mb-8">
         ${downloadAreaHtml}
         
         <p class="text-[11px] text-gray-500 mt-3">Bằng việc tải xuống và sử dụng CTU Scheduler, bạn đồng ý với <a href="https://github.com/d3nhatv0lam/CTU-Scheduler/blob/master/TERMS.md" target="_blank" class="text-secondary hover:underline">Điều khoản sử dụng & Miễn trừ trách nhiệm</a> của dự án.</p>
       </div>
 
-      <!-- Secondary Downloads Section -->
-      <div class="relative z-10 ${isMobile ? 'hidden' : ''}">
-        <h4 class="text-sm font-semibold uppercase tracking-wider text-secondary/80 mb-4"><i class="fa-solid fa-cubes mr-2"></i> Các Tùy Chọn Tải Khác</h4>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          ${otherDownloadsList.map(generateAssetCardHtml).join("")}
-        </div>
+      <!-- Khu vực các tùy chọn tải khác (Phân nhóm Setup vs Portable) -->
+      <div class="relative z-10 space-y-8 ${isMobile ? 'hidden' : ''}">
+        <!-- Nhóm 1: Bộ cài đặt chính thức (Setup) -->
+        ${
+          setupDownloadsList.length > 0
+            ? `
+          <div>
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+              <h4 class="text-sm font-semibold uppercase tracking-wider text-secondary flex items-center gap-2">
+                <i class="fa-solid fa-box-archive text-secondary"></i> Bộ Cài Đặt (Setup / Installer)
+              </h4>
+              <span class="text-xs text-emerald-400 font-medium flex items-center gap-1 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">
+                <i class="fa-solid fa-bolt text-[10px]"></i> Tự động cập nhật khi có bản mới
+              </span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              ${setupDownloadsList.map(generateAssetCardHtml).join("")}
+            </div>
+          </div>
+        `
+            : ""
+        }
+
+        <!-- Nhóm 2: Bản Portable (Chạy ngay) -->
+        ${
+          portableDownloadsList.length > 0
+            ? `
+          <div class="pt-6 border-t border-white/10">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+              <h4 class="text-sm font-semibold uppercase tracking-wider text-slate-200 flex items-center gap-2">
+                <i class="fa-solid fa-box-open text-amber-400"></i> Bản Chạy Ngay (Portable - .ZIP)
+              </h4>
+              <span class="text-xs text-amber-400/90 font-medium flex items-center gap-1 bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/20">
+                <i class="fa-solid fa-triangle-exclamation text-[10px]"></i> Không hỗ trợ tự động cập nhật
+              </span>
+            </div>
+            <p class="text-xs text-gray-400 mb-4 leading-relaxed">
+              Phù hợp khi dùng trên máy tính phòng máy của trường hoặc lưu trữ trong USB. Bạn sẽ cần tải thủ công bản mới khi có cập nhật.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              ${portableDownloadsList.map(generateAssetCardHtml).join("")}
+            </div>
+          </div>
+        `
+            : ""
+        }
       </div>
 
-      <!-- Changelog Section -->
+      <!-- Khu vực Changelog -->
       ${
         data.body
           ? `
