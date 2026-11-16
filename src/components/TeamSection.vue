@@ -25,7 +25,7 @@
           v-motion
           :initial="{ opacity: 0, y: 20 }"
           :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 50, ease: [0.33, 1, 0.68, 1] } }"
-          class="clickup-card p-6 text-center space-y-4"
+          class="clickup-card p-6 text-center space-y-4 hover-lift"
         >
           <div class="w-20 h-20 mx-auto rounded-full bg-[#f8f9fa] overflow-hidden border-2 border-[#e8e8e8] shadow-subtle">
             <img
@@ -51,7 +51,7 @@
           v-motion
           :initial="{ opacity: 0, y: 20 }"
           :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 100, ease: [0.33, 1, 0.68, 1] } }"
-          class="clickup-card p-6 text-center space-y-4"
+          class="clickup-card p-6 text-center space-y-4 hover-lift"
         >
           <div class="w-20 h-20 mx-auto rounded-full bg-[#f8f9fa] overflow-hidden border-2 border-[#e8e8e8] shadow-subtle">
             <img
@@ -77,7 +77,7 @@
           v-motion
           :initial="{ opacity: 0, y: 20 }"
           :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 150, ease: [0.33, 1, 0.68, 1] } }"
-          class="clickup-card p-6 text-center space-y-4"
+          class="clickup-card p-6 text-center space-y-4 hover-lift"
         >
           <div class="w-20 h-20 mx-auto rounded-full bg-[#f8f9fa] overflow-hidden border-2 border-[#e8e8e8] shadow-subtle">
             <img
@@ -102,7 +102,7 @@
           v-motion
           :initial="{ opacity: 0, y: 20 }"
           :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 200, ease: [0.33, 1, 0.68, 1] } }"
-          class="clickup-card p-6 text-center space-y-4"
+          class="clickup-card p-6 text-center space-y-4 hover-lift"
         >
           <div class="w-20 h-20 mx-auto rounded-full bg-[#f8f9fa] overflow-hidden border-2 border-[#e8e8e8] shadow-subtle">
             <img

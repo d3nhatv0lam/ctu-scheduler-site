@@ -1,37 +1,38 @@
 <template>
-  <section id="download" class="py-20 border-b border-[#e8e8e8] bg-white">
+  <section id="download" class="py-20 md:py-28 border-b border-[#e8e8e8] bg-white">
     <div class="container mx-auto max-w-clickup px-4 sm:px-6">
+      <!-- Section Header -->
       <div
         v-motion
         :initial="{ opacity: 0, y: 20 }"
         :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, ease: [0.33, 1, 0.68, 1] } }"
-        class="max-w-2xl text-left mb-12"
+        class="max-w-3xl mx-auto text-center mb-14"
       >
-        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#f5f3ff] text-[#6647f0] border border-[#ddd6fe] text-xs font-bold tracking-wider uppercase mb-3">
-          <span class="w-1.5 h-1.5 rounded-full bg-[#6647f0]"></span>
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#f5f3ff] text-[#6647f0] border border-[#ddd6fe] text-xs font-bold uppercase tracking-wider mb-4 shadow-sm">
+          <span class="w-2 h-2 rounded-full bg-[#6647f0]"></span>
           Bản Phát Hành Chính Thức
         </div>
-        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-[-0.03em] text-[#090c1d] mb-3 font-display">
-          Tải ứng dụng CTU Scheduler
+        <h2 class="text-3xl sm:text-5xl font-extrabold tracking-[-0.035em] text-[#090c1d] mb-4 font-display">
+          Tải phần mềm CTU Scheduler
         </h2>
-        <p class="text-[#646464] text-base leading-relaxed">
-          Ứng dụng tương thích tối ưu trên Windows x64. Tải xuống bản cài đặt tự động cập nhật hoặc bản chạy ngay Portable không cần cài đặt.
+        <p class="text-[#646464] text-base sm:text-lg leading-relaxed">
+          Tương thích tối ưu với hệ điều hành Windows 10 và Windows 11 (64-bit). Lựa chọn bản cài đặt tự động cập nhật hoặc bản Portable giải nén dùng ngay.
         </p>
       </div>
 
       <!-- Loading State -->
-      <div v-if="loading" class="clickup-card text-center py-12">
-        <div class="text-sm font-semibold text-[#646464] flex items-center justify-center gap-3">
-          <span class="w-2.5 h-2.5 rounded-full bg-[#6647f0] animate-ping"></span>
-          Đang kiểm tra bản phát hành mới nhất từ GitHub Releases...
+      <div v-if="loading" class="clickup-card text-center py-16">
+        <div class="text-sm font-bold text-[#646464] flex items-center justify-center gap-3">
+          <span class="w-3 h-3 rounded-full bg-[#6647f0] animate-ping"></span>
+          Đang kết nối GitHub Releases để nạp danh sách tập tin mới nhất...
         </div>
       </div>
 
       <!-- Error / Fallback State -->
-      <div v-else-if="error" class="clickup-card text-center py-10 space-y-4">
-        <div class="text-base font-bold text-[#202020] font-display">Không thể nạp danh sách trực tiếp từ GitHub API</div>
+      <div v-else-if="error" class="clickup-card text-center py-12 space-y-4">
+        <div class="text-base font-bold text-[#202020] font-display">Không thể nạp trực tiếp từ máy chủ GitHub API</div>
         <p class="text-sm text-[#646464] max-w-md mx-auto">
-          Bạn có thể truy cập thẳng vào kho lưu trữ Releases chính thức để tải bản cài đặt mới nhất.
+          Bạn có thể truy cập thẳng vào trang phát hành chính thức để tải bản cài đặt.
         </p>
         <div>
           <a
@@ -40,119 +41,183 @@
             rel="noopener noreferrer"
             class="btn-clickup-primary !text-xs"
           >
-            Đi Tới GitHub Releases
+            Mở GitHub Releases
           </a>
         </div>
       </div>
 
       <!-- Main Release Showcase -->
-      <div
-        v-else-if="latestRelease"
-        v-motion
-        :initial="{ opacity: 0, y: 20 }"
-        :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, ease: [0.33, 1, 0.68, 1] } }"
-        class="space-y-6"
-      >
-        <!-- Hero Release Header Card -->
-        <div class="clickup-card p-6 sm:p-8">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#e8e8e8]">
+      <div v-else-if="latestRelease" class="space-y-8">
+        <!-- Release Overview Card -->
+        <div class="clickup-card p-6 sm:p-8 hover-lift">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-[#e8e8e8]">
             <div>
-              <div class="flex items-center gap-3">
-                <span class="text-xl font-bold text-[#090c1d] font-display">{{ latestRelease.name || latestRelease.tag_name }}</span>
-                <span class="text-xs px-2.5 py-0.5 rounded-full font-bold bg-[#f5f3ff] text-[#6647f0] border border-[#ddd6fe]">
+              <div class="flex flex-wrap items-center gap-3">
+                <span class="text-2xl font-extrabold text-[#090c1d] font-display">
+                  {{ latestRelease.name || latestRelease.tag_name }}
+                </span>
+                <span class="text-xs px-3 py-1 rounded-full font-bold bg-[#f5f3ff] text-[#6647f0] border border-[#ddd6fe]">
                   {{ latestRelease.tag_name }}
                 </span>
-                <span class="hidden sm:inline-flex text-xs px-2.5 py-0.5 rounded-full font-bold bg-[#ecfdf5] text-[#00c07a] border border-[#a7f3d0]">
-                  Bản Mới Nhất
+                <span class="text-xs px-3 py-1 rounded-full font-bold bg-[#ecfdf5] text-[#00c07a] border border-[#a7f3d0] flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-[#00c07a]"></span>
+                  Mới nhất
                 </span>
               </div>
-              <div class="text-xs text-[#838383] mt-1 font-medium">
-                Phát hành ngày {{ formatDate(latestRelease.published_at) }} · Hệ điều hành hỗ trợ: Windows 10/11 x64
-              </div>
+              <p class="text-xs text-[#838383] mt-2 font-medium">
+                Ngày phát hành: {{ formatDate(latestRelease.published_at) }} · Hệ điều hành: Windows 10/11 x64 · Giấy phép: MIT (Miễn phí)
+              </p>
             </div>
 
             <!-- Primary Recommended Download CTA -->
-            <div>
+            <div class="shrink-0">
               <a
-                v-if="recommendedAsset"
-                :href="recommendedAsset.browser_download_url"
+                v-if="recommendedSetupAsset"
+                :href="recommendedSetupAsset.browser_download_url"
                 target="_blank"
-                class="btn-clickup-primary w-full sm:w-auto"
+                class="btn-clickup-primary !py-3 !px-6 !text-sm flex items-center gap-2.5 shadow-md hover:shadow-lg"
               >
-                <i class="fa-solid fa-download text-xs" aria-hidden="true"></i>
-                Tải {{ recommendedAsset.name }} (Khuyên Dùng)
-              </a>
-              <a
-                v-else
-                :href="latestRelease.html_url"
-                target="_blank"
-                class="btn-clickup-primary w-full sm:w-auto"
-              >
-                Tải Bản Mới Nhất
+                <i class="fa-solid fa-download text-sm" aria-hidden="true"></i>
+                <span>Tải Bản Cài Đặt (Setup.exe)</span>
               </a>
             </div>
           </div>
 
-          <!-- All Available Asset Downloads (ClickUp Spec Sheet Table Style) -->
-          <div class="mt-6">
-            <div class="text-xs font-bold text-[#202020] uppercase tracking-wider mb-3">Tất cả tập tin cài đặt:</div>
-            <div class="divide-y divide-[#e8e8e8] border border-[#e8e8e8] rounded-xl overflow-hidden bg-white">
-              <div
-                v-for="asset in validAssets"
-                :key="asset.id"
-                class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs hover:bg-[#f8f9fa] transition-colors"
-              >
-                <div class="flex items-center gap-3.5 min-w-0">
-                  <div class="w-9 h-9 rounded-full bg-[#f8f9fa] border border-[#e8e8e8] flex items-center justify-center text-[#202020] shrink-0">
-                    <i :class="getAssetIcon(asset.name)" aria-hidden="true"></i>
+          <!-- Categorized Download Cards (Phân Cấp Rõ Ràng) -->
+          <div class="mt-8">
+            <h3 class="text-sm font-bold text-[#202020] uppercase tracking-wider mb-4 font-display">
+              Phân loại tập tin cài đặt:
+            </h3>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <!-- Category 1: Windows Setup (Auto-Update) -->
+              <div class="p-5 rounded-2xl border-2 border-[#ddd6fe] bg-[#f5f3ff]/40 flex flex-col justify-between hover-lift">
+                <div>
+                  <div class="flex items-center justify-between mb-3">
+                    <span class="px-2.5 py-0.5 text-xs font-bold rounded-full bg-[#ecfdf5] text-[#00c07a] border border-[#a7f3d0] flex items-center gap-1">
+                      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                      Khuyên Dùng Cho Máy Cá Nhân
+                    </span>
+                    <span class="text-xs font-bold text-[#6647f0]">TỰ CẬP NHẬT</span>
                   </div>
-                  <div class="min-w-0">
-                    <div class="flex items-center gap-2">
-                      <span class="font-bold text-[#202020] truncate text-sm font-mono">{{ asset.name }}</span>
-                      <span
-                        v-if="asset.name.toLowerCase().includes('setup')"
-                        class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-[#ecfdf5] text-[#00c07a] border border-[#a7f3d0]"
-                      >
-                        Tự động cập nhật
-                      </span>
-                      <span
-                        v-else
-                        class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-[#f8f9fa] text-[#646464] border border-[#e8e8e8]"
-                      >
-                        Portable
-                      </span>
-                    </div>
-                    <div class="text-[#838383] text-[11px] flex items-center gap-2 mt-1 font-mono">
-                      <span>{{ formatBytes(asset.size) }}</span>
-                      <span class="w-1 h-1 rounded-full bg-[#d4d4d4]"></span>
-                      <span>{{ asset.download_count?.toLocaleString('vi-VN') || 0 }} lượt tải</span>
+                  <h4 class="text-base font-bold text-[#090c1d] mb-1 font-display">
+                    Bản Cài Đặt Windows (Setup Installer)
+                  </h4>
+                  <p class="text-xs text-[#646464] leading-relaxed mb-4">
+                    Tự động tạo shortcut ngoài màn hình Desktop, tự động kiểm tra và nâng cấp lên phiên bản mới nhất khi có bản cập nhật từ nhóm phát triển.
+                  </p>
+
+                  <div v-if="recommendedSetupAsset" class="space-y-2 py-2">
+                    <div class="text-xs font-bold text-[#202020]">{{ recommendedSetupAsset.name }}</div>
+                    <div class="text-xs text-[#838383] flex items-center gap-3">
+                      <span>Dung lượng: {{ formatBytes(recommendedSetupAsset.size) }}</span>
+                      <span>·</span>
+                      <span>{{ recommendedSetupAsset.download_count?.toLocaleString('vi-VN') || 0 }} lượt tải</span>
                     </div>
                   </div>
                 </div>
 
-                <div class="flex items-center gap-2 shrink-0">
+                <div class="mt-4 pt-3 border-t border-[#ddd6fe]">
+                  <a
+                    v-if="recommendedSetupAsset"
+                    :href="recommendedSetupAsset.browser_download_url"
+                    target="_blank"
+                    class="btn-clickup-primary w-full text-center justify-center !py-2.5 !text-xs"
+                  >
+                    <i class="fa-brands fa-windows text-sm mr-1"></i>
+                    Tải Bản Tự Động Cập Nhật
+                  </a>
+                </div>
+              </div>
+
+              <!-- Category 2: Portable Edition (No Install) -->
+              <div class="p-5 rounded-2xl border border-[#e8e8e8] bg-[#f8f9fa] flex flex-col justify-between hover-lift">
+                <div>
+                  <div class="flex items-center justify-between mb-3">
+                    <span class="px-2.5 py-0.5 text-xs font-bold rounded-full bg-white text-[#646464] border border-[#e8e8e8]">
+                      Không Cần Cài Đặt
+                    </span>
+                    <span class="text-xs font-bold text-[#646464]">PORTABLE</span>
+                  </div>
+                  <h4 class="text-base font-bold text-[#090c1d] mb-1 font-display">
+                    Bản Chạy Ngay (Portable Edition)
+                  </h4>
+                  <p class="text-xs text-[#646464] leading-relaxed mb-4">
+                    Chỉ cần tải về, giải nén và mở lên dùng ngay mà không cần quyền Administrator. Hoàn hảo để chép vào USB mang đi thực hành tại phòng máy trường.
+                  </p>
+
+                  <div v-if="portableAsset" class="space-y-2 py-2">
+                    <div class="text-xs font-bold text-[#202020]">{{ portableAsset.name }}</div>
+                    <div class="text-xs text-[#838383] flex items-center gap-3">
+                      <span>Dung lượng: {{ formatBytes(portableAsset.size) }}</span>
+                      <span>·</span>
+                      <span>{{ portableAsset.download_count?.toLocaleString('vi-VN') || 0 }} lượt tải</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mt-4 pt-3 border-t border-[#e8e8e8]">
+                  <a
+                    v-if="portableAsset"
+                    :href="portableAsset.browser_download_url"
+                    target="_blank"
+                    class="btn-clickup-ghost w-full text-center justify-center !py-2.5 !text-xs"
+                  >
+                    <i class="fa-solid fa-box-archive text-sm mr-1"></i>
+                    Tải Bản Portable (.zip)
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Other Assets / Source Code Accordion -->
+            <div class="mt-6 pt-4 border-t border-[#e8e8e8]">
+              <div class="text-xs font-bold text-[#838383] uppercase tracking-wider mb-2">Tất cả tập tin bổ trợ &amp; mã nguồn:</div>
+              <div class="divide-y divide-[#e8e8e8] border border-[#e8e8e8] rounded-xl overflow-hidden bg-white text-xs">
+                <div
+                  v-for="asset in validAssets"
+                  :key="asset.id"
+                  class="p-3.5 flex items-center justify-between hover:bg-[#f8f9fa] transition-colors"
+                >
+                  <div class="flex items-center gap-3 min-w-0">
+                    <i :class="getAssetIcon(asset.name)" class="text-base text-[#6647f0] shrink-0" aria-hidden="true"></i>
+                    <div class="min-w-0">
+                      <div class="font-bold text-[#202020] truncate">{{ asset.name }}</div>
+                      <div class="text-[#838383] text-[11px] mt-0.5">
+                        {{ formatBytes(asset.size) }} · {{ asset.download_count?.toLocaleString('vi-VN') || 0 }} lượt tải
+                      </div>
+                    </div>
+                  </div>
                   <a
                     :href="asset.browser_download_url"
                     target="_blank"
-                    class="btn-clickup-ghost !py-1.5 !px-4 !text-xs font-semibold"
+                    class="btn-clickup-ghost !py-1 !px-3 !text-xs shrink-0"
                   >
-                    Tải Xuống
+                    Tải về
                   </a>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Collapsible Changelog -->
-          <div v-if="latestRelease.body" class="mt-6 pt-4 border-t border-[#e8e8e8]">
+          <!-- Markdown Rendered Changelog -->
+          <div v-if="latestRelease.body" class="mt-8 pt-6 border-t border-[#e8e8e8]">
             <button
               type="button"
-              class="text-xs font-semibold text-[#646464] hover:text-[#202020] flex items-center gap-2 focus:outline-none"
+              class="w-full text-left flex items-center justify-between p-3.5 rounded-xl bg-[#f8f9fa] hover:bg-[#e9ebf0] border border-[#e8e8e8] transition-colors focus:outline-none"
               @click="showChangelog = !showChangelog"
             >
-              <span>{{ showChangelog ? 'Thu gọn nhật ký cập nhật' : 'Xem nhật ký cập nhật (Release Notes)' }}</span>
+              <div class="flex items-center gap-2.5">
+                <i class="fa-solid fa-code-commit text-[#6647f0]"></i>
+                <span class="text-sm font-bold text-[#202020] font-display">
+                  Nhật Ký Cập Nhật (Release Notes)
+                </span>
+                <span class="text-xs text-[#838383]">
+                  {{ showChangelog ? 'Bấm để thu gọn' : 'Bấm để xem chi tiết bản vá & tính năng mới' }}
+                </span>
+              </div>
               <svg
-                class="w-3.5 h-3.5 transition-transform"
+                class="w-4 h-4 text-[#646464] transition-transform duration-200"
                 :class="{ 'rotate-180': showChangelog }"
                 fill="none"
                 stroke="currentColor"
@@ -161,40 +226,41 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
             </button>
+
+            <!-- Markdown Rendered Container -->
             <div
               v-show="showChangelog"
-              class="mt-3 p-4 bg-[#f8f9fa] rounded-xl border border-[#e8e8e8] text-xs text-[#202020] leading-relaxed whitespace-pre-line font-mono"
-            >
-              {{ latestRelease.body }}
-            </div>
+              class="mt-4 p-6 bg-[#f8f9fa] rounded-2xl border border-[#e8e8e8] text-sm leading-relaxed overflow-x-auto markdown-prose shadow-inner"
+              v-html="renderedMarkdownBody"
+            ></div>
           </div>
         </div>
 
-        <!-- Terms of Use & Liability Disclaimers -->
-        <div class="clickup-card p-6 sm:p-8 space-y-4">
-          <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#f8f9fa] text-[#646464] border border-[#e8e8e8] text-xs font-bold uppercase tracking-wider">
-            Pháp Lý &amp; Điều Khoản
+        <!-- Legal & Disclaimers Card -->
+        <div class="clickup-card p-6 sm:p-8 space-y-4 hover-lift">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f8f9fa] text-[#646464] border border-[#e8e8e8] text-xs font-bold uppercase tracking-wider">
+            Pháp Lý &amp; Điều Khoản Sử Dụng
           </div>
-          <h3 class="text-base font-bold text-[#090c1d] font-display">
-            Điều Khoản Sử Dụng &amp; Miễn Trừ Trách Nhiệm
+          <h3 class="text-lg font-bold text-[#090c1d] font-display">
+            Miễn Trừ Trách Nhiệm &amp; Quyền Riêng Tư
           </h3>
-          <div class="space-y-3 text-xs text-[#646464] leading-relaxed">
+          <div class="space-y-3.5 text-xs text-[#646464] leading-relaxed">
             <div>
-              <strong class="text-[#202020]">1. Quyền Riêng Tư &amp; Bảo Mật Dữ Liệu:</strong>
+              <strong class="text-[#202020]">1. Bảo mật thông tin MyCTU tuyệt đối:</strong>
               <p class="mt-1">
-                Mọi thao tác đăng nhập và đồng bộ thời khóa biểu chỉ diễn ra cục bộ trên máy tính của bạn và giao tiếp thẳng với máy chủ MyCTU. Nhóm phát triển cam kết tuyệt đối không thu thập, không lưu trữ và không truyền tải thông tin đăng nhập của bạn đến bất kỳ bên thứ ba nào. Mật khẩu tự động bị tiêu hủy khỏi bộ nhớ đệm ngay khi kết thúc phiên.
+                Toàn bộ thao tác kết nối được thực hiện trực tiếp giữa máy tính cá nhân của bạn và cổng thông tin Đại học Cần Thơ. Nhóm phát triển cam kết không có máy chủ trung gian thu thập tài khoản, mật khẩu tự động bị tiêu hủy khỏi bộ nhớ ngay khi đóng ứng dụng.
               </p>
             </div>
             <div>
-              <strong class="text-[#202020]">2. Miễn Trừ Trách Nhiệm (Disclaimer):</strong>
+              <strong class="text-[#202020]">2. Tuyên bố miễn trừ trách nhiệm (Disclaimer):</strong>
               <p class="mt-1">
-                Ứng dụng phát hành miễn phí theo Giấy phép mã nguồn mở MIT "AS IS" (Có sao dùng vậy). Nhóm phát triển không chịu trách nhiệm đối với các sự cố bất khả kháng như nghẽn mạng MyCTU vào giờ cao điểm, kẹt mã Captcha hoặc hệ thống cổng thông tin trường thay đổi đột ngột.
+                Phần mềm được phát hành phi thương mại theo Giấy phép mã nguồn mở MIT "AS IS". Nhóm phát triển không chịu trách nhiệm trong các tình huống nghẽn mạng MyCTU vào giờ cao điểm, kẹt Captcha hoặc cổng trường thay đổi kết cấu dữ liệu đột ngột.
               </p>
             </div>
             <div>
-              <strong class="text-[#202020]">3. Mục Đích &amp; Lưu Ý Vận Hành:</strong>
+              <strong class="text-[#202020]">3. Tinh thần sử dụng có trách nhiệm:</strong>
               <p class="mt-1">
-                Ứng dụng mở một trình duyệt ảo ngầm để lấy dữ liệu. Vui lòng không tắt cửa sổ ngầm này trong quá trình đồng bộ và tự giải Captcha nếu hệ thống MyCTU yêu cầu. Tuyệt đối nghiêm cấm việc dùng ứng dụng để gửi request liên tục làm quá tải máy chủ trường.
+                Nghiêm cấm mọi hành vi chỉnh sửa mã nguồn để gửi spam request làm gián đoạn máy chủ trường. Ứng dụng hỗ trợ xếp lịch học tối ưu, không tự động can thiệp vào hành vi bấm nút đăng ký cuối cùng của sinh viên.
               </p>
             </div>
           </div>
@@ -206,6 +272,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
+import { marked } from 'marked';
 import { detectDevice, OS, ARCH } from '../../js/detector.js';
 
 const loading = ref(true);
@@ -233,13 +300,32 @@ const validAssets = computed(() => {
   return latestRelease.value.assets.filter((a) => !isIgnoredAsset(a.name));
 });
 
-const recommendedAsset = computed(() => {
+// Setup Installer (Auto update)
+const recommendedSetupAsset = computed(() => {
   if (!validAssets.value.length) return null;
-  const setup = validAssets.value.find((a) => {
+  return validAssets.value.find((a) => {
     const n = a.name.toLowerCase();
     return n.includes('setup') && n.endsWith('.exe') && !n.includes('arm64');
-  });
-  return setup || validAssets.value[0];
+  }) || validAssets.value.find((a) => a.name.endsWith('.exe'));
+});
+
+// Portable Edition (.zip or portable .exe)
+const portableAsset = computed(() => {
+  if (!validAssets.value.length) return null;
+  return validAssets.value.find((a) => {
+    const n = a.name.toLowerCase();
+    return (n.endsWith('.zip') || n.includes('portable')) && !n.includes('setup');
+  }) || validAssets.value[1] || validAssets.value[0];
+});
+
+// Parse release notes markdown with marked
+const renderedMarkdownBody = computed(() => {
+  if (!latestRelease.value?.body) return '';
+  try {
+    return marked.parse(latestRelease.value.body);
+  } catch {
+    return latestRelease.value.body;
+  }
 });
 
 function getAssetIcon(filename) {

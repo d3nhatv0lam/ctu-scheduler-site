@@ -30,7 +30,6 @@ export default {
       fontFamily: {
         display: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'],
-        mono: ['"Sometype Mono"', 'ui-monospace', 'monospace'],
       },
       borderRadius: {
         pill: '9999px',

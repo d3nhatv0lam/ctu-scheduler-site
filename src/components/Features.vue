@@ -25,7 +25,7 @@
           v-motion
           :initial="{ opacity: 0, y: 20 }"
           :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 50, ease: [0.33, 1, 0.68, 1] } }"
-          class="clickup-card p-6 flex flex-col justify-between"
+          class="clickup-card p-6 flex flex-col justify-between hover-lift"
         >
           <div>
             <div class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#f8f9fa] text-[#646464] border border-[#e8e8e8] text-[11px] font-semibold mb-3">
@@ -43,7 +43,7 @@
           v-motion
           :initial="{ opacity: 0, y: 20 }"
           :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 100, ease: [0.33, 1, 0.68, 1] } }"
-          class="clickup-card p-6 flex flex-col justify-between"
+          class="clickup-card p-6 flex flex-col justify-between hover-lift"
         >
           <div>
             <div class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#f8f9fa] text-[#646464] border border-[#e8e8e8] text-[11px] font-semibold mb-3">
@@ -61,7 +61,7 @@
           v-motion
           :initial="{ opacity: 0, y: 20 }"
           :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 150, ease: [0.33, 1, 0.68, 1] } }"
-          class="clickup-card p-6 flex flex-col justify-between"
+          class="clickup-card p-6 flex flex-col justify-between hover-lift"
         >
           <div>
             <div class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#f8f9fa] text-[#646464] border border-[#e8e8e8] text-[11px] font-semibold mb-3">
@@ -79,7 +79,7 @@
           v-motion
           :initial="{ opacity: 0, y: 20 }"
           :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 200, ease: [0.33, 1, 0.68, 1] } }"
-          class="clickup-card p-6 flex flex-col justify-between"
+          class="clickup-card p-6 flex flex-col justify-between hover-lift"
         >
           <div>
             <div class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#f8f9fa] text-[#646464] border border-[#e8e8e8] text-[11px] font-semibold mb-3">
@@ -97,7 +97,7 @@
           v-motion
           :initial="{ opacity: 0, y: 20 }"
           :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 250, ease: [0.33, 1, 0.68, 1] } }"
-          class="clickup-card p-6 md:col-span-2 flex flex-col justify-between border-l-4 border-l-[#6647f0]"
+          class="clickup-card p-6 md:col-span-2 flex flex-col justify-between border-l-4 border-l-[#6647f0] hover-lift"
         >
           <div>
             <div class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#f5f3ff] text-[#6647f0] border border-[#ddd6fe] text-[11px] font-semibold mb-3">

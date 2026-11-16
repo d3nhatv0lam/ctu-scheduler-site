@@ -20,6 +20,7 @@
   "dependencies": {
     "@vueuse/core": "^15.0.0",
     "@vueuse/motion": "^3.0.3",
+    "marked": "^18.2.0",
     "vue": "^3.5.45"
   }
 }

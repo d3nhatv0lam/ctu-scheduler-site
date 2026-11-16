@@ -64,7 +64,7 @@ typography:
     fontSize: "0.75rem"
     fontWeight: 500
   micro:
-    fontFamily: "Sometype Mono, monospace"
+    fontFamily: "Inter, system-ui, sans-serif"
     fontSize: "0.6875rem"
     fontWeight: 600
 rounded:
@@ -109,7 +109,7 @@ components:
 
 CTU Scheduler — ClickUp Edition is built on the philosophy of a **"hardworking dashboard on white marble"**:
 - **Canvas:** Clean Signal White (`#ffffff`) canvas layered with soft neutral section bands (`#e9ebf0` Plaster and `#f8f9fa` Mist).
-- **Typography:** Bold, energetic `Plus Jakarta Sans` headings with compressed tracking (`-0.04em`), paired with readable, ergonomic `Inter` body copy and `Sometype Mono` for technical metrics.
+- **Typography:** Bold, energetic `Plus Jakarta Sans` headings with compressed tracking (`-0.04em`), paired with readable, ergonomic `Inter` body copy and technical metrics (strictly no generic monospace).
 - **Relentless 9999px Pill:** Buttons, status badges, filter chips, navigation items, and tags all share the signature 9999px full-radius curve.
 - **Color Surgery:** Grayscale dominance with focused chromatic pops — Brand Violet (`#6647f0`) for brand highlights and badges, Signal Blue (`#0091ff`) for verified interactive links and focus states, Mint/Emerald for status, and a rotating Rainbow Conic gradient border around primary hero triggers.
 - **Motion:** `@vueuse/motion` physics with smooth scroll-in animations (`0.45s cubic-bezier(0.33, 1, 0.68, 1)`), providing tactile, living feedback as users scroll through the SPA.
@@ -139,4 +139,4 @@ CTU Scheduler — ClickUp Edition is built on the philosophy of a **"hardworking
 - **Body (`1rem` / `16px`):** Inter 400/500, line-height 1.6.
 - **Small Body / UI (`0.875rem` / `14px`):** Inter 500/600, line-height 1.5.
 - **Category Badge (`0.8125rem` / `13px`):** Plus Jakarta Sans 700, letter-spacing 0.04em, uppercase.
-- **Micro / Mono (`0.6875rem` / `11px`):** Sometype Mono 600, for version pills, checksums, and timetable slots.
+- **Micro / Technical Tag (`0.6875rem` / `11px`):** Inter 600, for version pills, checksums, and timetable slots.

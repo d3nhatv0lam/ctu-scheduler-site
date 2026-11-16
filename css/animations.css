@@ -13,16 +13,72 @@
   animation: rotate-conic 4s linear infinite;
 }
 
-/* Subtle reveal on scroll */
-.reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.45s cubic-bezier(0.33, 1, 0.68, 1), transform 0.45s cubic-bezier(0.33, 1, 0.68, 1);
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
-.reveal.active {
-  opacity: 1;
-  transform: translateY(0);
+.animate-float {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+@keyframes aurora-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-aurora {
+  background-size: 200% 200%;
+  animation: aurora-flow 8s ease infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Rich Hover Micro-Interactions */
+.hover-lift {
+  transition: transform 0.25s cubic-bezier(0.33, 1, 0.68, 1), box-shadow 0.25s cubic-bezier(0.33, 1, 0.68, 1), border-color 0.2s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.1);
+}
+
+.hover-glow-violet {
+  transition: all 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.hover-glow-violet:hover {
+  box-shadow: 0 0 24px rgba(102, 71, 240, 0.25);
+  border-color: #6647f0;
 }
 
 /* Page View Transition for SPA */
@@ -52,12 +108,10 @@
     scroll-behavior: auto !important;
   }
 
-  .reveal {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-
-  .animate-conic-spin {
+  .animate-float,
+  .animate-conic-spin,
+  .animate-aurora,
+  .animate-pulse-ring {
     animation: none !important;
   }
 }
