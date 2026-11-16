@@ -4,45 +4,69 @@ body {
   overflow-x: hidden;
   scroll-behavior: smooth;
   font-family: var(--font-inter);
+  font-size: 1rem;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Headings: Plus Jakarta Sans display typography */
-h1 {
+/* Headings: Plus Jakarta Sans display typography with balanced wrap */
+h1, h2, h3, h4, h5, h6, .font-display {
   font-family: var(--font-plus-jakarta-sans);
-  font-size: 3.75rem; /* 60px */
-  line-height: 1.1;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  color: var(--color-ink-black);
+  text-wrap: balance;
 }
 
-h2 {
-  font-family: var(--font-plus-jakarta-sans);
-  font-size: 2.5rem; /* 40px */
-  line-height: 1.2;
-  font-weight: 700;
+h1 {
+  font-size: 3.75rem; /* 60px */
+  line-height: 1.08;
+  font-weight: 800;
   letter-spacing: -0.035em;
   color: var(--color-ink-black);
 }
 
-h3 {
-  font-family: var(--font-plus-jakarta-sans);
-  font-size: 1.75rem; /* 28px */
-  line-height: 1.25;
+h2 {
+  font-size: 2.5rem; /* 40px */
+  line-height: 1.15;
   font-weight: 700;
   letter-spacing: -0.03em;
   color: var(--color-ink-black);
 }
 
+h3 {
+  font-size: 1.75rem; /* 28px */
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--color-ink-black);
+}
+
 h4 {
-  font-family: var(--font-plus-jakarta-sans);
   font-size: 1.125rem; /* 18px */
   line-height: 1.4;
-  font-weight: 650;
-  letter-spacing: -0.02em;
+  font-weight: 600;
+  letter-spacing: -0.015em;
   color: var(--color-ink-black);
+}
+
+/* Paragraphs & Prose: Pretty wrap to prevent orphan words */
+p, .prose p {
+  text-wrap: pretty;
+}
+
+/* Tabular figures for numerical alignment (timetable, metrics, dates, counts) */
+.tabular-nums,
+table,
+time,
+.slot-course {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Optical compensation for light text on dark surfaces (prevent halation & clipping) */
+.dark-bento-section p,
+.dark-bento-card p,
+.aurora-cta-banner p {
+  letter-spacing: 0.01em;
+  line-height: 1.65;
 }
 
 /* Custom scrollbar in ClickUp light theme */

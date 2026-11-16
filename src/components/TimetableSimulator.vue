@@ -38,7 +38,7 @@
     </div>
 
     <!-- Calendar View -->
-    <div v-if="activeView === 'calendar'" class="overflow-x-auto rounded-xl border border-[#e8e8e8] bg-[#f8f9fa]/40">
+    <div v-if="activeView === 'calendar'" class="overflow-x-auto rounded-xl border border-[#e8e8e8] bg-[#f8f9fa]/40 tabular-nums">
       <table class="w-full text-left border-collapse text-xs">
         <thead>
           <tr class="border-b border-[#e8e8e8] bg-[#e9ebf0]/50 text-[#646464] font-bold">
@@ -63,7 +63,7 @@
               >
                 <div class="flex items-center justify-between">
                   <span class="font-extrabold text-[#202020]">CT176</span>
-                  <span class="text-[10px] font-bold px-1.5 py-0.2 bg-[#f5f3ff] text-[#6647f0] rounded">3TC</span>
+                  <span class="text-[10px] font-bold px-1.5 py-0.2 bg-[#f0f7ff] text-[#00529c] rounded">3TC</span>
                 </div>
                 <div class="text-[11px] text-[#646464] mt-0.5">Lập trình HĐT</div>
                 <div class="text-[10px] text-[#838383] mt-1">Phòng 102/DI · Khu II</div>
@@ -77,7 +77,7 @@
               >
                 <div class="flex items-center justify-between">
                   <span class="font-extrabold text-[#202020]">CT103</span>
-                  <span class="text-[10px] font-bold px-1.5 py-0.2 bg-[#f5f3ff] text-[#6647f0] rounded">4TC</span>
+                  <span class="text-[10px] font-bold px-1.5 py-0.2 bg-[#f0f7ff] text-[#00529c] rounded">4TC</span>
                 </div>
                 <div class="text-[11px] text-[#646464] mt-0.5">Cấu trúc Dữ Liệu</div>
                 <div class="text-[10px] text-[#838383] mt-1">Phòng 204/DI · Khu II</div>
@@ -138,14 +138,14 @@
     </div>
 
     <!-- List View -->
-    <div v-else class="rounded-xl border border-[#e8e8e8] overflow-hidden divide-y divide-[#e8e8e8] bg-white text-xs">
+    <div v-else class="rounded-xl border border-[#e8e8e8] overflow-hidden divide-y divide-[#e8e8e8] bg-white text-xs tabular-nums">
       <div
         v-for="course in courseList"
         :key="course.code"
         class="p-3.5 flex items-center justify-between hover:bg-[#f8f9fa] transition-colors"
       >
         <div class="flex items-center gap-3">
-          <span class="w-8 h-8 rounded-full bg-[#f5f3ff] text-[#6647f0] font-extrabold flex items-center justify-center text-xs">
+          <span class="w-8 h-8 rounded-full bg-[#f0f7ff] text-[#00529c] font-extrabold flex items-center justify-center text-xs">
             {{ course.credits }}
           </span>
           <div>

@@ -362,6 +362,7 @@
   color: var(--color-ink-black);
   margin-top: 1.25rem;
   margin-bottom: 0.5rem;
+  text-wrap: balance;
 }
 
 .markdown-prose h2 {
@@ -395,6 +396,7 @@
 
 .markdown-prose p {
   margin-bottom: 0.75rem;
+  text-wrap: pretty;
 }
 
 .markdown-prose code {

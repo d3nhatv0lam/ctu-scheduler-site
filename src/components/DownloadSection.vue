@@ -105,7 +105,7 @@
 
                   <div v-if="recommendedSetupAsset" class="space-y-2 py-2">
                     <div class="text-xs font-bold text-[#18181b]">{{ recommendedSetupAsset.name }}</div>
-                    <div class="text-xs text-[#52525b] flex items-center gap-3">
+                    <div class="text-xs text-[#52525b] flex items-center gap-3 tabular-nums">
                       <span>Dung lượng: {{ formatBytes(recommendedSetupAsset.size) }}</span>
                       <span>·</span>
                       <span>{{ recommendedSetupAsset.download_count?.toLocaleString('vi-VN') || 0 }} lượt tải</span>
@@ -144,7 +144,7 @@
 
                   <div v-if="portableAsset" class="space-y-2 py-2">
                     <div class="text-xs font-bold text-[#18181b]">{{ portableAsset.name }}</div>
-                    <div class="text-xs text-[#52525b] flex items-center gap-3">
+                    <div class="text-xs text-[#52525b] flex items-center gap-3 tabular-nums">
                       <span>Dung lượng: {{ formatBytes(portableAsset.size) }}</span>
                       <span>·</span>
                       <span>{{ portableAsset.download_count?.toLocaleString('vi-VN') || 0 }} lượt tải</span>
@@ -194,7 +194,7 @@
                     <i :class="getAssetIcon(asset.name)" class="text-base text-[#00529c] shrink-0" aria-hidden="true"></i>
                     <div class="min-w-0">
                       <div class="font-bold text-[#18181b] truncate">{{ asset.name }}</div>
-                      <div class="text-[#52525b] text-[11px] mt-0.5">
+                      <div class="text-[#52525b] text-[11px] mt-0.5 tabular-nums">
                         {{ formatBytes(asset.size) }} · {{ asset.download_count?.toLocaleString('vi-VN') || 0 }} lượt tải
                       </div>
                     </div>
@@ -249,10 +249,7 @@
 
         <!-- Legal & Disclaimers Card -->
         <div class="clickup-card p-6 sm:p-8 space-y-4 hover-lift">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f8f9fa] text-[#52525b] border border-[#e4e4e7] text-xs font-bold uppercase tracking-wider">
-            Pháp Lý &amp; Điều Khoản Sử Dụng
-          </div>
-          <h3 class="text-lg font-bold text-[#090c1d] font-display">
+          <h3 class="text-xl font-bold text-[#090c1d] font-display">
             Miễn Trừ Trách Nhiệm &amp; Quyền Riêng Tư
           </h3>
           <div class="space-y-3.5 text-xs text-[#52525b] leading-relaxed">
