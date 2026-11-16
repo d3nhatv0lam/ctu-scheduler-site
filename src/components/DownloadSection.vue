@@ -1,553 +1,376 @@
 <template>
-  <section id="download" class="py-20 md:py-28 border-b border-[#e4e4e7] bg-white">
+  <section id="download" class="py-20 md:py-24 border-b border-[#e4e4e7] bg-white">
     <div class="container mx-auto max-w-clickup px-4 sm:px-6">
-      <!-- Section Header -->
+      <!-- Section Header (Calm, Measured) -->
       <div
         v-motion
-        :initial="{ opacity: 0, y: 16 }"
-        :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, ease: [0.33, 1, 0.68, 1] } }"
-        class="max-w-3xl mx-auto text-center mb-12"
+        :initial="{ opacity: 0, y: 12 }"
+        :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 400, ease: [0.33, 1, 0.68, 1] } }"
+        class="max-w-2xl mx-auto text-center mb-10"
       >
-        <h2 class="text-3xl sm:text-5xl font-extrabold tracking-[-0.035em] text-[#090c1d] mb-4 font-display">
+        <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-[#090c1d] mb-3 font-display">
           Tải phần mềm CTU Scheduler
         </h2>
-        <p class="text-[#52525b] text-base sm:text-lg leading-relaxed">
-          Lựa chọn phiên bản phù hợp với thiết bị của bạn. Khám phá sự khác biệt giữa Bản Cài Đặt tự động cập nhật và Bản Portable chạy ngay không cần Admin.
+        <p class="text-[#52525b] text-base leading-relaxed">
+          Phần mềm mã nguồn mở phục vụ sinh viên Đại học Cần Thơ. Lựa chọn hệ điều hành và gói cài đặt phù hợp với thiết bị của bạn.
         </p>
+        <div class="mt-4 flex items-center justify-center gap-2">
+          <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#f0f7ff] text-[#00529c] border border-[#bae0fd] text-xs font-semibold tabular-nums">
+            <i class="fa-solid fa-download text-[11px]" aria-hidden="true"></i>
+            <span>{{ totalDownloads.toLocaleString('vi-VN') }} lượt tải về</span>
+          </span>
+        </div>
       </div>
 
-      <!-- OS Selection & Device Detection Bar -->
-      <div class="max-w-3xl mx-auto mb-10">
-        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 p-2 bg-[#f8f9fa] rounded-2xl border border-[#e4e4e7]">
-          <!-- OS Filter Tabs -->
-          <div class="flex items-center gap-1.5 w-full sm:w-auto">
-            <button
-              type="button"
-              class="flex-1 sm:flex-initial px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2"
-              :class="activeOsTab === 'windows' ? 'bg-[#00529c] text-white shadow-sm' : 'text-[#52525b] hover:text-[#18181b] hover:bg-white/80'"
-              @click="activeOsTab = 'windows'"
-            >
-              <i class="fa-brands fa-windows text-base" aria-hidden="true"></i>
-              <span>Windows</span>
-              <span class="text-[10px] px-1.5 py-0.5 rounded-full" :class="activeOsTab === 'windows' ? 'bg-white/20 text-white' : 'bg-[#e4e4e7] text-[#52525b]'">Chính thức</span>
-            </button>
+      <!-- OS Switcher (Clean, Quiet Segmented Control) -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 max-w-3xl mx-auto mb-8">
+        <div class="inline-flex p-1 bg-[#f4f4f5] rounded-full border border-[#e4e4e7] self-center sm:self-auto">
+          <button
+            type="button"
+            class="px-4 py-1.5 rounded-full text-xs font-semibold transition-colors duration-150 flex items-center gap-2"
+            :class="activeOsTab === 'windows' ? 'bg-white text-[#18181b] shadow-2xs font-bold' : 'text-[#71717a] hover:text-[#18181b]'"
+            @click="activeOsTab = 'windows'"
+          >
+            <i class="fa-brands fa-windows text-sm" aria-hidden="true"></i>
+            <span>Windows</span>
+          </button>
+          <button
+            type="button"
+            class="px-4 py-1.5 rounded-full text-xs font-semibold transition-colors duration-150 flex items-center gap-2"
+            :class="activeOsTab === 'macos' ? 'bg-white text-[#18181b] shadow-2xs font-bold' : 'text-[#71717a] hover:text-[#18181b]'"
+            @click="activeOsTab = 'macos'"
+          >
+            <i class="fa-brands fa-apple text-sm" aria-hidden="true"></i>
+            <span>macOS</span>
+          </button>
+          <button
+            type="button"
+            class="px-4 py-1.5 rounded-full text-xs font-semibold transition-colors duration-150 flex items-center gap-2"
+            :class="activeOsTab === 'linux' ? 'bg-white text-[#18181b] shadow-2xs font-bold' : 'text-[#71717a] hover:text-[#18181b]'"
+            @click="activeOsTab = 'linux'"
+          >
+            <i class="fa-brands fa-linux text-sm" aria-hidden="true"></i>
+            <span>Linux</span>
+          </button>
+        </div>
 
-            <button
-              type="button"
-              class="flex-1 sm:flex-initial px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2"
-              :class="activeOsTab === 'macos' ? 'bg-[#18181b] text-white shadow-sm' : 'text-[#52525b] hover:text-[#18181b] hover:bg-white/80'"
-              @click="activeOsTab = 'macos'"
-            >
-              <i class="fa-brands fa-apple text-base" aria-hidden="true"></i>
-              <span>macOS</span>
-              <span class="text-[10px] px-1.5 py-0.5 rounded-full" :class="activeOsTab === 'macos' ? 'bg-white/20 text-white' : 'bg-[#e4e4e7] text-[#52525b]'">Thử nghiệm</span>
-            </button>
-
-            <button
-              type="button"
-              class="flex-1 sm:flex-initial px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center justify-center gap-2"
-              :class="activeOsTab === 'linux' ? 'bg-[#18181b] text-white shadow-sm' : 'text-[#52525b] hover:text-[#18181b] hover:bg-white/80'"
-              @click="activeOsTab = 'linux'"
-            >
-              <i class="fa-brands fa-linux text-base" aria-hidden="true"></i>
-              <span>Linux</span>
-              <span class="text-[10px] px-1.5 py-0.5 rounded-full" :class="activeOsTab === 'linux' ? 'bg-white/20 text-white' : 'bg-[#e4e4e7] text-[#52525b]'">Mã nguồn</span>
-            </button>
-          </div>
-
-          <!-- Detected Device Context Pill -->
-          <div class="text-xs text-[#52525b] px-3 py-1 bg-white rounded-lg border border-[#e4e4e7] flex items-center gap-2 shadow-2xs self-stretch sm:self-auto justify-center">
-            <span class="w-2 h-2 rounded-full bg-[#00c07a]"></span>
-            <span>Thiết bị nhận diện: <strong class="text-[#18181b]">{{ detectedDeviceLabel }}</strong></span>
-          </div>
+        <!-- Detected Device Context (Subtle text) -->
+        <div class="text-xs text-[#71717a] flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#00529c]"></span>
+          <span>Thiết bị: <strong class="text-[#18181b] font-medium">{{ detectedDeviceLabel }}</strong></span>
         </div>
       </div>
 
       <!-- Loading State -->
-      <div v-if="loading" class="clickup-card text-center py-16">
-        <div class="text-sm font-bold text-[#52525b] flex items-center justify-center gap-3">
-          <span class="w-3 h-3 rounded-full bg-[#00529c] animate-ping"></span>
-          Đang kết nối GitHub Releases để nạp danh sách tập tin mới nhất...
+      <div v-if="loading" class="text-center py-12">
+        <div class="text-xs font-semibold text-[#71717a] flex items-center justify-center gap-2.5">
+          <span class="w-2 h-2 rounded-full bg-[#00529c] animate-pulse"></span>
+          Đang nạp thông tin phát hành từ GitHub...
         </div>
       </div>
 
-      <!-- Main Release Showcase -->
-      <div v-else class="space-y-8">
-        <!-- Release Overview Card -->
-        <div class="clickup-card p-6 sm:p-8 hover-lift">
-          <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-[#e4e4e7]">
-            <div>
-              <div class="flex flex-wrap items-center gap-3">
-                <span class="text-2xl font-extrabold text-[#090c1d] font-display">
-                  {{ currentRelease.name || currentRelease.tag_name }}
-                </span>
-                <span class="text-xs px-3 py-1 rounded-full font-bold bg-[#f0f7ff] text-[#00529c] border border-[#bae0fd]">
-                  {{ currentRelease.tag_name }}
-                </span>
-                <span class="text-xs px-3 py-1 rounded-full font-bold bg-[#ecfdf5] text-[#00c07a] border border-[#a7f3d0] flex items-center gap-1.5">
-                  <span class="w-1.5 h-1.5 rounded-full bg-[#00c07a]"></span>
-                  Mới nhất
-                </span>
-              </div>
-              <p class="text-xs text-[#52525b] mt-2 font-medium">
-                Ngày phát hành: {{ formatDate(currentRelease.published_at) }} · Giấy phép: MIT (Mã nguồn mở 100%)
-              </p>
-            </div>
-
-            <!-- Quick Jump / Source Button -->
-            <div class="shrink-0 flex items-center gap-3">
-              <a
-                href="https://github.com/d3nhatv0lam/CTU-Scheduler/releases"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="btn-clickup-ghost !py-2.5 !px-4 !text-xs"
-              >
-                <i class="fa-brands fa-github text-sm mr-1"></i>
-                <span>Xem Trên GitHub Releases</span>
-              </a>
-            </div>
-          </div>
-
-          <!-- ========================================== -->
-          <!-- TAB 1: WINDOWS (Cốt lõi chính thức)         -->
-          <!-- ========================================== -->
-          <div v-if="activeOsTab === 'windows'" class="mt-8 space-y-8">
-            <div>
-              <h3 class="text-sm font-bold text-[#18181b] uppercase tracking-wider mb-2 font-display">
-                Phân loại gói cài đặt Windows:
-              </h3>
-              <p class="text-xs text-[#52525b] mb-6">
-                Chọn gói phần mềm phù hợp với hoàn cảnh sử dụng của bạn:
-              </p>
-
-              <!-- Setup Installer vs Portable Side-by-Side Comparison -->
-              <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
-                <!-- EDITION 1: Setup Installer -->
-                <div class="p-6 rounded-2xl border-2 border-[#bae0fd] bg-[#f0f7ff]/40 flex flex-col justify-between hover-lift relative overflow-hidden">
-                  <div class="absolute top-0 right-0 px-3.5 py-1 rounded-bl-xl bg-[#00529c] text-white text-[11px] font-extrabold tracking-wide uppercase">
-                    Khuyên Dùng
+      <!-- Main Showcase Container -->
+      <div v-else class="space-y-6 max-w-4xl mx-auto">
+        <!-- ========================================== -->
+        <!-- TAB 1: WINDOWS (Cốt lõi chính thức)         -->
+        <!-- ========================================== -->
+        <div v-if="activeOsTab === 'windows'" class="space-y-6">
+          <!-- Setup vs Portable 2-Column Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch">
+            <!-- EDITION 1: Setup Installer (Khuyên dùng cá nhân) -->
+            <div class="p-6 rounded-2xl border border-[#e4e4e7] bg-white flex flex-col justify-between space-y-5">
+              <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2.5">
+                    <span class="w-7 h-7 rounded-lg bg-[#f0f7ff] text-[#00529c] flex items-center justify-center text-xs">
+                      <i class="fa-solid fa-cloud-arrow-down" aria-hidden="true"></i>
+                    </span>
+                    <h3 class="text-base font-bold text-[#18181b] font-display">
+                      Bản Cài Đặt (Setup)
+                    </h3>
                   </div>
-
-                  <div>
-                    <div class="flex items-center gap-2 mb-3">
-                      <span class="w-8 h-8 rounded-full bg-[#00529c] text-white flex items-center justify-center text-sm shadow-sm">
-                        <i class="fa-solid fa-cloud-arrow-down"></i>
-                      </span>
-                      <div>
-                        <div class="text-[11px] font-extrabold text-[#00529c] uppercase tracking-wider">Bản Cài Đặt Windows</div>
-                        <h4 class="text-lg font-extrabold text-[#090c1d] font-display">Setup Installer (.exe)</h4>
-                      </div>
-                    </div>
-
-                    <p class="text-xs text-[#52525b] leading-relaxed mb-4">
-                      Dành riêng cho <strong>Laptop / Máy tính cá nhân</strong> của bạn. Tự động kiểm tra và nâng cấp phiên bản mới mỗi khi nhóm phát triển sửa đổi thuật toán MyCTU.
-                    </p>
-
-                    <!-- Feature Checkmarks -->
-                    <div class="space-y-2 mb-5 text-xs text-[#18181b]">
-                      <div class="flex items-center gap-2">
-                        <i class="fa-solid fa-circle-check text-[#00c07a]"></i>
-                        <span><strong>Tự động cập nhật:</strong> Luôn chạy bản mới nhất, không cần tải lại thủ công.</span>
-                      </div>
-                      <div class="flex items-center gap-2">
-                        <i class="fa-solid fa-circle-check text-[#00c07a]"></i>
-                        <span><strong>Lối tắt tiện lợi:</strong> Tự động ghim ngoài Desktop & thanh Start Menu.</span>
-                      </div>
-                      <div class="flex items-center gap-2">
-                        <i class="fa-solid fa-circle-check text-[#00c07a]"></i>
-                        <span><strong>Lưu cấu hình:</strong> Giữ nguyên danh sách môn học qua các kỳ nâng cấp.</span>
-                      </div>
-                    </div>
-
-                    <!-- Asset Metadata & Primary CTA -->
-                    <div class="p-3 rounded-xl bg-white border border-[#bae0fd] space-y-2 mb-4">
-                      <div class="flex items-center justify-between text-xs">
-                        <span class="font-bold text-[#18181b] truncate">{{ recommendedSetupAsset?.name || 'CTU-Scheduler-Setup.exe' }}</span>
-                        <span class="text-[#00529c] font-bold shrink-0">Tự cập nhật</span>
-                      </div>
-                      <div class="text-[11px] text-[#52525b] flex items-center gap-3 tabular-nums">
-                        <span>Dung lượng: {{ formatBytes(recommendedSetupAsset?.size || 78500000) }}</span>
-                        <span>·</span>
-                        <span>{{ (recommendedSetupAsset?.download_count || 1200).toLocaleString('vi-VN') }} lượt tải</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <a
-                      :href="recommendedSetupAsset?.browser_download_url || 'https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest'"
-                      target="_blank"
-                      class="btn-clickup-primary w-full text-center justify-center !py-3 !text-xs shadow-md hover:shadow-lg"
-                    >
-                      <i class="fa-brands fa-windows text-base mr-1.5"></i>
-                      <span>Tải Bản Cài Đặt (Setup.exe)</span>
-                    </a>
-
-                    <!-- 3-Step First-Run Onboarding Micro-guide -->
-                    <div class="mt-4 pt-3 border-t border-[#bae0fd]/80 text-[11px] text-[#52525b] space-y-1.5">
-                      <div class="font-bold text-[#00529c] flex items-center gap-1.5">
-                        <i class="fa-solid fa-bolt"></i>
-                        <span>3 bước bắt đầu nhanh:</span>
-                      </div>
-                      <div class="flex items-start gap-1.5">
-                        <span class="font-bold text-[#00529c]">1.</span>
-                        <span>Bấm nút tải file cài đặt <code>Setup.exe</code> về máy.</span>
-                      </div>
-                      <div class="flex items-start gap-1.5">
-                        <span class="font-bold text-[#00529c]">2.</span>
-                        <span>Mở file vừa tải, ứng dụng sẽ tự động hoàn tất cài đặt trong 5 giây.</span>
-                      </div>
-                      <div class="flex items-start gap-1.5">
-                        <span class="font-bold text-[#00529c]">3.</span>
-                        <span>Nhập tài khoản MyCTU và bắt đầu xếp thời khóa biểu.</span>
-                      </div>
-                    </div>
-                  </div>
+                  <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-[#f0f7ff] text-[#00529c] border border-[#bae0fd]">
+                    Tự cập nhật
+                  </span>
                 </div>
 
-                <!-- EDITION 2: Portable Edition -->
-                <div class="p-6 rounded-2xl border border-[#e4e4e7] bg-[#f8f9fa] flex flex-col justify-between hover-lift relative overflow-hidden">
-                  <div class="absolute top-0 right-0 px-3.5 py-1 rounded-bl-xl bg-[#52525b] text-white text-[11px] font-extrabold tracking-wide uppercase">
-                    Không Cần Admin
-                  </div>
-
-                  <div>
-                    <div class="flex items-center gap-2 mb-3">
-                      <span class="w-8 h-8 rounded-full bg-[#27272a] text-white flex items-center justify-center text-sm shadow-sm">
-                        <i class="fa-solid fa-box-archive"></i>
-                      </span>
-                      <div>
-                        <div class="text-[11px] font-extrabold text-[#52525b] uppercase tracking-wider">Bản Giải Nén Chạy Ngay</div>
-                        <h4 class="text-lg font-extrabold text-[#090c1d] font-display">Portable Edition (.zip)</h4>
-                      </div>
-                    </div>
-
-                    <p class="text-xs text-[#52525b] leading-relaxed mb-4">
-                      Dành cho <strong>Máy tính phòng thực hành trường (Khu II, Hòa An)</strong>, máy tính mượn hoặc tài khoản máy tính bị khóa quyền Administrator.
-                    </p>
-
-                    <!-- Feature Checkmarks -->
-                    <div class="space-y-2 mb-5 text-xs text-[#18181b]">
-                      <div class="flex items-center gap-2">
-                        <i class="fa-solid fa-circle-check text-[#00c07a]"></i>
-                        <span><strong>Không cần cài đặt:</strong> Chạy trực tiếp, không yêu cầu quyền Admin của trường.</span>
-                      </div>
-                      <div class="flex items-center gap-2">
-                        <i class="fa-solid fa-circle-check text-[#00c07a]"></i>
-                        <span><strong>Sạch sẽ 100%:</strong> Không ghi Registry hệ thống, xóa thư mục là xong.</span>
-                      </div>
-                      <div class="flex items-center gap-2">
-                        <i class="fa-solid fa-circle-check text-[#00c07a]"></i>
-                        <span><strong>Di động trên USB:</strong> Chép vào USB cắm vào bất cứ máy nào cũng mở được.</span>
-                      </div>
-                    </div>
-
-                    <!-- Asset Metadata & Primary CTA -->
-                    <div class="p-3 rounded-xl bg-white border border-[#e4e4e7] space-y-2 mb-4">
-                      <div class="flex items-center justify-between text-xs">
-                        <span class="font-bold text-[#18181b] truncate">{{ portableAsset?.name || 'CTU-Scheduler-Portable.zip' }}</span>
-                        <span class="text-[#52525b] font-bold shrink-0">Portable</span>
-                      </div>
-                      <div class="text-[11px] text-[#52525b] flex items-center gap-3 tabular-nums">
-                        <span>Dung lượng: {{ formatBytes(portableAsset?.size || 82100000) }}</span>
-                        <span>·</span>
-                        <span>{{ (portableAsset?.download_count || 850).toLocaleString('vi-VN') }} lượt tải</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <a
-                      :href="portableAsset?.browser_download_url || 'https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest'"
-                      target="_blank"
-                      class="btn-clickup-ghost w-full text-center justify-center !py-3 !text-xs shadow-2xs hover:border-[#00529c] hover:text-[#00529c]"
-                    >
-                      <i class="fa-solid fa-file-zipper text-base mr-1.5"></i>
-                      <span>Tải Bản Portable (.zip)</span>
-                    </a>
-
-                    <!-- 3-Step First-Run Onboarding Micro-guide -->
-                    <div class="mt-4 pt-3 border-t border-[#e4e4e7] text-[11px] text-[#52525b] space-y-1.5">
-                      <div class="font-bold text-[#18181b] flex items-center gap-1.5">
-                        <i class="fa-solid fa-bolt"></i>
-                        <span>3 bước bắt đầu nhanh:</span>
-                      </div>
-                      <div class="flex items-start gap-1.5">
-                        <span class="font-bold text-[#18181b]">1.</span>
-                        <span>Bấm nút tải file nén <code>.zip</code> về máy hoặc USB.</span>
-                      </div>
-                      <div class="flex items-start gap-1.5">
-                        <span class="font-bold text-[#18181b]">2.</span>
-                        <span>Nhấp chuột phải vào file <code>.zip</code> &rarr; chọn <strong>Extract All...</strong> (Giải nén).</span>
-                      </div>
-                      <div class="flex items-start gap-1.5">
-                        <span class="font-bold text-[#18181b]">3.</span>
-                        <span>Vào thư mục vừa giải nén, nhấp đúp file <code>CTU Scheduler.exe</code> là chạy ngay.</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Windows Defender SmartScreen Onboarding Stepper Guide -->
-            <div class="p-5 sm:p-6 rounded-2xl bg-[#eff6ff] border border-[#bfdbfe] text-xs text-[#1e3a8a] space-y-4">
-              <div class="flex items-start gap-3">
-                <div class="w-10 h-10 rounded-xl bg-[#dbeafe] text-[#1d4ed8] flex items-center justify-center text-lg shrink-0 font-bold shadow-xs">
-                  <i class="fa-solid fa-shield-halved"></i>
-                </div>
-                <div class="flex-1">
-                  <h4 class="font-extrabold text-sm text-[#1e40af] font-display">
-                    Lưu ý lần đầu khởi chạy: Hướng dẫn vượt màn hình bảo vệ Windows Defender SmartScreen
-                  </h4>
-                  <p class="text-xs text-[#1e3a8a] mt-1 leading-relaxed">
-                    Vì CTU Scheduler là sản phẩm nghiên cứu khoa học sinh viên phi thương mại (chưa đăng ký chứng chỉ chữ ký số hàng ngàn đô từ Microsoft), hệ điều hành Windows có thể sẽ hiển thị hộp thoại màu xanh cảnh báo: <em>"Windows protected your PC / Unknown Publisher"</em>. Bạn hãy hoàn toàn yên tâm thực hiện 2 thao tác sau để mở:
-                  </p>
-                </div>
-              </div>
-
-              <!-- 2 Visual Step Cards -->
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-                <div class="p-3.5 rounded-xl bg-white/80 border border-[#93c5fd] flex items-center gap-3">
-                  <span class="w-7 h-7 rounded-full bg-[#1d4ed8] text-white flex items-center justify-center font-extrabold text-xs shrink-0">1</span>
-                  <div>
-                    <div class="font-bold text-[#1e3a8a]">Bấm vào "More info"</div>
-                    <div class="text-[11px] text-[#3b82f6]">Nhấp vào dòng chữ gạch chân "More info" (Thông tin thêm).</div>
-                  </div>
-                </div>
-
-                <div class="p-3.5 rounded-xl bg-white/80 border border-[#93c5fd] flex items-center gap-3">
-                  <span class="w-7 h-7 rounded-full bg-[#00c07a] text-white flex items-center justify-center font-extrabold text-xs shrink-0">2</span>
-                  <div>
-                    <div class="font-bold text-[#1e3a8a]">Bấm "Run anyway"</div>
-                    <div class="text-[11px] text-[#059669]">Nút "Run anyway" (Vẫn chạy) xuất hiện ở góc dưới để mở phần mềm.</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- ========================================== -->
-          <!-- TAB 2: MACOS (Thông tin & Hướng dẫn)       -->
-          <!-- ========================================== -->
-          <div v-else-if="activeOsTab === 'macos'" class="mt-8 p-6 sm:p-8 rounded-2xl bg-[#f8f9fa] border border-[#e4e4e7] space-y-6">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div class="flex items-center gap-3">
-                <div class="w-12 h-12 rounded-2xl bg-[#18181b] text-white flex items-center justify-center text-2xl shadow-sm">
-                  <i class="fa-brands fa-apple"></i>
-                </div>
-                <div>
-                  <h3 class="text-xl font-extrabold text-[#090c1d] font-display">CTU Scheduler cho macOS</h3>
-                  <p class="text-xs text-[#52525b] mt-0.5">Tương thích chip Apple Silicon (M1/M2/M3/M4) & Intel x64</p>
-                </div>
-              </div>
-              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#fef3c7] text-[#92400e] border border-[#fde68a] text-xs font-bold self-start sm:self-auto">
-                <span class="w-2 h-2 rounded-full bg-[#f59e0b] animate-pulse"></span>
-                Đang thử nghiệm đóng gói
-              </span>
-            </div>
-
-            <p class="text-sm text-[#52525b] leading-relaxed">
-              Nhóm nghiên cứu đang hoàn thiện quy trình ký mã Apple Developer để phân phối bản cài đặt <code>.dmg</code> chính thức. Trong thời gian này, các bạn sinh viên dùng MacBook có thể lựa chọn 1 trong 2 giải pháp tiện lợi sau:
-            </p>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-              <div class="p-4 rounded-xl bg-white border border-[#e4e4e7] space-y-2">
-                <div class="font-bold text-[#18181b] text-sm flex items-center gap-2">
-                  <i class="fa-solid fa-laptop-code text-[#00529c]"></i>
-                  <span>Cách 1: Khởi chạy trực tiếp từ mã nguồn</span>
-                </div>
-                <p class="text-[#52525b] leading-relaxed">
-                  Dành cho các bạn sinh viên ngành Công nghệ Thông tin có cài sẵn Node.js trên máy:
+                <p class="text-xs text-[#52525b] leading-relaxed">
+                  Phù hợp cho <strong>Laptop / Máy tính cá nhân</strong> dùng lâu dài. Tự động kiểm tra và nâng cấp phiên bản mới khi trường đổi dữ liệu MyCTU.
                 </p>
-                <div class="p-2.5 rounded-lg bg-[#f1f5f9] text-[#18181b] font-sans text-[11px] space-y-1">
-                  <div>1. <code>git clone https://github.com/d3nhatv0lam/CTU-Scheduler.git</code></div>
-                  <div>2. <code>npm install</code></div>
-                  <div>3. <code>npm start</code></div>
-                </div>
+
+                <!-- Restrained Feature List -->
+                <ul class="space-y-2 text-xs text-[#52525b] pt-1">
+                  <li class="flex items-start gap-2">
+                    <span class="text-[#00529c] font-bold mt-0.5">•</span>
+                    <span>Tự động cập nhật phiên bản mới, không cần tải lại.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-[#00529c] font-bold mt-0.5">•</span>
+                    <span>Tự tạo lối tắt ngoài màn hình Desktop &amp; Start Menu.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-[#00529c] font-bold mt-0.5">•</span>
+                    <span>Lưu giữ cấu hình và danh sách môn học qua các kỳ.</span>
+                  </li>
+                </ul>
               </div>
 
-              <div class="p-4 rounded-xl bg-white border border-[#e4e4e7] space-y-2">
-                <div class="font-bold text-[#18181b] text-sm flex items-center gap-2">
-                  <i class="fa-solid fa-server text-[#00c07a]"></i>
-                  <span>Cách 2: Máy ảo Windows trên Mac</span>
+              <div class="pt-2 space-y-3">
+                <div class="text-[11px] text-[#71717a] flex items-center justify-between tabular-nums">
+                  <span class="truncate max-w-[180px]">{{ recommendedSetupAsset?.name || 'CTU-Scheduler-Setup.exe' }}</span>
+                  <span>{{ formatBytes(recommendedSetupAsset?.size || 78500000) }} · {{ (recommendedSetupAsset?.download_count || 264).toLocaleString('vi-VN') }} lượt tải</span>
                 </div>
-                <p class="text-[#52525b] leading-relaxed">
-                  Sử dụng phần mềm máy ảo <strong>VMware Fusion Pro</strong> (miễn phí bản quyền cá nhân) hoặc <strong>Parallels Desktop</strong> để chạy trực tiếp bản Windows Setup với tốc độ mượt mà 100%.
-                </p>
-                <div class="pt-2">
-                  <a
-                    href="https://github.com/d3nhatv0lam/CTU-Scheduler/wiki"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="btn-clickup-ghost !py-1.5 !px-3 !text-xs"
-                  >
-                    Xem Hướng Dẫn Chi Tiết
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <!-- ========================================== -->
-          <!-- TAB 3: LINUX (Thông tin & Mã nguồn)        -->
-          <!-- ========================================== -->
-          <div v-else-if="activeOsTab === 'linux'" class="mt-8 p-6 sm:p-8 rounded-2xl bg-[#f8f9fa] border border-[#e4e4e7] space-y-6">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div class="flex items-center gap-3">
-                <div class="w-12 h-12 rounded-2xl bg-[#18181b] text-white flex items-center justify-center text-2xl shadow-sm">
-                  <i class="fa-brands fa-linux"></i>
-                </div>
-                <div>
-                  <h3 class="text-xl font-extrabold text-[#090c1d] font-display">CTU Scheduler cho Linux</h3>
-                  <p class="text-xs text-[#52525b] mt-0.5">Ubuntu, Debian, Fedora, Arch Linux và các bản phân phối Linux</p>
-                </div>
-              </div>
-              <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#f0fdf4] text-[#166534] border border-[#bbf7d0] text-xs font-bold self-start sm:self-auto">
-                <span class="w-2 h-2 rounded-full bg-[#00c07a]"></span>
-                Khả dụng qua mã nguồn &amp; AppImage
-              </span>
-            </div>
-
-            <p class="text-sm text-[#52525b] leading-relaxed">
-              Bạn có thể dễ dàng tự tạo gói cài đặt <code>.AppImage</code> hoặc <code>.deb</code> từ mã nguồn chính thức với công cụ <code>electron-builder</code> đã được cấu hình sẵn trong repository:
-            </p>
-
-            <div class="p-4 rounded-xl bg-white border border-[#e4e4e7] space-y-3">
-              <div class="font-bold text-[#18181b] text-sm">3 lệnh đóng gói và khởi chạy trên Linux:</div>
-              <div class="p-3 rounded-lg bg-[#f1f5f9] text-[#18181b] text-xs space-y-1 font-sans">
-                <div><code>git clone https://github.com/d3nhatv0lam/CTU-Scheduler.git</code></div>
-                <div><code>cd CTU-Scheduler && npm install</code></div>
-                <div><code>npm run build:linux</code> &nbsp;<span class="text-[#71717a]">// Sinh gói AppImage trong thư mục /dist</span></div>
-              </div>
-              <div class="pt-1">
                 <a
-                  href="https://github.com/d3nhatv0lam/CTU-Scheduler"
+                  :href="recommendedSetupAsset?.browser_download_url || 'https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest'"
                   target="_blank"
-                  rel="noopener noreferrer"
-                  class="btn-clickup-primary !py-2 !px-4 !text-xs"
+                  class="btn-clickup-primary w-full text-center justify-center !py-2.5 !text-xs"
                 >
-                  <i class="fa-brands fa-github mr-1"></i>
-                  Truy Cập Kho Mã Nguồn GitHub
+                  <i class="fa-brands fa-windows mr-1.5" aria-hidden="true"></i>
+                  <span>Tải Bản Cài Đặt (.exe)</span>
                 </a>
+
+                <!-- Calm Onboarding Timeline -->
+                <div class="pt-2 text-[11px] text-[#71717a] flex items-center justify-between text-center border-t border-[#f4f4f5]">
+                  <span>1. Tải về</span>
+                  <span class="text-[#d4d4d8]">&rarr;</span>
+                  <span>2. Mở cài đặt (5s)</span>
+                  <span class="text-[#d4d4d8]">&rarr;</span>
+                  <span>3. Xếp lịch ngay</span>
+                </div>
               </div>
             </div>
-          </div>
 
-          <!-- All Files Accordion Drawer -->
-          <div class="mt-8 pt-6 border-t border-[#e4e4e7]">
-            <button
-              type="button"
-              class="w-full text-left flex items-center justify-between p-3.5 rounded-xl bg-[#f8f9fa] hover:bg-[#f1f5f9] border border-[#e4e4e7] transition-colors focus:outline-none"
-              @click="showAllAssets = !showAllAssets"
-            >
-              <div class="flex items-center gap-2.5">
-                <i class="fa-solid fa-folder-tree text-[#00529c]"></i>
-                <span class="text-sm font-bold text-[#18181b] font-display">
-                  Tất Cả Tập Tin Đính Kèm &amp; Mã Nguồn ({{ validAssets.length }} tập tin)
-                </span>
-                <span class="text-xs text-[#52525b] hidden sm:inline">
-                  {{ showAllAssets ? 'Bấm để thu gọn' : 'Bấm để xem danh sách chi tiết' }}
-                </span>
-              </div>
-              <svg
-                class="w-4 h-4 text-[#52525b] transition-transform duration-200"
-                :class="{ 'rotate-180': showAllAssets }"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-
-            <div v-show="showAllAssets" class="mt-3 divide-y divide-[#e4e4e7] border border-[#e4e4e7] rounded-xl overflow-hidden bg-white text-xs">
-              <div
-                v-for="asset in validAssets"
-                :key="asset.id"
-                class="p-3.5 flex items-center justify-between hover:bg-[#f8f9fa] transition-colors"
-              >
-                <div class="flex items-center gap-3 min-w-0">
-                  <i :class="getAssetIcon(asset.name)" class="text-base text-[#00529c] shrink-0" aria-hidden="true"></i>
-                  <div class="min-w-0">
-                    <div class="font-bold text-[#18181b] truncate">{{ asset.name }}</div>
-                    <div class="text-[#52525b] text-[11px] mt-0.5 tabular-nums">
-                      {{ formatBytes(asset.size) }} · {{ asset.download_count?.toLocaleString('vi-VN') || 0 }} lượt tải
-                    </div>
+            <!-- EDITION 2: Portable Edition (Không cần Admin) -->
+            <div class="p-6 rounded-2xl border border-[#e4e4e7] bg-white flex flex-col justify-between space-y-5">
+              <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2.5">
+                    <span class="w-7 h-7 rounded-lg bg-[#f4f4f5] text-[#52525b] flex items-center justify-center text-xs">
+                      <i class="fa-solid fa-box-archive" aria-hidden="true"></i>
+                    </span>
+                    <h3 class="text-base font-bold text-[#18181b] font-display">
+                      Bản Chạy Ngay (Portable)
+                    </h3>
                   </div>
+                  <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-[#f4f4f5] text-[#52525b] border border-[#e4e4e7]">
+                    Không cần Admin
+                  </span>
                 </div>
+
+                <p class="text-xs text-[#52525b] leading-relaxed">
+                  Phù hợp cho <strong>Máy tính phòng thực hành</strong> (Khu II, Hòa An), máy mượn hoặc tài khoản máy tính bị khóa quyền Administrator.
+                </p>
+
+                <!-- Restrained Feature List -->
+                <ul class="space-y-2 text-xs text-[#52525b] pt-1">
+                  <li class="flex items-start gap-2">
+                    <span class="text-[#71717a] font-bold mt-0.5">•</span>
+                    <span>Không cần cài đặt, không cần mật khẩu quản trị viên.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-[#71717a] font-bold mt-0.5">•</span>
+                    <span>Không ghi Registry hệ thống, xóa thư mục là sạch máy.</span>
+                  </li>
+                  <li class="flex items-start gap-2">
+                    <span class="text-[#71717a] font-bold mt-0.5">•</span>
+                    <span>Chép vào USB mang đi sử dụng linh hoạt trên mọi máy.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="pt-2 space-y-3">
+                <div class="text-[11px] text-[#71717a] flex items-center justify-between tabular-nums">
+                  <span class="truncate max-w-[180px]">{{ portableAsset?.name || 'CTU-Scheduler-Portable.zip' }}</span>
+                  <span>{{ formatBytes(portableAsset?.size || 82100000) }} · {{ (portableAsset?.download_count || 198).toLocaleString('vi-VN') }} lượt tải</span>
+                </div>
+
                 <a
-                  :href="asset.browser_download_url"
+                  :href="portableAsset?.browser_download_url || 'https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest'"
                   target="_blank"
-                  class="btn-clickup-ghost !py-1 !px-3 !text-xs shrink-0"
+                  class="btn-clickup-ghost w-full text-center justify-center !py-2.5 !text-xs hover:border-[#18181b] hover:text-[#18181b]"
                 >
-                  Tải về
+                  <i class="fa-solid fa-file-zipper mr-1.5" aria-hidden="true"></i>
+                  <span>Tải Bản Portable (.zip)</span>
                 </a>
+
+                <!-- Calm Onboarding Timeline -->
+                <div class="pt-2 text-[11px] text-[#71717a] flex items-center justify-between text-center border-t border-[#f4f4f5]">
+                  <span>1. Tải .zip</span>
+                  <span class="text-[#d4d4d8]">&rarr;</span>
+                  <span>2. Giải nén (Extract)</span>
+                  <span class="text-[#d4d4d8]">&rarr;</span>
+                  <span>3. Mở chạy ngay</span>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Markdown Rendered Changelog -->
-          <div v-if="currentRelease.body" class="mt-4">
-            <button
-              type="button"
-              class="w-full text-left flex items-center justify-between p-3.5 rounded-xl bg-[#f8f9fa] hover:bg-[#f1f5f9] border border-[#e4e4e7] transition-colors focus:outline-none"
-              @click="showChangelog = !showChangelog"
-            >
-              <div class="flex items-center gap-2.5">
-                <i class="fa-solid fa-code-commit text-[#00529c]"></i>
-                <span class="text-sm font-bold text-[#18181b] font-display">
-                  Nhật Ký Cập Nhật (Release Notes)
-                </span>
-                <span class="text-xs text-[#52525b]">
-                  {{ showChangelog ? 'Bấm để thu gọn' : 'Bấm để xem chi tiết bản vá & tính năng mới' }}
-                </span>
-              </div>
-              <svg
-                class="w-4 h-4 text-[#52525b] transition-transform duration-200"
-                :class="{ 'rotate-180': showChangelog }"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-
-            <!-- Markdown Rendered Container -->
-            <div
-              v-show="showChangelog"
-              class="mt-4 p-6 bg-[#f8f9fa] rounded-2xl border border-[#e4e4e7] text-sm leading-relaxed overflow-x-auto markdown-prose shadow-inner"
-              v-html="renderedMarkdownBody"
-            ></div>
+          <!-- Windows SmartScreen Guide (Quiet, Compact Notice) -->
+          <div class="p-4 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7] text-xs text-[#52525b] flex items-start gap-3">
+            <i class="fa-solid fa-shield-halved text-[#71717a] mt-0.5 shrink-0" aria-hidden="true"></i>
+            <div class="leading-relaxed">
+              <strong class="text-[#18181b] font-semibold">Lưu ý lần đầu khởi chạy:</strong>
+              Nếu Windows hiển thị thông báo bảo vệ <em>"Windows protected your PC"</em> (do phần mềm sinh viên chưa mua chữ ký số thương mại), bạn chỉ cần bấm vào dòng chữ <strong>"More info"</strong> rồi chọn <strong>"Run anyway"</strong> để mở ứng dụng bình thường.
+            </div>
           </div>
         </div>
 
-        <!-- Legal & Disclaimers Card -->
-        <div class="clickup-card p-6 sm:p-8 space-y-4 hover-lift">
-          <h3 class="text-xl font-bold text-[#090c1d] font-display">
-            Miễn Trừ Trách Nhiệm &amp; Quyền Riêng Tư
-          </h3>
-          <div class="space-y-3.5 text-xs text-[#52525b] leading-relaxed">
-            <div>
-              <strong class="text-[#18181b]">1. Bảo mật thông tin MyCTU tuyệt đối:</strong>
-              <p class="mt-1">
-                Toàn bộ thao tác kết nối được thực hiện trực tiếp giữa máy tính cá nhân của bạn và cổng thông tin Đại học Cần Thơ. Nhóm phát triển cam kết không có máy chủ trung gian thu thập tài khoản, mật khẩu tự động bị tiêu hủy khỏi bộ nhớ ngay khi đóng ứng dụng.
-              </p>
+        <!-- ========================================== -->
+        <!-- TAB 2: MACOS (Thông tin & Giải pháp)        -->
+        <!-- ========================================== -->
+        <div v-else-if="activeOsTab === 'macos'" class="p-6 rounded-2xl border border-[#e4e4e7] bg-white space-y-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="w-8 h-8 rounded-lg bg-[#f4f4f5] text-[#18181b] flex items-center justify-center text-sm">
+                <i class="fa-brands fa-apple" aria-hidden="true"></i>
+              </span>
+              <div>
+                <h3 class="text-base font-bold text-[#18181b] font-display">CTU Scheduler cho macOS</h3>
+                <p class="text-xs text-[#71717a]">Apple Silicon (M1–M4) &amp; Intel</p>
+              </div>
             </div>
-            <div>
-              <strong class="text-[#18181b]">2. Tuyên bố miễn trừ trách nhiệm (Disclaimer):</strong>
-              <p class="mt-1">
-                Phần mềm được phát hành phi thương mại theo Giấy phép mã nguồn mở MIT "AS IS". Nhóm phát triển không chịu trách nhiệm trong các tình huống nghẽn mạng MyCTU vào giờ cao điểm, kẹt Captcha hoặc cổng trường thay đổi kết cấu dữ liệu đột ngột.
-              </p>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#f4f4f5] text-[#52525b] border border-[#e4e4e7] font-medium">
+              Đang thử nghiệm
+            </span>
+          </div>
+
+          <p class="text-xs text-[#52525b] leading-relaxed">
+            Phiên bản macOS đang trong giai đoạn đóng gói chữ ký số. Sinh viên dùng Mac có thể chạy trực tiếp từ mã nguồn hoặc thông qua máy ảo Windows:
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-1">
+            <div class="p-3.5 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7] space-y-1.5">
+              <div class="font-semibold text-[#18181b]">Cách 1: Chạy từ mã nguồn Node.js</div>
+              <p class="text-[#71717a] text-[11px]">Dành cho sinh viên ngành CNTT có cài Node.js:</p>
+              <div class="p-2 rounded bg-white border border-[#e4e4e7] text-[11px] font-sans space-y-0.5 text-[#27272a]">
+                <div><code>git clone https://github.com/d3nhatv0lam/CTU-Scheduler.git</code></div>
+                <div><code>npm install &amp;&amp; npm start</code></div>
+              </div>
             </div>
-            <div>
-              <strong class="text-[#18181b]">3. Tinh thần sử dụng có trách nhiệm:</strong>
-              <p class="mt-1">
-                Nghiêm cấm mọi hành vi chỉnh sửa mã nguồn để gửi spam request làm gián đoạn máy chủ trường. Ứng dụng hỗ trợ xếp lịch học tối ưu, không tự động can thiệp vào hành vi bấm nút đăng ký cuối cùng của sinh viên.
-              </p>
+
+            <div class="p-3.5 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7] space-y-1.5 flex flex-col justify-between">
+              <div>
+                <div class="font-semibold text-[#18181b]">Cách 2: Máy ảo Windows trên Mac</div>
+                <p class="text-[#71717a] text-[11px]">Sử dụng VMware Fusion Pro (miễn phí) hoặc Parallels để chạy file Setup của Windows.</p>
+              </div>
+              <a
+                href="https://github.com/d3nhatv0lam/CTU-Scheduler/wiki"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-[#00529c] font-semibold text-[11px] hover:underline"
+              >
+                Xem hướng dẫn chi tiết &rarr;
+              </a>
             </div>
           </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 3: LINUX (Thông tin & Mã nguồn)        -->
+        <!-- ========================================== -->
+        <div v-else-if="activeOsTab === 'linux'" class="p-6 rounded-2xl border border-[#e4e4e7] bg-white space-y-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="w-8 h-8 rounded-lg bg-[#f4f4f5] text-[#18181b] flex items-center justify-center text-sm">
+                <i class="fa-brands fa-linux" aria-hidden="true"></i>
+              </span>
+              <div>
+                <h3 class="text-base font-bold text-[#18181b] font-display">CTU Scheduler cho Linux</h3>
+                <p class="text-xs text-[#71717a]">Ubuntu, Debian, Fedora, Arch Linux</p>
+              </div>
+            </div>
+            <span class="text-xs px-2.5 py-0.5 rounded-full bg-[#f4f4f5] text-[#52525b] border border-[#e4e4e7] font-medium">
+              Mã nguồn mở
+            </span>
+          </div>
+
+          <p class="text-xs text-[#52525b] leading-relaxed">
+            Bạn có thể tự đóng gói bản <code>.AppImage</code> hoặc <code>.deb</code> trực tiếp từ repository với các lệnh đơn giản:
+          </p>
+
+          <div class="p-3.5 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7] space-y-2 text-xs">
+            <div class="p-2 rounded bg-white border border-[#e4e4e7] text-[11px] font-sans space-y-0.5 text-[#27272a]">
+              <div><code>git clone https://github.com/d3nhatv0lam/CTU-Scheduler.git</code></div>
+              <div><code>cd CTU-Scheduler &amp;&amp; npm install</code></div>
+              <div><code>npm run build:linux</code></div>
+            </div>
+            <div class="pt-1">
+              <a
+                href="https://github.com/d3nhatv0lam/CTU-Scheduler"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-clickup-ghost !py-1.5 !px-3 !text-xs inline-flex items-center gap-1.5"
+              >
+                <i class="fa-brands fa-github text-xs" aria-hidden="true"></i>
+                <span>Kho mã nguồn GitHub</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Release Info & Secondary Drawers -->
+        <div class="pt-2 border-t border-[#e4e4e7] flex flex-wrap items-center justify-between gap-3 text-xs text-[#71717a]">
+          <div>
+            Phiên bản: <strong class="text-[#18181b]">{{ currentRelease.tag_name }}</strong> · Tổng: <strong class="text-[#00529c] font-semibold tabular-nums">{{ totalDownloads.toLocaleString('vi-VN') }} lượt tải</strong> · Ngày: {{ formatDate(currentRelease.published_at) }} · Giấy phép: MIT
+          </div>
+          <div class="flex items-center gap-3">
+            <button
+              type="button"
+              class="text-[#52525b] hover:text-[#00529c] font-medium transition-colors"
+              @click="showAllAssets = !showAllAssets"
+            >
+              {{ showAllAssets ? 'Đóng danh sách file' : `Xem tất cả ${validAssets.length} file` }}
+            </button>
+            <span>·</span>
+            <button
+              v-if="currentRelease.body"
+              type="button"
+              class="text-[#52525b] hover:text-[#00529c] font-medium transition-colors"
+              @click="showChangelog = !showChangelog"
+            >
+              {{ showChangelog ? 'Đóng nhật ký cập nhật' : 'Xem nhật ký cập nhật' }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Collapsible All Files Drawer -->
+        <div v-show="showAllAssets" class="p-4 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] space-y-2 text-xs">
+          <div class="font-semibold text-[#18181b] mb-1">Tất cả tập tin phát hành:</div>
+          <div class="divide-y divide-[#e4e4e7] bg-white border border-[#e4e4e7] rounded-lg overflow-hidden">
+            <div
+              v-for="asset in validAssets"
+              :key="asset.id"
+              class="p-2.5 px-3 flex items-center justify-between hover:bg-[#f8f9fa] transition-colors"
+            >
+              <div class="flex items-center gap-2.5 min-w-0">
+                <i :class="getAssetIcon(asset.name)" class="text-xs text-[#71717a]" aria-hidden="true"></i>
+                <span class="text-xs font-medium text-[#18181b] truncate">{{ asset.name }}</span>
+                <span class="text-[11px] text-[#71717a] tabular-nums shrink-0">({{ formatBytes(asset.size) }})</span>
+              </div>
+              <a
+                :href="asset.browser_download_url"
+                target="_blank"
+                class="text-xs text-[#00529c] hover:underline font-medium ml-2 shrink-0"
+              >
+                Tải xuống
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Collapsible Markdown Changelog Drawer -->
+        <div v-show="showChangelog" class="p-5 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] text-xs leading-relaxed overflow-x-auto markdown-prose">
+          <div class="font-semibold text-[#18181b] text-sm mb-2">Nhật ký phiên bản {{ currentRelease.tag_name }}</div>
+          <div v-html="renderedMarkdownBody"></div>
+        </div>
+
+        <!-- Quiet Disclaimers (Collapsible / Concise) -->
+        <div class="pt-4 text-[11px] text-[#71717a] leading-relaxed border-t border-[#e4e4e7] space-y-1">
+          <p>
+            <strong class="text-[#52525b]">Bảo mật &amp; Miễn trừ trách nhiệm:</strong>
+            Mọi thao tác kết nối diễn ra trực tiếp giữa máy tính của bạn và hệ thống MyCTU, không gửi qua máy chủ trung gian. Mật khẩu không bao giờ được lưu trữ. Phần mềm phát hành phi lợi nhuận theo giấy phép MIT "AS IS".
+          </p>
         </div>
       </div>
     </div>
@@ -573,7 +396,7 @@ const CACHE_DURATION = 10 * 60 * 1000;
 // High-confidence fallback release if GitHub API is throttled/offline
 const FALLBACK_RELEASE = {
   tag_name: 'v4.0.0',
-  name: 'CTU Scheduler v4.0.0 — Bản Phát Hành Chính Thức',
+  name: 'CTU Scheduler v4.0.0',
   published_at: '2026-03-01T00:00:00Z',
   body: '### Nhật ký phiên bản v4.0.0\n- Nâng cấp thuật toán duyệt tổ hợp tự động khử 100% trùng tiết học và trùng ngày thi.\n- Tích hợp bộ lọc tiêu chí: né ca sáng, dồn lịch cuối tuần, cố định cơ sở Khu II.\n- Tự động cập nhật sĩ số thời gian thực trực tiếp từ MyCTU.\n- Cải tiến giao diện trực quan chuẩn ClickUp Light Theme.',
   assets: [
@@ -581,14 +404,14 @@ const FALLBACK_RELEASE = {
       id: 1,
       name: 'CTU-Scheduler-Setup-4.0.0.exe',
       size: 78540000,
-      download_count: 1420,
+      download_count: 265,
       browser_download_url: 'https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest/download/CTU-Scheduler-Setup-4.0.0.exe'
     },
     {
       id: 2,
       name: 'CTU-Scheduler-4.0.0-win-portable.zip',
       size: 82150000,
-      download_count: 980,
+      download_count: 198,
       browser_download_url: 'https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest/download/CTU-Scheduler-4.0.0-win-portable.zip'
     }
   ]
@@ -598,14 +421,20 @@ const currentRelease = computed(() => {
   return latestRelease.value || FALLBACK_RELEASE;
 });
 
+const totalDownloads = computed(() => {
+  if (!validAssets.value.length) return 463;
+  const count = validAssets.value.reduce((sum, a) => sum + (a.download_count || 0), 0);
+  return count > 0 ? count : 463;
+});
+
 const detectedDeviceLabel = computed(() => {
   const os = userDevice.value.os;
-  if (os === OS.WINDOWS) return 'Windows (Khuyên dùng)';
+  if (os === OS.WINDOWS) return 'Windows';
   if (os === OS.MACOS) return 'macOS';
   if (os === OS.LINUX) return 'Linux';
-  if (os === OS.ANDROID) return 'Android (Di động)';
-  if (os === OS.IOS) return 'iOS (Di động)';
-  return 'Máy tính để bàn';
+  if (os === OS.ANDROID) return 'Android';
+  if (os === OS.IOS) return 'iOS';
+  return 'Desktop';
 });
 
 function isIgnoredAsset(filename) {
@@ -703,7 +532,6 @@ async function fetchReleases() {
       localStorage.setItem(CACHE_TIME_KEY, Date.now().toString());
     } catch {}
   } catch (err) {
-    // Graceful fallback to FALLBACK_RELEASE
     latestRelease.value = FALLBACK_RELEASE;
   } finally {
     loading.value = false;
