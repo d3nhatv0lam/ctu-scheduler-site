@@ -72,13 +72,14 @@
   box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.1);
 }
 
-.hover-glow-violet {
-  transition: all 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+.hover-elevation-blue {
+  transition: transform 0.25s cubic-bezier(0.33, 1, 0.68, 1), box-shadow 0.25s cubic-bezier(0.33, 1, 0.68, 1), border-color 0.2s ease;
 }
 
-.hover-glow-violet:hover {
-  box-shadow: 0 0 24px rgba(102, 71, 240, 0.25);
-  border-color: #6647f0;
+.hover-elevation-blue:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px -4px rgba(0, 0, 0, 0.12);
+  border-color: var(--color-ctu-blue);
 }
 
 /* Page View Transition for SPA */

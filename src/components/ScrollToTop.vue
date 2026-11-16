@@ -2,7 +2,7 @@
   <button
     v-show="isVisible"
     type="button"
-    class="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-full bg-white hover:bg-[#f8f9fa] text-[#202020] border border-[#e8e8e8] shadow-float flex items-center justify-center transition-all hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6647f0]"
+    class="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-full bg-white hover:bg-[#f8f9fa] text-[#18181b] border border-[#e4e4e7] shadow-float flex items-center justify-center transition-all hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00529c]"
     aria-label="Cuộn lên đầu trang"
     title="Cuộn lên đầu trang"
     @click="scrollToTop"

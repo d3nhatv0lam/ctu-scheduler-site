@@ -1,4 +1,4 @@
-/* ClickUp Component Primitives */
+/* CTU Academic Component Primitives */
 
 .clickup-card {
   background-color: var(--color-signal-white);
@@ -26,8 +26,37 @@
   box-shadow: var(--shadow-float);
 }
 
-/* ClickUp Relentless 9999px Pill Buttons */
+/* CTU 9999px Pill Buttons */
 .btn-clickup-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-plus-jakarta-sans);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-signal-white);
+  background-color: var(--color-ctu-blue);
+  border: 1px solid var(--color-ctu-blue);
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.15s cubic-bezier(0.33, 1, 0.68, 1), background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-clickup-primary:hover {
+  background-color: var(--color-ctu-navy);
+  border-color: var(--color-ctu-navy);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn-clickup-primary:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.btn-clickup-dark {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -45,14 +74,10 @@
   transition: transform 0.15s cubic-bezier(0.33, 1, 0.68, 1), background-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.btn-clickup-primary:hover {
-  background-color: #333333;
+.btn-clickup-dark:hover {
+  background-color: #27272a;
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
-}
-
-.btn-clickup-primary:active {
-  transform: translateY(0) scale(0.98);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .btn-clickup-ghost {
@@ -75,7 +100,8 @@
 
 .btn-clickup-ghost:hover {
   background-color: var(--color-mist);
-  border-color: var(--color-fog);
+  border-color: var(--color-ctu-blue);
+  color: var(--color-ctu-blue);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
@@ -94,18 +120,18 @@
   font-family: var(--font-plus-jakarta-sans);
   font-size: 14px;
   font-weight: 600;
-  color: var(--color-signal-blue);
+  color: var(--color-ctu-blue);
   background-color: var(--color-signal-white);
-  border: 1px solid var(--color-signal-blue);
+  border: 1px solid var(--color-ctu-blue);
   cursor: pointer;
   text-decoration: none;
   transition: all 0.2s cubic-bezier(0.33, 1, 0.68, 1);
 }
 
 .btn-clickup-blue:hover {
-  background-color: rgba(0, 145, 255, 0.08);
+  background-color: #f0f7ff;
   transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(0, 145, 255, 0.18);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
 }
 
 .btn-clickup-blue:active {
@@ -119,13 +145,13 @@
   border-radius: var(--radius-pill);
   padding: 2px;
   overflow: hidden;
-  box-shadow: 0 4px 24px rgba(102, 71, 240, 0.25);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s cubic-bezier(0.33, 1, 0.68, 1), box-shadow 0.2s ease;
 }
 
 .conic-border-wrapper:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(102, 71, 240, 0.35);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 .conic-border-wrapper::before {
@@ -143,7 +169,7 @@
 .conic-border-inner {
   position: relative;
   z-index: 1;
-  background-color: var(--color-ink-black);
+  background-color: var(--color-ctu-blue);
   color: var(--color-signal-white);
   border-radius: var(--radius-pill);
   padding: 12px 28px;
@@ -158,10 +184,10 @@
 }
 
 .conic-border-inner:hover {
-  background-color: #2b2b2b;
+  background-color: var(--color-ctu-navy);
 }
 
-/* ClickUp 9999px Pill Filters and Tags */
+/* CTU 9999px Pill Filters and Tags */
 .pill-filter {
   display: inline-flex;
   align-items: center;
@@ -181,16 +207,16 @@
 }
 
 .pill-filter:hover {
-  color: var(--color-ink-black);
-  border-color: #cbd5e1;
-  background-color: var(--color-mist);
+  color: var(--color-ctu-blue);
+  border-color: #93c5fd;
+  background-color: #f8fafc;
   transform: translateY(-1px);
 }
 
 .pill-filter.active {
   color: var(--color-signal-white);
-  background-color: var(--color-ink-black);
-  border-color: var(--color-ink-black);
+  background-color: var(--color-ctu-blue);
+  border-color: var(--color-ctu-blue);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
@@ -208,7 +234,7 @@
   border: 1px solid var(--color-bone);
 }
 
-.pill-tag-violet {
+.pill-tag-ctu {
   display: inline-flex;
   align-items: center;
   gap: 5px;
@@ -217,9 +243,9 @@
   font-family: var(--font-inter);
   font-size: 12px;
   font-weight: 700;
-  color: var(--color-brand-violet);
-  background-color: #f5f3ff;
-  border: 1px solid #ddd6fe;
+  color: var(--color-ctu-blue);
+  background-color: #f0f7ff;
+  border: 1px solid #bae0fd;
 }
 
 .pill-tag-emerald {
@@ -236,7 +262,7 @@
   border: 1px solid #a7f3d0;
 }
 
-/* Timetable simulation in ClickUp light dashboard style */
+/* Timetable simulation in CTU Academic dashboard style */
 .timetable-cell {
   border-right: 1px solid var(--color-bone);
   border-bottom: 1px solid var(--color-bone);
@@ -260,14 +286,14 @@
 }
 
 .slot-course:hover {
-  border-color: var(--color-brand-violet);
-  box-shadow: 0 6px 16px rgba(102, 71, 240, 0.16);
+  border-color: var(--color-ctu-blue);
+  box-shadow: 0 6px 16px rgba(0, 82, 156, 0.16);
   transform: translateY(-2px);
 }
 
 .slot-dimmed {
-  opacity: 0.22;
-  filter: grayscale(1);
+  opacity: 0.45;
+  filter: grayscale(0.7);
 }
 
 /* Section Background Band */
@@ -277,36 +303,36 @@
   border-bottom: 1px solid var(--color-bone);
 }
 
-/* Inverted Dark Section (ClickUp Brain 3.0 / High-Tech Bento) */
+/* Inverted Dark Section with Harmonized Deep Academic Navy */
 .dark-bento-section {
-  background-color: var(--color-onyx);
+  background-color: #040d1a;
   color: var(--color-signal-white);
   position: relative;
   overflow: hidden;
 }
 
 .dark-bento-card {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--radius-largecard);
   backdrop-blur: 8px;
   transition: all 0.25s cubic-bezier(0.33, 1, 0.68, 1);
 }
 
 .dark-bento-card:hover {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(102, 71, 240, 0.5);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(0, 145, 255, 0.5);
   transform: translateY(-4px);
-  box-shadow: 0 16px 36px -8px rgba(102, 71, 240, 0.3);
+  box-shadow: 0 16px 36px -8px rgba(0, 82, 156, 0.35);
 }
 
-/* Aurora Gradient Banner */
+/* CTU Academic Gradient Banner */
 .aurora-cta-banner {
-  background: linear-gradient(135deg, #7d5be7 0%, #fa24ce 45%, #ff5238 100%);
+  background: var(--gradient-aurora);
   border-radius: var(--radius-largecard);
   position: relative;
   overflow: hidden;
-  box-shadow: 0 20px 48px -10px rgba(250, 36, 206, 0.35);
+  box-shadow: 0 20px 48px -10px rgba(0, 82, 156, 0.4);
 }
 
 .aurora-cta-banner::before {
@@ -372,8 +398,8 @@
 }
 
 .markdown-prose code {
-  background-color: #f1f3f5;
-  color: var(--color-brand-violet);
+  background-color: #f1f5f9;
+  color: var(--color-ctu-blue);
   padding: 2px 6px;
   border-radius: 4px;
   font-size: 0.85em;

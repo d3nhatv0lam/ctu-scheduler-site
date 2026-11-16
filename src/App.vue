@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex flex-col bg-white text-[#202020] font-sans">
+  <div class="min-h-screen flex flex-col bg-white text-[#18181b] font-sans">
     <Navbar />
     <main class="flex-grow">
       <Hero />
@@ -10,8 +10,8 @@
       <DownloadSection />
       <FaqSection />
       <TeamSection />
-      <AuroraCtaBanner />
       <FeedbackSection />
+      <AuroraCtaBanner />
     </main>
     <FooterSection />
     <ScrollToTop />
@@ -28,8 +28,8 @@ import Ecosystem from './components/Ecosystem.vue';
 import DownloadSection from './components/DownloadSection.vue';
 import FaqSection from './components/FaqSection.vue';
 import TeamSection from './components/TeamSection.vue';
-import AuroraCtaBanner from './components/AuroraCtaBanner.vue';
 import FeedbackSection from './components/FeedbackSection.vue';
+import AuroraCtaBanner from './components/AuroraCtaBanner.vue';
 import FooterSection from './components/FooterSection.vue';
 import ScrollToTop from './components/ScrollToTop.vue';
 </script>

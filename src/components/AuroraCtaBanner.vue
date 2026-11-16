@@ -23,7 +23,7 @@
           <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href="#download"
-              class="px-8 py-3.5 rounded-full bg-white text-[#202020] font-extrabold text-sm shadow-xl hover:bg-[#f8f9fa] hover:scale-105 active:scale-95 transition-all duration-200"
+              class="px-8 py-3.5 rounded-full bg-white text-[#003b7a] font-extrabold text-sm shadow-xl hover:bg-[#f8f9fa] hover:scale-105 active:scale-95 transition-all duration-200"
             >
               <span>Tải Phần Mềm Miễn Phí</span>
             </a>
@@ -41,4 +41,3 @@
     </div>
   </section>
 </template>
-

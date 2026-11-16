@@ -1,39 +1,38 @@
 :root {
-  /* Colors */
+  /* Colors — CTU Academic Identity */
   --color-signal-white: #ffffff;
-  --color-ink-black: #202020;
+  --color-ink-black: #18181b;
   --color-onyx: #090c1d;
-  --color-carbon: #2a2a2a;
-  --color-slate: #646464;
-  --color-ash: #838383;
-  --color-fog: #b3b3b3;
-  --color-cloud: #d4d4d4;
-  --color-bone: #e8e8e8;
+  --color-carbon: #27272a;
+  --color-slate: #52525b;
+  --color-ash: #71717a;
+  --color-fog: #a1a1aa;
+  --color-cloud: #d4d4d8;
+  --color-bone: #e4e4e7;
   --color-mist: #f8f9fa;
-  --color-plaster: #e9ebf0;
+  --color-plaster: #f1f5f9;
   --color-mercury: #eeeeee;
-  --color-brand-violet: #6647f0;
+
+  /* Brand Accents: Can Tho University Academic Blue */
+  --color-ctu-blue: #00529c;
+  --color-ctu-navy: #003b7a;
+  --color-brand-blue: #00529c;
   --color-signal-blue: #0091ff;
   --color-mint: #6ee7b7;
   --color-emerald: #00c07a;
   --color-teal-tag: #16c0a4;
 
   /* Gradients */
+  --gradient-ctu-academic: linear-gradient(135deg, #003b7a 0%, #00529c 50%, #0091ff 100%);
+  --gradient-aurora: linear-gradient(135deg, #003b7a 0%, #00529c 35%, #0284c7 70%, #00c07a 100%);
   --gradient-rainbow-conic: conic-gradient(
     from 90deg,
-    rgb(125, 91, 231) 19%,
-    rgb(188, 63, 218) 28%,
-    rgb(250, 36, 206) 37%,
-    rgb(251, 73, 165) 45%,
-    rgb(252, 109, 123) 52%,
-    rgb(253, 132, 97) 55%,
-    rgb(253, 154, 70) 58%,
-    rgb(246, 135, 198) 65%,
-    rgb(163, 160, 224) 80%,
-    rgb(79, 185, 250) 95%,
-    rgb(0, 145, 255) 100%
+    rgb(0, 82, 156) 19%,
+    rgb(0, 145, 255) 35%,
+    rgb(0, 192, 122) 50%,
+    rgb(14, 165, 233) 65%,
+    rgb(0, 82, 156) 100%
   );
-  --gradient-primary: linear-gradient(83deg, rgba(64, 221, 255) -5%, rgba(118, 18, 250) 51%, rgba(250, 18, 227) 125%);
 
   /* Typography (Inter + Plus Jakarta Sans, strictly NO font-mono) */
   --font-plus-jakarta-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -44,14 +43,14 @@
   --section-gap: 80px;
 
   /* Border Radius */
-  --radius-sm: 1px;
-  --radius-input: 9px;
-  --radius-card: 12px;
-  --radius-largecard: 20px;
+  --radius-sm: 6px;
+  --radius-card: 16px;
+  --radius-largecard: 24px;
   --radius-pill: 9999px;
 
-  /* Shadows */
-  --shadow-subtle: 0px 1px 3px 0px rgba(0, 0, 0, 0.08), 0px 1px 2px -1px rgba(0, 0, 0, 0.08);
+  /* Shadows (Neutral Directional Elevation, Zero Chromatic Glows) */
+  --shadow-subtle: 0px 1px 3px 0px rgba(0, 0, 0, 0.06), 0px 1px 2px -1px rgba(0, 0, 0, 0.06);
   --shadow-card: 0px 4px 16px -2px rgba(0, 0, 0, 0.06);
-  --shadow-float: 0px 12px 32px -4px rgba(0, 0, 0, 0.12);
+  --shadow-float: 0px 12px 32px -4px rgba(0, 0, 0, 0.1);
+  --shadow-elevated: 0px 20px 40px -8px rgba(0, 0, 0, 0.12);
 }
