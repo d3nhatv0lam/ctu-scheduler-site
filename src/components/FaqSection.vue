@@ -39,7 +39,7 @@
               <span>{{ item.question }}</span>
             </h3>
             <motion.span
-              class="w-7 h-7 rounded-full flex items-center justify-center shrink-0 origin-center transition-colors duration-200 transform-gpu"
+              class="w-7 h-7 rounded-full flex items-center justify-center shrink-0 origin-center transition-colors duration-200"
               :class="openIndex === index ? 'bg-[#f0f7ff] text-[#00529c]' : 'bg-[#f4f4f5] text-[#52525b]'"
               :initial="false"
               :animate="{ rotate: openIndex === index ? 180 : 0 }"
@@ -63,7 +63,7 @@
                   opacity: openIndex === index ? 1 : 0,
                 }"
                 :transition="{ duration: 0.2, ease: [0.33, 1, 0.68, 1] }"
-                class="px-4 sm:px-6 pb-5 pt-0 text-[#52525b] text-xs sm:text-sm leading-relaxed pl-[28px] sm:pl-[34px] transform-gpu"
+                class="px-4 sm:px-6 pb-5 pt-0 text-[#52525b] text-xs sm:text-sm leading-relaxed pl-[28px] sm:pl-[34px]"
               >
                 {{ item.answer }}
               </motion.div>

@@ -53,7 +53,7 @@
       :initial="hasSwitchedView ? { opacity: 0 } : false"
       :animate="{ opacity: 1 }"
       :transition="{ duration: 0.18, ease: 'easeOut' }"
-      class="overflow-x-auto rounded-xl border border-[#e8e8e8] bg-[#f8f9fa]/40 tabular-nums transform-gpu"
+      class="overflow-x-auto rounded-xl border border-[#e8e8e8] bg-[#f8f9fa]/40 tabular-nums"
     >
       <table class="w-full text-left border-collapse text-xs">
         <thead>
@@ -160,7 +160,7 @@
       :initial="hasSwitchedView ? { opacity: 0 } : false"
       :animate="{ opacity: 1 }"
       :transition="{ duration: 0.18, ease: 'easeOut' }"
-      class="rounded-xl border border-[#e8e8e8] overflow-hidden divide-y divide-[#e8e8e8] bg-white text-xs tabular-nums transform-gpu"
+      class="rounded-xl border border-[#e8e8e8] overflow-hidden divide-y divide-[#e8e8e8] bg-white text-xs tabular-nums"
     >
       <div
         v-for="course in courseList"

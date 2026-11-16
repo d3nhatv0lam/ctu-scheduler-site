@@ -83,7 +83,7 @@
         :animate="{ opacity: 1, y: 0 }"
         :exit="{ opacity: 0, y: -8 }"
         :transition="{ duration: 0.18, ease: [0.33, 1, 0.68, 1] }"
-        class="md:hidden bg-white border-b border-[#e4e4e7] px-4 py-4 space-y-2 text-sm shadow-lg transform-gpu"
+        class="md:hidden bg-white border-b border-[#e4e4e7] px-4 py-4 space-y-2 text-sm shadow-lg"
       >
         <a href="#features" class="block text-[#52525b] hover:text-[#00529c] font-medium py-2 px-3 rounded-lg hover:bg-[#f0f7ff]" @click="isMenuOpen = false">Tính Năng</a>
         <a href="#certification" class="block text-[#52525b] hover:text-[#00529c] font-medium py-2 px-3 rounded-lg hover:bg-[#f0f7ff]" @click="isMenuOpen = false">Nghiệm Thu NCKH</a>

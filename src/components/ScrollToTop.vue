@@ -9,7 +9,7 @@
       :exit="{ opacity: 0, scale: 0.85 }"
       :transition="{ duration: 0.18, ease: [0.33, 1, 0.68, 1] }"
       :whilePress="{ scale: 0.92 }"
-      class="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-full bg-white hover:bg-[#f8f9fa] text-[#18181b] border border-[#e4e4e7] shadow-float flex items-center justify-center transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00529c] transform-gpu"
+      class="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-full bg-white hover:bg-[#f8f9fa] text-[#18181b] border border-[#e4e4e7] shadow-float flex items-center justify-center transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00529c]"
       aria-label="Cuộn lên đầu trang"
       title="Cuộn lên đầu trang"
       @click="scrollToTop"

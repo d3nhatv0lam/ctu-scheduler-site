@@ -131,7 +131,7 @@
           :initial="hasSwitchedTab ? { opacity: 0 } : false"
           :animate="{ opacity: 1 }"
           :transition="{ duration: 0.18, ease: 'easeOut' }"
-          class="space-y-6 transform-gpu"
+          class="space-y-6"
         >
             <!-- Setup vs Portable 2-Column Cards -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch">
@@ -348,7 +348,7 @@
           :initial="hasSwitchedTab ? { opacity: 0 } : false"
           :animate="{ opacity: 1 }"
           :transition="{ duration: 0.18, ease: 'easeOut' }"
-          class="p-6 rounded-2xl border border-[#e4e4e7] bg-white space-y-4 transform-gpu"
+          class="p-6 rounded-2xl border border-[#e4e4e7] bg-white space-y-4"
         >
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -435,7 +435,7 @@
           :initial="hasSwitchedTab ? { opacity: 0 } : false"
           :animate="{ opacity: 1 }"
           :transition="{ duration: 0.18, ease: 'easeOut' }"
-          class="p-6 rounded-2xl border border-[#e4e4e7] bg-white space-y-4 transform-gpu"
+          class="p-6 rounded-2xl border border-[#e4e4e7] bg-white space-y-4"
         >
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -552,7 +552,7 @@
                 opacity: showAllAssets ? 1 : 0,
               }"
               :transition="{ duration: 0.2, ease: [0.33, 1, 0.68, 1] }"
-              class="p-4 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] space-y-2 text-xs transform-gpu"
+              class="p-4 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] space-y-2 text-xs"
             >
               <div class="font-semibold text-[#18181b] mb-1">
                 Tất cả tập tin phát hành:
@@ -604,7 +604,7 @@
                 opacity: showChangelog ? 1 : 0,
               }"
               :transition="{ duration: 0.2, ease: [0.33, 1, 0.68, 1] }"
-              class="p-4 sm:p-5 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] text-xs leading-relaxed overflow-x-auto markdown-prose transform-gpu"
+              class="p-4 sm:p-5 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] text-xs leading-relaxed overflow-x-auto markdown-prose"
             >
               <div class="font-semibold text-[#18181b] text-sm mb-2">
                 Nhật ký phiên bản {{ currentRelease.tag_name }}
