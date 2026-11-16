@@ -28,7 +28,7 @@
       <Particles
         :particle-colors="['#00529c', '#38bdf8', '#818cf8', '#34d399']"
         :particle-count="500"
-        :particle-spread="5"
+        :particle-spread="8"
         :speed="0.08"
         :move-particles-on-hover="true"
         :particle-hover-factor="0.4"

@@ -1,42 +1,37 @@
 <template>
-  <section class="py-16 md:py-24 bg-white overflow-hidden">
+  <section class="py-16 md:py-20 bg-white">
     <div class="container mx-auto max-w-clickup px-4 sm:px-6">
       <motion.div
-        :initial="{ opacity: 0, scale: 0.96 }"
-        :whileInView="{ opacity: 1, scale: 1 }"
+        :initial="{ opacity: 0, y: 16 }"
+        :whileInView="{ opacity: 1, y: 0 }"
         :inViewOptions="{ once: true }"
-        :transition="{ duration: 0.5, ease: [0.33, 1, 0.68, 1] }"
-        class="aurora-cta-banner p-6 sm:p-12 md:p-16 text-center text-white relative hover-lift"
+        :transition="{ duration: 0.45, ease: [0.33, 1, 0.68, 1] }"
+        class="rounded-2xl sm:rounded-3xl bg-[#003b7a] text-white p-8 sm:p-12 md:p-14 text-center relative overflow-hidden shadow-card"
       >
-        <div class="relative z-10 max-w-3xl mx-auto space-y-5 sm:space-y-6">
-          <div class="w-12 h-12 sm:w-14 sm:h-14 mx-auto rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center text-xl sm:text-2xl shadow-lg border border-white/30">
-            <img src="/assets/images/icon.svg" class="w-7 h-7 sm:w-8 sm:h-8" alt="CTU Scheduler" />
-          </div>
-
-          <h2 class="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-[-0.035em] leading-tight font-display text-white text-balance">
-            Xếp lịch học tự động, giải phóng áp lực học kỳ.
+        <div class="relative z-10 max-w-2xl mx-auto space-y-4 sm:space-y-5">
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-[-0.03em] font-display text-white text-balance leading-tight">
+            Sẵn sàng tối ưu thời khóa biểu của bạn?
           </h2>
 
-          <p class="text-white/90 text-sm sm:text-base md:text-lg max-w-xl mx-auto font-medium leading-relaxed text-pretty">
-            Hàng ngàn sinh viên Đại học Cần Thơ đã tối ưu hóa thời khóa biểu thành công. Tải về và trải nghiệm hoàn toàn miễn phí ngay hôm nay.
+          <p class="text-white/80 text-sm sm:text-base leading-relaxed text-pretty max-w-xl mx-auto">
+            Tự động hóa hoàn toàn việc xếp lịch học, loại bỏ nguy cơ trùng tiết và chủ động chọn phương án tốt nhất cho học kỳ mới.
           </p>
 
-          <div class="pt-3 sm:pt-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 w-full max-w-sm sm:max-w-none mx-auto">
+          <div class="pt-2 sm:pt-3 flex flex-col sm:flex-row items-center justify-center gap-3">
             <a
               href="#download"
-              class="w-full sm:w-auto px-7 sm:px-8 py-3.5 rounded-full bg-white text-[#003b7a] font-extrabold text-xs sm:text-sm shadow-xl hover:bg-[#f8f9fa] transition-colors duration-200 text-center justify-center whitespace-nowrap"
+              class="w-full sm:w-auto px-7 py-3 rounded-full bg-white text-[#003b7a] font-bold text-xs sm:text-sm hover:bg-[#f8f9fa] shadow-sm transition-colors duration-150 text-center whitespace-nowrap flex items-center justify-center gap-2"
             >
               <span>Tải Phần Mềm Miễn Phí</span>
-            </a>
-            <a
-              href="https://github.com/d3nhatv0lam/CTU-Scheduler"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="w-full sm:w-auto px-6 sm:px-7 py-3.5 rounded-full bg-black/25 backdrop-blur-md text-white border border-white/30 font-bold text-xs sm:text-sm hover:bg-black/40 transition-colors duration-200 text-center justify-center whitespace-nowrap"
-            >
-              <span>Kho Mã Nguồn GitHub</span>
+              <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
             </a>
           </div>
+
+          <p class="text-[11px] sm:text-xs text-white/60 tracking-wide pt-1">
+            Hỗ trợ Windows, macOS &amp; Linux · Miễn phí &amp; Mã nguồn mở MIT
+          </p>
         </div>
       </motion.div>
     </div>
