@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="vi">
+<html lang="vi" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,17 +8,21 @@
       href="./assets/images/icon.ico"
       type="image/x-icon"
     />
-    <title>CTU Scheduler - Tối Ưu Thời Khóa Biểu</title>
+    <title>CTU Scheduler - Tối Ưu Thời Khóa Biểu Đại Học Cần Thơ</title>
+    <meta
+      name="description"
+      content="Ứng dụng Desktop tự động hóa xếp lịch học, giải quyết xung đột môn và theo dõi biến động sĩ số trực tiếp từ MyCTU cho sinh viên Đại học Cần Thơ."
+    />
 
-    <!-- Fonts -->
+    <!-- Preconnect & Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
 
-    <!-- FontAwesome -->
+    <!-- FontAwesome Icons -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -29,484 +33,569 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="./css/style.css" />
+    <style>
+      h1 { font-size: 2.75rem; line-height: 1.15; font-weight: 800; }
+      h2 { font-size: 2rem; line-height: 1.25; font-weight: 700; }
+      h3 { font-size: 1.5rem; line-height: 1.35; font-weight: 600; }
+      h4 { font-size: 1.2rem; line-height: 1.4; font-weight: 600; }
+      body { font-size: 1rem; line-height: 1.5; }
+    </style>
   </head>
-  <body class="font-sans antialiased text-slate-100 min-h-screen flex flex-col">
-    <!-- Mesh Gradient Background -->
-    <div class="mesh-bg">
-      <div class="mesh-blob blob-1"></div>
-      <div class="mesh-blob blob-2"></div>
-      <div class="mesh-blob blob-3"></div>
-    </div>
+  <body class="font-sans antialiased text-slate-100 min-h-screen flex flex-col selection:bg-primary selection:text-white">
+    <!-- Subtle technical grid background -->
+    <div class="tech-bg" aria-hidden="true"></div>
 
-    <!-- Navigation -->
-    <nav
-      class="w-full z-50 glass-card !rounded-none !border-x-0 !border-t-0 !p-4 bg-white/5 backdrop-blur-lg"
-    >
-      <div
-        class="container mx-auto max-w-6xl flex justify-between items-center"
-      >
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-[#0a0f1d]/90 border-b border-slate-800 backdrop-blur-md">
+      <div class="container mx-auto max-w-6xl px-4 h-16 flex items-center justify-between">
         <a
           href="#home"
-          class="nav-link flex flex-row gap-4 items-center justify-center"
+          class="flex items-center gap-3 text-slate-100 hover:text-white transition-colors"
+          aria-label="CTU Scheduler Trang chủ"
         >
-          <img src="./assets/images/icon.svg" alt="" class="h-10 md:h-14" />
-          <p class="text-2xl font-bold tracking-tight text-gradient">
-            CTU Scheduler
-          </p>
+          <img
+            src="./assets/images/icon.svg"
+            alt="CTU Scheduler Logo"
+            class="h-9 w-9 shrink-0"
+          />
+          <span class="text-xl font-bold tracking-tight text-white">CTU Scheduler</span>
         </a>
-        <div class="hidden md:flex gap-8 font-medium">
+
+        <!-- Desktop Navigation Links -->
+        <nav class="hidden md:flex items-center gap-7 text-sm font-medium" aria-label="Menu điều hướng chính">
+          <a href="#how-it-works" class="nav-link text-slate-300 hover:text-white transition-colors">Cách Hoạt Động</a>
+          <a href="#features" class="nav-link text-slate-300 hover:text-white transition-colors">Tính Năng</a>
+          <a href="#certification" class="nav-link text-slate-300 hover:text-white transition-colors">Nghiệm Thu NCKH</a>
+          <a href="#download" class="nav-link text-slate-300 hover:text-white transition-colors">Tải Xuống</a>
+          <a href="#faq" class="nav-link text-slate-300 hover:text-white transition-colors">Hỏi Đáp</a>
+          <a href="#team" class="nav-link text-slate-300 hover:text-white transition-colors">Đội Ngũ</a>
+        </nav>
+
+        <!-- Right Action Button -->
+        <div class="hidden sm:flex items-center gap-3">
           <a
-            href="#home"
-            class="nav-link text-secondary hover:text-white transition-colors"
-            >Trang Chủ</a
+            href="https://github.com/d3nhatv0lam/CTU-Scheduler"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-secondary !px-3.5 !py-2 text-xs"
+            aria-label="Xem mã nguồn mở trên GitHub"
           >
-          <a
-            href="#download"
-            class="nav-link text-gray-300 hover:text-white transition-colors"
-            >Tải Xuống</a
-          >
-          <a
-            href="#contact"
-            class="nav-link text-gray-300 hover:text-white transition-colors"
-            >Liên Hệ</a
-          >
+            <i class="fa-brands fa-github text-sm" aria-hidden="true"></i>
+            <span>GitHub</span>
+          </a>
+          <a href="#download" class="btn-primary !px-4 !py-2 text-xs">
+            <i class="fa-solid fa-download text-xs" aria-hidden="true"></i>
+            <span>Tải App</span>
+          </a>
         </div>
-        <!-- Mobile Menu Button -->
+
+        <!-- Mobile Menu Toggle Button -->
         <button
           id="mobile-menu-btn"
-          class="md:hidden text-gray-300 hover:text-white"
+          class="md:hidden p-2 text-slate-400 hover:text-white focus:outline-none"
+          aria-label="Mở danh mục điều hướng"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
         >
-          <i class="fa-solid fa-bars text-xl"></i>
+          <i class="fa-solid fa-bars text-xl" aria-hidden="true"></i>
         </button>
       </div>
 
-      <!-- Mobile Menu Dropdown -->
+      <!-- Mobile Dropdown Menu -->
       <div
         id="mobile-menu"
-        class="hidden md:hidden absolute top-full left-0 w-full bg-slate-900/95 backdrop-blur-xl border-b border-white/10 shadow-2xl transition-all duration-300"
+        class="hidden md:hidden bg-[#0d1527] border-b border-slate-800 px-4 py-4 space-y-3"
       >
-        <div class="flex flex-col p-4 gap-4">
+        <a href="#how-it-works" class="block text-slate-300 hover:text-white py-1.5 font-medium">Cách Hoạt Động</a>
+        <a href="#features" class="block text-slate-300 hover:text-white py-1.5 font-medium">Tính Năng</a>
+        <a href="#certification" class="block text-slate-300 hover:text-white py-1.5 font-medium">Nghiệm Thu NCKH</a>
+        <a href="#download" class="block text-slate-300 hover:text-white py-1.5 font-medium">Tải Xuống</a>
+        <a href="#faq" class="block text-slate-300 hover:text-white py-1.5 font-medium">Hỏi Đáp</a>
+        <a href="#team" class="block text-slate-300 hover:text-white py-1.5 font-medium">Đội Ngũ</a>
+        <div class="pt-3 border-t border-slate-800 flex gap-2">
+          <a href="#download" class="btn-primary flex-1 !py-2 text-xs text-center">Tải Ngay</a>
           <a
-            href="#home"
-            class="nav-link text-secondary font-medium hover:text-white transition-colors"
-            >Trang Chủ</a
+            href="https://github.com/d3nhatv0lam/CTU-Scheduler"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-secondary !py-2 text-xs px-3"
           >
-          <a
-            href="#download"
-            class="nav-link text-gray-300 font-medium hover:text-white transition-colors"
-            >Tải Xuống</a
-          >
-          <a
-            href="#contact"
-            class="nav-link text-gray-300 font-medium hover:text-white transition-colors"
-            >Liên Hệ</a
-          >
+            <i class="fa-brands fa-github" aria-hidden="true"></i>
+          </a>
         </div>
       </div>
-    </nav>
+    </header>
 
-    <!-- Main Content Area -->
-    <main class="flex-grow container mx-auto max-w-6xl px-4 pt-28 pb-16">
-      <!-- 1. HOMEPAGE SECTION -->
-      <section id="home" class="page-section">
-        <!-- Hero -->
-        <div class="text-center mt-12 mb-20 reveal relative">
-          <div
-            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 sm:w-96 sm:h-96 bg-secondary/20 rounded-full blur-[80px] sm:blur-[100px] z-[-1]"
-          ></div>
-          <h1
-            class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight leading-tight drop-shadow-[0_0_20px_rgba(0,229,255,0.3)]"
-          >
-            Lên Lịch Học <br /><span class="text-gradient drop-shadow-lg"
-              >Thông Minh & Tối Ưu</span
-            >
-          </h1>
-          <p
-            class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-10 leading-relaxed drop-shadow-md"
-          >
-            CTU Scheduler là ứng dụng Desktop hỗ trợ sinh viên trường Đại học
-            Cần Thơ (CTU) giải quyết bài toán xếp lịch học mỗi đầu học kỳ. Tự
-            động hóa quy trình trích xuất dữ liệu, lập thời khóa biểu cá nhân
-            hóa và theo dõi biến động sĩ số tức thời.
-          </p>
-          <div
-            class="flex flex-col sm:flex-row gap-4 justify-center items-center"
-          >
-            <a href="#download" class="btn-primary">
-              <i class="fa-solid fa-download"></i> Tải Ngay Bản Mới Nhất
-            </a>
-            <a
-              href="https://github.com/d3nhatv0lam/CTU-Scheduler"
-              target="_blank"
-              class="glass-card !py-3 !px-6 hover:bg-white/10 flex items-center gap-2 font-medium"
-            >
-              <i class="fa-brands fa-github text-xl"></i> Xem Mã Nguồn
-            </a>
-          </div>
-        </div>
-
-        <!-- How it works -->
-        <div class="mb-24">
-          <h2
-            class="text-3xl font-bold mb-12 text-center reveal text-gradient drop-shadow-[0_0_15px_rgba(0,229,255,0.4)]"
-          >
-            Cách Thức Hoạt Động
-          </h2>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-            <!-- decorative line -->
-            <div
-              class="hidden md:block absolute top-[40%] left-[10%] w-[80%] h-0.5 bg-gradient-to-r from-transparent via-secondary/30 to-transparent z-0"
-            ></div>
-
-            <div
-              class="glass-card reveal text-center relative z-10 !bg-slate-900/60 hover:!bg-slate-900/80"
-            >
-              <div
-                class="w-16 h-16 rounded-full bg-primary/20 border border-secondary/50 flex items-center justify-center text-secondary text-2xl mx-auto mb-6 font-bold shadow-[0_0_25px_rgba(0,229,255,0.3)] backdrop-blur-sm"
-              >
-                1
+    <!-- Main Content Container -->
+    <main class="flex-grow">
+      <!-- 1. HERO SECTION WITH LIVING TIMETABLE PREVIEW -->
+      <section id="home" class="pt-12 pb-20 md:pt-16 md:pb-24 border-b border-slate-800/80">
+        <div class="container mx-auto max-w-6xl px-4">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <!-- Left Headline & Call to Action -->
+            <div class="lg:col-span-6 reveal">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-medium mb-6">
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                Đề tài NCKH Sinh viên được Nghiệm thu
               </div>
-              <h3 class="text-xl font-bold mb-3">Tải & Khởi Chạy</h3>
-              <p class="text-gray-300 text-sm leading-relaxed">
-                Chạy ứng dụng trực tiếp trên máy tính của bạn, không cần cài đặt
-                rườm rà. Hệ thống hoạt động hoàn toàn bảo mật và cục bộ.
+
+              <h1 class="text-4xl sm:text-5xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight mb-6">
+                Lên lịch học Đại học Cần Thơ tự động & chuẩn xác
+              </h1>
+
+              <p class="text-base sm:text-lg text-slate-300 leading-relaxed mb-8 max-w-xl">
+                Chấm dứt hoàn toàn việc dò mã lớp thủ công, giải quyết xung đột lịch học phức tạp và theo dõi biến động sĩ số trực tiếp từ hệ thống MyCTU.
               </p>
+
+              <div class="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center mb-8">
+                <a href="#download" class="btn-primary">
+                  <i class="fa-solid fa-download" aria-hidden="true"></i>
+                  <span>Tải Bản Cài Đặt Mới Nhất</span>
+                </a>
+                <a
+                  href="https://github.com/d3nhatv0lam/CTU-Scheduler"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-secondary"
+                >
+                  <i class="fa-brands fa-github text-lg" aria-hidden="true"></i>
+                  <span>Mã Nguồn Mở (MIT)</span>
+                </a>
+              </div>
+
+              <!-- Trust & Security Signals -->
+              <div class="pt-6 border-t border-slate-800/80 grid grid-cols-2 sm:grid-cols-3 gap-4 text-xs text-slate-400">
+                <div class="flex items-center gap-2">
+                  <i class="fa-solid fa-shield-check text-emerald-400" aria-hidden="true"></i>
+                  <span>Bảo mật 100% Cục bộ</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <i class="fa-solid fa-bolt text-blue-400" aria-hidden="true"></i>
+                  <span>Xem lịch Offline</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <i class="fa-solid fa-user-lock text-emerald-400" aria-hidden="true"></i>
+                  <span>Không lưu tài khoản</span>
+                </div>
+              </div>
             </div>
 
-            <div
-              class="glass-card reveal text-center relative z-10 !bg-slate-900/60 hover:!bg-slate-900/80"
-              style="transition-delay: 100ms"
-            >
-              <div
-                class="w-16 h-16 rounded-full bg-primary/20 border border-secondary/50 flex items-center justify-center text-secondary text-2xl mx-auto mb-6 font-bold shadow-[0_0_25px_rgba(0,229,255,0.3)] backdrop-blur-sm"
-              >
-                2
-              </div>
-              <h3 class="text-xl font-bold mb-3">Thiết Lập Tiêu Chí</h3>
-              <p class="text-gray-300 text-sm leading-relaxed">
-                Tùy chỉnh linh hoạt: ưu tiên né ca sáng, bắt buộc nghỉ trưa, hay
-                dồn lịch vào cuối tuần để đi làm thêm.
-              </p>
-            </div>
+            <!-- Right Interactive Master Timetable Simulator -->
+            <div class="lg:col-span-6 reveal">
+              <div class="bg-[#111a2e] border border-slate-700/80 rounded-xl shadow-2xl p-4 sm:p-5">
+                <!-- Interactive Controls Bar -->
+                <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-4 border-b border-slate-800">
+                  <div class="flex items-center gap-2">
+                    <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
+                    <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
+                    <span class="w-3 h-3 rounded-full bg-green-500/80"></span>
+                    <span class="text-xs font-mono font-semibold text-slate-400 ml-2">Mô Phỏng Xếp Lịch Tự Động</span>
+                  </div>
+                  <span class="badge-tech badge-success">
+                    <i class="fa-solid fa-check text-[10px]" aria-hidden="true"></i> Thuật toán tối ưu
+                  </span>
+                </div>
 
-            <div
-              class="glass-card reveal text-center relative z-10 !bg-slate-900/60 hover:!bg-slate-900/80"
-              style="transition-delay: 200ms"
-            >
-              <div
-                class="w-16 h-16 rounded-full bg-primary/20 border border-secondary/50 flex items-center justify-center text-secondary text-2xl mx-auto mb-6 font-bold shadow-[0_0_25px_rgba(0,229,255,0.3)] backdrop-blur-sm"
-              >
-                3
-              </div>
-              <h3 class="text-xl font-bold mb-3">Nhận Lịch Tối Ưu</h3>
-              <p class="text-gray-300 text-sm leading-relaxed">
-                Hệ thống xử lý hàng ngàn tổ hợp môn học và trả về cho bạn những
-                phương án hoàn hảo nhất chỉ trong tích tắc.
-              </p>
-            </div>
-          </div>
-        </div>
+                <!-- Simulation Filter Selector -->
+                <div class="mb-4">
+                  <div class="text-xs font-semibold text-slate-400 mb-2">Chọn tiêu chí thử nghiệm:</div>
+                  <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 text-xs">
+                    <button
+                      type="button"
+                      class="filter-btn px-2.5 py-1.5 rounded font-medium border bg-primary text-white border-primary transition-all text-center"
+                      data-filter="all"
+                      aria-pressed="true"
+                    >
+                      Cân bằng
+                    </button>
+                    <button
+                      type="button"
+                      class="filter-btn px-2.5 py-1.5 rounded font-medium border bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-600 transition-all text-center"
+                      data-filter="afternoon"
+                      aria-pressed="false"
+                    >
+                      Né ca sáng
+                    </button>
+                    <button
+                      type="button"
+                      class="filter-btn px-2.5 py-1.5 rounded font-medium border bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-600 transition-all text-center"
+                      data-filter="condensed"
+                      aria-pressed="false"
+                    >
+                      Dồn lịch T6-7
+                    </button>
+                    <button
+                      type="button"
+                      class="filter-btn px-2.5 py-1.5 rounded font-medium border bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-600 transition-all text-center"
+                      data-filter="campus"
+                      aria-pressed="false"
+                    >
+                      Chỉ Khu II
+                    </button>
+                  </div>
+                </div>
 
-        <!-- Features -->
-        <div class="mb-20">
-          <h2 class="text-3xl font-bold mb-10 text-center reveal text-gradient">
-            Tính Năng Nổi Bật
-          </h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="glass-card reveal">
-              <div
-                class="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white mb-4 shadow-lg"
-              >
-                <i class="fa-solid fa-wand-magic-sparkles text-xl"></i>
-              </div>
-              <h3 class="text-xl font-bold mb-3">Tự Động Sinh & Tối Ưu</h3>
-              <p class="text-gray-300 text-sm leading-relaxed">
-                Tự động tính toán hàng ngàn tổ hợp lịch học và trả về phương án
-                khả thi nhất, loại bỏ hoàn toàn tình trạng trùng lịch học.
-              </p>
-            </div>
+                <!-- Interactive Weekly Timetable Grid -->
+                <div class="overflow-x-auto">
+                  <table class="w-full text-left border-collapse text-[11px]">
+                    <thead>
+                      <tr class="border-b border-slate-800 text-slate-400 font-mono">
+                        <th class="p-2 w-16 text-center">Buổi</th>
+                        <th class="p-2 text-center">Thứ 2</th>
+                        <th class="p-2 text-center">Thứ 3</th>
+                        <th class="p-2 text-center">Thứ 4</th>
+                        <th class="p-2 text-center">Thứ 5</th>
+                        <th class="p-2 text-center">Thứ 6</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800/60 font-sans">
+                      <!-- Ca Sáng -->
+                      <tr>
+                        <td class="p-2 font-mono text-slate-400 text-center bg-slate-900/40">Sáng<br/><span class="text-[10px] text-slate-500">T1-5</span></td>
+                        <td class="p-1">
+                          <div id="slot-ct176-m" class="sim-slot timetable-slot slot-blue">
+                            <div class="font-bold">CT176</div>
+                            <div class="text-[10px] opacity-80">OOP (Khu II)</div>
+                          </div>
+                        </td>
+                        <td class="p-1">
+                          <div class="timetable-slot text-slate-600 text-center font-normal py-2">-</div>
+                        </td>
+                        <td class="p-1">
+                          <div id="slot-ct103-m" class="sim-slot timetable-slot slot-purple">
+                            <div class="font-bold">CT103</div>
+                            <div class="text-[10px] opacity-80">CTDL (Khu II)</div>
+                          </div>
+                        </td>
+                        <td class="p-1">
+                          <div class="timetable-slot text-slate-600 text-center font-normal py-2">-</div>
+                        </td>
+                        <td class="p-1">
+                          <div class="timetable-slot text-slate-600 text-center font-normal py-2">-</div>
+                        </td>
+                      </tr>
+                      <!-- Ca Chiều -->
+                      <tr>
+                        <td class="p-2 font-mono text-slate-400 text-center bg-slate-900/40">Chiều<br/><span class="text-[10px] text-slate-500">T6-10</span></td>
+                        <td class="p-1">
+                          <div class="timetable-slot text-slate-600 text-center font-normal py-2">-</div>
+                        </td>
+                        <td class="p-1">
+                          <div id="slot-ct112-a" class="sim-slot timetable-slot slot-emerald">
+                            <div class="font-bold">CT112</div>
+                            <div class="text-[10px] opacity-80">Mạng MT (Khu II)</div>
+                          </div>
+                        </td>
+                        <td class="p-1">
+                          <div id="slot-ct178-a" class="sim-slot timetable-slot slot-amber">
+                            <div class="font-bold">CT178</div>
+                            <div class="text-[10px] opacity-80">HĐH (Khu II)</div>
+                          </div>
+                        </td>
+                        <td class="p-1">
+                          <div id="slot-ml014-a" class="sim-slot timetable-slot slot-blue">
+                            <div class="font-bold">ML014</div>
+                            <div class="text-[10px] opacity-80">Triết học</div>
+                          </div>
+                        </td>
+                        <td class="p-1">
+                          <div class="timetable-slot text-slate-600 text-center font-normal py-2">-</div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
 
-            <div class="glass-card reveal" style="transition-delay: 100ms">
-              <div
-                class="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white mb-4 shadow-lg"
-              >
-                <i class="fa-solid fa-sliders text-xl"></i>
+                <!-- Simulation Live Result Summary -->
+                <div class="mt-4 pt-3 border-t border-slate-800 text-xs">
+                  <div class="grid grid-cols-3 divide-x divide-slate-800 py-2 mb-2 font-mono text-[11px]">
+                    <div class="pr-3">
+                      <span class="text-slate-400 block text-[10px]">Trùng lịch</span>
+                      <span id="sim-stat-conflicts" class="font-bold text-emerald-400">0 môn trùng</span>
+                    </div>
+                    <div class="px-3">
+                      <span class="text-slate-400 block text-[10px]">Sĩ số CT176</span>
+                      <span id="sim-stat-capacity" class="font-bold text-blue-400">Còn 42/45 chỗ</span>
+                    </div>
+                    <div class="pl-3">
+                      <span class="text-slate-400 block text-[10px]">Ngày trống</span>
+                      <span id="sim-stat-freedays" class="font-bold text-slate-200">Chủ nhật</span>
+                    </div>
+                  </div>
+                  <p id="sim-stat-status" class="text-slate-400 italic text-[11px]">
+                    Phương án cân bằng tiêu chuẩn: Rải đều các buổi sáng/chiều.
+                  </p>
+                </div>
               </div>
-              <h3 class="text-xl font-bold mb-3">Cá Nhân Hóa Chuyên Sâu</h3>
-              <p class="text-gray-300 text-sm leading-relaxed">
-                Ưu tiên dồn lịch, chỉ học ca sáng/chiều, tránh ngày cuối tuần,
-                đảm bảo thời gian nghỉ trưa, tránh di chuyển qua lại giữa các cơ
-                sở.
-              </p>
-            </div>
-
-            <div class="glass-card reveal" style="transition-delay: 200ms">
-              <div
-                class="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white mb-4 shadow-lg"
-              >
-                <i class="fa-solid fa-users-viewfinder text-xl"></i>
-              </div>
-              <h3 class="text-xl font-bold mb-3">Theo Dõi Sĩ Số</h3>
-              <p class="text-gray-300 text-sm leading-relaxed">
-                Tự động theo dõi, cập nhật sĩ số của từng lớp học phần trực tiếp
-                từ hệ thống MyCTU để bạn nắm bắt tức thời lớp nào còn chỗ.
-              </p>
-            </div>
-
-            <div class="glass-card reveal" style="transition-delay: 300ms">
-              <div
-                class="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white mb-4 shadow-lg"
-              >
-                <i class="fa-solid fa-layer-group text-xl"></i>
-              </div>
-              <h3 class="text-xl font-bold mb-3">Quản Lý Đa Phương Án</h3>
-              <p class="text-gray-300 text-sm leading-relaxed">
-                Hỗ trợ quản lý, lưu trữ, tải lại và so sánh nhiều bộ thời khóa
-                biểu khác nhau cùng lúc. Chuẩn bị sẵn các phương án dự phòng.
-              </p>
-            </div>
-
-            <div
-              class="glass-card reveal md:col-span-2 lg:col-span-2"
-              style="transition-delay: 400ms"
-            >
-              <div
-                class="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white mb-4 shadow-lg"
-              >
-                <i class="fa-solid fa-shield-halved text-xl"></i>
-              </div>
-              <h3 class="text-xl font-bold mb-3">
-                Bảo Mật Cao & Hỗ Trợ Offline
-              </h3>
-              <p class="text-gray-300 text-sm leading-relaxed">
-                Hoạt động hoàn toàn Local. Dữ liệu học phần và thông tin được
-                bảo mật tuyệt đối, tự động tiêu hủy thông tin đăng nhập sau xử
-                lý. Xem lịch học Offline mọi lúc.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Certification -->
-        <div class="mb-20 glass-card reveal overflow-hidden !p-0">
-          <div class="flex flex-col md:flex-row items-stretch">
-            <div class="p-8 md:p-12 md:w-1/2 flex flex-col justify-center">
-              <div
-                class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/20 text-secondary text-sm font-semibold mb-6 border border-secondary/30 w-fit"
-              >
-                <i class="fa-solid fa-award text-lg"></i> Dự Án NCKH Sinh Viên
-              </div>
-              <h2
-                class="text-3xl md:text-4xl font-bold mb-4 text-white leading-tight"
-              >
-                Bảo Chứng Cho Trách Nhiệm & Chất Lượng
-              </h2>
-              <p class="text-gray-300 mb-4 leading-relaxed">
-                CTU Scheduler tự hào là đề tài nghiên cứu khoa học sinh viên
-                được Hội đồng khoa học Khoa Công nghệ Thông tin & Truyền thông -
-                Đại học Cần Thơ chính thức đánh giá cao, nghiệm thu và thông
-                qua.
-              </p>
-              <p class="text-gray-300 leading-relaxed">
-                Sự chấp thuận này là minh chứng rõ nét cho sự đầu tư nghiêm túc
-                và tâm huyết của toàn bộ đội ngũ, nhằm hiện thực hóa một giải
-                pháp công nghệ giá trị, thiết thực phục vụ cộng đồng sinh viên
-                trường.
-              </p>
-            </div>
-            <div
-              class="md:w-1/2 bg-white/5 relative p-8 flex items-center justify-center border-t md:border-t-0 md:border-l border-white/10"
-            >
-              <!-- Subtle gradient glow -->
-              <div
-                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-secondary/30 rounded-full blur-[80px] z-0 pointer-events-none"
-              ></div>
-              <img
-                src="./assets/images/02_TB Cong nghe va CNTT_SV_Bien ban_duoc duyet-images-48.webp"
-                alt="Biên bản nghiệm thu đề tài NCKH"
-                class="relative z-10 w-full max-w-[280px] md:max-w-xs rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-white/20 hover:scale-[1.03] hover:-translate-y-1 transition-all duration-500 cursor-pointer"
-                onclick="window.open(this.src, '_blank')"
-                loading="lazy"
-                title="Click để xem bản đầy đủ"
-              />
             </div>
           </div>
-        </div>
-
-        <!-- Ecosystem Section -->
-        <div class="mb-20 glass-card reveal">
-          <div
-            class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
-          >
-            <div>
-              <div
-                class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-secondary/10 text-secondary text-xs font-semibold mb-3 border border-secondary/20"
-              >
-                <i class="fa-solid fa-cubes"></i> Hệ Sinh Thái Bổ Trợ
-              </div>
-              <h2 class="text-2xl font-bold text-white mb-2">
-                <span class="text-gradient">CTU Student's Tools</span>
-              </h2>
-              <p class="text-gray-300 text-sm max-w-2xl leading-relaxed">
-                Một sản phẩm trong hệ sinh thái do thành viên trong nhóm -
-                <span class="text-secondary font-medium"> Lexipit3268</span>
-                phát triển. Hỗ trợ sinh viên CTU quy đổi điểm V-SAT, tính học
-                bạ, quản lý GPA và ước tính học bổng nhanh chóng.
-              </p>
-            </div>
-
-            <a
-              href="https://ctust.pages.dev/"
-              target="_blank"
-              class="glass-card !py-3 !px-5 hover:bg-white/10 flex items-center gap-2 font-medium text-sm text-secondary border border-secondary/30 shrink-0 w-full md:w-auto justify-center"
-            >
-              Ghé thăm CTUST
-              <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
-            </a>
-          </div>
-        </div>
-        <!-- CTA / Feedback -->
-        <div
-          id="feedback-section"
-          class="glass-card !bg-primary/20 !border-secondary/30 text-center py-12 reveal"
-        >
-          <h2 class="text-3xl font-bold mb-4">Bạn Gặp Lỗi Hoặc Có Góp Ý?</h2>
-          <p class="text-gray-300 mb-8 max-w-2xl mx-auto">
-            Đóng góp của bạn giúp chúng tôi hoàn thiện ứng dụng hơn nữa. Đừng
-            ngần ngại gửi báo cáo lỗi hay ý tưởng tính năng mới nhé.
-          </p>
-          <a
-            href="https://docs.google.com/forms/d/e/1FAIpQLSfjU3UmQCetqDPxXowysP-OyfJc_QOscjXvdLepzJszug5u7w/viewform"
-            target="_blank"
-            class="btn-primary !px-8"
-          >
-            <i class="fa-solid fa-comment-dots"></i> Đóng góp ngay
-          </a>
         </div>
       </section>
 
-      <!-- 2. DOWNLOAD SECTION -->
-      <section id="download" class="page-section hidden">
-        <div class="max-w-4xl mx-auto mt-10">
+      <!-- 2. CÁCH THỨC HOẠT ĐỘNG (HOW IT WORKS) -->
+      <section id="how-it-works" class="py-20 border-b border-slate-800/80 bg-[#0d1424]">
+        <div class="container mx-auto max-w-6xl px-4">
+          <div class="max-w-2xl mx-auto text-center mb-14 reveal">
+            <h2 class="text-3xl font-bold tracking-tight text-white mb-4">
+              Cách thức hoạt động
+            </h2>
+            <p class="text-slate-400 leading-relaxed text-sm sm:text-base">
+              Quy trình 3 bước gọn gàng giúp sinh viên tiết kiệm hàng giờ vật lộn với bảng tính Excel và danh sách mã lớp.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="academic-card reveal">
+              <div class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-base mb-4 font-mono">
+                01
+              </div>
+              <h3 class="text-lg font-bold text-white mb-2">Tải & Khởi Chạy Cục Bộ</h3>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Chạy ứng dụng trực tiếp trên máy tính của bạn, không cần cài đặt rườm rà. Dữ liệu xử lý hoàn toàn bảo mật và cục bộ.
+              </p>
+            </div>
+
+            <div class="academic-card reveal">
+              <div class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-base mb-4 font-mono">
+                02
+              </div>
+              <h3 class="text-lg font-bold text-white mb-2">Thiết Lập Bộ Lọc Cá Nhân</h3>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Tùy chỉnh linh hoạt: ưu tiên né ca sáng, đảm bảo thời gian nghỉ trưa, dồn lịch vào đầu tuần để đi làm thêm, tránh di chuyển đổi cơ sở.
+              </p>
+            </div>
+
+            <div class="academic-card reveal">
+              <div class="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-base mb-4 font-mono">
+                03
+              </div>
+              <h3 class="text-lg font-bold text-white mb-2">Nhận Kết Quả Tối Ưu Tức Thì</h3>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Hệ thống tự động tính toán hàng ngàn tổ hợp môn học, loại trừ hoàn toàn lịch trùng và hiển thị biến động sĩ số MyCTU theo thời gian thực.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. TÍNH NĂNG NỔI BẬT (FEATURES) -->
+      <section id="features" class="py-20 border-b border-slate-800/80">
+        <div class="container mx-auto max-w-6xl px-4">
+          <div class="max-w-2xl mx-auto text-center mb-14 reveal">
+            <h2 class="text-3xl font-bold tracking-tight text-white mb-4">
+              Tính năng hỗ trợ chuyên sâu
+            </h2>
+            <p class="text-slate-400 leading-relaxed text-sm sm:text-base">
+              Xây dựng xuất phát từ thực tế đăng ký môn học tại trường Đại học Cần Thơ, giải quyết trọn vẹn từng điểm nghẽn.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Feature 1 -->
+            <div class="academic-card reveal">
+              <div class="w-10 h-10 rounded-lg bg-blue-600/15 border border-blue-500/30 text-blue-400 flex items-center justify-center mb-4">
+                <i class="fa-solid fa-calculator text-base" aria-hidden="true"></i>
+              </div>
+              <h3 class="text-lg font-bold text-white mb-2">Tự Động Sinh & Tối Ưu Hóa</h3>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Tự động tính toán hàng ngàn tổ hợp lịch học và trả về hàng loạt phương án khả thi nhất, loại bỏ hoàn toàn tình trạng trùng giờ môn học.
+              </p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="academic-card reveal">
+              <div class="w-10 h-10 rounded-lg bg-blue-600/15 border border-blue-500/30 text-blue-400 flex items-center justify-center mb-4">
+                <i class="fa-solid fa-sliders text-base" aria-hidden="true"></i>
+              </div>
+              <h3 class="text-lg font-bold text-white mb-2">Cá Nhân Hóa Chuyên Sâu</h3>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Bộ lọc mạnh mẽ: ưu tiên dồn lịch, chỉ học ca sáng hoặc chiều, tránh ngày cuối tuần, đảm bảo giờ ăn trưa và hạn chế di chuyển giữa các cơ sở trong cùng 1 buổi.
+              </p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="academic-card reveal">
+              <div class="w-10 h-10 rounded-lg bg-blue-600/15 border border-blue-500/30 text-blue-400 flex items-center justify-center mb-4">
+                <i class="fa-solid fa-chart-line text-base" aria-hidden="true"></i>
+              </div>
+              <h3 class="text-lg font-bold text-white mb-2">Theo Dõi Biến Động Sĩ Số</h3>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Tự động cập nhật sĩ số của từng lớp học phần trực tiếp từ hệ thống MyCTU. Nhận biết tức thời lớp nào còn chỗ để kịp thời chuyển đổi phương án.
+              </p>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="academic-card reveal">
+              <div class="w-10 h-10 rounded-lg bg-blue-600/15 border border-blue-500/30 text-blue-400 flex items-center justify-center mb-4">
+                <i class="fa-solid fa-copy text-base" aria-hidden="true"></i>
+              </div>
+              <h3 class="text-lg font-bold text-white mb-2">Quản Lý Đa Phương Án</h3>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Hỗ trợ quản lý, lưu trữ, tải lại và so sánh nhiều bộ thời khóa biểu cùng lúc. Chủ động sẵn sàng các phương án dự phòng khi mở cổng đăng ký.
+              </p>
+            </div>
+
+            <!-- Feature 5 (spans 2 columns on lg) -->
+            <div class="academic-card reveal md:col-span-2 lg:col-span-2">
+              <div class="w-10 h-10 rounded-lg bg-emerald-600/15 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mb-4">
+                <i class="fa-solid fa-shield-halved text-base" aria-hidden="true"></i>
+              </div>
+              <h3 class="text-lg font-bold text-white mb-2">Bảo Mật Cục Bộ Tuyệt Đối & Hỗ Trợ Offline</h3>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Hoạt động hoàn toàn trên máy tính cá nhân thông qua trình duyệt ảo ngầm. Dữ liệu học phần và thông tin sinh viên được giữ an toàn tuyệt đối, mật khẩu MyCTU tự hủy sau khi xác thực. Bạn có thể mở xem lịch học bất kỳ lúc nào ngay cả khi mất kết nối Internet.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. NGHIỆM THU NCKH (CERTIFICATION) -->
+      <section id="certification" class="py-20 border-b border-slate-800/80 bg-[#0d1424]">
+        <div class="container mx-auto max-w-6xl px-4">
+          <div class="academic-card !p-0 overflow-hidden reveal">
+            <div class="flex flex-col lg:flex-row items-stretch">
+              <div class="p-8 sm:p-12 lg:w-3/5 flex flex-col justify-center">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-semibold mb-6 border border-blue-500/20 w-fit">
+                  <i class="fa-solid fa-award text-sm" aria-hidden="true"></i>
+                  Đề Tài Nghiên Cứu Khoa Học Sinh Viên
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-4 leading-snug">
+                  Bảo chứng cho trách nhiệm & chất lượng công nghệ
+                </h2>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-4">
+                  CTU Scheduler là đề tài nghiên cứu khoa học sinh viên được Hội đồng khoa học Khoa Công nghệ Thông tin & Truyền thông - Đại học Cần Thơ chính thức đánh giá cao, nghiệm thu và thông qua.
+                </p>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                  Sự thẩm định nghiêm ngặt từ các giảng viên chuyên môn là minh chứng rõ rệt cho tính chính xác của thuật toán xếp lịch và mức độ bảo mật dữ liệu phục vụ trực tiếp cộng đồng sinh viên trường.
+                </p>
+              </div>
+
+              <!-- Certificate Image Preview Container -->
+              <div class="lg:w-2/5 bg-slate-900/60 p-8 flex flex-col items-center justify-center border-t lg:border-t-0 lg:border-l border-slate-800">
+                <a
+                  href="./assets/images/02_TB Cong nghe va CNTT_SV_Bien ban_duoc duyet-images-48.webp"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="group block relative rounded-lg overflow-hidden border border-slate-700 shadow-xl focus:outline-none focus:ring-2 focus:ring-primary"
+                  title="Nhấn để xem biên bản nghiệm thu kích thước đầy đủ"
+                >
+                  <img
+                    src="./assets/images/02_TB Cong nghe va CNTT_SV_Bien ban_duoc duyet-images-48.webp"
+                    alt="Biên bản nghiệm thu đề tài NCKH CTU Scheduler"
+                    class="max-w-[260px] sm:max-w-xs object-cover transition-transform duration-300 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div class="absolute inset-0 bg-slate-950/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-medium gap-2">
+                    <i class="fa-solid fa-magnifying-glass-plus text-base" aria-hidden="true"></i>
+                    <span>Xem Bản Đầy Đủ</span>
+                  </div>
+                </a>
+                <span class="text-xs text-slate-500 mt-3 text-center">Biên bản nghiệm thu đề tài cấp Khoa CNTT&TT</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. HỆ SINH THÁI BỔ TRỢ (ECOSYSTEM) -->
+      <section class="py-16 border-b border-slate-800/80">
+        <div class="container mx-auto max-w-6xl px-4">
+          <div class="academic-card flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 reveal">
+            <div class="space-y-2">
+              <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded text-[11px] font-semibold bg-slate-800 text-slate-300 border border-slate-700">
+                <i class="fa-solid fa-cubes text-xs" aria-hidden="true"></i> Hệ Sinh Thái Bổ Trợ
+              </div>
+              <h3 class="text-xl font-bold text-white">CTU Student's Tools (CTUST)</h3>
+              <p class="text-slate-400 text-sm max-w-2xl leading-relaxed">
+                Công cụ quy đổi điểm V-SAT, tính điểm học bạ, quản lý GPA và ước tính điểm học bổng dành riêng cho sinh viên Đại học Cần Thơ do thành viên Nguyễn Phước Lộc (Lexipit3268) phát triển.
+              </p>
+            </div>
+            <a
+              href="https://ctust.pages.dev/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-secondary !text-xs shrink-0 w-full sm:w-auto"
+            >
+              <span>Truy Cập CTUST</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[10px]" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. TẢI XUỐNG & ĐIỀU KHOẢN (DOWNLOAD & DISCLAIMER) -->
+      <section id="download" class="py-20 border-b border-slate-800/80 bg-[#0d1424]">
+        <div class="container mx-auto max-w-5xl px-4">
           <div class="text-center mb-12 reveal">
-            <h2 class="text-4xl md:text-5xl font-bold mb-4 text-gradient">
+            <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-3">
               Tải CTU Scheduler
             </h2>
-            <p class="text-base text-gray-300">
-              Tải xuống phiên bản mới nhất phù hợp với thiết bị của bạn.
+            <p class="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">
+              Ứng dụng tương thích tối ưu trên Windows x64. Tải xuống bản cài đặt tự động cập nhật hoặc bản chạy ngay Portable.
             </p>
           </div>
 
-          <!-- Trạng thái Loading Skeleton -->
+          <!-- Loading Skeleton -->
           <div
             id="download-loading"
-            class="glass-card mb-12 reveal text-center py-16"
+            class="academic-card text-center py-16 reveal"
           >
             <div
-              class="inline-block w-12 h-12 border-4 border-secondary border-t-transparent rounded-full animate-spin mb-4"
+              class="inline-block w-10 h-10 border-3 border-primary border-t-transparent rounded-full animate-spin mb-4"
+              aria-label="Đang kiểm tra bản phát hành mới"
             ></div>
-            <p class="text-gray-400 animate-pulse">
-              Đang tải cấu hình cài đặt từ GitHub...
-            </p>
+            <p class="text-slate-400 text-sm">Đang tải cấu hình cài đặt mới nhất từ GitHub Releases...</p>
           </div>
 
-          <!-- Trạng thái lỗi / Fallback -->
+          <!-- Error / Fallback State -->
           <div
             id="download-error"
-            class="glass-card mb-12 reveal hidden text-center py-12 border-red-500/20 bg-red-500/5"
+            class="academic-card hidden text-center py-12 border-red-500/30 bg-red-500/5 reveal"
           >
-            <div
-              class="w-16 h-16 bg-red-500/10 text-red-400 border border-red-500/30 rounded-full flex items-center justify-center text-2xl mx-auto mb-4"
-            >
-              <i class="fa-solid fa-triangle-exclamation"></i>
+            <div class="w-12 h-12 bg-red-500/10 text-red-400 border border-red-500/30 rounded-full flex items-center justify-center text-xl mx-auto mb-3">
+              <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
             </div>
-            <h3 class="text-xl font-bold text-white mb-2">
-              Không Thể Kết Nối Đến GitHub
-            </h3>
-            <p class="text-gray-400 text-sm max-w-md mx-auto mb-6">
-              Không thể lấy thông tin trực tiếp.<br />
-              Bạn có thể tải thủ công trên trang Releases chính thức.
+            <h3 class="text-lg font-bold text-white mb-1">Không Thể Kết Nối Trực Tiếp Đến GitHub</h3>
+            <p class="text-slate-400 text-sm max-w-md mx-auto mb-6">
+              Bạn có thể tải trực tiếp file cài đặt trên kho lưu trữ Releases chính thức.
             </p>
             <a
               href="https://github.com/d3nhatv0lam/CTU-Scheduler/releases"
               target="_blank"
+              rel="noopener noreferrer"
               class="btn-primary"
             >
-              <i class="fa-brands fa-github text-lg"></i> Đi Tới Trang Tải Xuống
-              Thủ Công
+              <i class="fa-brands fa-github text-base" aria-hidden="true"></i>
+              <span>Xem Trang Tải Xuống Thủ Công</span>
             </a>
-            <p class="text-xs text-white mt-6">
-              Bằng việc tải xuống và sử dụng CTU Scheduler, bạn đồng ý với
-              <a
-                href="https://github.com/d3nhatv0lam/CTU-Scheduler/blob/master/TERMS.md"
-                target="_blank"
-                class="text-secondary hover:underline"
-                >Điều khoản sử dụng & Miễn trừ trách nhiệm</a
-              >
-              của dự án.
-            </p>
           </div>
 
-          <!-- Trạng thái hiển thị liên kết động -->
-          <div id="download-content" class="hidden mb-12">
-            <!-- Sẽ được fill bằng JavaScript -->
-          </div>
+          <!-- Dynamic Releases Content Filled by github-release.js -->
+          <div id="download-content" class="hidden mb-12"></div>
 
-          <div class="mt-16 reveal">
-            <h3 class="text-2xl font-bold mb-6 text-center text-gradient">
-              Câu Hỏi Thường Gặp (FAQ)
+          <!-- Terms & Disclaimers Section -->
+          <div class="academic-card mt-8 reveal">
+            <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+              <i class="fa-solid fa-file-contract text-blue-400" aria-hidden="true"></i>
+              Điều Khoản Sử Dụng & Miễn Trừ Trách Nhiệm
             </h3>
-            <div class="space-y-4">
-              <div class="glass-card !p-5">
-                <h4 class="font-bold text-white mb-2 text-lg">
-                  Tại sao lại là app Desktop mà không phải Web?
-                </h4>
-                <p class="text-gray-300 text-sm leading-relaxed">
-                  Giúp tận dụng tài nguyên xử lý thuật toán phức tạp mượt mà,
-                  đảm bảo riêng tư tuyệt đối (không qua server) và cho phép xem
-                  lịch Offline.
+            <div class="space-y-4 text-xs sm:text-sm text-slate-300 leading-relaxed">
+              <div>
+                <strong class="text-white">1. Quyền Riêng Tư & Bảo Mật Dữ Liệu:</strong>
+                <p class="text-slate-400 mt-1">
+                  Mọi thao tác đăng nhập và đồng bộ thời khóa biểu chỉ diễn ra cục bộ trên máy tính của bạn và giao tiếp thẳng với máy chủ MyCTU. Nhóm phát triển cam kết tuyệt đối không thu thập, không lưu trữ và không truyền tải thông tin đăng nhập của bạn đến bất kỳ bên thứ ba nào. Mật khẩu tự động bị tiêu hủy khỏi bộ nhớ đệm ngay khi kết thúc phiên.
                 </p>
               </div>
-              <div class="glass-card !p-5">
-                <h4 class="font-bold text-white mb-2 text-lg">
-                  Nếu hệ thống trường đổi giao diện thì sao?
-                </h4>
-                <p class="text-gray-300 text-sm leading-relaxed">
-                  CTU Scheduler thiết kế dạng module. Nhóm phát triển chỉ cần
-                  cập nhật "module thu thập dữ liệu" mà không cần đập đi xây lại
-                  hệ thống.
+              <div>
+                <strong class="text-white">2. Miễn Trừ Trách Nhiệm (Disclaimer):</strong>
+                <p class="text-slate-400 mt-1">
+                  Ứng dụng phát hành miễn phí theo Giấy phép mã nguồn mở MIT "AS IS" (Có sao dùng vậy). Nhóm phát triển không chịu trách nhiệm đối với các sự cố bất khả kháng như nghẽn mạng MyCTU vào giờ cao điểm, kẹt mã Captcha hoặc hệ thống cổng thông tin trường thay đổi đột ngột.
                 </p>
               </div>
-              <div class="glass-card !p-5">
-                <h4 class="font-bold text-white mb-2 text-lg">
-                  Có hỗ trợ điện thoại (Mobile) không?
-                </h4>
-                <p class="text-gray-300 text-sm leading-relaxed">
-                  Hiện tại chưa, nhưng dự án dùng công nghệ đa nền tảng nên
-                  tương lai hoàn toàn có thể ra mắt bản Mobile thu gọn.
-                </p>
-              </div>
-              <div class="glass-card !p-5">
-                <h4 class="font-bold text-white mb-2 text-lg">
-                  Tại sao ứng dụng đôi khi bị chậm hoặc báo lỗi khi đăng nhập,
-                  tải dữ liệu?
-                </h4>
-                <p class="text-gray-300 text-sm leading-relaxed">
-                  Nguyên nhân chủ yếu là do máy chủ MyCTU của trường bị nghẽn
-                  mạng vào giờ cao điểm đăng ký, hoặc đường truyền mạng của bạn
-                  tới trường bị chập chờn. Bạn hãy thử kiểm tra lại kết nối
-                  mạng, giải mã Captcha nếu ứng dụng có yêu cầu, hoặc thử chuyển
-                  sang mạng khác (như 4G/5G) / bật ứng dụng VPN để kết nối ổn
-                  định hơn.
-                </p>
-              </div>
-              <div class="glass-card !p-5">
-                <h4 class="font-bold text-white mb-2 text-lg">
-                  Ứng dụng có tự động đăng ký môn học giúp tôi không?
-                </h4>
-                <p class="text-gray-300 text-sm leading-relaxed">
-                  Không. Hiện tại CTU Scheduler tập trung hoàn toàn vào việc
-                  giúp bạn lập lịch học tối ưu, cá nhân hóa và theo dõi sĩ số.
+              <div>
+                <strong class="text-white">3. Mục Đích & Lưu Ý Vận Hành:</strong>
+                <p class="text-slate-400 mt-1">
+                  Ứng dụng mở một trình duyệt ảo ngầm để lấy dữ liệu. Vui lòng không tắt cửa sổ ngầm này trong quá trình đồng bộ và tự giải Captcha nếu hệ thống MyCTU yêu cầu. Tuyệt đối nghiêm cấm việc dùng ứng dụng để gửi request liên tục làm quá tải máy chủ trường.
                 </p>
               </div>
             </div>
@@ -514,234 +603,279 @@
         </div>
       </section>
 
-      <!-- 3. CONTACT SECTION -->
-      <section id="contact" class="page-section hidden">
-        <div class="text-center mt-10 mb-16 reveal">
-          <h2 class="text-4xl md:text-5xl font-bold mb-4 text-gradient">
-            Đội Ngũ Phát Triển
-          </h2>
-          <p class="text-gray-300">
-            Những người đã đóng góp công sức xây dựng dự án này.
-          </p>
+      <!-- 7. CÂU HỎI THƯỜNG GẶP (FAQ) -->
+      <section id="faq" class="py-20 border-b border-slate-800/80">
+        <div class="container mx-auto max-w-4xl px-4">
+          <div class="text-center mb-14 reveal">
+            <h2 class="text-3xl font-bold tracking-tight text-white mb-3">
+              Câu hỏi thường gặp
+            </h2>
+            <p class="text-slate-400 text-sm sm:text-base">
+              Giải đáp các thắc mắc phổ biến của sinh viên khi sử dụng CTU Scheduler.
+            </p>
+          </div>
+
+          <div class="space-y-4">
+            <div class="academic-card !p-5 reveal">
+              <h3 class="font-bold text-white text-base mb-2">
+                Tại sao lại là ứng dụng Desktop mà không phải một trang Web?
+              </h3>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Ứng dụng Desktop giúp tận dụng tối đa tài nguyên máy tính cá nhân để chạy mượt mà thuật toán sinh tổ hợp lịch học phức tạp. Quan trọng hơn, nó bảo đảm tính riêng tư tuyệt đối cho tài khoản MyCTU của bạn (vì không gửi qua máy chủ trung gian) và cho phép bạn xem lại thời khóa biểu mọi lúc ngay cả khi mất mạng.
+              </p>
+            </div>
+
+            <div class="academic-card !p-5 reveal">
+              <h3 class="font-bold text-white text-base mb-2">
+                Nếu hệ thống trường đột ngột đổi giao diện hoặc cấu trúc dữ liệu thì sao?
+              </h3>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                CTU Scheduler được thiết kế thông minh theo dạng mô-đun. Khi có thay đổi, nhóm chỉ cần cập nhật riêng mô-đun thu thập dữ liệu là ứng dụng có thể hoạt động bình thường mà không cần lập trình lại toàn bộ hệ thống.
+              </p>
+            </div>
+
+            <div class="academic-card !p-5 reveal">
+              <h3 class="font-bold text-white text-base mb-2">
+                Ứng dụng có phiên bản dành cho điện thoại di động (Mobile) không?
+              </h3>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Hiện tại dự án tập trung hoàn thiện phiên bản Desktop cho máy tính. Vì được xây dựng trên công nghệ đa nền tảng, một phiên bản thu gọn dành cho Mobile có thể được nhóm nghiên cứu phát triển trong tương lai nếu có đủ điều kiện.
+              </p>
+            </div>
+
+            <div class="academic-card !p-5 reveal">
+              <h3 class="font-bold text-white text-base mb-2">
+                Tại sao ứng dụng đôi khi bị chậm hoặc báo lỗi kết nối khi đăng nhập?
+              </h3>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Nguyên nhân chủ yếu do máy chủ MyCTU của trường bị quá tải vào giờ cao điểm đăng ký, hoặc đường truyền mạng chập chờn. Bạn nên kiểm tra lại kết nối mạng, hoàn thành xác thực Captcha trên cửa sổ trình duyệt ngầm nếu có yêu cầu, hoặc thử chuyển sang mạng 4G/5G / bật ứng dụng 1.1.1.1 để kết nối ổn định hơn.
+              </p>
+            </div>
+
+            <div class="academic-card !p-5 reveal">
+              <h3 class="font-bold text-white text-base mb-2">
+                Ứng dụng có tự động bấm đăng ký môn học thay cho sinh viên không?
+              </h3>
+              <p class="text-slate-400 text-sm leading-relaxed">
+                Không. CTU Scheduler tập trung hoàn toàn vào việc giúp sinh viên lên lịch học tối ưu, cá nhân hóa tiêu chí và theo dõi biến động sĩ số lớp học phần, không can thiệp vào hành động bấm nút đăng ký chính thức của bạn trên MyCTU.
+              </p>
+            </div>
+          </div>
         </div>
+      </section>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <!-- Dev 1 -->
-          <div class="glass-card text-center reveal">
-            <div
-              class="w-24 h-24 mx-auto rounded-full bg-primary mb-4 overflow-hidden border-2 border-secondary p-1"
-            >
-              <img
-                src="https://github.com/d3nhatv0lam.png"
-                onerror="
-                  this.onerror = null;
-                  this.src =
-                    'https://ui-avatars.com/api/?name=Dương+Minh+Đức&background=1f5ca9&color=fff&size=200';
-                "
-                alt="Dương Minh Đức"
-                class="w-full h-full rounded-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <h3 class="text-xl font-bold text-white">Dương Minh Đức</h3>
-            <p class="text-sm text-secondary font-medium mb-3">
-              Founder / Developer
+      <!-- 8. ĐỘI NGŨ PHÁT TRIỂN (TEAM) -->
+      <section id="team" class="py-20 border-b border-slate-800/80 bg-[#0d1424]">
+        <div class="container mx-auto max-w-6xl px-4">
+          <div class="text-center mb-14 reveal">
+            <h2 class="text-3xl font-bold tracking-tight text-white mb-3">
+              Đội ngũ phát triển
+            </h2>
+            <p class="text-slate-400 text-sm sm:text-base">
+              Nhóm sinh viên Khoa CNTT&TT - Đại học Cần Thơ xây dựng và duy trì dự án.
             </p>
-            <div class="flex justify-center gap-3">
-              <a
-                href="https://github.com/d3nhatv0lam"
-                target="_blank"
-                class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-secondary hover:text-black transition-colors"
-                ><i class="fa-brands fa-github"></i
-              ></a>
-              <a
-                href="https://www.facebook.com/profile.php?id=61591905747383"
-                target="_blank"
-                class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-secondary hover:text-black transition-colors"
-                ><i class="fa-brands fa-facebook-f"></i
-              ></a>
-              <a
-                href="https://www.youtube.com/@ucduong9984"
-                target="_blank"
-                class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-secondary hover:text-black transition-colors"
-                ><i class="fa-brands fa-youtube"></i
-              ></a>
-            </div>
           </div>
 
-          <!-- Dev 2 -->
-          <div
-            class="glass-card text-center reveal"
-            style="transition-delay: 100ms"
-          >
-            <div
-              class="w-24 h-24 mx-auto rounded-full bg-primary mb-4 overflow-hidden border-2 border-secondary p-1"
-            >
-              <img
-                src="https://github.com/lexipit3268.png"
-                onerror="
-                  this.onerror = null;
-                  this.src =
-                    'https://ui-avatars.com/api/?name=Nguyễn+Phước+Lộc&background=00E5FF&color=000&size=200';
-                "
-                alt="Nguyễn Phước Lộc"
-                class="w-full h-full rounded-full object-cover"
-                loading="lazy"
-              />
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Member 1 -->
+            <div class="academic-card text-center reveal">
+              <div class="w-20 h-20 mx-auto rounded-full bg-slate-800 mb-4 overflow-hidden border border-slate-700">
+                <img
+                  src="https://github.com/d3nhatv0lam.png"
+                  onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Dương+Minh+Đức&background=1a56db&color=fff&size=160';"
+                  alt="Dương Minh Đức"
+                  class="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <h3 class="text-base font-bold text-white">Dương Minh Đức</h3>
+              <p class="text-xs text-blue-400 font-medium mb-4">Founder / Developer</p>
+              <div class="flex justify-center gap-2">
+                <a
+                  href="https://github.com/d3nhatv0lam"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="w-9 h-9 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-colors border border-slate-700"
+                  aria-label="GitHub của Dương Minh Đức"
+                >
+                  <i class="fa-brands fa-github text-sm" aria-hidden="true"></i>
+                </a>
+                <a
+                  href="https://www.facebook.com/profile.php?id=61591905747383"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="w-9 h-9 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-colors border border-slate-700"
+                  aria-label="Facebook của Dương Minh Đức"
+                >
+                  <i class="fa-brands fa-facebook-f text-sm" aria-hidden="true"></i>
+                </a>
+                <a
+                  href="https://www.youtube.com/@ucduong9984"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="w-9 h-9 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-colors border border-slate-700"
+                  aria-label="YouTube của Dương Minh Đức"
+                >
+                  <i class="fa-brands fa-youtube text-sm" aria-hidden="true"></i>
+                </a>
+              </div>
             </div>
-            <h3 class="text-xl font-bold text-white">Nguyễn Phước Lộc</h3>
-            <p class="text-sm text-secondary font-medium mb-3">
-              Maintainer / Designer
-            </p>
-            <div class="flex justify-center gap-3">
-              <a
-                href="https://github.com/lexipit3268"
-                target="_blank"
-                class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-secondary hover:text-black transition-colors"
-                ><i class="fa-brands fa-github"></i
-              ></a>
-              <a
-                href="https://www.facebook.com/lexipit3268"
-                target="_blank"
-                class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-secondary hover:text-black transition-colors"
-                ><i class="fa-brands fa-facebook-f"></i
-              ></a>
-              <a
-                href="https://www.youtube.com/@lexipit3268"
-                target="_blank"
-                class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-secondary hover:text-black transition-colors"
-                ><i class="fa-brands fa-youtube"></i
-              ></a>
+
+            <!-- Member 2 -->
+            <div class="academic-card text-center reveal">
+              <div class="w-20 h-20 mx-auto rounded-full bg-slate-800 mb-4 overflow-hidden border border-slate-700">
+                <img
+                  src="https://github.com/lexipit3268.png"
+                  onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Nguyễn+Phước+Lộc&background=1a56db&color=fff&size=160';"
+                  alt="Nguyễn Phước Lộc"
+                  class="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <h3 class="text-base font-bold text-white">Nguyễn Phước Lộc</h3>
+              <p class="text-xs text-blue-400 font-medium mb-4">Maintainer / Designer</p>
+              <div class="flex justify-center gap-2">
+                <a
+                  href="https://github.com/lexipit3268"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="w-9 h-9 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-colors border border-slate-700"
+                  aria-label="GitHub của Nguyễn Phước Lộc"
+                >
+                  <i class="fa-brands fa-github text-sm" aria-hidden="true"></i>
+                </a>
+                <a
+                  href="https://www.facebook.com/lexipit3268"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="w-9 h-9 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-colors border border-slate-700"
+                  aria-label="Facebook của Nguyễn Phước Lộc"
+                >
+                  <i class="fa-brands fa-facebook-f text-sm" aria-hidden="true"></i>
+                </a>
+                <a
+                  href="https://www.youtube.com/@lexipit3268"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="w-9 h-9 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-colors border border-slate-700"
+                  aria-label="YouTube của Nguyễn Phước Lộc"
+                >
+                  <i class="fa-brands fa-youtube text-sm" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+
+            <!-- Member 3 -->
+            <div class="academic-card text-center reveal">
+              <div class="w-20 h-20 mx-auto rounded-full bg-slate-800 mb-4 overflow-hidden border border-slate-700">
+                <img
+                  src="https://github.com/phuctran1501.png"
+                  onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Trần+Trọng+Phúc&background=1a56db&color=fff&size=160';"
+                  alt="Trần Trọng Phúc"
+                  class="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <h3 class="text-base font-bold text-white">Trần Trọng Phúc</h3>
+              <p class="text-xs text-blue-400 font-medium mb-4">Maintainer / Tester</p>
+              <div class="flex justify-center gap-2">
+                <a
+                  href="https://github.com/phuctran1501"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="w-9 h-9 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-colors border border-slate-700"
+                  aria-label="GitHub của Trần Trọng Phúc"
+                >
+                  <i class="fa-brands fa-github text-sm" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+
+            <!-- Member 4 -->
+            <div class="academic-card text-center reveal">
+              <div class="w-20 h-20 mx-auto rounded-full bg-slate-800 mb-4 overflow-hidden border border-slate-700">
+                <img
+                  src="https://github.com/KimgionDev.png"
+                  onerror="this.onerror=null; this.src='https://ui-avatars.com/api/?name=Nguyễn+Ngọc+Đức+Phát&background=1a56db&color=fff&size=160';"
+                  alt="Nguyễn Ngọc Đức Phát"
+                  class="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+              <h3 class="text-base font-bold text-white">Nguyễn Ngọc Đức Phát</h3>
+              <p class="text-xs text-blue-400 font-medium mb-4">Maintainer / Designer</p>
+              <div class="flex justify-center gap-2">
+                <a
+                  href="https://github.com/KimgionDev"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="w-9 h-9 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-colors border border-slate-700"
+                  aria-label="GitHub của Nguyễn Ngọc Đức Phát"
+                >
+                  <i class="fa-brands fa-github text-sm" aria-hidden="true"></i>
+                </a>
+              </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          <!-- Dev 3 -->
-          <div
-            class="glass-card text-center reveal"
-            style="transition-delay: 200ms"
-          >
-            <div
-              class="w-24 h-24 mx-auto rounded-full bg-primary mb-4 overflow-hidden border-2 border-secondary p-1"
-            >
-              <img
-                src="https://github.com/phuctran1501.png"
-                onerror="
-                  this.onerror = null;
-                  this.src =
-                    'https://ui-avatars.com/api/?name=Trần+Trọng+Phúc&background=1f5ca9&color=fff&size=200';
-                "
-                alt="Trần Trọng Phúc"
-                class="w-full h-full rounded-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <h3 class="text-xl font-bold text-white">Trần Trọng Phúc</h3>
-            <p class="text-sm text-secondary font-medium mb-3">
-              Maintainer / Tester
+      <!-- 9. PHẢN HỒI & ĐÓNG GÓP Ý KIẾN (FEEDBACK) -->
+      <section id="feedback" class="py-16">
+        <div class="container mx-auto max-w-4xl px-4">
+          <div class="academic-card text-center py-10 reveal">
+            <h2 class="text-2xl font-bold text-white mb-2">Bạn Gặp Lỗi Hoặc Có Ý Tưởng Góp Ý?</h2>
+            <p class="text-slate-400 text-sm max-w-xl mx-auto mb-6">
+              Mọi ý kiến đóng góp từ sinh viên giúp đội ngũ hoàn thiện ứng dụng ngày một hữu ích và ổn định hơn.
             </p>
-            <div class="flex justify-center gap-3">
-              <a
-                href="https://github.com/phuctran1501"
-                target="_blank"
-                class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-secondary hover:text-black transition-colors"
-                ><i class="fa-brands fa-github"></i
-              ></a>
-            </div>
-          </div>
-
-          <!-- Dev 4 -->
-          <div
-            class="glass-card text-center reveal"
-            style="transition-delay: 300ms"
-          >
-            <div
-              class="w-24 h-24 mx-auto rounded-full bg-primary mb-4 overflow-hidden border-2 border-secondary p-1"
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfjU3UmQCetqDPxXowysP-OyfJc_QOscjXvdLepzJszug5u7w/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary"
             >
-              <img
-                src="https://github.com/KimgionDev.png"
-                onerror="
-                  this.onerror = null;
-                  this.src =
-                    'https://ui-avatars.com/api/?name=Nguyễn+Ngọc+Đức+Phát&background=00E5FF&color=000&size=200';
-                "
-                alt="Nguyễn Ngọc Đức Phát"
-                class="w-full h-full rounded-full object-cover"
-                loading="lazy"
-              />
-            </div>
-            <h3 class="text-xl font-bold text-white">Nguyễn Ngọc Đức Phát</h3>
-            <p class="text-sm text-secondary font-medium mb-3">
-              Maintainer / Designer
-            </p>
-            <div class="flex justify-center gap-3">
-              <a
-                href="https://github.com/KimgionDev"
-                target="_blank"
-                class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-secondary hover:text-black transition-colors"
-                ><i class="fa-brands fa-github"></i
-              ></a>
-            </div>
+              <i class="fa-solid fa-comment-dots" aria-hidden="true"></i>
+              <span>Gửi Báo Cáo Hoặc Ý Tưởng</span>
+            </a>
           </div>
         </div>
       </section>
     </main>
 
     <!-- Footer -->
-    <footer
-      class="mt-auto border-t border-white/10 py-6 text-center text-gray-400 text-sm"
-    >
-      <div class="container mx-auto px-4">
-        <p>&copy; 2026 CTU Scheduler Team</p>
-        <p class="mt-1">Dự án mã nguồn mở phát hành theo Giấy phép MIT</p>
-        <p class="mt-2 text-gray-500 text-xs">
-          Website được thiết kế và phát triển bởi
+    <footer class="border-t border-slate-800 py-8 bg-[#0a0f1d] text-slate-500 text-xs">
+      <div class="container mx-auto max-w-6xl px-4 text-center space-y-2">
+        <p class="text-slate-400">&copy; 2026 CTU Scheduler Team. Dự án phát hành phi lợi nhuận theo Giấy phép MIT.</p>
+        <p>
+          Thiết kế và phát triển bởi 
           <a
             href="https://github.com/lexipit3268"
             target="_blank"
-            class="text-secondary hover:text-white transition-colors font-medium"
-            >Lexipit3268</a
-          >.
-        </p>
-        <p class="mt-2 text-gray-500 text-xs">
-          Được bảo trì bởi
+            rel="noopener noreferrer"
+            class="text-slate-300 hover:text-white underline transition-colors"
+          >Lexipit3268</a> 
+          &amp; 
           <a
             href="https://github.com/d3nhatv0lam"
             target="_blank"
-            class="text-secondary hover:text-white transition-colors font-medium"
-            >CTU Scheduler Team</a
-          >.
+            rel="noopener noreferrer"
+            class="text-slate-300 hover:text-white underline transition-colors"
+          >Dương Minh Đức</a>.
         </p>
       </div>
     </footer>
 
-    <!-- Floating Action Buttons -->
-    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
-      <!-- Scroll To Top Button -->
-      <button
-        id="scroll-to-top"
-        class="w-12 h-12 rounded-full bg-slate-900/80 hover:bg-slate-900 border border-white/10 text-white flex items-center justify-center shadow-lg hover:shadow-[0_0_15px_rgba(0,229,255,0.4)] hover:border-secondary transition-all duration-300 opacity-0 translate-y-10 pointer-events-none"
-        title="Quay lên đầu trang"
-      >
-        <i class="fa-solid fa-chevron-up text-lg"></i>
-      </button>
-      
-      <!-- Feedback Button with Expand-on-Hover Effect -->
-      <button
-        id="floating-feedback"
-        class="group flex items-center h-12 w-12 hover:w-44 rounded-full bg-gradient-to-br from-primary to-secondary text-white shadow-lg hover:shadow-[0_0_20px_rgba(0,229,255,0.5)] transition-all duration-300 overflow-hidden"
-        title="Báo cáo lỗi & Góp ý"
-      >
-        <!-- Icon Container (keeps icon centered when circular) -->
-        <div class="w-12 h-12 flex items-center justify-center shrink-0">
-          <i class="fa-solid fa-comment-dots text-lg"></i>
-        </div>
-        <!-- Label revealed on hover -->
-        <span class="whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-semibold text-sm pr-4 -ml-1">
-          Góp ý & Báo lỗi
-        </span>
-      </button>
-    </div>
+    <!-- Accessible Floating Scroll-to-Top Button -->
+    <button
+      id="scroll-to-top"
+      class="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center justify-center shadow-lg transition-all opacity-0 pointer-events-none translate-y-4"
+      aria-label="Cuộn lên đầu trang"
+      title="Cuộn lên đầu trang"
+    >
+      <i class="fa-solid fa-chevron-up text-sm" aria-hidden="true"></i>
+    </button>
 
+    <!-- App Logic Script -->
     <script type="module" src="./js/main.js"></script>
   </body>
 </html>

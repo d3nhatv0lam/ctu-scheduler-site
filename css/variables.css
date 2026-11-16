@@ -1,9 +1,22 @@
 :root {
-  --color-primary: #1f5ca9;
-  --color-secondary: #00E5FF;
+  --color-primary: #1a56db;
+  --color-primary-hover: #1e40af;
+  --color-primary-dark: #0f2942;
+  --color-secondary: #0284c7;
   
-  --mesh-color-1: #1f5ca9;
-  --mesh-color-2: #00E5FF;
-  --mesh-color-3: #5b21b6;
-  --mesh-color-4: #0f172a;
+  --bg-main: #0a0f1d;
+  --bg-card: #111a2e;
+  --bg-card-hover: #16223d;
+  --bg-card-muted: #0d1527;
+  
+  --border-card: #1e293b;
+  --border-card-hover: #334155;
+  --border-card-active: #3b82f6;
+
+  --text-main: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --color-success: #059669;
+  --color-warning: #d97706;
 }

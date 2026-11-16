@@ -7,11 +7,25 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#1f5ca9',
-        secondary: '#00E5FF',
+        primary: {
+          DEFAULT: '#1a56db',
+          hover: '#1e40af',
+          dark: '#0f2942',
+        },
+        surface: {
+          DEFAULT: '#0a0f1d',
+          card: '#111a2e',
+          'card-hover': '#16223d',
+          muted: '#0d1527',
+        },
+        border: {
+          subtle: '#1e293b',
+          muted: '#334155',
+        }
       },
       fontFamily: {
-        sans: ['Inter', 'Satoshi', 'sans-serif'],
+        sans: ['Inter', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
       }
     },
   },
