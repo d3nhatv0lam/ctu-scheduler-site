@@ -1,123 +1,250 @@
-.slash-card {
-  background-color: var(--color-onyx);
-  border: 1px solid var(--color-graphite);
+/* ClickUp Component Primitives */
+
+.clickup-card {
+  background-color: var(--color-signal-white);
+  border: 1px solid var(--color-bone);
   border-radius: var(--radius-card);
-  padding: 24px;
-  transition: border-color 0.2s ease;
+  box-shadow: var(--shadow-subtle);
+  transition: transform 0.2s cubic-bezier(0.33, 1, 0.68, 1), box-shadow 0.2s cubic-bezier(0.33, 1, 0.68, 1), border-color 0.2s ease;
 }
 
-.slash-card:hover {
-  border-color: var(--color-slate);
+.clickup-card:hover {
+  box-shadow: var(--shadow-card);
+  border-color: var(--color-cloud);
 }
 
-.btn-pill-primary {
+.clickup-card-elevated {
+  background-color: var(--color-signal-white);
+  border: 1px solid var(--color-bone);
+  border-radius: var(--radius-largecard);
+  box-shadow: var(--shadow-card);
+}
+
+/* ClickUp Relentless 9999px Pill Buttons */
+.btn-clickup-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 10px 20px;
+  padding: 12px 24px;
   border-radius: var(--radius-pill);
-  font-family: var(--font-sans);
+  font-family: var(--font-plus-jakarta-sans);
   font-size: 14px;
-  font-weight: 500;
-  color: #000000;
-  background-color: var(--color-paper-white);
-  border: none;
+  font-weight: 700;
+  color: var(--color-signal-white);
+  background-color: var(--color-ink-black);
+  border: 1px solid var(--color-ink-black);
   cursor: pointer;
   text-decoration: none;
-  transition: opacity 0.15s ease, transform 0.15s ease;
+  transition: transform 0.15s cubic-bezier(0.33, 1, 0.68, 1), background-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.btn-pill-primary:hover {
-  opacity: 0.92;
+.btn-clickup-primary:hover {
+  background-color: #333333;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-clickup-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-plus-jakarta-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-ink-black);
+  background-color: var(--color-signal-white);
+  border: 1px solid var(--color-bone);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.btn-clickup-ghost:hover {
+  background-color: var(--color-mist);
+  border-color: var(--color-fog);
   transform: translateY(-1px);
 }
 
-.btn-pill-ghost {
+.btn-clickup-blue {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   padding: 10px 20px;
   border-radius: var(--radius-pill);
-  font-family: var(--font-sans);
+  font-family: var(--font-plus-jakarta-sans);
   font-size: 14px;
-  font-weight: 500;
-  color: var(--color-paper-white);
-  background-color: transparent;
-  border: 1px solid var(--color-paper-white);
+  font-weight: 600;
+  color: var(--color-signal-blue);
+  background-color: var(--color-signal-white);
+  border: 1px solid var(--color-signal-blue);
   cursor: pointer;
   text-decoration: none;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  transition: all 0.15s ease;
 }
 
-.btn-pill-ghost:hover {
-  background-color: rgba(255, 255, 255, 0.08);
+.btn-clickup-blue:hover {
+  background-color: rgba(0, 145, 255, 0.06);
+  transform: translateY(-1px);
 }
 
+/* Conic Animated Border Wrapper */
+.conic-border-wrapper {
+  position: relative;
+  display: inline-flex;
+  border-radius: var(--radius-pill);
+  padding: 2px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(102, 71, 240, 0.2);
+}
+
+.conic-border-wrapper::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: var(--gradient-rainbow-conic);
+  animation: rotate-conic 4s linear infinite;
+  z-index: 0;
+}
+
+.conic-border-inner {
+  position: relative;
+  z-index: 1;
+  background-color: var(--color-ink-black);
+  color: var(--color-signal-white);
+  border-radius: var(--radius-pill);
+  padding: 12px 28px;
+  font-family: var(--font-plus-jakarta-sans);
+  font-size: 14px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.conic-border-inner:hover {
+  background-color: #2e2e2e;
+}
+
+/* ClickUp 9999px Pill Filters and Tags */
 .pill-filter {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 14px;
+  gap: 6px;
+  padding: 8px 18px;
   border-radius: var(--radius-pill);
-  font-family: var(--font-sans);
+  font-family: var(--font-inter);
   font-size: 13px;
-  font-weight: 500;
-  color: var(--color-fog);
-  background-color: transparent;
-  border: 1px solid var(--color-slate);
+  font-weight: 600;
+  color: var(--color-slate);
+  background-color: var(--color-signal-white);
+  border: 1px solid var(--color-bone);
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.15s cubic-bezier(0.33, 1, 0.68, 1);
+  user-select: none;
 }
 
 .pill-filter:hover {
-  color: var(--color-paper-white);
-  border-color: var(--color-steel);
+  color: var(--color-ink-black);
+  border-color: var(--color-cloud);
+  background-color: var(--color-mist);
 }
 
 .pill-filter.active {
-  color: var(--color-paper-white);
-  background-color: var(--color-carbon);
-  border-color: var(--color-paper-white);
+  color: var(--color-signal-white);
+  background-color: var(--color-ink-black);
+  border-color: var(--color-ink-black);
 }
 
-.copper-tag {
-  color: var(--color-copper);
-  font-family: var(--font-sans);
-  font-size: 13px;
+.pill-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-inter);
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
+  color: var(--color-carbon);
+  background-color: var(--color-mist);
+  border: 1px solid var(--color-bone);
 }
 
-/* Timetable simulation in Slash style */
+.pill-tag-violet {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-inter);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-brand-violet);
+  background-color: #f5f3ff;
+  border: 1px solid #ddd6fe;
+}
+
+.pill-tag-emerald {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-inter);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-emerald);
+  background-color: #ecfdf5;
+  border: 1px solid #a7f3d0;
+}
+
+/* Timetable simulation in ClickUp light dashboard style */
 .timetable-cell {
-  border: 1px solid var(--color-graphite);
-  padding: 8px 4px;
-  min-height: 48px;
+  border-right: 1px solid var(--color-bone);
+  border-bottom: 1px solid var(--color-bone);
+  padding: 8px 6px;
+  min-height: 54px;
 }
 
 .timetable-slot {
-  border-radius: 4px;
-  padding: 6px 8px;
+  border-radius: 8px;
+  padding: 8px 10px;
   font-size: 12px;
-  line-height: 1.25;
-  transition: opacity 0.2s ease, border-color 0.2s ease;
+  line-height: 1.35;
+  transition: all 0.2s cubic-bezier(0.33, 1, 0.68, 1);
 }
 
 .slot-course {
-  background-color: var(--color-carbon);
-  border: 1px solid var(--color-slate);
-  color: var(--color-bone);
+  background-color: var(--color-signal-white);
+  border: 1px solid var(--color-bone);
+  color: var(--color-ink-black);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.slot-course:hover {
+  border-color: var(--color-brand-violet);
+  box-shadow: 0 4px 12px rgba(102, 71, 240, 0.12);
+  transform: translateY(-1px);
 }
 
 .slot-dimmed {
-  opacity: 0.15;
+  opacity: 0.22;
+  filter: grayscale(1);
 }
 
-.gilded-highlight {
-  background: var(--gradient-gilded);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Section Background Band */
+.bg-plaster-band {
+  background-color: var(--color-plaster);
+  border-top: 1px solid var(--color-bone);
+  border-bottom: 1px solid var(--color-bone);
 }

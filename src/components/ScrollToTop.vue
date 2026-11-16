@@ -2,13 +2,13 @@
   <button
     v-show="isVisible"
     type="button"
-    class="fixed bottom-6 right-6 z-40 w-10 h-10 rounded-full bg-[#121317] hover:bg-[#1c1d22] text-[#ffffff] border border-[#2e3038] flex items-center justify-center transition-all focus:outline-none focus-visible:ring-1 focus-visible:ring-[#ffffff]"
+    class="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-full bg-white hover:bg-[#f8f9fa] text-[#202020] border border-[#e8e8e8] shadow-float flex items-center justify-center transition-all hover:-translate-y-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6647f0]"
     aria-label="Cuộn lên đầu trang"
     title="Cuộn lên đầu trang"
     @click="scrollToTop"
   >
     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7" />
     </svg>
   </button>
 </template>
@@ -34,4 +34,3 @@ onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
 });
 </script>
-

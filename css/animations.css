@@ -1,7 +1,23 @@
+/* ClickUp Animation System: 0.45s cubic-bezier(0.33, 1, 0.68, 1) */
+
+@keyframes rotate-conic {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-conic-spin {
+  animation: rotate-conic 4s linear infinite;
+}
+
+/* Subtle reveal on scroll */
 .reveal {
   opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.4s ease-out, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(20px);
+  transition: opacity 0.45s cubic-bezier(0.33, 1, 0.68, 1), transform 0.45s cubic-bezier(0.33, 1, 0.68, 1);
 }
 
 .reveal.active {
@@ -9,7 +25,23 @@
   transform: translateY(0);
 }
 
-/* Accessibility: prefers-reduced-motion compliance */
+/* Page View Transition for SPA */
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: opacity 0.3s cubic-bezier(0.33, 1, 0.68, 1), transform 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.fade-slide-enter-from {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+/* Prefers-reduced-motion accessibility */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -23,5 +55,9 @@
   .reveal {
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  .animate-conic-spin {
+    animation: none !important;
   }
 }

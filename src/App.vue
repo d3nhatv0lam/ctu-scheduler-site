@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex flex-col bg-[#08080a] text-[#e2e3e9]">
+  <div class="min-h-screen flex flex-col bg-white text-[#202020]">
     <Navbar />
     <main class="flex-grow">
       <Hero />
