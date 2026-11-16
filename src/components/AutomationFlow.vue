@@ -1,14 +1,11 @@
 <template>
   <section class="py-20 bg-plaster-band border-b border-[#e4e4e7]">
     <div class="container mx-auto max-w-clickup px-4 sm:px-6">
-      <div
-        v-motion
+      <motion.div
         :initial="{ opacity: 0, y: 16 }"
-        :visibleOnce="{
-          opacity: 1,
-          y: 0,
-          transition: { duration: 450, ease: [0.33, 1, 0.68, 1] },
-        }"
+        :whileInView="{ opacity: 1, y: 0 }"
+        :inViewOptions="{ once: true }"
+        :transition="{ duration: 0.45, ease: [0.33, 1, 0.68, 1] }"
         class="max-w-3xl mx-auto text-center mb-14"
       >
         <h2
@@ -20,19 +17,16 @@
           Mọi dữ liệu học phần được xử lý độc lập và chạy trên phần cứng máy
           tính của bạn — không rò rỉ cookie hay tài khoản.
         </p>
-      </div>
+      </motion.div>
 
       <!-- 3-Stage Diagram Flow -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
         <!-- Stage 1 -->
-        <div
-          v-motion
+        <motion.div
           :initial="{ opacity: 0, y: 16 }"
-          :visibleOnce="{
-            opacity: 1,
-            y: 0,
-            transition: { duration: 450, delay: 50, ease: [0.33, 1, 0.68, 1] },
-          }"
+          :whileInView="{ opacity: 1, y: 0 }"
+          :inViewOptions="{ once: true }"
+          :transition="{ duration: 0.45, delay: 0.05, ease: [0.33, 1, 0.68, 1] }"
           class="clickup-card p-6 sm:p-7 relative flex flex-col justify-between hover-lift"
         >
           <div>
@@ -56,17 +50,14 @@
             <span class="w-2 h-2 rounded-full bg-[#00c07a]"></span>
             <span>Mật khẩu tự tiêu hủy sau phiên sử dụng</span>
           </div>
-        </div>
+        </motion.div>
 
         <!-- Stage 2 -->
-        <div
-          v-motion
+        <motion.div
           :initial="{ opacity: 0, y: 16 }"
-          :visibleOnce="{
-            opacity: 1,
-            y: 0,
-            transition: { duration: 450, delay: 120, ease: [0.33, 1, 0.68, 1] },
-          }"
+          :whileInView="{ opacity: 1, y: 0 }"
+          :inViewOptions="{ once: true }"
+          :transition="{ duration: 0.45, delay: 0.12, ease: [0.33, 1, 0.68, 1] }"
           class="clickup-card p-6 sm:p-7 relative flex flex-col justify-between hover-lift"
         >
           <div>
@@ -90,17 +81,14 @@
             <span class="w-2 h-2 rounded-full bg-[#00529c]"></span>
             <span>Tốc độ xử lý &lt; 0.5 giây</span>
           </div>
-        </div>
+        </motion.div>
 
         <!-- Stage 3 -->
-        <div
-          v-motion
+        <motion.div
           :initial="{ opacity: 0, y: 16 }"
-          :visibleOnce="{
-            opacity: 1,
-            y: 0,
-            transition: { duration: 450, delay: 180, ease: [0.33, 1, 0.68, 1] },
-          }"
+          :whileInView="{ opacity: 1, y: 0 }"
+          :inViewOptions="{ once: true }"
+          :transition="{ duration: 0.45, delay: 0.18, ease: [0.33, 1, 0.68, 1] }"
           class="clickup-card p-6 sm:p-7 relative flex flex-col justify-between hover-lift"
         >
           <div>
@@ -124,8 +112,12 @@
             <span class="w-2 h-2 rounded-full bg-[#00529c]"></span>
             <span>Hỗ trợ đa định dạng 1-click</span>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   </section>
 </template>
+
+<script setup>
+import { motion } from 'motion-v';
+</script>

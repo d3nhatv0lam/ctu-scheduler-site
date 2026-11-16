@@ -1,10 +1,11 @@
 <template>
   <section id="feedback" class="py-20 border-b border-[#e4e4e7] bg-white">
     <div class="container mx-auto max-w-4xl px-4 sm:px-6">
-      <div
-        v-motion
+      <motion.div
         :initial="{ opacity: 0, scale: 0.96 }"
-        :visibleOnce="{ opacity: 1, scale: 1, transition: { duration: 450, ease: [0.33, 1, 0.68, 1] } }"
+        :whileInView="{ opacity: 1, scale: 1 }"
+        :inViewOptions="{ once: true }"
+        :transition="{ duration: 0.45, ease: [0.33, 1, 0.68, 1] }"
         class="clickup-card-elevated text-center p-8 sm:p-12 space-y-4 bg-white border border-[#e4e4e7] shadow-card hover-lift"
       >
         <h2 class="text-2xl sm:text-3xl font-extrabold text-[#090c1d] font-display">
@@ -35,7 +36,11 @@
             <span>Báo Lỗi Trên GitHub Issues</span>
           </a>
         </div>
-      </div>
+      </motion.div>
     </div>
   </section>
 </template>
+
+<script setup>
+import { motion } from 'motion-v';
+</script>

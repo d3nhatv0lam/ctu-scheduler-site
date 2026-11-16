@@ -5,14 +5,11 @@
   >
     <div class="container mx-auto max-w-clickup px-4 sm:px-6">
       <!-- Section Header (Calm, Measured) -->
-      <div
-        v-motion
+      <motion.div
         :initial="{ opacity: 0, y: 12 }"
-        :visibleOnce="{
-          opacity: 1,
-          y: 0,
-          transition: { duration: 400, ease: [0.33, 1, 0.68, 1] },
-        }"
+        :whileInView="{ opacity: 1, y: 0 }"
+        :inViewOptions="{ once: true }"
+        :transition="{ duration: 0.4, ease: [0.33, 1, 0.68, 1] }"
         class="max-w-2xl mx-auto text-center mb-10"
       >
         <h2
@@ -34,7 +31,7 @@
             >
           </span>
         </div>
-      </div>
+      </motion.div>
 
       <!-- OS Switcher (Clean Segmented Control with Sliding Indicator) -->
       <div
@@ -43,19 +40,20 @@
         <div
           class="relative grid grid-cols-3 p-1 bg-[#f4f4f5] rounded-full border border-[#e4e4e7] w-full max-w-[340px] select-none"
         >
-          <!-- Sliding Background Indicator Pill -->
-          <div
-            class="absolute top-1 bottom-1 left-1 rounded-full bg-white shadow-2xs transition-transform duration-250 ease-[cubic-bezier(0.33,1,0.68,1)] pointer-events-none"
-            :style="{
-              width: 'calc((100% - 8px) / 3)',
-              transform:
+          <!-- Sliding Background Indicator Pill (motion-v animated) -->
+          <motion.div
+            class="absolute top-1 bottom-1 left-1 rounded-full bg-white shadow-2xs pointer-events-none"
+            :style="{ width: 'calc((100% - 8px) / 3)' }"
+            :animate="{
+              x:
                 activeOsTab === 'windows'
-                  ? 'translateX(0%)'
+                  ? '0%'
                   : activeOsTab === 'macos'
-                    ? 'translateX(100%)'
-                    : 'translateX(200%)',
+                    ? '100%'
+                    : '200%',
             }"
-          ></div>
+            :transition="{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }"
+          />
 
           <button
             type="button"
@@ -124,23 +122,21 @@
 
       <!-- Main Showcase Container -->
       <div v-else class="space-y-6 max-w-4xl mx-auto">
-        <!-- ========================================== -->
-        <!-- TAB 1: WINDOWS (Cốt lõi chính thức)         -->
-        <!-- ========================================== -->
-        <div
-          v-if="activeOsTab === 'windows'"
-          key="windows"
-          v-motion
-          :initial="{ opacity: 0, y: 10 }"
-          :enter="{
-            opacity: 1,
-            y: 0,
-            transition: { duration: 250, ease: [0.33, 1, 0.68, 1] },
-          }"
-          class="space-y-6"
-        >
-          <!-- Setup vs Portable 2-Column Cards -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch">
+        <AnimatePresence mode="wait">
+          <!-- ========================================== -->
+          <!-- TAB 1: WINDOWS (Cốt lõi chính thức)         -->
+          <!-- ========================================== -->
+          <motion.div
+            v-if="activeOsTab === 'windows'"
+            key="windows"
+            :initial="{ opacity: 0, y: 8 }"
+            :animate="{ opacity: 1, y: 0 }"
+            :exit="{ opacity: 0, y: -8 }"
+            :transition="{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }"
+            class="space-y-6"
+          >
+            <!-- Setup vs Portable 2-Column Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch">
             <!-- EDITION 1: Setup Installer (Khuyên dùng cá nhân) -->
             <div
               class="p-6 rounded-2xl border border-[#e4e4e7] bg-white flex flex-col justify-between space-y-5"
@@ -343,23 +339,20 @@
               <strong>"Run anyway"</strong> để mở.
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        <!-- ========================================== -->
-        <!-- TAB 2: MACOS (Thông tin & Giải pháp)        -->
-        <!-- ========================================== -->
-        <div
-          v-else-if="activeOsTab === 'macos'"
-          key="macos"
-          v-motion
-          :initial="{ opacity: 0, y: 10 }"
-          :enter="{
-            opacity: 1,
-            y: 0,
-            transition: { duration: 250, ease: [0.33, 1, 0.68, 1] },
-          }"
-          class="p-6 rounded-2xl border border-[#e4e4e7] bg-white space-y-4"
-        >
+          <!-- ========================================== -->
+          <!-- TAB 2: MACOS (Thông tin & Giải pháp)        -->
+          <!-- ========================================== -->
+          <motion.div
+            v-else-if="activeOsTab === 'macos'"
+            key="macos"
+            :initial="{ opacity: 0, y: 8 }"
+            :animate="{ opacity: 1, y: 0 }"
+            :exit="{ opacity: 0, y: -8 }"
+            :transition="{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }"
+            class="p-6 rounded-2xl border border-[#e4e4e7] bg-white space-y-4"
+          >
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
               <span
@@ -434,23 +427,20 @@
               </a>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        <!-- ========================================== -->
-        <!-- TAB 3: LINUX (Thông tin & Mã nguồn)        -->
-        <!-- ========================================== -->
-        <div
-          v-else-if="activeOsTab === 'linux'"
-          key="linux"
-          v-motion
-          :initial="{ opacity: 0, y: 10 }"
-          :enter="{
-            opacity: 1,
-            y: 0,
-            transition: { duration: 250, ease: [0.33, 1, 0.68, 1] },
-          }"
-          class="p-6 rounded-2xl border border-[#e4e4e7] bg-white space-y-4"
-        >
+          <!-- ========================================== -->
+          <!-- TAB 3: LINUX (Thông tin & Mã nguồn)        -->
+          <!-- ========================================== -->
+          <motion.div
+            v-else-if="activeOsTab === 'linux'"
+            key="linux"
+            :initial="{ opacity: 0, y: 8 }"
+            :animate="{ opacity: 1, y: 0 }"
+            :exit="{ opacity: 0, y: -8 }"
+            :transition="{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }"
+            class="p-6 rounded-2xl border border-[#e4e4e7] bg-white space-y-4"
+          >
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
               <span
@@ -506,7 +496,8 @@
               </a>
             </div>
           </div>
-        </div>
+        </motion.div>
+      </AnimatePresence>
 
         <!-- Release Info & Secondary Drawers -->
         <div
@@ -527,10 +518,9 @@
             <span>{{ formatDate(currentRelease.published_at) }}</span>
           </div>
           <div class="flex items-center gap-3 self-start sm:self-auto">
-            <button
+            <motion.button
               type="button"
-              v-motion
-              :tapped="{ scale: 0.96, transition: { duration: 150 } }"
+              :whilePress="{ scale: 0.96 }"
               class="text-[#52525b] hover:text-[#00529c] font-medium cursor-pointer"
               @click="showAllAssets = !showAllAssets"
             >
@@ -539,33 +529,33 @@
                   ? "Đóng danh sách file"
                   : `Xem tất cả ${validAssets.length} file`
               }}
-            </button>
+            </motion.button>
             <span>·</span>
-            <button
+            <motion.button
               v-if="currentRelease.body"
               type="button"
-              v-motion
-              :tapped="{ scale: 0.96, transition: { duration: 150 } }"
+              :whilePress="{ scale: 0.96 }"
               class="text-[#52525b] hover:text-[#00529c] font-medium cursor-pointer"
               @click="showChangelog = !showChangelog"
             >
               {{
                 showChangelog ? "Đóng nhật ký cập nhật" : "Xem nhật ký cập nhật"
               }}
-            </button>
+            </motion.button>
           </div>
         </div>
 
-        <!-- Collapsible All Files Drawer (Smooth Grid Height Expansion) -->
-        <div
-          class="grid transition-[grid-template-rows] duration-250 ease-[cubic-bezier(0.33,1,0.68,1)]"
-          :class="showAllAssets ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
-        >
-          <div class="overflow-hidden">
-            <div
-              class="p-4 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] space-y-2 text-xs transition-opacity duration-200"
-              :class="showAllAssets ? 'opacity-100' : 'opacity-0'"
-            >
+        <!-- Collapsible All Files Drawer (motion-v animated height) -->
+        <AnimatePresence>
+          <motion.div
+            v-if="showAllAssets"
+            :initial="{ height: 0, opacity: 0 }"
+            :animate="{ height: 'auto', opacity: 1 }"
+            :exit="{ height: 0, opacity: 0 }"
+            :transition="{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }"
+            class="overflow-hidden"
+          >
+            <div class="p-4 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] space-y-2 text-xs">
               <div class="font-semibold text-[#18181b] mb-1">
                 Tất cả tập tin phát hành:
               </div>
@@ -601,26 +591,27 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </AnimatePresence>
 
-        <!-- Collapsible Markdown Changelog Drawer (Smooth Grid Height Expansion) -->
-        <div
-          class="grid transition-[grid-template-rows] duration-250 ease-[cubic-bezier(0.33,1,0.68,1)]"
-          :class="showChangelog ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
-        >
-          <div class="overflow-hidden">
-            <div
-              class="p-4 sm:p-5 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] text-xs leading-relaxed overflow-x-auto markdown-prose transition-opacity duration-200"
-              :class="showChangelog ? 'opacity-100' : 'opacity-0'"
-            >
+        <!-- Collapsible Markdown Changelog Drawer (motion-v animated height) -->
+        <AnimatePresence>
+          <motion.div
+            v-if="showChangelog"
+            :initial="{ height: 0, opacity: 0 }"
+            :animate="{ height: 'auto', opacity: 1 }"
+            :exit="{ height: 0, opacity: 0 }"
+            :transition="{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }"
+            class="overflow-hidden"
+          >
+            <div class="p-4 sm:p-5 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] text-xs leading-relaxed overflow-x-auto markdown-prose">
               <div class="font-semibold text-[#18181b] text-sm mb-2">
                 Nhật ký phiên bản {{ currentRelease.tag_name }}
               </div>
               <div v-html="renderedMarkdownBody"></div>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </AnimatePresence>
 
         <!-- Quiet Disclaimers (Collapsible / Concise) -->
         <div
@@ -643,6 +634,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
+import { motion, AnimatePresence } from "motion-v";
 import { marked } from "marked";
 import { detectDevice, OS, ARCH } from "../../js/detector.js";
 

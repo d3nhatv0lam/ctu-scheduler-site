@@ -1,30 +1,33 @@
 <template>
-  <button
-    v-if="isVisible"
-    v-motion
-    :initial="{ opacity: 0, scale: 0.8 }"
-    :enter="{ opacity: 1, scale: 1, transition: { duration: 200, ease: [0.33, 1, 0.68, 1] } }"
-    :leave="{ opacity: 0, scale: 0.8, transition: { duration: 150, ease: [0.33, 1, 0.68, 1] } }"
-    :tapped="{ scale: 0.92, transition: { duration: 150 } }"
-    type="button"
-    class="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-full bg-white hover:bg-[#f8f9fa] text-[#18181b] border border-[#e4e4e7] shadow-float flex items-center justify-center transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00529c]"
-    aria-label="Cuộn lên đầu trang"
-    title="Cuộn lên đầu trang"
-    @click="scrollToTop"
-  >
-    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2.5"
-        d="M5 15l7-7 7 7"
-      />
-    </svg>
-  </button>
+  <AnimatePresence>
+    <motion.button
+      v-if="isVisible"
+      type="button"
+      :initial="{ opacity: 0, scale: 0.8 }"
+      :animate="{ opacity: 1, scale: 1 }"
+      :exit="{ opacity: 0, scale: 0.8 }"
+      :transition="{ duration: 0.2, ease: [0.33, 1, 0.68, 1] }"
+      :whilePress="{ scale: 0.92 }"
+      class="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-full bg-white hover:bg-[#f8f9fa] text-[#18181b] border border-[#e4e4e7] shadow-float flex items-center justify-center transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00529c]"
+      aria-label="Cuộn lên đầu trang"
+      title="Cuộn lên đầu trang"
+      @click="scrollToTop"
+    >
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2.5"
+          d="M5 15l7-7 7 7"
+        />
+      </svg>
+    </motion.button>
+  </AnimatePresence>
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
+import { motion, AnimatePresence } from "motion-v";
 
 const isVisible = ref(false);
 

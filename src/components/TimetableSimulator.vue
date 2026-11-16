@@ -3,14 +3,13 @@
     <!-- View Switcher Tabs (ClickUp Style) -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#e8e8e8]">
       <div class="relative grid grid-cols-2 p-1 bg-[#f4f4f5] rounded-full border border-[#e8e8e8] self-start w-52 sm:w-56 select-none">
-        <!-- Sliding Active Background Pill -->
-        <div
-          class="absolute top-1 bottom-1 left-1 rounded-full bg-[#18181b] shadow-2xs transition-transform duration-250 ease-[cubic-bezier(0.33,1,0.68,1)] pointer-events-none"
-          :style="{
-            width: 'calc((100% - 8px) / 2)',
-            transform: activeView === 'calendar' ? 'translateX(0%)' : 'translateX(100%)'
-          }"
-        ></div>
+        <!-- Sliding Active Background Pill (motion-v animated) -->
+        <motion.div
+          class="absolute top-1 bottom-1 left-1 rounded-full bg-[#18181b] shadow-2xs pointer-events-none"
+          :style="{ width: 'calc((100% - 8px) / 2)' }"
+          :animate="{ x: activeView === 'calendar' ? '0%' : '100%' }"
+          :transition="{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }"
+        />
         <button
           type="button"
           class="relative z-10 py-1 px-3 text-xs font-semibold rounded-full transition-colors duration-200 text-center cursor-pointer"
@@ -32,30 +31,32 @@
       <!-- Quick Criteria Filters (ClickUp 9999px Pill Filters) -->
       <div class="flex flex-wrap items-center gap-1.5">
         <span class="text-xs text-[#838383] font-semibold mr-1">Tiêu chí:</span>
-        <button
+        <motion.button
           v-for="item in filterList"
           :key="item.key"
           type="button"
-          v-motion
-          :tapped="{ scale: 0.95, transition: { duration: 150 } }"
+          :whilePress="{ scale: 0.95 }"
           class="pill-filter !py-1 !px-3 !text-xs cursor-pointer"
           :class="{ active: currentFilter === item.key }"
           @click="currentFilter = item.key"
         >
           {{ item.label }}
-        </button>
+        </motion.button>
       </div>
     </div>
 
-    <!-- Calendar View -->
-    <div
-      v-if="activeView === 'calendar'"
-      key="calendar"
-      v-motion
-      :initial="{ opacity: 0, y: 6 }"
-      :enter="{ opacity: 1, y: 0, transition: { duration: 200, ease: [0.33, 1, 0.68, 1] } }"
-      class="overflow-x-auto rounded-xl border border-[#e8e8e8] bg-[#f8f9fa]/40 tabular-nums"
-    >
+    <!-- Calendar / List Views with AnimatePresence -->
+    <AnimatePresence mode="wait">
+      <!-- Calendar View -->
+      <motion.div
+        v-if="activeView === 'calendar'"
+        key="calendar"
+        :initial="{ opacity: 0, y: 6 }"
+        :animate="{ opacity: 1, y: 0 }"
+        :exit="{ opacity: 0, y: -6 }"
+        :transition="{ duration: 0.2, ease: [0.33, 1, 0.68, 1] }"
+        class="overflow-x-auto rounded-xl border border-[#e8e8e8] bg-[#f8f9fa]/40 tabular-nums"
+      >
       <table class="w-full text-left border-collapse text-xs">
         <thead>
           <tr class="border-b border-[#e8e8e8] bg-[#e9ebf0]/50 text-[#646464] font-bold">
@@ -152,15 +153,16 @@
           </tr>
         </tbody>
       </table>
-    </div>
+    </motion.div>
 
     <!-- List View -->
-    <div
+    <motion.div
       v-else
       key="list"
-      v-motion
       :initial="{ opacity: 0, y: 6 }"
-      :enter="{ opacity: 1, y: 0, transition: { duration: 200, ease: [0.33, 1, 0.68, 1] } }"
+      :animate="{ opacity: 1, y: 0 }"
+      :exit="{ opacity: 0, y: -6 }"
+      :transition="{ duration: 0.2, ease: [0.33, 1, 0.68, 1] }"
       class="rounded-xl border border-[#e8e8e8] overflow-hidden divide-y divide-[#e8e8e8] bg-white text-xs tabular-nums"
     >
       <div
@@ -183,7 +185,8 @@
           </span>
         </div>
       </div>
-    </div>
+    </motion.div>
+  </AnimatePresence>
 
     <!-- Live Status Toolbar (Hairline Divider Row) -->
     <div class="pt-3 border-t border-[#e8e8e8] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
@@ -215,6 +218,7 @@
 
 <script setup>
 import { ref, computed } from 'vue';
+import { motion, AnimatePresence } from 'motion-v';
 
 const activeView = ref('calendar');
 

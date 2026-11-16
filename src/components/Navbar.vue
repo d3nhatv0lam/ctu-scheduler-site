@@ -47,10 +47,9 @@
       </div>
 
       <!-- Mobile Menu Button -->
-      <button
+      <motion.button
         type="button"
-        v-motion
-        :tapped="{ scale: 0.92, transition: { duration: 150 } }"
+        :whilePress="{ scale: 0.92 }"
         class="md:hidden p-2 text-[#52525b] hover:text-[#18181b] rounded-lg focus:outline-none cursor-pointer"
         :aria-expanded="isMenuOpen"
         aria-label="Mở menu điều hướng"
@@ -72,43 +71,46 @@
             d="M6 18L18 6M6 6l12 12"
           />
         </svg>
-      </button>
+      </motion.button>
     </div>
 
     <!-- Mobile Dropdown Menu -->
-    <div
-      v-if="isMenuOpen"
-      v-motion
-      :initial="{ opacity: 0, y: -10 }"
-      :enter="{ opacity: 1, y: 0, transition: { duration: 200, ease: [0.33, 1, 0.68, 1] } }"
-      :leave="{ opacity: 0, y: -10, transition: { duration: 150, ease: [0.33, 1, 0.68, 1] } }"
-      class="md:hidden bg-white border-b border-[#e4e4e7] px-4 py-4 space-y-2 text-sm shadow-lg"
-    >
-      <a href="#features" class="block text-[#52525b] hover:text-[#00529c] font-medium py-2 px-3 rounded-lg hover:bg-[#f0f7ff]" @click="isMenuOpen = false">Tính Năng</a>
-      <a href="#certification" class="block text-[#52525b] hover:text-[#00529c] font-medium py-2 px-3 rounded-lg hover:bg-[#f0f7ff]" @click="isMenuOpen = false">Nghiệm Thu NCKH</a>
-      <a href="#ecosystem" class="block text-[#52525b] hover:text-[#00529c] font-medium py-2 px-3 rounded-lg hover:bg-[#f0f7ff]" @click="isMenuOpen = false">Hệ Sinh Thái</a>
-      <a href="#download" class="block text-[#52525b] hover:text-[#00529c] font-medium py-2 px-3 rounded-lg hover:bg-[#f0f7ff]" @click="isMenuOpen = false">Tải Xuống</a>
-      <a href="#faq" class="block text-[#52525b] hover:text-[#00529c] font-medium py-2 px-3 rounded-lg hover:bg-[#f0f7ff]" @click="isMenuOpen = false">Hỏi Đáp</a>
-      <a href="#team" class="block text-[#52525b] hover:text-[#00529c] font-medium py-2 px-3 rounded-lg hover:bg-[#f0f7ff]" @click="isMenuOpen = false">Đội Ngũ</a>
-      <div class="pt-3 border-t border-[#e4e4e7] flex gap-2">
-        <a href="#download" class="btn-clickup-primary flex-1 !py-2.5 !text-xs text-center justify-center" @click="isMenuOpen = false">
-          Tải Ứng Dụng
-        </a>
-        <a
-          href="https://github.com/d3nhatv0lam/CTU-Scheduler"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="btn-clickup-ghost !py-2.5 !text-xs px-3 text-center justify-center"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
+    <AnimatePresence>
+      <motion.div
+        v-if="isMenuOpen"
+        :initial="{ opacity: 0, y: -10 }"
+        :animate="{ opacity: 1, y: 0 }"
+        :exit="{ opacity: 0, y: -10 }"
+        :transition="{ duration: 0.2, ease: [0.33, 1, 0.68, 1] }"
+        class="md:hidden bg-white border-b border-[#e4e4e7] px-4 py-4 space-y-2 text-sm shadow-lg"
+      >
+        <a href="#features" class="block text-[#52525b] hover:text-[#00529c] font-medium py-2 px-3 rounded-lg hover:bg-[#f0f7ff]" @click="isMenuOpen = false">Tính Năng</a>
+        <a href="#certification" class="block text-[#52525b] hover:text-[#00529c] font-medium py-2 px-3 rounded-lg hover:bg-[#f0f7ff]" @click="isMenuOpen = false">Nghiệm Thu NCKH</a>
+        <a href="#ecosystem" class="block text-[#52525b] hover:text-[#00529c] font-medium py-2 px-3 rounded-lg hover:bg-[#f0f7ff]" @click="isMenuOpen = false">Hệ Sinh Thái</a>
+        <a href="#download" class="block text-[#52525b] hover:text-[#00529c] font-medium py-2 px-3 rounded-lg hover:bg-[#f0f7ff]" @click="isMenuOpen = false">Tải Xuống</a>
+        <a href="#faq" class="block text-[#52525b] hover:text-[#00529c] font-medium py-2 px-3 rounded-lg hover:bg-[#f0f7ff]" @click="isMenuOpen = false">Hỏi Đáp</a>
+        <a href="#team" class="block text-[#52525b] hover:text-[#00529c] font-medium py-2 px-3 rounded-lg hover:bg-[#f0f7ff]" @click="isMenuOpen = false">Đội Ngũ</a>
+        <div class="pt-3 border-t border-[#e4e4e7] flex gap-2">
+          <a href="#download" class="btn-clickup-primary flex-1 !py-2.5 !text-xs text-center justify-center" @click="isMenuOpen = false">
+            Tải Ứng Dụng
+          </a>
+          <a
+            href="https://github.com/d3nhatv0lam/CTU-Scheduler"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-clickup-ghost !py-2.5 !text-xs px-3 text-center justify-center"
+          >
+            GitHub
+          </a>
+        </div>
+      </motion.div>
+    </AnimatePresence>
   </header>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import { motion, AnimatePresence } from 'motion-v';
 
 const isMenuOpen = ref(false);
 </script>

@@ -10,33 +10,25 @@
 
     <div class="container mx-auto max-w-clickup px-4 sm:px-6 text-center">
       <!-- Mega Keynote Centered Headline -->
-      <h1
-        v-motion
+      <motion.h1
         :initial="{ opacity: 0, y: 16 }"
-        :enter="{
-          opacity: 1,
-          y: 0,
-          transition: { duration: 450, ease: [0.33, 1, 0.68, 1] },
-        }"
+        :animate="{ opacity: 1, y: 0 }"
+        :transition="{ duration: 0.45, ease: [0.33, 1, 0.68, 1] }"
         class="text-4xl sm:text-6xl lg:text-[4.25rem] font-extrabold tracking-[-0.035em] text-[#090c1d] leading-[1.08] font-display max-w-4xl mx-auto"
       >
         Một không gian xếp lịch thông minh cho sinh viên Đại học Cần Thơ.
-      </h1>
+      </motion.h1>
 
       <!-- Centered Subtitle -->
-      <p
-        v-motion
+      <motion.p
         :initial="{ opacity: 0, y: 16 }"
-        :enter="{
-          opacity: 1,
-          y: 0,
-          transition: { duration: 450, delay: 60, ease: [0.33, 1, 0.68, 1] },
-        }"
+        :animate="{ opacity: 1, y: 0 }"
+        :transition="{ duration: 0.45, delay: 0.06, ease: [0.33, 1, 0.68, 1] }"
         class="text-base sm:text-lg md:text-xl text-[#52525b] leading-relaxed max-w-2xl mx-auto mt-6 font-normal"
       >
         Tự động hóa hoàn toàn việc sắp xếp lịch học, loại trừ khả năng xung đột
         lịch học và cập nhật sĩ số trực tiếp từ hệ thống MyCTU.
-      </p>
+      </motion.p>
 
       <!-- Mobile Visitor Context Banner -->
       <div
@@ -51,14 +43,10 @@
       </div>
 
       <!-- Centered Confident Action Buttons -->
-      <div
-        v-motion
+      <motion.div
         :initial="{ opacity: 0, y: 16 }"
-        :enter="{
-          opacity: 1,
-          y: 0,
-          transition: { duration: 450, delay: 120, ease: [0.33, 1, 0.68, 1] },
-        }"
+        :animate="{ opacity: 1, y: 0 }"
+        :transition="{ duration: 0.45, delay: 0.12, ease: [0.33, 1, 0.68, 1] }"
         class="flex flex-col sm:flex-row gap-3 pt-8 items-center justify-center"
       >
         <a
@@ -100,13 +88,13 @@
           </svg>
           <span>Xem Mã Nguồn GitHub</span>
         </a>
-      </div>
+      </motion.div>
 
       <!-- Trust Row -->
-      <div
-        v-motion
+      <motion.div
         :initial="{ opacity: 0 }"
-        :enter="{ opacity: 1, transition: { duration: 450, delay: 180 } }"
+        :animate="{ opacity: 1 }"
+        :transition="{ duration: 0.45, delay: 0.18 }"
         class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-6 text-xs text-[#52525b] font-medium"
       >
         <span class="flex items-center gap-1.5">
@@ -157,18 +145,13 @@
           </svg>
           Hội đồng Khoa CNTT&amp;TT nghiệm thu
         </span>
-      </div>
+      </motion.div>
 
       <!-- Centered Epic Product Interface Window Showcase -->
-      <div
-        v-motion
+      <motion.div
         :initial="{ opacity: 0, y: 30, scale: 0.99 }"
-        :enter="{
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          transition: { duration: 600, delay: 220, ease: [0.33, 1, 0.68, 1] },
-        }"
+        :animate="{ opacity: 1, y: 0, scale: 1 }"
+        :transition="{ duration: 0.6, delay: 0.22, ease: [0.33, 1, 0.68, 1] }"
         class="mt-12 max-w-5xl mx-auto relative text-left"
       >
         <!-- Mockup Ambient Shadow -->
@@ -221,13 +204,14 @@
             <TimetableSimulator />
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   </section>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
+import { motion } from "motion-v";
 import TimetableSimulator from "./TimetableSimulator.vue";
 import { detectDevice, OS } from "../../js/detector.js";
 

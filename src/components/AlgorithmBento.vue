@@ -2,10 +2,11 @@
   <section id="certification" class="py-20 bg-plaster-band border-b border-[#e4e4e7] relative">
     <div class="container mx-auto max-w-clickup px-4 sm:px-6">
       <!-- Section Header -->
-      <div
-        v-motion
+      <motion.div
         :initial="{ opacity: 0, y: 16 }"
-        :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, ease: [0.33, 1, 0.68, 1] } }"
+        :whileInView="{ opacity: 1, y: 0 }"
+        :inViewOptions="{ once: true }"
+        :transition="{ duration: 0.45, ease: [0.33, 1, 0.68, 1] }"
         class="max-w-2xl mx-auto text-center mb-14"
       >
         <h2 class="text-3xl sm:text-4xl lg:text-[40px] font-bold tracking-[-0.03em] leading-[1.15] text-[#090c1d] mb-3.5 font-display text-balance">
@@ -14,15 +15,16 @@
         <p class="text-[#52525b] text-base sm:text-lg leading-relaxed font-normal text-pretty">
           Đề tài Nghiên cứu Khoa học Sinh viên được Hội đồng khoa học Khoa Công nghệ Thông tin &amp; Truyền thông — Đại học Cần Thơ chính thức nghiệm thu và đánh giá xuất sắc.
         </p>
-      </div>
+      </motion.div>
 
       <!-- 2-Column Grid (Consistent with CTU Design System) -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
         <!-- Col 1: Core Solver Capabilities (7 cols) -->
-        <div
-          v-motion
+        <motion.div
           :initial="{ opacity: 0, y: 16 }"
-          :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 50, ease: [0.33, 1, 0.68, 1] } }"
+          :whileInView="{ opacity: 1, y: 0 }"
+          :inViewOptions="{ once: true }"
+          :transition="{ duration: 0.45, delay: 0.05, ease: [0.33, 1, 0.68, 1] }"
           class="lg:col-span-7 clickup-card p-5 sm:p-7 flex flex-col justify-between"
         >
           <div>
@@ -71,13 +73,14 @@
               Nghiệm thu chính thức
             </span>
           </div>
-        </div>
+        </motion.div>
 
         <!-- Col 2: Document Certification (5 cols) -->
-        <div
-          v-motion
+        <motion.div
           :initial="{ opacity: 0, y: 16 }"
-          :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 120, ease: [0.33, 1, 0.68, 1] } }"
+          :whileInView="{ opacity: 1, y: 0 }"
+          :inViewOptions="{ once: true }"
+          :transition="{ duration: 0.45, delay: 0.12, ease: [0.33, 1, 0.68, 1] }"
           class="lg:col-span-5 clickup-card p-5 sm:p-7 flex flex-col justify-between"
         >
           <div>
@@ -89,10 +92,9 @@
             </p>
 
             <!-- Document Click-to-Modal Trigger -->
-            <button
+            <motion.button
               type="button"
-              v-motion
-              :tapped="{ scale: 0.98, transition: { duration: 150 } }"
+              :whilePress="{ scale: 0.98 }"
               @click="openModal"
               class="group relative w-full flex flex-col items-center justify-center p-3 sm:p-4 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] hover:border-[#00529c] hover:bg-[#f0f7ff]/40 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00529c]/50"
               aria-haspopup="dialog"
@@ -112,35 +114,38 @@
               <span class="mt-2.5 text-xs font-medium text-[#00529c] group-hover:underline">
                 Xem toàn văn biên bản nghiệm thu
               </span>
-            </button>
+            </motion.button>
           </div>
 
           <div class="mt-6 pt-4 border-t border-[#e4e4e7] flex items-center justify-center gap-1.5 text-xs text-[#52525b]">
             <span>Xếp loại: <strong class="text-[#090c1d] font-semibold">Xuất sắc</strong> • Khoa CNTT&amp;TT — ĐH Cần Thơ</span>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
 
-    <!-- Zoomable Modal for Document Inspection -->
+    <!-- Zoomable Modal for Document Inspection (motion-v animated) -->
     <Teleport to="body">
-      <Transition
-        enter-active-class="transition duration-200 ease-out"
-        enter-from-class="opacity-0"
-        enter-to-class="opacity-100"
-        leave-active-class="transition duration-150 ease-in"
-        leave-from-class="opacity-100"
-        leave-to-class="opacity-0"
-      >
-        <div
+      <AnimatePresence>
+        <motion.div
           v-if="isModalOpen"
+          :initial="{ opacity: 0 }"
+          :animate="{ opacity: 1 }"
+          :exit="{ opacity: 0 }"
+          :transition="{ duration: 0.2 }"
           class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-[#090c1d]/80 backdrop-blur-sm"
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-doc-title"
           @click.self="closeModal"
         >
-          <div class="relative w-full max-w-4xl max-h-[92vh] flex flex-col bg-white rounded-2xl shadow-2xl border border-[#e4e4e7] overflow-hidden">
+          <motion.div
+            :initial="{ scale: 0.95, opacity: 0 }"
+            :animate="{ scale: 1, opacity: 1 }"
+            :exit="{ scale: 0.95, opacity: 0 }"
+            :transition="{ duration: 0.2, ease: [0.33, 1, 0.68, 1] }"
+            class="relative w-full max-w-4xl max-h-[92vh] flex flex-col bg-white rounded-2xl shadow-2xl border border-[#e4e4e7] overflow-hidden"
+          >
             <!-- Modal Header -->
             <div class="flex items-center justify-between px-5 py-3.5 border-b border-[#e4e4e7] bg-[#f8f9fa] shrink-0">
               <div>
@@ -156,58 +161,54 @@
               <div class="flex items-center gap-1.5 sm:gap-2">
                 <!-- Zoom Controls -->
                 <div class="flex items-center bg-white border border-[#e4e4e7] rounded-lg p-0.5 shadow-2xs">
-                  <button
+                  <motion.button
                     type="button"
-                    v-motion
-                    :tapped="{ scale: 0.92, transition: { duration: 150 } }"
+                    :whilePress="{ scale: 0.92 }"
                     @click="zoomOut"
                     class="w-7 h-7 flex items-center justify-center text-[#52525b] hover:text-[#090c1d] hover:bg-[#f1f5f9] rounded transition-colors cursor-pointer"
                     title="Thu nhỏ (-)"
                     aria-label="Thu nhỏ"
                   >
                     <i class="fa-solid fa-minus text-xs" aria-hidden="true"></i>
-                  </button>
+                  </motion.button>
                   <span class="px-2 text-xs font-semibold tabular-nums text-[#18181b]">
                     {{ Math.round(zoom * 100) }}%
                   </span>
-                  <button
+                  <motion.button
                     type="button"
-                    v-motion
-                    :tapped="{ scale: 0.92, transition: { duration: 150 } }"
+                    :whilePress="{ scale: 0.92 }"
                     @click="zoomIn"
                     class="w-7 h-7 flex items-center justify-center text-[#52525b] hover:text-[#090c1d] hover:bg-[#f1f5f9] rounded transition-colors cursor-pointer"
                     title="Phóng to (+)"
                     aria-label="Phóng to"
                   >
                     <i class="fa-solid fa-plus text-xs" aria-hidden="true"></i>
-                  </button>
+                  </motion.button>
                 </div>
 
                 <!-- Reset Zoom -->
-                <button
+                <motion.button
                   type="button"
-                  v-motion
-                  :tapped="{ scale: 0.95, transition: { duration: 150 } }"
+                  :whilePress="{ scale: 0.95 }"
                   @click="resetZoom"
                   class="px-2.5 py-1 text-xs font-medium text-[#52525b] hover:text-[#090c1d] bg-white border border-[#e4e4e7] rounded-lg hover:bg-[#f1f5f9] transition-colors shadow-2xs hidden sm:inline-flex items-center gap-1 cursor-pointer"
                   title="Đặt lại kích thước chuẩn (0)"
                 >
                   <i class="fa-solid fa-rotate-left text-[11px]" aria-hidden="true"></i>
                   <span>Vừa khung</span>
-                </button>
+                </motion.button>
 
                 <!-- Close Button -->
-                <button
+                <motion.button
                   type="button"
-                  v-motion
-                  :tapped="{ scale: 0.90, transition: { duration: 150 } }"
+                  :whilePress="{ scale: 0.90 }"
                   @click="closeModal"
                   class="w-8 h-8 flex items-center justify-center text-[#71717a] hover:text-[#090c1d] hover:bg-[#e4e4e7]/60 rounded-lg transition-colors ml-1 cursor-pointer"
                   title="Đóng (Esc)"
                   aria-label="Đóng cửa sổ"
                 >
                   <i class="fa-solid fa-xmark text-sm" aria-hidden="true"></i>
-                </button>
+                </motion.button>
               </div>
             </div>
 
@@ -241,15 +242,16 @@
               <span>Mẹo: Dùng con lăn chuột để phóng to/thu nhỏ, kéo chuột để di chuyển ảnh.</span>
               <span class="hidden sm:inline">Nhấn phím <kbd class="px-1.5 py-0.5 rounded bg-white border border-[#e4e4e7] text-[#18181b] font-semibold text-[10px]">Esc</kbd> để đóng</span>
             </div>
-          </div>
-        </div>
-      </Transition>
+          </motion.div>
+        </motion.div>
+      </AnimatePresence>
     </Teleport>
   </section>
 </template>
 
 <script setup>
 import { ref, watch, onMounted, onUnmounted } from 'vue';
+import { motion, AnimatePresence } from 'motion-v';
 
 const isModalOpen = ref(false);
 const zoom = ref(1);

@@ -1,10 +1,11 @@
 <template>
   <section class="py-16 md:py-24 bg-white overflow-hidden">
     <div class="container mx-auto max-w-clickup px-4 sm:px-6">
-      <div
-        v-motion
+      <motion.div
         :initial="{ opacity: 0, scale: 0.96 }"
-        :visibleOnce="{ opacity: 1, scale: 1, transition: { duration: 500, ease: [0.33, 1, 0.68, 1] } }"
+        :whileInView="{ opacity: 1, scale: 1 }"
+        :inViewOptions="{ once: true }"
+        :transition="{ duration: 0.5, ease: [0.33, 1, 0.68, 1] }"
         class="aurora-cta-banner p-8 sm:p-14 md:p-16 text-center text-white relative hover-lift"
       >
         <div class="relative z-10 max-w-3xl mx-auto space-y-6">
@@ -37,7 +38,11 @@
             </a>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   </section>
 </template>
+
+<script setup>
+import { motion } from 'motion-v';
+</script>

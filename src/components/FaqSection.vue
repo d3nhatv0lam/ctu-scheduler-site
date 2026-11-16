@@ -1,10 +1,11 @@
 <template>
   <section id="faq" class="py-20 bg-plaster-band border-b border-[#e4e4e7]">
     <div class="container mx-auto max-w-clickup px-4 sm:px-6">
-      <div
-        v-motion
+      <motion.div
         :initial="{ opacity: 0, y: 16 }"
-        :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, ease: [0.33, 1, 0.68, 1] } }"
+        :whileInView="{ opacity: 1, y: 0 }"
+        :inViewOptions="{ once: true }"
+        :transition="{ duration: 0.45, ease: [0.33, 1, 0.68, 1] }"
         class="max-w-2xl text-left mb-12"
       >
         <h2 class="text-3xl sm:text-4xl font-extrabold tracking-[-0.03em] text-[#090c1d] mb-3 font-display">
@@ -13,12 +14,13 @@
         <p class="text-[#52525b] text-base leading-relaxed">
           Giải đáp các thắc mắc phổ biến của sinh viên khi sử dụng và vận hành CTU Scheduler.
         </p>
-      </div>
+      </motion.div>
 
-      <div
-        v-motion
+      <motion.div
         :initial="{ opacity: 0, y: 20 }"
-        :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 100, ease: [0.33, 1, 0.68, 1] } }"
+        :whileInView="{ opacity: 1, y: 0 }"
+        :inViewOptions="{ once: true }"
+        :transition="{ duration: 0.45, delay: 0.1, ease: [0.33, 1, 0.68, 1] }"
         class="clickup-card-elevated !p-0 divide-y divide-[#e4e4e7] bg-white border border-[#e4e4e7] shadow-card overflow-hidden"
       >
         <div
@@ -36,38 +38,44 @@
               <span class="w-2 h-2 rounded-full bg-[#00529c] shrink-0"></span>
               <span>{{ item.question }}</span>
             </h3>
-            <span
-              class="w-7 h-7 rounded-full bg-[#f4f4f5] text-[#52525b] flex items-center justify-center shrink-0 transition-transform duration-250 ease-out origin-center"
-              :class="{ 'rotate-180 bg-[#f0f7ff] text-[#00529c]': openIndex === index }"
+            <motion.span
+              class="w-7 h-7 rounded-full flex items-center justify-center shrink-0 origin-center transition-colors duration-200"
+              :class="openIndex === index ? 'bg-[#f0f7ff] text-[#00529c]' : 'bg-[#f4f4f5] text-[#52525b]'"
+              :animate="{ rotate: openIndex === index ? 180 : 0 }"
+              :transition="{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }"
             >
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
               </svg>
-            </span>
+            </motion.span>
           </button>
 
-          <!-- Smooth Grid Height Expansion -->
-          <div
-            class="grid transition-[grid-template-rows] duration-250 ease-[cubic-bezier(0.33,1,0.68,1)]"
-            :class="openIndex === index ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
-          >
-            <div class="overflow-hidden">
+          <!-- Motion-v Accordion Height & Opacity Expansion -->
+          <AnimatePresence :initial="false">
+            <motion.div
+              v-if="openIndex === index"
+              :initial="{ height: 0, opacity: 0 }"
+              :animate="{ height: 'auto', opacity: 1 }"
+              :exit="{ height: 0, opacity: 0 }"
+              :transition="{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }"
+              class="overflow-hidden"
+            >
               <div
-                class="px-4 sm:px-6 pb-5 pt-0 text-[#52525b] text-xs sm:text-sm leading-relaxed pl-[28px] sm:pl-[34px] transition-opacity duration-200"
-                :class="openIndex === index ? 'opacity-100' : 'opacity-0'"
+                class="px-4 sm:px-6 pb-5 pt-0 text-[#52525b] text-xs sm:text-sm leading-relaxed pl-[28px] sm:pl-[34px]"
               >
                 {{ item.answer }}
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
-      </div>
+      </motion.div>
     </div>
   </section>
 </template>
 
 <script setup>
 import { ref } from 'vue';
+import { motion, AnimatePresence } from 'motion-v';
 
 const openIndex = ref(0);
 

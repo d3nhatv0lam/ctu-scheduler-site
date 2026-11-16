@@ -1,10 +1,11 @@
 <template>
   <section id="team" class="py-20 border-b border-[#e4e4e7] bg-white">
     <div class="container mx-auto max-w-clickup px-4 sm:px-6">
-      <div
-        v-motion
+      <motion.div
         :initial="{ opacity: 0, y: 16 }"
-        :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, ease: [0.33, 1, 0.68, 1] } }"
+        :whileInView="{ opacity: 1, y: 0 }"
+        :inViewOptions="{ once: true }"
+        :transition="{ duration: 0.45, ease: [0.33, 1, 0.68, 1] }"
         class="max-w-2xl text-left mb-12"
       >
         <h2 class="text-3xl sm:text-4xl font-extrabold tracking-[-0.03em] text-[#090c1d] mb-3 font-display">
@@ -13,14 +14,15 @@
         <p class="text-[#52525b] text-base leading-relaxed">
           Nhóm sinh viên Khoa CNTT&amp;TT - Đại học Cần Thơ trực tiếp nghiên cứu, lập trình và duy trì dự án.
         </p>
-      </div>
+      </motion.div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <!-- Member 1: Dương Minh Đức -->
-        <div
-          v-motion
+        <motion.div
           :initial="{ opacity: 0, y: 16 }"
-          :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 50, ease: [0.33, 1, 0.68, 1] } }"
+          :whileInView="{ opacity: 1, y: 0 }"
+          :inViewOptions="{ once: true }"
+          :transition="{ duration: 0.45, delay: 0.05, ease: [0.33, 1, 0.68, 1] }"
           class="clickup-card p-6 text-center space-y-4"
         >
           <div class="w-20 h-20 mx-auto rounded-full bg-[#f8f9fa] overflow-hidden border-2 border-[#e4e4e7] shadow-subtle">
@@ -52,13 +54,14 @@
               <span>YouTube</span>
             </a>
           </div>
-        </div>
+        </motion.div>
 
         <!-- Member 2: Nguyễn Phước Lộc -->
-        <div
-          v-motion
+        <motion.div
           :initial="{ opacity: 0, y: 16 }"
-          :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 100, ease: [0.33, 1, 0.68, 1] } }"
+          :whileInView="{ opacity: 1, y: 0 }"
+          :inViewOptions="{ once: true }"
+          :transition="{ duration: 0.45, delay: 0.1, ease: [0.33, 1, 0.68, 1] }"
           class="clickup-card p-6 text-center space-y-4"
         >
           <div class="w-20 h-20 mx-auto rounded-full bg-[#f8f9fa] overflow-hidden border-2 border-[#e4e4e7] shadow-subtle">
@@ -90,13 +93,14 @@
               <span>YouTube</span>
             </a>
           </div>
-        </div>
+        </motion.div>
 
         <!-- Member 3: Trần Trọng Phúc -->
-        <div
-          v-motion
+        <motion.div
           :initial="{ opacity: 0, y: 16 }"
-          :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 150, ease: [0.33, 1, 0.68, 1] } }"
+          :whileInView="{ opacity: 1, y: 0 }"
+          :inViewOptions="{ once: true }"
+          :transition="{ duration: 0.45, delay: 0.15, ease: [0.33, 1, 0.68, 1] }"
           class="clickup-card p-6 text-center space-y-4"
         >
           <div class="w-20 h-20 mx-auto rounded-full bg-[#f8f9fa] overflow-hidden border-2 border-[#e4e4e7] shadow-subtle">
@@ -120,13 +124,14 @@
               <span>GitHub</span>
             </a>
           </div>
-        </div>
+        </motion.div>
 
         <!-- Member 4: Nguyễn Ngọc Đức Phát -->
-        <div
-          v-motion
+        <motion.div
           :initial="{ opacity: 0, y: 16 }"
-          :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 200, ease: [0.33, 1, 0.68, 1] } }"
+          :whileInView="{ opacity: 1, y: 0 }"
+          :inViewOptions="{ once: true }"
+          :transition="{ duration: 0.45, delay: 0.2, ease: [0.33, 1, 0.68, 1] }"
           class="clickup-card p-6 text-center space-y-4"
         >
           <div class="w-20 h-20 mx-auto rounded-full bg-[#f8f9fa] overflow-hidden border-2 border-[#e4e4e7] shadow-subtle">
@@ -150,8 +155,12 @@
               <span>GitHub</span>
             </a>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   </section>
 </template>
+
+<script setup>
+import { motion } from 'motion-v';
+</script>
