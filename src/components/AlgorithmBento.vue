@@ -23,75 +23,51 @@
           v-motion
           :initial="{ opacity: 0, y: 16 }"
           :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 50, ease: [0.33, 1, 0.68, 1] } }"
-          class="lg:col-span-7 clickup-card p-6 sm:p-8 flex flex-col justify-between"
+          class="lg:col-span-7 clickup-card p-5 sm:p-7 flex flex-col justify-between"
         >
           <div>
-            <div class="w-11 h-11 rounded-2xl bg-[#f0f7ff] text-[#00529c] border border-[#bae0fd] flex items-center justify-center text-lg mb-5 shadow-xs">
-              <i class="fa-solid fa-microchip" aria-hidden="true"></i>
-            </div>
             <h3 class="text-xl font-bold tracking-[-0.02em] leading-snug text-[#18181b] mb-2 font-display text-balance">
               Thuật toán duyệt tổ hợp &amp; Khử xung đột ma trận
             </h3>
-            <p class="text-[#52525b] text-sm leading-relaxed mb-6 font-normal text-pretty">
-              Thuật toán tự động sinh và kiểm tra hàng chục ngàn nhánh kết hợp giữa các nhóm học phần lý thuyết và thực hành, bảo đảm triệt tiêu hoàn toàn xung đột theo các ràng buộc:
+            <p class="text-[#52525b] text-sm leading-relaxed mb-5 font-normal text-pretty">
+              Tự động kiểm tra hàng chục ngàn tổ hợp môn học, giải quyết triệt để các ràng buộc đăng ký:
             </p>
 
-            <!-- Flat, Clean Constraint List (No Nested Cards) -->
-            <div class="space-y-3 text-xs">
-              <div class="flex items-center justify-between p-3.5 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7] transition-colors">
-                <div class="flex items-center gap-3">
-                  <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[11px] shrink-0">
-                    <i class="fa-solid fa-check" aria-hidden="true"></i>
-                  </span>
-                  <span class="font-medium text-[#18181b]">Khử <strong class="text-[#090c1d] font-semibold tabular-nums">100%</strong> trùng tiết học</span>
-                </div>
-                <span class="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
+            <!-- Flat, Clean Constraint List (No Icons, No Overflow on Mobile) -->
+            <div class="space-y-2.5 text-xs sm:text-sm">
+              <div class="flex items-center justify-between gap-3 p-3 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7]">
+                <span class="font-medium text-[#18181b] leading-tight">Khử 100% trùng tiết học</span>
+                <span class="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
                   Bắt buộc
                 </span>
               </div>
 
-              <div class="flex items-center justify-between p-3.5 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7] transition-colors">
-                <div class="flex items-center gap-3">
-                  <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-[11px] shrink-0">
-                    <i class="fa-solid fa-check" aria-hidden="true"></i>
-                  </span>
-                  <span class="font-medium text-[#18181b]">Khử <strong class="text-[#090c1d] font-semibold tabular-nums">100%</strong> trùng ngày thi kết thúc</span>
-                </div>
-                <span class="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
+              <div class="flex items-center justify-between gap-3 p-3 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7]">
+                <span class="font-medium text-[#18181b] leading-tight">Khử 100% trùng ngày thi</span>
+                <span class="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
                   Bắt buộc
                 </span>
               </div>
 
-              <div class="flex items-center justify-between p-3.5 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7] transition-colors">
-                <div class="flex items-center gap-3">
-                  <span class="w-5 h-5 rounded-full bg-blue-100 text-[#00529c] flex items-center justify-center text-[11px] shrink-0">
-                    <i class="fa-solid fa-check" aria-hidden="true"></i>
-                  </span>
-                  <span class="font-medium text-[#18181b]">Tránh đổi cơ sở cùng buổi (Khu II – Hòa An)</span>
-                </div>
-                <span class="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-md bg-blue-50 text-[#00529c] border border-blue-200 shrink-0">
+              <div class="flex items-center justify-between gap-3 p-3 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7]">
+                <span class="font-medium text-[#18181b] leading-tight">Tránh đổi cơ sở cùng buổi</span>
+                <span class="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-blue-50 text-[#00529c] border border-blue-200 shrink-0">
                   Tối ưu
                 </span>
               </div>
 
-              <div class="flex items-center justify-between p-3.5 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7] transition-colors">
-                <div class="flex items-center gap-3">
-                  <span class="w-5 h-5 rounded-full bg-blue-100 text-[#00529c] flex items-center justify-center text-[11px] shrink-0">
-                    <i class="fa-solid fa-check" aria-hidden="true"></i>
-                  </span>
-                  <span class="font-medium text-[#18181b]">Cố định giờ nghỉ trưa &amp; ăn uống (11h00 – 13h00)</span>
-                </div>
-                <span class="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-md bg-blue-50 text-[#00529c] border border-blue-200 shrink-0">
+              <div class="flex items-center justify-between gap-3 p-3 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7]">
+                <span class="font-medium text-[#18181b] leading-tight">Bảo lưu giờ nghỉ trưa</span>
+                <span class="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-blue-50 text-[#00529c] border border-blue-200 shrink-0">
                   Tối ưu
                 </span>
               </div>
             </div>
           </div>
 
-          <div class="mt-8 pt-5 border-t border-[#e4e4e7] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-[#71717a]">
-            <span>Kiểm nghiệm thực tế qua nhiều học kỳ tại ĐH Cần Thơ</span>
-            <span class="text-emerald-700 font-semibold uppercase text-[11px] tracking-wide flex items-center gap-1.5 self-start sm:self-auto">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+          <div class="mt-6 pt-4 border-t border-[#e4e4e7] flex items-center justify-between gap-2 text-xs text-[#71717a]">
+            <span>Thực nghiệm tại ĐH Cần Thơ</span>
+            <span class="text-emerald-700 font-semibold uppercase text-[11px] tracking-wide shrink-0">
               Nghiệm thu chính thức
             </span>
           </div>
@@ -102,51 +78,43 @@
           v-motion
           :initial="{ opacity: 0, y: 16 }"
           :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 120, ease: [0.33, 1, 0.68, 1] } }"
-          class="lg:col-span-5 clickup-card p-6 sm:p-8 flex flex-col justify-between"
+          class="lg:col-span-5 clickup-card p-5 sm:p-7 flex flex-col justify-between"
         >
           <div>
-            <div class="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center justify-center text-lg mb-5 shadow-xs">
-              <i class="fa-solid fa-award" aria-hidden="true"></i>
-            </div>
             <h3 class="text-xl font-bold tracking-[-0.02em] leading-snug text-[#18181b] mb-2 font-display text-balance">
               Chứng Nhận Khoa CNTT&amp;TT
             </h3>
             <p class="text-[#52525b] text-sm leading-relaxed mb-5 font-normal text-pretty">
-              Biên bản số 02/TB-CN&amp;CNTT-SV do Hội đồng khoa học thẩm định và công nhận tính khả thi cao:
+              Biên bản số 02/TB-CN&amp;CNTT-SV do Hội đồng khoa học thẩm định và thông qua:
             </p>
 
             <!-- Document Click-to-Modal Trigger -->
             <button
               type="button"
               @click="openModal"
-              class="group relative w-full flex flex-col items-center justify-center p-4 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] hover:border-[#00529c] hover:bg-[#f0f7ff]/40 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00529c]/50"
+              class="group relative w-full flex flex-col items-center justify-center p-3 sm:p-4 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] hover:border-[#00529c] hover:bg-[#f0f7ff]/40 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00529c]/50"
               aria-haspopup="dialog"
-              aria-label="Bấm để xem văn bản nghiệm thu trong modal thu phóng"
+              aria-label="Xem biên bản nghiệm thu phóng to"
             >
-              <div class="relative overflow-hidden rounded-lg border border-[#e4e4e7] shadow-sm max-w-[200px]">
+              <div class="relative overflow-hidden rounded-lg border border-[#e4e4e7] shadow-xs max-w-[190px]">
                 <img
                   src="/assets/images/02_TB Cong nghe va CNTT_SV_Bien ban_duoc duyet-images-48.webp"
                   alt="Biên bản nghiệm thu đề tài NCKH CTU Scheduler"
                   class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300"
                   loading="lazy"
                 />
-                <div class="absolute inset-0 bg-[#090c1d]/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col items-center justify-center text-white p-2">
-                  <span class="w-9 h-9 rounded-full bg-white/20 backdrop-blur-xs flex items-center justify-center mb-1">
-                    <i class="fa-solid fa-magnifying-glass-plus text-sm" aria-hidden="true"></i>
-                  </span>
-                  <span class="text-xs font-semibold">Bấm để phóng to</span>
+                <div class="absolute inset-0 bg-[#090c1d]/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center text-white p-2">
+                  <span class="text-xs font-semibold px-2.5 py-1 rounded bg-white/20 backdrop-blur-xs">Phóng to văn bản</span>
                 </div>
               </div>
-              <span class="mt-3 text-xs font-medium text-[#00529c] flex items-center gap-1.5 group-hover:underline">
-                <i class="fa-solid fa-expand text-[11px]" aria-hidden="true"></i>
-                Xem văn bản nghiệm thu kích thước lớn
+              <span class="mt-2.5 text-xs font-medium text-[#00529c] group-hover:underline">
+                Xem toàn văn biên bản nghiệm thu
               </span>
             </button>
           </div>
 
-          <div class="mt-6 pt-5 border-t border-[#e4e4e7] flex items-center justify-center gap-2 text-xs text-[#52525b]">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-600 shrink-0"></span>
-            <span>Xếp loại: <strong class="text-[#090c1d] font-semibold">Xuất sắc</strong> <span class="text-[#a1a1aa]">•</span> Khoa CNTT&amp;TT — ĐH Cần Thơ</span>
+          <div class="mt-6 pt-4 border-t border-[#e4e4e7] flex items-center justify-center gap-1.5 text-xs text-[#52525b]">
+            <span>Xếp loại: <strong class="text-[#090c1d] font-semibold">Xuất sắc</strong> • Khoa CNTT&amp;TT — ĐH Cần Thơ</span>
           </div>
         </div>
       </div>
@@ -173,18 +141,13 @@
           <div class="relative w-full max-w-4xl max-h-[92vh] flex flex-col bg-white rounded-2xl shadow-2xl border border-[#e4e4e7] overflow-hidden">
             <!-- Modal Header -->
             <div class="flex items-center justify-between px-5 py-3.5 border-b border-[#e4e4e7] bg-[#f8f9fa] shrink-0">
-              <div class="flex items-center gap-2.5">
-                <span class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center justify-center text-xs">
-                  <i class="fa-solid fa-award" aria-hidden="true"></i>
-                </span>
-                <div>
-                  <h4 id="modal-doc-title" class="text-sm font-bold text-[#18181b] leading-tight">
-                    Biên bản nghiệm thu đề tài NCKH Sinh viên
-                  </h4>
-                  <p class="text-[11px] text-[#71717a]">
-                    Số 02/TB-CN&amp;CNTT-SV • Khoa Công nghệ Thông tin &amp; Truyền thông
-                  </p>
-                </div>
+              <div>
+                <h4 id="modal-doc-title" class="text-sm font-bold text-[#18181b] leading-tight">
+                  Biên bản nghiệm thu đề tài NCKH Sinh viên
+                </h4>
+                <p class="text-[11px] text-[#71717a]">
+                  Số 02/TB-CN&amp;CNTT-SV • Khoa Công nghệ Thông tin &amp; Truyền thông
+                </p>
               </div>
 
               <!-- Controls & Close -->
