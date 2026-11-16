@@ -91,6 +91,8 @@
             <!-- Document Click-to-Modal Trigger -->
             <button
               type="button"
+              v-motion
+              :tapped="{ scale: 0.98, transition: { duration: 150 } }"
               @click="openModal"
               class="group relative w-full flex flex-col items-center justify-center p-3 sm:p-4 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] hover:border-[#00529c] hover:bg-[#f0f7ff]/40 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00529c]/50"
               aria-haspopup="dialog"
@@ -156,8 +158,10 @@
                 <div class="flex items-center bg-white border border-[#e4e4e7] rounded-lg p-0.5 shadow-2xs">
                   <button
                     type="button"
+                    v-motion
+                    :tapped="{ scale: 0.92, transition: { duration: 150 } }"
                     @click="zoomOut"
-                    class="w-7 h-7 flex items-center justify-center text-[#52525b] hover:text-[#090c1d] hover:bg-[#f1f5f9] rounded transition-colors"
+                    class="w-7 h-7 flex items-center justify-center text-[#52525b] hover:text-[#090c1d] hover:bg-[#f1f5f9] rounded transition-colors cursor-pointer"
                     title="Thu nhỏ (-)"
                     aria-label="Thu nhỏ"
                   >
@@ -168,8 +172,10 @@
                   </span>
                   <button
                     type="button"
+                    v-motion
+                    :tapped="{ scale: 0.92, transition: { duration: 150 } }"
                     @click="zoomIn"
-                    class="w-7 h-7 flex items-center justify-center text-[#52525b] hover:text-[#090c1d] hover:bg-[#f1f5f9] rounded transition-colors"
+                    class="w-7 h-7 flex items-center justify-center text-[#52525b] hover:text-[#090c1d] hover:bg-[#f1f5f9] rounded transition-colors cursor-pointer"
                     title="Phóng to (+)"
                     aria-label="Phóng to"
                   >
@@ -180,8 +186,10 @@
                 <!-- Reset Zoom -->
                 <button
                   type="button"
+                  v-motion
+                  :tapped="{ scale: 0.95, transition: { duration: 150 } }"
                   @click="resetZoom"
-                  class="px-2.5 py-1 text-xs font-medium text-[#52525b] hover:text-[#090c1d] bg-white border border-[#e4e4e7] rounded-lg hover:bg-[#f1f5f9] transition-colors shadow-2xs hidden sm:inline-flex items-center gap-1"
+                  class="px-2.5 py-1 text-xs font-medium text-[#52525b] hover:text-[#090c1d] bg-white border border-[#e4e4e7] rounded-lg hover:bg-[#f1f5f9] transition-colors shadow-2xs hidden sm:inline-flex items-center gap-1 cursor-pointer"
                   title="Đặt lại kích thước chuẩn (0)"
                 >
                   <i class="fa-solid fa-rotate-left text-[11px]" aria-hidden="true"></i>
@@ -191,8 +199,10 @@
                 <!-- Close Button -->
                 <button
                   type="button"
+                  v-motion
+                  :tapped="{ scale: 0.90, transition: { duration: 150 } }"
                   @click="closeModal"
-                  class="w-8 h-8 flex items-center justify-center text-[#71717a] hover:text-[#090c1d] hover:bg-[#e4e4e7]/60 rounded-lg transition-colors ml-1"
+                  class="w-8 h-8 flex items-center justify-center text-[#71717a] hover:text-[#090c1d] hover:bg-[#e4e4e7]/60 rounded-lg transition-colors ml-1 cursor-pointer"
                   title="Đóng (Esc)"
                   aria-label="Đóng cửa sổ"
                 >

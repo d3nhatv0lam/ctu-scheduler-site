@@ -49,7 +49,9 @@
       <!-- Mobile Menu Button -->
       <button
         type="button"
-        class="md:hidden p-2 text-[#52525b] hover:text-[#18181b] rounded-lg focus:outline-none"
+        v-motion
+        :tapped="{ scale: 0.92, transition: { duration: 150 } }"
+        class="md:hidden p-2 text-[#52525b] hover:text-[#18181b] rounded-lg focus:outline-none cursor-pointer"
         :aria-expanded="isMenuOpen"
         aria-label="Mở menu điều hướng"
         @click="isMenuOpen = !isMenuOpen"
@@ -75,7 +77,11 @@
 
     <!-- Mobile Dropdown Menu -->
     <div
-      v-show="isMenuOpen"
+      v-if="isMenuOpen"
+      v-motion
+      :initial="{ opacity: 0, y: -10 }"
+      :enter="{ opacity: 1, y: 0, transition: { duration: 200, ease: [0.33, 1, 0.68, 1] } }"
+      :leave="{ opacity: 0, y: -10, transition: { duration: 150, ease: [0.33, 1, 0.68, 1] } }"
       class="md:hidden bg-white border-b border-[#e4e4e7] px-4 py-4 space-y-2 text-sm shadow-lg"
     >
       <a href="#features" class="block text-[#52525b] hover:text-[#00529c] font-medium py-2 px-3 rounded-lg hover:bg-[#f0f7ff]" @click="isMenuOpen = false">Tính Năng</a>

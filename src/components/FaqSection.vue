@@ -21,56 +21,77 @@
         :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 100, ease: [0.33, 1, 0.68, 1] } }"
         class="clickup-card-elevated !p-0 divide-y divide-[#e4e4e7] bg-white border border-[#e4e4e7] shadow-card overflow-hidden"
       >
-        <div class="p-6 sm:p-7 space-y-2 hover:bg-[#f8f9fa] transition-colors">
-          <h3 class="font-bold text-[#090c1d] text-base font-display flex items-center gap-2.5">
-            <span class="w-2 h-2 rounded-full bg-[#00529c]"></span>
-            Tại sao lại là ứng dụng Desktop mà không phải một trang Web?
-          </h3>
-          <p class="text-[#52525b] text-sm leading-relaxed pl-4.5">
-            Ứng dụng Desktop giúp tận dụng tối đa tài nguyên máy tính cá nhân để chạy mượt mà thuật toán sinh tổ hợp lịch học phức tạp. Quan trọng hơn, nó bảo đảm tính riêng tư tuyệt đối cho tài khoản MyCTU của bạn (vì không gửi qua máy chủ trung gian) và cho phép bạn xem lại thời khóa biểu mọi lúc ngay cả khi mất mạng.
-          </p>
-        </div>
-
-        <div class="p-6 sm:p-7 space-y-2 hover:bg-[#f8f9fa] transition-colors">
-          <h3 class="font-bold text-[#090c1d] text-base font-display flex items-center gap-2.5">
-            <span class="w-2 h-2 rounded-full bg-[#00529c]"></span>
-            Nếu hệ thống trường đột ngột đổi giao diện hoặc cấu trúc dữ liệu thì sao?
-          </h3>
-          <p class="text-[#52525b] text-sm leading-relaxed pl-4.5">
-            CTU Scheduler được thiết kế thông minh theo dạng mô-đun. Khi có thay đổi, nhóm chỉ cần cập nhật riêng mô-đun thu thập dữ liệu là ứng dụng có thể hoạt động bình thường mà không cần lập trình lại toàn bộ hệ thống.
-          </p>
-        </div>
-
-        <div class="p-6 sm:p-7 space-y-2 hover:bg-[#f8f9fa] transition-colors">
-          <h3 class="font-bold text-[#090c1d] text-base font-display flex items-center gap-2.5">
-            <span class="w-2 h-2 rounded-full bg-[#00529c]"></span>
-            Ứng dụng có phiên bản dành cho điện thoại di động (Mobile) không?
-          </h3>
-          <p class="text-[#52525b] text-sm leading-relaxed pl-4.5">
-            Hiện tại dự án tập trung hoàn thiện phiên bản Desktop cho máy tính. Vì được xây dựng trên công nghệ đa nền tảng, một phiên bản thu gọn dành cho Mobile có thể được nhóm nghiên cứu phát triển trong tương lai nếu có đủ điều kiện.
-          </p>
-        </div>
-
-        <div class="p-6 sm:p-7 space-y-2 hover:bg-[#f8f9fa] transition-colors">
-          <h3 class="font-bold text-[#090c1d] text-base font-display flex items-center gap-2.5">
-            <span class="w-2 h-2 rounded-full bg-[#00529c]"></span>
-            Tại sao ứng dụng đôi khi bị chậm hoặc báo lỗi kết nối khi đăng nhập?
-          </h3>
-          <p class="text-[#52525b] text-sm leading-relaxed pl-4.5">
-            Nguyên nhân chủ yếu do máy chủ MyCTU của trường bị quá tải vào giờ cao điểm đăng ký, hoặc đường truyền mạng chập chờn. Bạn nên kiểm tra lại kết nối mạng, hoàn thành xác thực Captcha trên cửa sổ trình duyệt ngầm nếu có yêu cầu, hoặc thử chuyển sang mạng 4G/5G / bật ứng dụng 1.1.1.1 để kết nối ổn định hơn.
-          </p>
-        </div>
-
-        <div class="p-6 sm:p-7 space-y-2 hover:bg-[#f8f9fa] transition-colors">
-          <h3 class="font-bold text-[#090c1d] text-base font-display flex items-center gap-2.5">
-            <span class="w-2 h-2 rounded-full bg-[#00529c]"></span>
-            Ứng dụng có tự động bấm đăng ký môn học thay cho sinh viên không?
-          </h3>
-          <p class="text-[#52525b] text-sm leading-relaxed pl-4.5">
-            Không. CTU Scheduler tập trung hoàn toàn vào việc giúp sinh viên lên lịch học tối ưu, cá nhân hóa tiêu chí và theo dõi biến động sĩ số lớp học phần, không can thiệp vào hành động bấm nút đăng ký chính thức của bạn trên MyCTU.
-          </p>
+        <div
+          v-for="(item, index) in faqList"
+          :key="index"
+          class="transition-colors"
+        >
+          <button
+            type="button"
+            v-motion
+            :tapped="{ scale: 0.995, transition: { duration: 150 } }"
+            class="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 hover:bg-[#f8f9fa] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00529c]/50"
+            :aria-expanded="openIndex === index"
+            @click="toggleFaq(index)"
+          >
+            <h3 class="font-bold text-[#090c1d] text-base font-display flex items-center gap-2.5">
+              <span class="w-2 h-2 rounded-full bg-[#00529c] shrink-0"></span>
+              <span>{{ item.question }}</span>
+            </h3>
+            <span
+              v-motion
+              :initial="{ rotate: openIndex === index ? 180 : 0 }"
+              :enter="{ rotate: openIndex === index ? 180 : 0, transition: { duration: 200, ease: [0.33, 1, 0.68, 1] } }"
+              class="text-[#71717a] shrink-0 text-xs w-6 h-6 flex items-center justify-center rounded-full bg-[#f4f4f5]"
+            >
+              <i class="fa-solid fa-chevron-down"></i>
+            </span>
+          </button>
+          <div
+            v-if="openIndex === index"
+            v-motion
+            :initial="{ opacity: 0, y: -6 }"
+            :enter="{ opacity: 1, y: 0, transition: { duration: 200, ease: [0.33, 1, 0.68, 1] } }"
+            :leave="{ opacity: 0, y: -6, transition: { duration: 150, ease: [0.33, 1, 0.68, 1] } }"
+            class="px-5 sm:px-6 pb-6 pt-0 text-[#52525b] text-sm leading-relaxed pl-[34px]"
+          >
+            {{ item.answer }}
+          </div>
         </div>
       </div>
     </div>
   </section>
 </template>
+
+<script setup>
+import { ref } from 'vue';
+
+const openIndex = ref(0);
+
+const toggleFaq = (index) => {
+  openIndex.value = openIndex.value === index ? -1 : index;
+};
+
+const faqList = [
+  {
+    question: 'Tại sao lại là ứng dụng Desktop mà không phải một trang Web?',
+    answer: 'Ứng dụng Desktop giúp tận dụng tối đa tài nguyên máy tính cá nhân để chạy mượt mà thuật toán sinh tổ hợp lịch học phức tạp. Quan trọng hơn, nó bảo đảm tính riêng tư tuyệt đối cho tài khoản MyCTU của bạn (vì không gửi qua máy chủ trung gian) và cho phép bạn xem lại thời khóa biểu mọi lúc ngay cả khi mất mạng.'
+  },
+  {
+    question: 'Nếu hệ thống trường đột ngột đổi giao diện hoặc cấu trúc dữ liệu thì sao?',
+    answer: 'CTU Scheduler được thiết kế thông minh theo dạng mô-đun. Khi có thay đổi, nhóm chỉ cần cập nhật riêng mô-đun thu thập dữ liệu là ứng dụng có thể hoạt động bình thường mà không cần lập trình lại toàn bộ hệ thống.'
+  },
+  {
+    question: 'Ứng dụng có phiên bản dành cho điện thoại di động (Mobile) không?',
+    answer: 'Hiện tại dự án tập trung hoàn thiện phiên bản Desktop cho máy tính. Vì được xây dựng trên công nghệ đa nền tảng, một phiên bản thu gọn dành cho Mobile có thể được nhóm nghiên cứu phát triển trong tương lai nếu có đủ điều kiện.'
+  },
+  {
+    question: 'Tại sao ứng dụng đôi khi bị chậm hoặc báo lỗi kết nối khi đăng nhập?',
+    answer: 'Nguyên nhân chủ yếu do máy chủ MyCTU của trường bị quá tải vào giờ cao điểm đăng ký, hoặc đường truyền mạng chập chờn. Bạn nên kiểm tra lại kết nối mạng, hoàn thành xác thực Captcha trên cửa sổ trình duyệt ngầm nếu có yêu cầu, hoặc thử chuyển sang mạng 4G/5G / bật ứng dụng 1.1.1.1 để kết nối ổn định hơn.'
+  },
+  {
+    question: 'Ứng dụng có tự động bấm đăng ký môn học thay cho sinh viên không?',
+    answer: 'Không. CTU Scheduler tập trung hoàn toàn vào việc giúp sinh viên lên lịch học tối ưu, cá nhân hóa tiêu chí và theo dõi biến động sĩ số lớp học phần, không can thiệp vào hành động bấm nút đăng ký chính thức của bạn trên MyCTU.'
+  }
+];
+</script>

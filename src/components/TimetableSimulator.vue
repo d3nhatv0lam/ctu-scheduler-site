@@ -5,7 +5,9 @@
       <div class="flex items-center gap-1.5 p-1 bg-[#f8f9fa] rounded-full border border-[#e8e8e8] self-start">
         <button
           type="button"
-          class="px-3.5 py-1 text-xs font-bold rounded-full transition-all"
+          v-motion
+          :tapped="{ scale: 0.96, transition: { duration: 150 } }"
+          class="px-3.5 py-1 text-xs font-bold rounded-full transition-colors cursor-pointer"
           :class="activeView === 'calendar' ? 'bg-[#202020] text-white shadow-sm' : 'text-[#646464] hover:text-[#202020]'"
           @click="activeView = 'calendar'"
         >
@@ -13,7 +15,9 @@
         </button>
         <button
           type="button"
-          class="px-3.5 py-1 text-xs font-bold rounded-full transition-all"
+          v-motion
+          :tapped="{ scale: 0.96, transition: { duration: 150 } }"
+          class="px-3.5 py-1 text-xs font-bold rounded-full transition-colors cursor-pointer"
           :class="activeView === 'list' ? 'bg-[#202020] text-white shadow-sm' : 'text-[#646464] hover:text-[#202020]'"
           @click="activeView = 'list'"
         >
@@ -28,7 +32,9 @@
           v-for="item in filterList"
           :key="item.key"
           type="button"
-          class="pill-filter !py-1 !px-3 !text-xs"
+          v-motion
+          :tapped="{ scale: 0.95, transition: { duration: 150 } }"
+          class="pill-filter !py-1 !px-3 !text-xs cursor-pointer"
           :class="{ active: currentFilter === item.key }"
           @click="currentFilter = item.key"
         >
@@ -38,7 +44,14 @@
     </div>
 
     <!-- Calendar View -->
-    <div v-if="activeView === 'calendar'" class="overflow-x-auto rounded-xl border border-[#e8e8e8] bg-[#f8f9fa]/40 tabular-nums">
+    <div
+      v-if="activeView === 'calendar'"
+      key="calendar"
+      v-motion
+      :initial="{ opacity: 0, y: 6 }"
+      :enter="{ opacity: 1, y: 0, transition: { duration: 200, ease: [0.33, 1, 0.68, 1] } }"
+      class="overflow-x-auto rounded-xl border border-[#e8e8e8] bg-[#f8f9fa]/40 tabular-nums"
+    >
       <table class="w-full text-left border-collapse text-xs">
         <thead>
           <tr class="border-b border-[#e8e8e8] bg-[#e9ebf0]/50 text-[#646464] font-bold">
@@ -138,7 +151,14 @@
     </div>
 
     <!-- List View -->
-    <div v-else class="rounded-xl border border-[#e8e8e8] overflow-hidden divide-y divide-[#e8e8e8] bg-white text-xs tabular-nums">
+    <div
+      v-else
+      key="list"
+      v-motion
+      :initial="{ opacity: 0, y: 6 }"
+      :enter="{ opacity: 1, y: 0, transition: { duration: 200, ease: [0.33, 1, 0.68, 1] } }"
+      class="rounded-xl border border-[#e8e8e8] overflow-hidden divide-y divide-[#e8e8e8] bg-white text-xs tabular-nums"
+    >
       <div
         v-for="course in courseList"
         :key="course.code"

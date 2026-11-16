@@ -45,7 +45,9 @@
         >
           <button
             type="button"
-            class="px-4 py-1.5 rounded-full text-xs font-semibold transition-colors duration-150 flex items-center gap-2"
+            v-motion
+            :tapped="{ scale: 0.96, transition: { duration: 150 } }"
+            class="px-4 py-1.5 rounded-full text-xs font-semibold flex items-center gap-2 cursor-pointer"
             :class="
               activeOsTab === 'windows'
                 ? 'bg-white text-[#18181b] shadow-2xs font-bold'
@@ -58,7 +60,9 @@
           </button>
           <button
             type="button"
-            class="px-4 py-1.5 rounded-full text-xs font-semibold transition-colors duration-150 flex items-center gap-2"
+            v-motion
+            :tapped="{ scale: 0.96, transition: { duration: 150 } }"
+            class="px-4 py-1.5 rounded-full text-xs font-semibold flex items-center gap-2 cursor-pointer"
             :class="
               activeOsTab === 'macos'
                 ? 'bg-white text-[#18181b] shadow-2xs font-bold'
@@ -71,7 +75,9 @@
           </button>
           <button
             type="button"
-            class="px-4 py-1.5 rounded-full text-xs font-semibold transition-colors duration-150 flex items-center gap-2"
+            v-motion
+            :tapped="{ scale: 0.96, transition: { duration: 150 } }"
+            class="px-4 py-1.5 rounded-full text-xs font-semibold flex items-center gap-2 cursor-pointer"
             :class="
               activeOsTab === 'linux'
                 ? 'bg-white text-[#18181b] shadow-2xs font-bold'
@@ -111,7 +117,14 @@
         <!-- ========================================== -->
         <!-- TAB 1: WINDOWS (Cốt lõi chính thức)         -->
         <!-- ========================================== -->
-        <div v-if="activeOsTab === 'windows'" class="space-y-6">
+        <div
+          v-if="activeOsTab === 'windows'"
+          key="windows"
+          v-motion
+          :initial="{ opacity: 0, y: 10 }"
+          :enter="{ opacity: 1, y: 0, transition: { duration: 250, ease: [0.33, 1, 0.68, 1] } }"
+          class="space-y-6"
+        >
           <!-- Setup vs Portable 2-Column Cards -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch">
             <!-- EDITION 1: Setup Installer (Khuyên dùng cá nhân) -->
@@ -344,6 +357,10 @@
         <!-- ========================================== -->
         <div
           v-else-if="activeOsTab === 'macos'"
+          key="macos"
+          v-motion
+          :initial="{ opacity: 0, y: 10 }"
+          :enter="{ opacity: 1, y: 0, transition: { duration: 250, ease: [0.33, 1, 0.68, 1] } }"
           class="p-6 rounded-2xl border border-[#e4e4e7] bg-white space-y-4"
         >
           <div class="flex items-center justify-between">
@@ -427,6 +444,10 @@
         <!-- ========================================== -->
         <div
           v-else-if="activeOsTab === 'linux'"
+          key="linux"
+          v-motion
+          :initial="{ opacity: 0, y: 10 }"
+          :enter="{ opacity: 1, y: 0, transition: { duration: 250, ease: [0.33, 1, 0.68, 1] } }"
           class="p-6 rounded-2xl border border-[#e4e4e7] bg-white space-y-4"
         >
           <div class="flex items-center justify-between">
@@ -505,7 +526,9 @@
           <div class="flex items-center gap-3">
             <button
               type="button"
-              class="text-[#52525b] hover:text-[#00529c] font-medium transition-colors"
+              v-motion
+              :tapped="{ scale: 0.96, transition: { duration: 150 } }"
+              class="text-[#52525b] hover:text-[#00529c] font-medium cursor-pointer"
               @click="showAllAssets = !showAllAssets"
             >
               {{
@@ -518,7 +541,9 @@
             <button
               v-if="currentRelease.body"
               type="button"
-              class="text-[#52525b] hover:text-[#00529c] font-medium transition-colors"
+              v-motion
+              :tapped="{ scale: 0.96, transition: { duration: 150 } }"
+              class="text-[#52525b] hover:text-[#00529c] font-medium cursor-pointer"
               @click="showChangelog = !showChangelog"
             >
               {{
@@ -530,7 +555,11 @@
 
         <!-- Collapsible All Files Drawer -->
         <div
-          v-show="showAllAssets"
+          v-if="showAllAssets"
+          v-motion
+          :initial="{ opacity: 0, y: -8 }"
+          :enter="{ opacity: 1, y: 0, transition: { duration: 220, ease: [0.33, 1, 0.68, 1] } }"
+          :leave="{ opacity: 0, y: -8, transition: { duration: 160, ease: [0.33, 1, 0.68, 1] } }"
           class="p-4 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] space-y-2 text-xs"
         >
           <div class="font-semibold text-[#18181b] mb-1">
@@ -570,7 +599,11 @@
 
         <!-- Collapsible Markdown Changelog Drawer -->
         <div
-          v-show="showChangelog"
+          v-if="showChangelog"
+          v-motion
+          :initial="{ opacity: 0, y: -8 }"
+          :enter="{ opacity: 1, y: 0, transition: { duration: 240, ease: [0.33, 1, 0.68, 1] } }"
+          :leave="{ opacity: 0, y: -8, transition: { duration: 160, ease: [0.33, 1, 0.68, 1] } }"
           class="p-5 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] text-xs leading-relaxed overflow-x-auto markdown-prose"
         >
           <div class="font-semibold text-[#18181b] text-sm mb-2">
