@@ -14,7 +14,7 @@
           type="button"
           class="relative z-10 py-1 px-3 text-xs font-semibold rounded-full transition-colors duration-200 text-center cursor-pointer"
           :class="activeView === 'calendar' ? 'text-white font-bold' : 'text-[#71717a] hover:text-[#18181b]'"
-          @click="activeView = 'calendar'"
+          @click="selectView('calendar')"
         >
           Lịch Tuần
         </button>
@@ -22,7 +22,7 @@
           type="button"
           class="relative z-10 py-1 px-3 text-xs font-semibold rounded-full transition-colors duration-200 text-center cursor-pointer"
           :class="activeView === 'list' ? 'text-white font-bold' : 'text-[#71717a] hover:text-[#18181b]'"
-          @click="activeView = 'list'"
+          @click="selectView('list')"
         >
           Danh Sách Môn
         </button>
@@ -50,10 +50,10 @@
     <motion.div
       v-if="activeView === 'calendar'"
       key="calendar"
-      :initial="{ opacity: 0 }"
+      :initial="hasSwitchedView ? { opacity: 0 } : false"
       :animate="{ opacity: 1 }"
-      :transition="{ duration: 0.2, ease: 'easeOut' }"
-      class="overflow-x-auto rounded-xl border border-[#e8e8e8] bg-[#f8f9fa]/40 tabular-nums"
+      :transition="{ duration: 0.18, ease: 'easeOut' }"
+      class="overflow-x-auto rounded-xl border border-[#e8e8e8] bg-[#f8f9fa]/40 tabular-nums transform-gpu"
     >
       <table class="w-full text-left border-collapse text-xs">
         <thead>
@@ -157,10 +157,10 @@
     <motion.div
       v-else
       key="list"
-      :initial="{ opacity: 0 }"
+      :initial="hasSwitchedView ? { opacity: 0 } : false"
       :animate="{ opacity: 1 }"
-      :transition="{ duration: 0.2, ease: 'easeOut' }"
-      class="rounded-xl border border-[#e8e8e8] overflow-hidden divide-y divide-[#e8e8e8] bg-white text-xs tabular-nums"
+      :transition="{ duration: 0.18, ease: 'easeOut' }"
+      class="rounded-xl border border-[#e8e8e8] overflow-hidden divide-y divide-[#e8e8e8] bg-white text-xs tabular-nums transform-gpu"
     >
       <div
         v-for="course in courseList"
@@ -217,6 +217,14 @@ import { ref, computed } from 'vue';
 import { motion, AnimatePresence } from 'motion-v';
 
 const activeView = ref('calendar');
+const hasSwitchedView = ref(false);
+
+function selectView(view) {
+  if (activeView.value !== view) {
+    hasSwitchedView.value = true;
+    activeView.value = view;
+  }
+}
 
 const filterList = [
   { key: 'all', label: 'Cân bằng' },

@@ -126,25 +126,25 @@
 
     <!-- Zoomable Modal for Document Inspection (motion-v animated) -->
     <Teleport to="body">
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         <motion.div
           v-if="isModalOpen"
+          key="doc-modal-overlay"
           :initial="{ opacity: 0 }"
           :animate="{ opacity: 1 }"
           :exit="{ opacity: 0 }"
-          :transition="{ duration: 0.2 }"
-          class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-[#090c1d]/80 backdrop-blur-sm"
+          :transition="{ duration: 0.18, ease: 'easeOut' }"
+          class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-[#090c1d]/80 backdrop-blur-sm transform-gpu"
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-doc-title"
           @click.self="closeModal"
         >
           <motion.div
-            :initial="{ scale: 0.95, opacity: 0 }"
+            :initial="{ scale: 0.96, opacity: 0 }"
             :animate="{ scale: 1, opacity: 1 }"
-            :exit="{ scale: 0.95, opacity: 0 }"
             :transition="{ duration: 0.2, ease: [0.33, 1, 0.68, 1] }"
-            class="relative w-full max-w-4xl max-h-[92vh] flex flex-col bg-white rounded-2xl shadow-2xl border border-[#e4e4e7] overflow-hidden"
+            class="relative w-full max-w-4xl max-h-[92vh] flex flex-col bg-white rounded-2xl shadow-2xl border border-[#e4e4e7] overflow-hidden transform-gpu"
           >
             <!-- Modal Header -->
             <div class="flex items-center justify-between px-5 py-3.5 border-b border-[#e4e4e7] bg-[#f8f9fa] shrink-0">

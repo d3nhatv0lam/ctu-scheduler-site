@@ -63,7 +63,7 @@
                 ? 'text-[#18181b] font-bold'
                 : 'text-[#71717a] hover:text-[#18181b]'
             "
-            @click="activeOsTab = 'windows'"
+            @click="selectOsTab('windows')"
           >
             <i class="fa-brands fa-windows text-sm" aria-hidden="true"></i>
             <span>Windows</span>
@@ -76,7 +76,7 @@
                 ? 'text-[#18181b] font-bold'
                 : 'text-[#71717a] hover:text-[#18181b]'
             "
-            @click="activeOsTab = 'macos'"
+            @click="selectOsTab('macos')"
           >
             <i class="fa-brands fa-apple text-sm" aria-hidden="true"></i>
             <span>macOS</span>
@@ -89,7 +89,7 @@
                 ? 'text-[#18181b] font-bold'
                 : 'text-[#71717a] hover:text-[#18181b]'
             "
-            @click="activeOsTab = 'linux'"
+            @click="selectOsTab('linux')"
           >
             <i class="fa-brands fa-linux text-sm" aria-hidden="true"></i>
             <span>Linux</span>
@@ -128,10 +128,10 @@
         <motion.div
           v-if="activeOsTab === 'windows'"
           key="windows"
-          :initial="{ opacity: 0 }"
+          :initial="hasSwitchedTab ? { opacity: 0 } : false"
           :animate="{ opacity: 1 }"
-          :transition="{ duration: 0.2, ease: 'easeOut' }"
-          class="space-y-6"
+          :transition="{ duration: 0.18, ease: 'easeOut' }"
+          class="space-y-6 transform-gpu"
         >
             <!-- Setup vs Portable 2-Column Cards -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch">
@@ -345,10 +345,10 @@
         <motion.div
           v-else-if="activeOsTab === 'macos'"
           key="macos"
-          :initial="{ opacity: 0 }"
+          :initial="hasSwitchedTab ? { opacity: 0 } : false"
           :animate="{ opacity: 1 }"
-          :transition="{ duration: 0.2, ease: 'easeOut' }"
-          class="p-6 rounded-2xl border border-[#e4e4e7] bg-white space-y-4"
+          :transition="{ duration: 0.18, ease: 'easeOut' }"
+          class="p-6 rounded-2xl border border-[#e4e4e7] bg-white space-y-4 transform-gpu"
         >
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -432,10 +432,10 @@
         <motion.div
           v-else-if="activeOsTab === 'linux'"
           key="linux"
-          :initial="{ opacity: 0 }"
+          :initial="hasSwitchedTab ? { opacity: 0 } : false"
           :animate="{ opacity: 1 }"
-          :transition="{ duration: 0.2, ease: 'easeOut' }"
-          class="p-6 rounded-2xl border border-[#e4e4e7] bg-white space-y-4"
+          :transition="{ duration: 0.18, ease: 'easeOut' }"
+          class="p-6 rounded-2xl border border-[#e4e4e7] bg-white space-y-4 transform-gpu"
         >
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
@@ -547,12 +547,12 @@
         >
           <div class="overflow-hidden">
             <motion.div
+              :initial="false"
               :animate="{
                 opacity: showAllAssets ? 1 : 0,
-                y: showAllAssets ? 0 : -8,
               }"
-              :transition="{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }"
-              class="p-4 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] space-y-2 text-xs"
+              :transition="{ duration: 0.2, ease: [0.33, 1, 0.68, 1] }"
+              class="p-4 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] space-y-2 text-xs transform-gpu"
             >
               <div class="font-semibold text-[#18181b] mb-1">
                 Tất cả tập tin phát hành:
@@ -599,12 +599,12 @@
         >
           <div class="overflow-hidden">
             <motion.div
+              :initial="false"
               :animate="{
                 opacity: showChangelog ? 1 : 0,
-                y: showChangelog ? 0 : -8,
               }"
-              :transition="{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }"
-              class="p-4 sm:p-5 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] text-xs leading-relaxed overflow-x-auto markdown-prose"
+              :transition="{ duration: 0.2, ease: [0.33, 1, 0.68, 1] }"
+              class="p-4 sm:p-5 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] text-xs leading-relaxed overflow-x-auto markdown-prose transform-gpu"
             >
               <div class="font-semibold text-[#18181b] text-sm mb-2">
                 Nhật ký phiên bản {{ currentRelease.tag_name }}
@@ -644,7 +644,15 @@ const latestRelease = ref(null);
 const showChangelog = ref(false);
 const showAllAssets = ref(false);
 const activeOsTab = ref("windows");
+const hasSwitchedTab = ref(false);
 const userDevice = ref({ os: OS.WINDOWS, arch: ARCH.X64 });
+
+function selectOsTab(tab) {
+  if (activeOsTab.value !== tab) {
+    hasSwitchedTab.value = true;
+    activeOsTab.value = tab;
+  }
+}
 
 const CACHE_KEY = "ctu_release_data_v2";
 const CACHE_TIME_KEY = "ctu_release_timestamp";

@@ -97,6 +97,18 @@
   transform: translateY(-8px);
 }
 
+/* GPU Compositor Stability (Eliminates font snapping, layer teardown, and appear/disappear glitches) */
+.clickup-card,
+.clickup-card-elevated,
+.dark-bento-card,
+.aurora-cta-banner,
+.timetable-slot,
+[data-motion] {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
 /* Prefers-reduced-motion accessibility */
 @media (prefers-reduced-motion: reduce) {
   *,
