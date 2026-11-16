@@ -17,7 +17,9 @@
         >
           Tải phần mềm CTU Scheduler
         </h2>
-        <p class="text-[#52525b] text-sm sm:text-base leading-relaxed text-pretty">
+        <p
+          class="text-[#52525b] text-sm sm:text-base leading-relaxed text-pretty"
+        >
           Phần mềm mã nguồn mở phục vụ sinh viên Đại học Cần Thơ. Lựa chọn hệ
           điều hành và gói cài đặt phù hợp với thiết bị của bạn.
         </p>
@@ -25,7 +27,10 @@
           <span
             class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#f0f7ff] text-[#00529c] border border-[#bae0fd] text-xs font-semibold tabular-nums whitespace-nowrap"
           >
-            <i class="fa-solid fa-download text-[11px] shrink-0" aria-hidden="true"></i>
+            <i
+              class="fa-solid fa-download text-[11px] shrink-0"
+              aria-hidden="true"
+            ></i>
             <span
               >{{ totalDownloads.toLocaleString("vi-VN") }} lượt tải về</span
             >
@@ -122,6 +127,50 @@
 
       <!-- Main Showcase Container -->
       <div v-else class="space-y-6 max-w-4xl mx-auto">
+        <!-- Mobile Device Notice Card (Chỉ hiện khi khách truy cập bằng Mobile Android/iOS) -->
+        <motion.div
+          v-if="isMobileUser"
+          :initial="{ opacity: 0, y: -6 }"
+          :animate="{ opacity: 1, y: 0 }"
+          :transition="{ duration: 0.3, ease: [0.33, 1, 0.68, 1] }"
+          class="p-4 sm:p-5 rounded-2xl bg-[#fffbeb] border border-[#fef3c7] text-[#92400e] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-2xs"
+        >
+          <div class="flex items-start gap-3">
+            <div class="space-y-1">
+              <div
+                class="font-bold text-sm text-[#78350f] flex items-center gap-2"
+              >
+                <span
+                  >Chưa có ứng dụng di động cho {{ detectedDeviceLabel }}</span
+                >
+              </div>
+              <p class="text-xs text-[#92400e] leading-relaxed text-pretty">
+                CTU Scheduler hiện được thiết kế và tối ưu riêng cho môi trường
+                máy tính để lập và xuất lịch học. Bạn vẫn có thể xem các gói cài
+                đặt bên dưới hoặc sao chép liên kết để mở tải về trên máy tính.
+              </p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            class="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#fde68a] hover:bg-[#fef9c3] text-[#78350f] text-xs font-semibold shadow-2xs transition-all cursor-pointer whitespace-nowrap self-stretch sm:self-auto justify-center"
+            @click="copyDownloadLink"
+          >
+            <i
+              :class="
+                linkCopied
+                  ? 'fa-solid fa-check text-[#16a34a]'
+                  : 'fa-regular fa-copy'
+              "
+              aria-hidden="true"
+            ></i>
+            <span>{{
+              linkCopied ? "Đã sao chép liên kết!" : "Chép link mở trên PC"
+            }}</span>
+          </button>
+        </motion.div>
+
         <!-- ========================================== -->
         <!-- TAB 1: WINDOWS (Cốt lõi chính thức)         -->
         <!-- ========================================== -->
@@ -133,8 +182,8 @@
           :transition="{ duration: 0.18, ease: 'easeOut' }"
           class="space-y-6"
         >
-            <!-- Setup vs Portable 2-Column Cards -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch">
+          <!-- Setup vs Portable 2-Column Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch">
             <!-- EDITION 1: Setup Installer (Khuyên dùng cá nhân) -->
             <div
               class="p-5 sm:p-6 rounded-2xl border border-[#e4e4e7] bg-white flex flex-col justify-between space-y-5"
@@ -169,15 +218,21 @@
                 <!-- Restrained Feature List -->
                 <ul class="space-y-1.5 text-xs text-[#52525b] pt-1">
                   <li class="flex items-start gap-2">
-                    <span class="text-[#00529c] font-bold mt-0.5 shrink-0">•</span>
+                    <span class="text-[#00529c] font-bold mt-0.5 shrink-0"
+                      >•</span
+                    >
                     <span>Tự động cập nhật phiên bản mới</span>
                   </li>
                   <li class="flex items-start gap-2">
-                    <span class="text-[#00529c] font-bold mt-0.5 shrink-0">•</span>
+                    <span class="text-[#00529c] font-bold mt-0.5 shrink-0"
+                      >•</span
+                    >
                     <span>Tạo lối tắt Desktop &amp; Start Menu</span>
                   </li>
                   <li class="flex items-start gap-2">
-                    <span class="text-[#00529c] font-bold mt-0.5 shrink-0">•</span>
+                    <span class="text-[#00529c] font-bold mt-0.5 shrink-0"
+                      >•</span
+                    >
                     <span>Lưu cấu hình và lịch học qua các kỳ</span>
                   </li>
                 </ul>
@@ -210,7 +265,10 @@
                   target="_blank"
                   class="btn-clickup-primary w-full text-center justify-center !py-2.5 !text-xs whitespace-nowrap"
                 >
-                  <i class="fa-brands fa-windows mr-1.5 shrink-0" aria-hidden="true"></i>
+                  <i
+                    class="fa-brands fa-windows mr-1.5 shrink-0"
+                    aria-hidden="true"
+                  ></i>
                   <span>Tải Bản Cài Đặt (.exe)</span>
                 </a>
 
@@ -258,15 +316,21 @@
                 <!-- Restrained Feature List -->
                 <ul class="space-y-1.5 text-xs text-[#52525b] pt-1">
                   <li class="flex items-start gap-2">
-                    <span class="text-[#71717a] font-bold mt-0.5 shrink-0">•</span>
+                    <span class="text-[#71717a] font-bold mt-0.5 shrink-0"
+                      >•</span
+                    >
                     <span>Chạy trực tiếp, không cần quyền Admin</span>
                   </li>
                   <li class="flex items-start gap-2">
-                    <span class="text-[#71717a] font-bold mt-0.5 shrink-0">•</span>
+                    <span class="text-[#71717a] font-bold mt-0.5 shrink-0"
+                      >•</span
+                    >
                     <span>Không ghi Registry, xóa thư mục là sạch</span>
                   </li>
                   <li class="flex items-start gap-2">
-                    <span class="text-[#71717a] font-bold mt-0.5 shrink-0">•</span>
+                    <span class="text-[#71717a] font-bold mt-0.5 shrink-0"
+                      >•</span
+                    >
                     <span>Chép vào USB dùng linh hoạt mọi máy</span>
                   </li>
                 </ul>
@@ -319,22 +383,82 @@
             </div>
           </div>
 
-          <!-- Windows SmartScreen Guide (Quiet, Compact Notice) -->
+          <!-- Windows SmartScreen & Antivirus Guide -->
           <div
-            class="p-3.5 sm:p-4 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7] text-xs text-[#52525b] flex items-start gap-2.5"
+            class="p-4 sm:p-5 rounded-2xl bg-[#f8f9fa] border border-[#e4e4e7] space-y-3.5"
           >
-            <i
-              class="fa-solid fa-shield-halved text-[#71717a] mt-0.5 shrink-0"
-              aria-hidden="true"
-            ></i>
-            <div class="leading-relaxed">
-              <strong class="text-[#18181b] font-semibold"
-                >Lưu ý lần đầu:</strong
+            <div class="flex items-center gap-2.5">
+              <div>
+                <h4 class="text-xs sm:text-sm font-bold text-[#18181b]">
+                  Hướng dẫn cài đặt &amp; Vượt cảnh báo bảo vệ Windows
+                  SmartScreen
+                </h4>
+              </div>
+            </div>
+
+            <!-- Root cause explanation -->
+            <div
+              class="p-3 rounded-xl bg-white border border-[#e4e4e7] text-xs text-[#52525b] leading-relaxed space-y-1"
+            >
+              <div
+                class="font-semibold text-[#18181b] flex items-center gap-1.5"
               >
-              Nếu Windows hiển thị thông báo bảo vệ
-              <em>"Windows protected your PC"</em>, bấm vào chữ
-              <strong>"More info"</strong> rồi chọn
-              <strong>"Run anyway"</strong> để mở.
+                <i class="fa-solid fa-circle-info text-[#00529c] text-xs"></i>
+                <span>Vì sao có cảnh báo phần mềm lạ / virus?</span>
+              </div>
+              <p class="text-[11px] text-[#52525b] text-pretty">
+                CTU Scheduler là dự án mã nguồn mở phi lợi nhuận do sinh viên
+                phát triển, chưa mua chứng chỉ số doanh nghiệp (EV Code Signing
+                $400+/năm từ Microsoft). Do đó, Windows Defender SmartScreen và
+                một số trình diệt virus sẽ hiện cảnh báo phòng ngừa
+                (false-positive). Mã nguồn ứng dụng hoàn toàn công khai 100%
+                trên GitHub và tuyệt đối an toàn.
+              </p>
+            </div>
+
+            <!-- Step by step instructions -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <div
+                class="p-3 rounded-xl bg-white border border-[#e4e4e7] space-y-1"
+              >
+                <div
+                  class="font-semibold text-[#18181b] flex items-center gap-1.5"
+                >
+                  <span
+                    class="w-5 h-5 rounded-full bg-[#f4f4f5] text-[#18181b] flex items-center justify-center text-[11px] font-bold shrink-0"
+                    >1</span
+                  >
+                  <span>Màn hình SmartScreen</span>
+                </div>
+                <p
+                  class="text-[#71717a] text-[11px] leading-relaxed pl-6.5 text-pretty"
+                >
+                  Nếu thấy bảng xanh <em>"Windows protected your PC"</em>, hãy
+                  bấm vào dòng chữ gạch chân <strong>"More info"</strong> (hoặc
+                  <em>Thông tin khác</em>).
+                </p>
+              </div>
+
+              <div
+                class="p-3 rounded-xl bg-white border border-[#e4e4e7] space-y-1"
+              >
+                <div
+                  class="font-semibold text-[#18181b] flex items-center gap-1.5"
+                >
+                  <span
+                    class="w-5 h-5 rounded-full bg-[#f4f4f5] text-[#18181b] flex items-center justify-center text-[11px] font-bold shrink-0"
+                    >2</span
+                  >
+                  <span>Xác nhận khởi chạy</span>
+                </div>
+                <p
+                  class="text-[#71717a] text-[11px] leading-relaxed pl-6.5 text-pretty"
+                >
+                  Bấm nút <strong>"Run anyway"</strong> (hoặc <em>Vẫn chạy</em>)
+                  xuất hiện ở góc dưới để bắt đầu sử dụng. Nếu dùng phần mềm
+                  diệt virus bên thứ 3, hãy chọn <em>"Cho phép / Allow"</em>.
+                </p>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -424,6 +548,108 @@
               </a>
             </div>
           </div>
+
+          <!-- macOS Gatekeeper Guidance -->
+          <div
+            class="p-4 sm:p-5 rounded-2xl bg-[#f8f9fa] border border-[#e4e4e7] space-y-3.5 mt-2"
+          >
+            <div class="flex items-center gap-2.5">
+              <div>
+                <h4 class="text-xs sm:text-sm font-bold text-[#18181b]">
+                  Lưu ý bảo mật &amp; Vượt cảnh báo Apple Gatekeeper trên macOS
+                </h4>
+                <p class="text-[11px] text-[#71717a]">
+                  Xử lý cảnh báo "App cannot be opened because developer cannot
+                  be verified" hoặc "is damaged"
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="p-3 rounded-xl bg-white border border-[#e4e4e7] text-xs text-[#52525b] leading-relaxed space-y-1"
+            >
+              <div
+                class="font-semibold text-[#18181b] flex items-center gap-1.5"
+              >
+                <i class="fa-solid fa-circle-info text-[#00529c] text-xs"></i>
+                <span>Vì sao macOS chặn mở ứng dụng?</span>
+              </div>
+              <p class="text-[11px] text-[#52525b] text-pretty">
+                Apple yêu cầu mọi phần mềm phải đăng ký chứng chỉ Apple
+                Developer ($99/năm) và qua quy trình công chứng (Notarization).
+                Là ứng dụng phi lợi nhuận cho sinh viên, CTU Scheduler chưa mua
+                chứng chỉ này nên hệ thống Gatekeeper sẽ tự động chặn hoặc báo
+                file hỏng. Mã nguồn 100% công khai và an toàn tuyệt đối.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+              <div
+                class="p-3 rounded-xl bg-white border border-[#e4e4e7] space-y-1"
+              >
+                <div
+                  class="font-semibold text-[#18181b] flex items-center gap-1.5"
+                >
+                  <span
+                    class="w-5 h-5 rounded-full bg-[#f4f4f5] text-[#18181b] flex items-center justify-center text-[11px] font-bold shrink-0"
+                    >1</span
+                  >
+                  <span>Control + Click (Nhanh nhất)</span>
+                </div>
+                <p
+                  class="text-[#71717a] text-[11px] leading-relaxed pl-6.5 text-pretty"
+                >
+                  Nhấn giữ phím <strong>Control</strong> rồi click vào file app
+                  &rarr; chọn <strong>Open</strong> &rarr; nhấn
+                  <strong>Open</strong> tại hộp thoại xác nhận.
+                </p>
+              </div>
+
+              <div
+                class="p-3 rounded-xl bg-white border border-[#e4e4e7] space-y-1"
+              >
+                <div
+                  class="font-semibold text-[#18181b] flex items-center gap-1.5"
+                >
+                  <span
+                    class="w-5 h-5 rounded-full bg-[#f4f4f5] text-[#18181b] flex items-center justify-center text-[11px] font-bold shrink-0"
+                    >2</span
+                  >
+                  <span>Mở từ System Settings</span>
+                </div>
+                <p
+                  class="text-[#71717a] text-[11px] leading-relaxed pl-6.5 text-pretty"
+                >
+                  Vào <strong>Cài đặt hệ thống</strong> &rarr;
+                  <strong>Quyền riêng tư &amp; Bảo mật</strong> &rarr; cuộn
+                  xuống mục Bảo mật và bấm <strong>Open Anyway</strong>.
+                </p>
+              </div>
+
+              <div
+                class="p-3 rounded-xl bg-white border border-[#e4e4e7] space-y-1"
+              >
+                <div
+                  class="font-semibold text-[#18181b] flex items-center gap-1.5"
+                >
+                  <span
+                    class="w-5 h-5 rounded-full bg-[#f4f4f5] text-[#18181b] flex items-center justify-center text-[11px] font-bold shrink-0"
+                    >3</span
+                  >
+                  <span>Lệnh Terminal (Gỡ cách ly)</span>
+                </div>
+                <p
+                  class="text-[#71717a] text-[11px] leading-relaxed pl-6.5 text-pretty"
+                >
+                  Nếu báo "is damaged", mở Terminal và chạy:
+                  <code
+                    class="text-[#090c1d] font-semibold bg-[#f4f4f5] px-1 py-0.5 rounded"
+                    >xattr -cr /Applications/CTU-Scheduler.app</code
+                  >.
+                </p>
+              </div>
+            </div>
+          </div>
         </motion.div>
 
         <!-- ========================================== -->
@@ -453,11 +679,6 @@
                 </p>
               </div>
             </div>
-            <span
-              class="text-xs px-2.5 py-0.5 rounded-full bg-[#f4f4f5] text-[#52525b] border border-[#e4e4e7] font-medium"
-            >
-              Mã nguồn mở
-            </span>
           </div>
 
           <p class="text-xs text-[#52525b] leading-relaxed">
@@ -490,6 +711,92 @@
                 <i class="fa-brands fa-github text-xs" aria-hidden="true"></i>
                 <span>Kho mã nguồn GitHub</span>
               </a>
+            </div>
+          </div>
+
+          <!-- Linux Permission & FUSE Guidance -->
+          <div
+            class="p-4 sm:p-5 rounded-2xl bg-[#f8f9fa] border border-[#e4e4e7] space-y-3.5 mt-2"
+          >
+            <div class="flex items-center gap-2.5">
+              <div>
+                <h4 class="text-xs sm:text-sm font-bold text-[#18181b]">
+                  Hướng dẫn cấp quyền thực thi &amp; Cài đặt FUSE trên Linux
+                </h4>
+                <p class="text-[11px] text-[#71717a]">
+                  Khắc phục lỗi không mở được file .AppImage trên Ubuntu 22.04+,
+                  Debian, Fedora
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="p-3 rounded-xl bg-white border border-[#e4e4e7] text-xs text-[#52525b] leading-relaxed space-y-1"
+            >
+              <div
+                class="font-semibold text-[#18181b] flex items-center gap-1.5"
+              >
+                <i class="fa-solid fa-circle-info text-[#00529c] text-xs"></i>
+                <span>Vì sao file tải về không chạy khi double-click?</span>
+              </div>
+              <p class="text-[11px] text-[#52525b] text-pretty">
+                Linux mặc định không tự động cấp quyền thực thi (executable bit)
+                cho file tải từ Internet để bảo vệ người dùng, đồng thời các bản
+                phân phối mới (như Ubuntu 22.04 trở lên) chưa cài sẵn thư viện
+                FUSE 2 cần cho AppImage.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+              <div
+                class="p-3 rounded-xl bg-white border border-[#e4e4e7] space-y-1"
+              >
+                <div
+                  class="font-semibold text-[#18181b] flex items-center gap-1.5"
+                >
+                  <span
+                    class="w-5 h-5 rounded-full bg-[#f4f4f5] text-[#18181b] flex items-center justify-center text-[11px] font-bold shrink-0"
+                    >1</span
+                  >
+                  <span>Cấp quyền chạy (Executable)</span>
+                </div>
+                <p
+                  class="text-[#71717a] text-[11px] leading-relaxed pl-6.5 text-pretty"
+                >
+                  Click chuột phải vào file &rarr;
+                  <strong>Properties</strong> &rarr;
+                  <strong>Permissions</strong> &rarr; Tích chọn
+                  <em>"Allow executing file as program"</em>. Hoặc Terminal:
+                  <code
+                    class="text-[#090c1d] font-semibold bg-[#f4f4f5] px-1 py-0.5 rounded"
+                    >chmod +x CTU-Scheduler*.AppImage</code
+                  >.
+                </p>
+              </div>
+
+              <div
+                class="p-3 rounded-xl bg-white border border-[#e4e4e7] space-y-1"
+              >
+                <div
+                  class="font-semibold text-[#18181b] flex items-center gap-1.5"
+                >
+                  <span
+                    class="w-5 h-5 rounded-full bg-[#f4f4f5] text-[#18181b] flex items-center justify-center text-[11px] font-bold shrink-0"
+                    >2</span
+                  >
+                  <span>Cài FUSE nếu không mở được</span>
+                </div>
+                <p
+                  class="text-[#71717a] text-[11px] leading-relaxed pl-6.5 text-pretty"
+                >
+                  Nếu nhấn đúp không mở, mở Terminal và chạy lệnh:
+                  <code
+                    class="text-[#090c1d] font-semibold bg-[#f4f4f5] px-1 py-0.5 rounded"
+                    >sudo apt install libfuse2</code
+                  >
+                  (dành cho Ubuntu/Debian).
+                </p>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -706,6 +1013,34 @@ const detectedDeviceLabel = computed(() => {
   if (os === OS.IOS) return "iOS";
   return "Desktop";
 });
+
+const isMobileUser = computed(() => {
+  return userDevice.value.os === OS.ANDROID || userDevice.value.os === OS.IOS;
+});
+
+const linkCopied = ref(false);
+
+async function copyDownloadLink() {
+  const url = window.location.origin + window.location.pathname + "#download";
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(url);
+    } else {
+      const input = document.createElement("input");
+      input.value = url;
+      document.body.appendChild(input);
+      input.select();
+      document.execCommand("copy");
+      document.body.removeChild(input);
+    }
+    linkCopied.value = true;
+    setTimeout(() => {
+      linkCopied.value = false;
+    }, 2500);
+  } catch (err) {
+    console.error("Không thể sao chép liên kết:", err);
+  }
+}
 
 function isIgnoredAsset(filename) {
   const name = filename.toLowerCase();

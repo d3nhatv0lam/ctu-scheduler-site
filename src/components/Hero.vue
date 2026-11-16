@@ -165,11 +165,7 @@
             <div
               class="flex items-center gap-2 text-xs font-bold text-[#18181b]"
             >
-              <img src="/assets/images/icon.svg" class="w-4 h-4" alt="logo" />
-              <span
-                >CTU Scheduler — Thời Khóa Biểu Học Kỳ 1 (Bản chính thức
-                v4.0.0)</span
-              >
+              <span>Thời khóa biểu của bạn</span>
             </div>
 
             <div class="flex items-center gap-3 text-xs text-[#71717a]">

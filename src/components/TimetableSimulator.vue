@@ -2,7 +2,7 @@
   <div class="space-y-4">
     <!-- View Switcher Tabs (ClickUp Style) -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#e8e8e8]">
-      <div class="relative grid grid-cols-2 p-1 bg-[#f4f4f5] rounded-full border border-[#e8e8e8] self-start w-52 sm:w-56 select-none">
+      <div class="relative grid grid-cols-2 p-1 bg-[#f4f4f5] rounded-full border border-[#e8e8e8] self-start w-[240px] sm:w-[256px] select-none">
         <!-- Sliding Active Background Pill (motion-v animated) -->
         <motion.div
           class="absolute top-1 bottom-1 left-1 rounded-full bg-[#18181b] shadow-2xs pointer-events-none"
@@ -12,7 +12,7 @@
         />
         <button
           type="button"
-          class="relative z-10 py-1 px-3 text-xs font-semibold rounded-full transition-colors duration-200 text-center cursor-pointer"
+          class="relative z-10 py-1.5 px-3 text-xs font-semibold rounded-full transition-colors duration-200 text-center cursor-pointer whitespace-nowrap flex items-center justify-center"
           :class="activeView === 'calendar' ? 'text-white font-bold' : 'text-[#71717a] hover:text-[#18181b]'"
           @click="selectView('calendar')"
         >
@@ -20,7 +20,7 @@
         </button>
         <button
           type="button"
-          class="relative z-10 py-1 px-3 text-xs font-semibold rounded-full transition-colors duration-200 text-center cursor-pointer"
+          class="relative z-10 py-1.5 px-3 text-xs font-semibold rounded-full transition-colors duration-200 text-center cursor-pointer whitespace-nowrap flex items-center justify-center"
           :class="activeView === 'list' ? 'text-white font-bold' : 'text-[#71717a] hover:text-[#18181b]'"
           @click="selectView('list')"
         >
