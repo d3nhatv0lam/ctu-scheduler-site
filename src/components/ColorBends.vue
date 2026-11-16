@@ -33,6 +33,7 @@ interface ColorBendsProps {
   iterations?: number;
   intensity?: number;
   bandWidth?: number;
+  fadeTop?: number;
 }
 
 const props = withDefaults(defineProps<ColorBendsProps>(), {
@@ -50,6 +51,7 @@ const props = withDefaults(defineProps<ColorBendsProps>(), {
   iterations: 1,
   intensity: 1.5,
   bandWidth: 6,
+  fadeTop: 0,
 });
 
 const MAX_COLORS = 8 as const;
@@ -73,6 +75,7 @@ uniform float uNoise;
 uniform int uIterations;
 uniform float uIntensity;
 uniform float uBandWidth;
+uniform float uFadeTop;
 varying vec2 vUv;
 
 void main() {
@@ -95,6 +98,7 @@ void main() {
 
     vec3 col = vec3(0.0);
     float a = 1.0;
+    float maxW = 1.0 - exp(-max(uBandWidth, 0.001));
 
     if (uColorCount > 0) {
       vec2 s = q;
@@ -112,12 +116,13 @@ void main() {
             vec2 warped = s + disp * gain;
             float m1 = length(warped + sin(5.0 * warped.y * uFrequency - 3.0 * t + float(i)) / 4.0);
             float m = mix(m0, m1, kMix);
-            float w = 1.0 - exp(-uBandWidth / exp(uBandWidth * m));
+            float rawW = 1.0 - exp(-uBandWidth / exp(uBandWidth * m));
+            float w = rawW / max(maxW, 0.001);
             sumCol += uColors[i] * w;
             cover = max(cover, w);
       }
       col = clamp(sumCol, 0.0, 1.0);
-      a = uTransparent > 0 ? cover : 1.0;
+      a = uTransparent > 0 ? clamp(cover, 0.0, 1.0) : 1.0;
     } else {
         vec2 s = q;
         for (int k = 0; k < 3; ++k) {
@@ -131,7 +136,8 @@ void main() {
             vec2 warped = s + disp * gain;
             float m1 = length(warped + sin(5.0 * warped.y * uFrequency - 3.0 * t + float(k)) / 4.0);
             float m = mix(m0, m1, kMix);
-            col[k] = 1.0 - exp(-uBandWidth / exp(uBandWidth * m));
+            float rawW = 1.0 - exp(-uBandWidth / exp(uBandWidth * m));
+            col[k] = rawW / max(maxW, 0.001);
         }
         a = uTransparent > 0 ? max(max(col.r, col.g), col.b) : 1.0;
     }
@@ -142,6 +148,11 @@ void main() {
       float n = fract(sin(dot(gl_FragCoord.xy + vec2(uTime), vec2(12.9898, 78.233))) * 43758.5453123);
       col += (n - 0.5) * uNoise;
       col = clamp(col, 0.0, 1.0);
+    }
+
+    if (uFadeTop > 0.0001) {
+      float fade = vUv.y > uFadeTop ? smoothstep(1.0, uFadeTop, vUv.y) : 1.0;
+      a *= fade;
     }
 
     vec3 rgb = (uTransparent > 0) ? col * a : col;
@@ -200,6 +211,7 @@ const init = () => {
       uIterations: { value: props.iterations },
       uIntensity: { value: props.intensity },
       uBandWidth: { value: props.bandWidth },
+      uFadeTop: { value: props.fadeTop },
     },
     premultipliedAlpha: true,
     transparent: true,
@@ -247,6 +259,16 @@ const init = () => {
     const elapsed = clock.elapsedTime;
     material.uniforms.uTime.value = elapsed;
 
+    if (container.clientWidth > 0 && container.clientHeight > 0) {
+      const uCanvas = material.uniforms.uCanvas.value as THREE.Vector2;
+      if (
+        Math.abs(uCanvas.x - container.clientWidth) > 1 ||
+        Math.abs(uCanvas.y - container.clientHeight) > 1
+      ) {
+        handleResize();
+      }
+    }
+
     const deg = (rotationRef.value % 360) + autoRotateRef.value * elapsed;
     const rad = (deg * Math.PI) / 180;
     const c = Math.cos(rad);
@@ -270,7 +292,7 @@ const init = () => {
     pointerTargetRef.value.set(x, y);
   };
 
-  container.addEventListener("pointermove", handlePointerMove);
+  window.addEventListener("pointermove", handlePointerMove, { passive: true });
 
   cleanup = () => {
     if (rafRef.value !== null) cancelAnimationFrame(rafRef.value);
@@ -286,7 +308,7 @@ const init = () => {
     ) {
       container.removeChild(renderer.domElement);
     }
-    container.removeEventListener("pointermove", handlePointerMove);
+    window.removeEventListener("pointermove", handlePointerMove);
   };
 };
 
@@ -307,6 +329,7 @@ const applyProps = () => {
   material.uniforms.uIterations.value = props.iterations;
   material.uniforms.uIntensity.value = props.intensity;
   material.uniforms.uBandWidth.value = props.bandWidth;
+  material.uniforms.uFadeTop.value = props.fadeTop;
 
   const toVec3 = (hex: string) => {
     const h = hex.replace("#", "").trim();
@@ -329,12 +352,13 @@ const applyProps = () => {
     .filter(Boolean)
     .slice(0, MAX_COLORS)
     .map(toVec3);
-  for (let i = 0; i < MAX_COLORS; i++) {
-    const vec = (material.uniforms.uColors.value as THREE.Vector3[])[i];
-    if (i < arr.length) vec.copy(arr[i]);
-    else vec.set(0, 0, 0);
-  }
+  const uColorsArray = Array.from(
+    { length: MAX_COLORS },
+    (_, i) => (i < arr.length ? arr[i] : new THREE.Vector3(0, 0, 0)),
+  );
+  material.uniforms.uColors.value = uColorsArray;
   material.uniforms.uColorCount.value = arr.length;
+  material.uniformsNeedUpdate = true;
 
   material.uniforms.uTransparent.value = props.transparent ? 1 : 0;
   if (renderer) renderer.setClearColor(0x000000, props.transparent ? 0 : 1);
@@ -363,6 +387,7 @@ watch(
     props.iterations,
     props.intensity,
     props.bandWidth,
+    props.fadeTop,
     props.colors,
     props.transparent,
   ],

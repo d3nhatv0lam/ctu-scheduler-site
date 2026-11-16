@@ -3,39 +3,38 @@
     id="home"
     class="pt-16 pb-20 md:pt-24 md:pb-28 border-b border-[#e4e4e7] bg-white overflow-hidden relative"
   >
-    <!-- Interactive Background Particles -->
+    <!-- Background Layer 1: ColorBends Shader (Underneath Particles) -->
     <div
       class="absolute inset-0 pointer-events-none overflow-hidden z-0"
       aria-hidden="true"
     >
-      <Particles
-        :particle-colors="['#00529c', '#38bdf8', '#818cf8', '#34d399']"
-        :move-particles-on-hover="true"
-        :particle-count="200"
-        :particle-spread="10"
-        :speed="0.1"
-        :particle-base-size="100"
-        :alpha-particles="false"
-        :disable-rotation="false"
+      <ColorBends
+        :colors="['#00529c', '#0091ff', '#00c07a']"
+        :speed="0.2"
+        :frequency="2"
+        :noise="0.15"
+        :band-width="3"
+        :rotation="60"
+        :iterations="1"
+        :intensity="8"
       />
     </div>
 
-    <!-- Interactive Background Particles -->
+    <!-- Background Layer 2: Interactive Particles -->
     <div
       class="absolute inset-0 pointer-events-none overflow-hidden z-0"
       aria-hidden="true"
     >
       <Particles
         :particle-colors="['#00529c', '#38bdf8', '#818cf8', '#34d399']"
-        :particle-count="140"
-        :particle-spread="12"
+        :particle-count="500"
+        :particle-spread="5"
         :speed="0.08"
-        :particle-base-size="80"
         :move-particles-on-hover="true"
-        :particle-hover-factor="0.6"
+        :particle-hover-factor="0.4"
         :alpha-particles="true"
-        :size-randomness="0.8"
-        :camera-distance="20"
+        :size-randomness="0.6"
+        :camera-distance="15"
         :disable-rotation="false"
       />
     </div>
@@ -243,6 +242,7 @@
 import { ref, onMounted } from "vue";
 import { motion } from "motion-v";
 import TimetableSimulator from "./TimetableSimulator.vue";
+import ColorBends from "./ColorBends.vue";
 import Particles from "./Particles.vue";
 import { detectDevice, OS } from "../../js/detector.js";
 
