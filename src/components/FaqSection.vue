@@ -52,23 +52,22 @@
           </button>
 
           <!-- Smooth Height Expansion + motion-v content transition -->
-          <div
-            class="grid transition-[grid-template-rows] duration-250 ease-[cubic-bezier(0.33,1,0.68,1)]"
-            :class="openIndex === index ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
-          >
-            <div class="overflow-hidden">
-              <motion.div
-                :initial="false"
-                :animate="{
-                  opacity: openIndex === index ? 1 : 0,
-                }"
-                :transition="{ duration: 0.2, ease: [0.33, 1, 0.68, 1] }"
+          <AnimatePresence :initial="false">
+            <motion.div
+              v-if="openIndex === index"
+              :initial="{ height: 0, opacity: 0 }"
+              :animate="{ height: 'auto', opacity: 1 }"
+              :exit="{ height: 0, opacity: 0 }"
+              :transition="{ duration: 0.28, ease: [0.33, 1, 0.68, 1] }"
+              class="overflow-hidden"
+            >
+              <div
                 class="px-4 sm:px-6 pb-5 pt-0 text-[#52525b] text-xs sm:text-sm leading-relaxed pl-[28px] sm:pl-[34px] text-pretty"
               >
                 {{ item.answer }}
-              </motion.div>
-            </div>
-          </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
       </motion.div>
     </div>

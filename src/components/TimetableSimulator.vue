@@ -2,7 +2,7 @@
   <div class="space-y-4">
     <!-- View Switcher Tabs (ClickUp Style) -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#e8e8e8]">
-      <div class="relative grid grid-cols-2 p-1 bg-[#f4f4f5] rounded-full border border-[#e8e8e8] self-start w-[240px] sm:w-[256px] select-none">
+      <div class="relative grid grid-cols-2 p-1 bg-[#f4f4f5] rounded-full border border-[#e8e8e8] self-start w-[260px] sm:w-[272px] select-none">
         <!-- Sliding Active Background Pill (motion-v animated) -->
         <motion.div
           class="absolute top-1 bottom-1 left-1 rounded-full bg-[#18181b] shadow-2xs pointer-events-none"
@@ -12,7 +12,7 @@
         />
         <button
           type="button"
-          class="relative z-10 py-1.5 px-3 text-xs font-semibold rounded-full transition-colors duration-200 text-center cursor-pointer whitespace-nowrap flex items-center justify-center"
+          class="relative z-10 py-1.5 px-3 text-xs font-semibold rounded-full transition-colors duration-200 text-center cursor-pointer whitespace-nowrap flex items-center justify-center shrink-0"
           :class="activeView === 'calendar' ? 'text-white font-bold' : 'text-[#71717a] hover:text-[#18181b]'"
           @click="selectView('calendar')"
         >
@@ -20,7 +20,7 @@
         </button>
         <button
           type="button"
-          class="relative z-10 py-1.5 px-3 text-xs font-semibold rounded-full transition-colors duration-200 text-center cursor-pointer whitespace-nowrap flex items-center justify-center"
+          class="relative z-10 py-1.5 px-3 text-xs font-semibold rounded-full transition-colors duration-200 text-center cursor-pointer whitespace-nowrap flex items-center justify-center shrink-0"
           :class="activeView === 'list' ? 'text-white font-bold' : 'text-[#71717a] hover:text-[#18181b]'"
           @click="selectView('list')"
         >
@@ -45,16 +45,18 @@
       </div>
     </div>
 
-    <!-- Calendar / List Views -->
-    <!-- Calendar View -->
-    <motion.div
-      v-if="activeView === 'calendar'"
-      key="calendar"
-      :initial="hasSwitchedView ? { opacity: 0 } : false"
-      :animate="{ opacity: 1 }"
-      :transition="{ duration: 0.18, ease: 'easeOut' }"
-      class="overflow-x-auto rounded-xl border border-[#e8e8e8] bg-[#f8f9fa]/40 tabular-nums"
-    >
+    <!-- Calendar / List Views with AnimatePresence (Smooth Transition) -->
+    <AnimatePresence mode="wait">
+      <!-- Calendar View -->
+      <motion.div
+        v-if="activeView === 'calendar'"
+        key="calendar"
+        :initial="{ opacity: 0, y: 8 }"
+        :animate="{ opacity: 1, y: 0 }"
+        :exit="{ opacity: 0, y: -8 }"
+        :transition="{ duration: 0.22, ease: [0.33, 1, 0.68, 1] }"
+        class="overflow-x-auto rounded-xl border border-[#e8e8e8] bg-[#f8f9fa]/40 tabular-nums"
+      >
       <table class="w-full text-left border-collapse text-xs">
         <thead>
           <tr class="border-b border-[#e8e8e8] bg-[#e9ebf0]/50 text-[#646464] font-bold">
@@ -154,35 +156,37 @@
     </motion.div>
 
     <!-- List View -->
-    <motion.div
-      v-else
-      key="list"
-      :initial="hasSwitchedView ? { opacity: 0 } : false"
-      :animate="{ opacity: 1 }"
-      :transition="{ duration: 0.18, ease: 'easeOut' }"
-      class="rounded-xl border border-[#e8e8e8] overflow-hidden divide-y divide-[#e8e8e8] bg-white text-xs tabular-nums"
-    >
-      <div
-        v-for="course in courseList"
-        :key="course.code"
-        class="p-3 sm:p-3.5 flex items-center justify-between gap-3 hover:bg-[#f8f9fa] transition-colors"
+      <motion.div
+        v-else
+        key="list"
+        :initial="{ opacity: 0, y: 8 }"
+        :animate="{ opacity: 1, y: 0 }"
+        :exit="{ opacity: 0, y: -8 }"
+        :transition="{ duration: 0.22, ease: [0.33, 1, 0.68, 1] }"
+        class="rounded-xl border border-[#e8e8e8] overflow-hidden divide-y divide-[#e8e8e8] bg-white text-xs tabular-nums"
       >
-        <div class="flex items-center gap-3 min-w-0 flex-1">
-          <span class="w-8 h-8 rounded-full bg-[#f0f7ff] text-[#00529c] font-extrabold flex items-center justify-center text-xs shrink-0">
-            {{ course.credits }}
-          </span>
-          <div class="min-w-0 flex-1">
-            <div class="font-bold text-[#202020] text-xs sm:text-sm truncate">{{ course.code }} — {{ course.name }}</div>
-            <div class="text-[11px] sm:text-xs text-[#838383] mt-0.5 truncate">Lớp: {{ course.classGroup }} · Giảng viên: {{ course.lecturer }} · Phòng: {{ course.room }}</div>
+        <div
+          v-for="course in courseList"
+          :key="course.code"
+          class="p-3 sm:p-3.5 flex items-center justify-between gap-3 hover:bg-[#f8f9fa] transition-colors"
+        >
+          <div class="flex items-center gap-3 min-w-0 flex-1">
+            <span class="w-8 h-8 rounded-full bg-[#f0f7ff] text-[#00529c] font-extrabold flex items-center justify-center text-xs shrink-0">
+              {{ course.credits }}
+            </span>
+            <div class="min-w-0 flex-1">
+              <div class="font-bold text-[#202020] text-xs sm:text-sm truncate">{{ course.code }} — {{ course.name }}</div>
+              <div class="text-[11px] sm:text-xs text-[#838383] mt-0.5 truncate">Lớp: {{ course.classGroup }} · Giảng viên: {{ course.lecturer }} · Phòng: {{ course.room }}</div>
+            </div>
+          </div>
+          <div class="text-right shrink-0">
+            <span class="px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-[#ecfdf5] text-[#00c07a] border border-[#a7f3d0] whitespace-nowrap">
+              Còn {{ course.slots }}
+            </span>
           </div>
         </div>
-        <div class="text-right shrink-0">
-          <span class="px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-[#ecfdf5] text-[#00c07a] border border-[#a7f3d0] whitespace-nowrap">
-            Còn {{ course.slots }}
-          </span>
-        </div>
-      </div>
-    </motion.div>
+      </motion.div>
+    </AnimatePresence>
 
     <!-- Live Status Toolbar (Hairline Divider Row) -->
     <div class="pt-3 border-t border-[#e8e8e8] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
