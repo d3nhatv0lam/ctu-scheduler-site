@@ -58,7 +58,7 @@
             </td>
             <td class="p-2 border-r border-[#e8e8e8]">
               <div
-                class="timetable-slot slot-course p-2.5 rounded-lg border border-[#e8e8e8] transition-all hover:scale-[1.02]"
+                class="timetable-slot slot-course p-2.5 rounded-lg border border-[#e8e8e8] transition-colors"
                 :class="{ 'slot-dimmed': !isSlotActive('slot-ct176-m') }"
               >
                 <div class="flex items-center justify-between">
@@ -72,7 +72,7 @@
             <td class="p-2 border-r border-[#e8e8e8]"><div class="text-[#cbd5e1] text-center py-4 font-sans">-</div></td>
             <td class="p-2 border-r border-[#e8e8e8]">
               <div
-                class="timetable-slot slot-course p-2.5 rounded-lg border border-[#e8e8e8] transition-all hover:scale-[1.02]"
+                class="timetable-slot slot-course p-2.5 rounded-lg border border-[#e8e8e8] transition-colors"
                 :class="{ 'slot-dimmed': !isSlotActive('slot-ct103-m') }"
               >
                 <div class="flex items-center justify-between">
@@ -94,7 +94,7 @@
             <td class="p-2 border-r border-[#e8e8e8]"><div class="text-[#cbd5e1] text-center py-4 font-sans">-</div></td>
             <td class="p-2 border-r border-[#e8e8e8]">
               <div
-                class="timetable-slot slot-course p-2.5 rounded-lg border border-[#e8e8e8] transition-all hover:scale-[1.02]"
+                class="timetable-slot slot-course p-2.5 rounded-lg border border-[#e8e8e8] transition-colors"
                 :class="{ 'slot-dimmed': !isSlotActive('slot-ct112-a') }"
               >
                 <div class="flex items-center justify-between">
@@ -107,7 +107,7 @@
             </td>
             <td class="p-2 border-r border-[#e8e8e8]">
               <div
-                class="timetable-slot slot-course p-2.5 rounded-lg border border-[#e8e8e8] transition-all hover:scale-[1.02]"
+                class="timetable-slot slot-course p-2.5 rounded-lg border border-[#e8e8e8] transition-colors"
                 :class="{ 'slot-dimmed': !isSlotActive('slot-ct178-a') }"
               >
                 <div class="flex items-center justify-between">
@@ -120,7 +120,7 @@
             </td>
             <td class="p-2 border-r border-[#e8e8e8]">
               <div
-                class="timetable-slot slot-course p-2.5 rounded-lg border border-[#e8e8e8] transition-all hover:scale-[1.02]"
+                class="timetable-slot slot-course p-2.5 rounded-lg border border-[#e8e8e8] transition-colors"
                 :class="{ 'slot-dimmed': !isSlotActive('slot-ml014-a') }"
               >
                 <div class="flex items-center justify-between">

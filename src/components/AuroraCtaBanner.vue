@@ -23,7 +23,7 @@
           <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href="#download"
-              class="px-8 py-3.5 rounded-full bg-white text-[#003b7a] font-extrabold text-sm shadow-xl hover:bg-[#f8f9fa] hover:scale-105 active:scale-95 transition-all duration-200"
+              class="px-8 py-3.5 rounded-full bg-white text-[#003b7a] font-extrabold text-sm shadow-xl hover:bg-[#f8f9fa] transition-colors duration-200"
             >
               <span>Tải Phần Mềm Miễn Phí</span>
             </a>
@@ -31,7 +31,7 @@
               href="https://github.com/d3nhatv0lam/CTU-Scheduler"
               target="_blank"
               rel="noopener noreferrer"
-              class="px-7 py-3.5 rounded-full bg-black/25 backdrop-blur-md text-white border border-white/30 font-bold text-sm hover:bg-black/40 hover:scale-105 active:scale-95 transition-all duration-200"
+              class="px-7 py-3.5 rounded-full bg-black/25 backdrop-blur-md text-white border border-white/30 font-bold text-sm hover:bg-black/40 transition-colors duration-200"
             >
               <span>Kho Mã Nguồn GitHub</span>
             </a>

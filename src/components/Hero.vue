@@ -132,8 +132,8 @@ import { detectDevice, OS } from '../../js/detector.js';
 
 const isMobileDevice = ref(false);
 
-onMounted(() => {
-  const device = detectDevice();
+onMounted(async () => {
+  const device = await detectDevice();
   isMobileDevice.value = device.os === OS.ANDROID || device.os === OS.IOS || window.innerWidth < 768;
 });
 </script>

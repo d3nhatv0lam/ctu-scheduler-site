@@ -5,11 +5,10 @@
   border: 1px solid var(--color-bone);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-subtle);
-  transition: transform 0.25s cubic-bezier(0.33, 1, 0.68, 1), box-shadow 0.25s cubic-bezier(0.33, 1, 0.68, 1), border-color 0.2s ease;
+  transition: box-shadow 0.2s cubic-bezier(0.33, 1, 0.68, 1), border-color 0.2s ease;
 }
 
 .clickup-card:hover {
-  transform: translateY(-3px);
   box-shadow: var(--shadow-card);
   border-color: #cbd5e1;
 }
@@ -19,7 +18,7 @@
   border: 1px solid var(--color-bone);
   border-radius: var(--radius-largecard);
   box-shadow: var(--shadow-card);
-  transition: transform 0.25s cubic-bezier(0.33, 1, 0.68, 1), box-shadow 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+  transition: box-shadow 0.2s cubic-bezier(0.33, 1, 0.68, 1);
 }
 
 .clickup-card-elevated:hover {
@@ -42,18 +41,17 @@
   border: 1px solid var(--color-ctu-blue);
   cursor: pointer;
   text-decoration: none;
-  transition: transform 0.15s cubic-bezier(0.33, 1, 0.68, 1), background-color 0.15s ease, box-shadow 0.15s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .btn-clickup-primary:hover {
   background-color: var(--color-ctu-navy);
   border-color: var(--color-ctu-navy);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
 }
 
 .btn-clickup-primary:active {
-  transform: translateY(0) scale(0.98);
+  background-color: #002b5c;
 }
 
 .btn-clickup-dark {
@@ -71,13 +69,12 @@
   border: 1px solid var(--color-ink-black);
   cursor: pointer;
   text-decoration: none;
-  transition: transform 0.15s cubic-bezier(0.33, 1, 0.68, 1), background-color 0.15s ease, box-shadow 0.15s ease;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .btn-clickup-dark:hover {
   background-color: #27272a;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
 }
 
 .btn-clickup-ghost {
@@ -95,19 +92,18 @@
   border: 1px solid var(--color-bone);
   cursor: pointer;
   text-decoration: none;
-  transition: all 0.2s cubic-bezier(0.33, 1, 0.68, 1);
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .btn-clickup-ghost:hover {
   background-color: var(--color-mist);
   border-color: var(--color-ctu-blue);
   color: var(--color-ctu-blue);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .btn-clickup-ghost:active {
-  transform: translateY(0) scale(0.98);
+  background-color: #e4e4e7;
 }
 
 .btn-clickup-blue {
@@ -125,17 +121,16 @@
   border: 1px solid var(--color-ctu-blue);
   cursor: pointer;
   text-decoration: none;
-  transition: all 0.2s cubic-bezier(0.33, 1, 0.68, 1);
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .btn-clickup-blue:hover {
   background-color: #f0f7ff;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
 }
 
 .btn-clickup-blue:active {
-  transform: translateY(0) scale(0.98);
+  background-color: #dbeafe;
 }
 
 /* Conic Animated Border Wrapper */
@@ -146,12 +141,11 @@
   padding: 2px;
   overflow: hidden;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s cubic-bezier(0.33, 1, 0.68, 1), box-shadow 0.2s ease;
+  transition: box-shadow 0.2s ease;
 }
 
 .conic-border-wrapper:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 }
 
 .conic-border-wrapper::before {
@@ -210,7 +204,6 @@
   color: var(--color-ctu-blue);
   border-color: #93c5fd;
   background-color: #f8fafc;
-  transform: translateY(-1px);
 }
 
 .pill-filter.active {
@@ -287,8 +280,7 @@
 
 .slot-course:hover {
   border-color: var(--color-ctu-blue);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .slot-dimmed {
@@ -316,14 +308,13 @@
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: var(--radius-largecard);
   backdrop-blur: 8px;
-  transition: all 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
 .dark-bento-card:hover {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(0, 145, 255, 0.5);
-  transform: translateY(-4px);
-  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.4);
 }
 
 /* CTU Academic Gradient Banner */
