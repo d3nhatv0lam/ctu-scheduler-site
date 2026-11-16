@@ -6,28 +6,28 @@
         :whileInView="{ opacity: 1, y: 0 }"
         :inViewOptions="{ once: true }"
         :transition="{ duration: 0.45, ease: [0.33, 1, 0.68, 1] }"
-        class="max-w-2xl text-left mb-12"
+        class="max-w-2xl text-left mb-10 sm:mb-12"
       >
-        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-[-0.03em] text-[#090c1d] mb-3 font-display">
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-[-0.03em] text-[#090c1d] mb-3 font-display text-balance">
           Tính năng hỗ trợ chuyên sâu
         </h2>
-        <p class="text-[#52525b] text-base leading-relaxed">
+        <p class="text-[#52525b] text-sm sm:text-base leading-relaxed text-pretty">
           Xây dựng xuất phát từ thực tế đăng ký môn học tại Đại học Cần Thơ, giải quyết trọn vẹn từng điểm nghẽn của sinh viên.
         </p>
       </motion.div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
         <!-- Feature 1 -->
         <motion.div
           :initial="{ opacity: 0, y: 16 }"
           :whileInView="{ opacity: 1, y: 0 }"
           :inViewOptions="{ once: true }"
           :transition="{ duration: 0.45, delay: 0.05, ease: [0.33, 1, 0.68, 1] }"
-          class="clickup-card p-6 flex flex-col justify-between hover-lift"
+          class="clickup-card p-5 sm:p-6 flex flex-col justify-between hover-lift"
         >
           <div>
-            <h3 class="text-lg font-bold text-[#18181b] mb-2 font-display">Tự Động Sinh &amp; Tối Ưu Hóa</h3>
-            <p class="text-[#52525b] text-sm leading-relaxed">
+            <h3 class="text-base sm:text-lg font-bold text-[#18181b] mb-2 font-display text-balance">Tự Động Sinh &amp; Tối Ưu Hóa</h3>
+            <p class="text-[#52525b] text-xs sm:text-sm leading-relaxed text-pretty">
               Tự động tính toán hàng ngàn tổ hợp lịch học và trả về hàng loạt phương án khả thi nhất, loại bỏ hoàn toàn tình trạng trùng giờ môn học và trùng lịch thi kết thúc học phần.
             </p>
           </div>
@@ -39,11 +39,11 @@
           :whileInView="{ opacity: 1, y: 0 }"
           :inViewOptions="{ once: true }"
           :transition="{ duration: 0.45, delay: 0.1, ease: [0.33, 1, 0.68, 1] }"
-          class="clickup-card p-6 flex flex-col justify-between hover-lift"
+          class="clickup-card p-5 sm:p-6 flex flex-col justify-between hover-lift"
         >
           <div>
-            <h3 class="text-lg font-bold text-[#18181b] mb-2 font-display">Bộ Lọc Tiêu Chí Chuyên Sâu</h3>
-            <p class="text-[#52525b] text-sm leading-relaxed">
+            <h3 class="text-base sm:text-lg font-bold text-[#18181b] mb-2 font-display text-balance">Bộ Lọc Tiêu Chí Chuyên Sâu</h3>
+            <p class="text-[#52525b] text-xs sm:text-sm leading-relaxed text-pretty">
               Bộ lọc đa chiều: ưu tiên dồn lịch, chỉ học ca sáng hoặc ca chiều, né ngày cuối tuần, đảm bảo thời gian ăn trưa và hạn chế di chuyển giữa các cơ sở (Khu II, Hòa An).
             </p>
           </div>
@@ -55,11 +55,11 @@
           :whileInView="{ opacity: 1, y: 0 }"
           :inViewOptions="{ once: true }"
           :transition="{ duration: 0.45, delay: 0.15, ease: [0.33, 1, 0.68, 1] }"
-          class="clickup-card p-6 flex flex-col justify-between hover-lift"
+          class="clickup-card p-5 sm:p-6 flex flex-col justify-between hover-lift"
         >
           <div>
-            <h3 class="text-lg font-bold text-[#18181b] mb-2 font-display">Theo Dõi Biến Động Sĩ Số</h3>
-            <p class="text-[#52525b] text-sm leading-relaxed">
+            <h3 class="text-base sm:text-lg font-bold text-[#18181b] mb-2 font-display text-balance">Theo Dõi Biến Động Sĩ Số</h3>
+            <p class="text-[#52525b] text-xs sm:text-sm leading-relaxed text-pretty">
               Tự động cập nhật sĩ số của từng lớp học phần trực tiếp từ hệ thống MyCTU. Nhận biết tức thời lớp nào còn chỗ hoặc đã đầy để kịp thời chuyển đổi phương án dự phòng.
             </p>
           </div>
@@ -71,11 +71,11 @@
           :whileInView="{ opacity: 1, y: 0 }"
           :inViewOptions="{ once: true }"
           :transition="{ duration: 0.45, delay: 0.2, ease: [0.33, 1, 0.68, 1] }"
-          class="clickup-card p-6 flex flex-col justify-between hover-lift"
+          class="clickup-card p-5 sm:p-6 flex flex-col justify-between hover-lift"
         >
           <div>
-            <h3 class="text-lg font-bold text-[#18181b] mb-2 font-display">Quản Lý &amp; So Sánh Lịch</h3>
-            <p class="text-[#52525b] text-sm leading-relaxed">
+            <h3 class="text-base sm:text-lg font-bold text-[#18181b] mb-2 font-display text-balance">Quản Lý &amp; So Sánh Lịch</h3>
+            <p class="text-[#52525b] text-xs sm:text-sm leading-relaxed text-pretty">
               Hỗ trợ quản lý, lưu trữ, tải lại và so sánh nhiều bộ thời khóa biểu song song. Sinh viên luôn chủ động sẵn sàng phương án thay thế khi cổng đăng ký mở.
             </p>
           </div>
@@ -87,11 +87,11 @@
           :whileInView="{ opacity: 1, y: 0 }"
           :inViewOptions="{ once: true }"
           :transition="{ duration: 0.45, delay: 0.25, ease: [0.33, 1, 0.68, 1] }"
-          class="clickup-card p-6 md:col-span-2 flex flex-col justify-between hover-lift"
+          class="clickup-card p-5 sm:p-6 md:col-span-2 flex flex-col justify-between hover-lift"
         >
           <div>
-            <h3 class="text-lg font-bold text-[#18181b] mb-2 font-display">Bảo Mật Cục Bộ Tuyệt Đối &amp; Hỗ Trợ Offline</h3>
-            <p class="text-[#52525b] text-sm leading-relaxed">
+            <h3 class="text-base sm:text-lg font-bold text-[#18181b] mb-2 font-display text-balance">Bảo Mật Cục Bộ Tuyệt Đối &amp; Hỗ Trợ Offline</h3>
+            <p class="text-[#52525b] text-xs sm:text-sm leading-relaxed text-pretty">
               Hoạt động hoàn toàn trên máy tính cá nhân qua trình duyệt nhúng ngầm. Dữ liệu học phần và tài khoản MyCTU được mã hóa và bảo mật cục bộ, mật khẩu tự hủy sau khi phiên kết thúc. Sinh viên có thể tra cứu lịch học đã lưu mọi lúc mọi nơi ngay cả khi không có kết nối mạng Internet.
             </p>
           </div>

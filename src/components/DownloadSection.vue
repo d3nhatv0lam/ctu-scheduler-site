@@ -13,19 +13,19 @@
         class="max-w-2xl mx-auto text-center mb-10"
       >
         <h2
-          class="text-3xl sm:text-4xl font-bold tracking-tight text-[#090c1d] mb-3 font-display"
+          class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#090c1d] mb-3 font-display text-balance"
         >
           Tải phần mềm CTU Scheduler
         </h2>
-        <p class="text-[#52525b] text-base leading-relaxed">
+        <p class="text-[#52525b] text-sm sm:text-base leading-relaxed text-pretty">
           Phần mềm mã nguồn mở phục vụ sinh viên Đại học Cần Thơ. Lựa chọn hệ
           điều hành và gói cài đặt phù hợp với thiết bị của bạn.
         </p>
         <div class="mt-4 flex items-center justify-center gap-2">
           <span
-            class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#f0f7ff] text-[#00529c] border border-[#bae0fd] text-xs font-semibold tabular-nums"
+            class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#f0f7ff] text-[#00529c] border border-[#bae0fd] text-xs font-semibold tabular-nums whitespace-nowrap"
           >
-            <i class="fa-solid fa-download text-[11px]" aria-hidden="true"></i>
+            <i class="fa-solid fa-download text-[11px] shrink-0" aria-hidden="true"></i>
             <span
               >{{ totalDownloads.toLocaleString("vi-VN") }} lượt tải về</span
             >
@@ -137,13 +137,13 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch">
             <!-- EDITION 1: Setup Installer (Khuyên dùng cá nhân) -->
             <div
-              class="p-6 rounded-2xl border border-[#e4e4e7] bg-white flex flex-col justify-between space-y-5"
+              class="p-5 sm:p-6 rounded-2xl border border-[#e4e4e7] bg-white flex flex-col justify-between space-y-5"
             >
               <div class="space-y-4">
                 <div class="flex items-center justify-between">
                   <div class="flex items-center gap-2.5">
                     <span
-                      class="w-7 h-7 rounded-lg bg-[#f0f7ff] text-[#00529c] flex items-center justify-center text-xs"
+                      class="w-7 h-7 rounded-lg bg-[#f0f7ff] text-[#00529c] flex items-center justify-center text-xs shrink-0"
                     >
                       <i
                         class="fa-solid fa-cloud-arrow-down"
@@ -155,13 +155,13 @@
                     </h3>
                   </div>
                   <span
-                    class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-[#f0f7ff] text-[#00529c] border border-[#bae0fd]"
+                    class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[#f0f7ff] text-[#00529c] border border-[#bae0fd] shrink-0 whitespace-nowrap"
                   >
                     Tự cập nhật
                   </span>
                 </div>
 
-                <p class="text-xs text-[#52525b] leading-relaxed">
+                <p class="text-xs text-[#52525b] leading-relaxed text-pretty">
                   Dành cho <strong>Laptop / Máy tính cá nhân</strong>. Tự động
                   kiểm tra và nâng cấp phiên bản mới.
                 </p>
@@ -169,15 +169,15 @@
                 <!-- Restrained Feature List -->
                 <ul class="space-y-1.5 text-xs text-[#52525b] pt-1">
                   <li class="flex items-start gap-2">
-                    <span class="text-[#00529c] font-bold mt-0.5">•</span>
+                    <span class="text-[#00529c] font-bold mt-0.5 shrink-0">•</span>
                     <span>Tự động cập nhật phiên bản mới</span>
                   </li>
                   <li class="flex items-start gap-2">
-                    <span class="text-[#00529c] font-bold mt-0.5">•</span>
+                    <span class="text-[#00529c] font-bold mt-0.5 shrink-0">•</span>
                     <span>Tạo lối tắt Desktop &amp; Start Menu</span>
                   </li>
                   <li class="flex items-start gap-2">
-                    <span class="text-[#00529c] font-bold mt-0.5">•</span>
+                    <span class="text-[#00529c] font-bold mt-0.5 shrink-0">•</span>
                     <span>Lưu cấu hình và lịch học qua các kỳ</span>
                   </li>
                 </ul>
@@ -185,12 +185,12 @@
 
               <div class="pt-2 space-y-3">
                 <div
-                  class="text-[11px] text-[#71717a] flex items-center justify-between gap-2 tabular-nums"
+                  class="text-[11px] text-[#71717a] flex flex-wrap items-center justify-between gap-1.5 tabular-nums"
                 >
                   <span class="truncate max-w-[130px] sm:max-w-[180px]">{{
                     recommendedSetupAsset?.name || "CTU-Scheduler-Setup.exe"
                   }}</span>
-                  <span class="shrink-0"
+                  <span class="shrink-0 whitespace-nowrap"
                     >{{ formatBytes(recommendedSetupAsset?.size || 78500000) }}
                     ·
                     {{
@@ -208,21 +208,21 @@
                     'https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest'
                   "
                   target="_blank"
-                  class="btn-clickup-primary w-full text-center justify-center !py-2.5 !text-xs"
+                  class="btn-clickup-primary w-full text-center justify-center !py-2.5 !text-xs whitespace-nowrap"
                 >
-                  <i class="fa-brands fa-windows mr-1.5" aria-hidden="true"></i>
+                  <i class="fa-brands fa-windows mr-1.5 shrink-0" aria-hidden="true"></i>
                   <span>Tải Bản Cài Đặt (.exe)</span>
                 </a>
 
                 <!-- Calm Onboarding Timeline -->
                 <div
-                  class="pt-2 text-[11px] text-[#71717a] flex items-center justify-between text-center border-t border-[#f4f4f5]"
+                  class="pt-2 text-[11px] text-[#71717a] flex items-center justify-between text-center border-t border-[#f4f4f5] gap-1"
                 >
-                  <span>1. Tải về</span>
-                  <span class="text-[#d4d4d8]">&rarr;</span>
-                  <span>2. Cài đặt (5s)</span>
-                  <span class="text-[#d4d4d8]">&rarr;</span>
-                  <span>3. Xếp lịch ngay</span>
+                  <span class="whitespace-nowrap">1. Tải về</span>
+                  <span class="text-[#d4d4d8] shrink-0">&rarr;</span>
+                  <span class="whitespace-nowrap">2. Cài đặt (5s)</span>
+                  <span class="text-[#d4d4d8] shrink-0">&rarr;</span>
+                  <span class="whitespace-nowrap">3. Xếp lịch ngay</span>
                 </div>
               </div>
             </div>
@@ -235,7 +235,7 @@
                 <div class="flex items-center justify-between">
                   <div class="flex items-center gap-2.5">
                     <span
-                      class="w-7 h-7 rounded-lg bg-[#f4f4f5] text-[#52525b] flex items-center justify-center text-xs"
+                      class="w-7 h-7 rounded-lg bg-[#f4f4f5] text-[#52525b] flex items-center justify-center text-xs shrink-0"
                     >
                       <i class="fa-solid fa-box-archive" aria-hidden="true"></i>
                     </span>
@@ -244,13 +244,13 @@
                     </h3>
                   </div>
                   <span
-                    class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-[#f4f4f5] text-[#52525b] border border-[#e4e4e7]"
+                    class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[#f4f4f5] text-[#52525b] border border-[#e4e4e7] shrink-0 whitespace-nowrap"
                   >
                     Không cần Admin
                   </span>
                 </div>
 
-                <p class="text-xs text-[#52525b] leading-relaxed">
+                <p class="text-xs text-[#52525b] leading-relaxed text-pretty">
                   Dành cho <strong>máy phòng thực hành</strong> (Khu II, Hòa An)
                   hoặc máy bị giới hạn quyền Admin.
                 </p>
@@ -258,15 +258,15 @@
                 <!-- Restrained Feature List -->
                 <ul class="space-y-1.5 text-xs text-[#52525b] pt-1">
                   <li class="flex items-start gap-2">
-                    <span class="text-[#71717a] font-bold mt-0.5">•</span>
+                    <span class="text-[#71717a] font-bold mt-0.5 shrink-0">•</span>
                     <span>Chạy trực tiếp, không cần quyền Admin</span>
                   </li>
                   <li class="flex items-start gap-2">
-                    <span class="text-[#71717a] font-bold mt-0.5">•</span>
+                    <span class="text-[#71717a] font-bold mt-0.5 shrink-0">•</span>
                     <span>Không ghi Registry, xóa thư mục là sạch</span>
                   </li>
                   <li class="flex items-start gap-2">
-                    <span class="text-[#71717a] font-bold mt-0.5">•</span>
+                    <span class="text-[#71717a] font-bold mt-0.5 shrink-0">•</span>
                     <span>Chép vào USB dùng linh hoạt mọi máy</span>
                   </li>
                 </ul>
@@ -274,12 +274,12 @@
 
               <div class="pt-2 space-y-3">
                 <div
-                  class="text-[11px] text-[#71717a] flex items-center justify-between gap-2 tabular-nums"
+                  class="text-[11px] text-[#71717a] flex flex-wrap items-center justify-between gap-1.5 tabular-nums"
                 >
                   <span class="truncate max-w-[130px] sm:max-w-[180px]">{{
                     portableAsset?.name || "CTU-Scheduler-Portable.zip"
                   }}</span>
-                  <span class="shrink-0"
+                  <span class="shrink-0 whitespace-nowrap"
                     >{{ formatBytes(portableAsset?.size || 82100000) }} ·
                     {{
                       (portableAsset?.download_count || 198).toLocaleString(
@@ -296,10 +296,10 @@
                     'https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest'
                   "
                   target="_blank"
-                  class="btn-clickup-ghost w-full text-center justify-center !py-2.5 !text-xs hover:border-[#18181b] hover:text-[#18181b]"
+                  class="btn-clickup-ghost w-full text-center justify-center !py-2.5 !text-xs hover:border-[#18181b] hover:text-[#18181b] whitespace-nowrap"
                 >
                   <i
-                    class="fa-solid fa-file-zipper mr-1.5"
+                    class="fa-solid fa-file-zipper mr-1.5 shrink-0"
                     aria-hidden="true"
                   ></i>
                   <span>Tải Bản Portable (.zip)</span>
@@ -307,13 +307,13 @@
 
                 <!-- Calm Onboarding Timeline -->
                 <div
-                  class="pt-2 text-[11px] text-[#71717a] flex items-center justify-between text-center border-t border-[#f4f4f5]"
+                  class="pt-2 text-[11px] text-[#71717a] flex items-center justify-between text-center border-t border-[#f4f4f5] gap-1"
                 >
-                  <span>1. Tải .zip</span>
-                  <span class="text-[#d4d4d8]">&rarr;</span>
-                  <span>2. Giải nén</span>
-                  <span class="text-[#d4d4d8]">&rarr;</span>
-                  <span>3. Mở chạy ngay</span>
+                  <span class="whitespace-nowrap">1. Tải .zip</span>
+                  <span class="text-[#d4d4d8] shrink-0">&rarr;</span>
+                  <span class="whitespace-nowrap">2. Giải nén</span>
+                  <span class="text-[#d4d4d8] shrink-0">&rarr;</span>
+                  <span class="whitespace-nowrap">3. Mở chạy ngay</span>
                 </div>
               </div>
             </div>

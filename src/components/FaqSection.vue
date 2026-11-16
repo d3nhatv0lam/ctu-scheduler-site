@@ -8,10 +8,10 @@
         :transition="{ duration: 0.45, ease: [0.33, 1, 0.68, 1] }"
         class="max-w-2xl text-left mb-12"
       >
-        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-[-0.03em] text-[#090c1d] mb-3 font-display">
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-[-0.03em] text-[#090c1d] mb-3 font-display text-balance">
           Câu hỏi thường gặp
         </h2>
-        <p class="text-[#52525b] text-base leading-relaxed">
+        <p class="text-[#52525b] text-sm sm:text-base leading-relaxed text-pretty">
           Giải đáp các thắc mắc phổ biến của sinh viên khi sử dụng và vận hành CTU Scheduler.
         </p>
       </motion.div>
@@ -30,16 +30,16 @@
         >
           <button
             type="button"
-            class="w-full p-4 sm:p-6 text-left flex items-center justify-between gap-4 hover:bg-[#f8f9fa] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00529c]/50 transition-colors"
+            class="w-full p-4 sm:p-6 text-left flex items-start sm:items-center justify-between gap-3 sm:gap-4 hover:bg-[#f8f9fa] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00529c]/50 transition-colors"
             :aria-expanded="openIndex === index"
             @click="toggleFaq(index)"
           >
-            <h3 class="font-bold text-[#090c1d] text-sm sm:text-base font-display flex items-center gap-2.5">
-              <span class="w-2 h-2 rounded-full bg-[#00529c] shrink-0"></span>
+            <h3 class="font-bold text-[#090c1d] text-sm sm:text-base font-display flex items-start sm:items-center gap-2.5 text-balance leading-snug">
+              <span class="w-2 h-2 rounded-full bg-[#00529c] shrink-0 mt-1.5 sm:mt-0"></span>
               <span>{{ item.question }}</span>
             </h3>
             <motion.span
-              class="w-7 h-7 rounded-full flex items-center justify-center shrink-0 origin-center transition-colors duration-200"
+              class="w-7 h-7 rounded-full flex items-center justify-center shrink-0 origin-center transition-colors duration-200 mt-0.5 sm:mt-0 transform-gpu"
               :class="openIndex === index ? 'bg-[#f0f7ff] text-[#00529c]' : 'bg-[#f4f4f5] text-[#52525b]'"
               :initial="false"
               :animate="{ rotate: openIndex === index ? 180 : 0 }"
@@ -63,7 +63,7 @@
                   opacity: openIndex === index ? 1 : 0,
                 }"
                 :transition="{ duration: 0.2, ease: [0.33, 1, 0.68, 1] }"
-                class="px-4 sm:px-6 pb-5 pt-0 text-[#52525b] text-xs sm:text-sm leading-relaxed pl-[28px] sm:pl-[34px]"
+                class="px-4 sm:px-6 pb-5 pt-0 text-[#52525b] text-xs sm:text-sm leading-relaxed pl-[28px] sm:pl-[34px] text-pretty"
               >
                 {{ item.answer }}
               </motion.div>

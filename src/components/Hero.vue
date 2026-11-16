@@ -13,7 +13,7 @@
       <motion.h1
         :initial="false"
         :animate="{ opacity: 1, y: 0 }"
-        class="text-4xl sm:text-6xl lg:text-[4.25rem] font-extrabold tracking-[-0.035em] text-[#090c1d] leading-[1.08] font-display max-w-4xl mx-auto"
+        class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-[-0.035em] text-[#090c1d] leading-[1.14] sm:leading-[1.08] font-display max-w-4xl mx-auto text-balance"
       >
         Một không gian xếp lịch thông minh cho sinh viên Đại học Cần Thơ.
       </motion.h1>
@@ -22,7 +22,7 @@
       <motion.p
         :initial="false"
         :animate="{ opacity: 1, y: 0 }"
-        class="text-base sm:text-lg md:text-xl text-[#52525b] leading-relaxed max-w-2xl mx-auto mt-6 font-normal"
+        class="text-sm sm:text-lg md:text-xl text-[#52525b] leading-relaxed max-w-2xl mx-auto mt-4 sm:mt-6 font-normal text-pretty"
       >
         Tự động hóa hoàn toàn việc sắp xếp lịch học, loại trừ khả năng xung đột
         lịch học và cập nhật sĩ số trực tiếp từ hệ thống MyCTU.
@@ -31,9 +31,9 @@
       <!-- Mobile Visitor Context Banner -->
       <div
         v-if="isMobileDevice"
-        class="mt-6 max-w-md mx-auto p-3 rounded-full bg-[#f0f7ff] border border-[#bae0fd] text-xs text-[#00529c] flex items-center justify-center gap-2 shadow-sm font-medium"
+        class="mt-6 max-w-md mx-auto px-4 py-2.5 rounded-2xl sm:rounded-full bg-[#f0f7ff] border border-[#bae0fd] text-xs text-[#00529c] flex items-center justify-center gap-2 shadow-2xs font-medium text-pretty text-center"
       >
-        <i class="fa-solid fa-mobile-screen-button"></i>
+        <i class="fa-solid fa-mobile-screen-button shrink-0"></i>
         <span
           >Đang mở trên điện thoại: Hãy lưu liên kết để tải trên máy tính
           Windows.</span
@@ -44,14 +44,14 @@
       <motion.div
         :initial="false"
         :animate="{ opacity: 1, y: 0 }"
-        class="flex flex-col sm:flex-row gap-3 pt-8 items-center justify-center"
+        class="flex flex-col sm:flex-row gap-3 pt-7 sm:pt-8 items-center justify-center w-full max-w-sm sm:max-w-none mx-auto"
       >
         <a
           href="#download"
-          class="btn-clickup-primary !py-3.5 !px-8 !text-sm flex items-center gap-2 shadow-md hover:shadow-lg"
+          class="btn-clickup-primary w-full sm:w-auto justify-center !py-3.5 !px-8 !text-sm flex items-center gap-2 shadow-md hover:shadow-lg whitespace-nowrap"
         >
           <svg
-            class="w-4 h-4"
+            class="w-4 h-4 shrink-0"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -70,10 +70,10 @@
           href="https://github.com/d3nhatv0lam/CTU-Scheduler"
           target="_blank"
           rel="noopener noreferrer"
-          class="btn-clickup-ghost !py-3.5 !px-6 !text-sm hover:border-[#00529c] hover:text-[#00529c]"
+          class="btn-clickup-ghost w-full sm:w-auto justify-center !py-3.5 !px-6 !text-sm hover:border-[#00529c] hover:text-[#00529c] whitespace-nowrap"
         >
           <svg
-            class="w-4 h-4 text-[#18181b]"
+            class="w-4 h-4 text-[#18181b] shrink-0"
             fill="currentColor"
             viewBox="0 0 24 24"
           >
@@ -91,11 +91,11 @@
       <motion.div
         :initial="false"
         :animate="{ opacity: 1 }"
-        class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-6 text-xs text-[#52525b] font-medium"
+        class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2.5 pt-6 text-xs text-[#52525b] font-medium"
       >
-        <span class="flex items-center gap-1.5">
+        <span class="flex items-center gap-1.5 whitespace-nowrap">
           <svg
-            class="w-3.5 h-3.5 text-[#00c07a]"
+            class="w-3.5 h-3.5 text-[#00c07a] shrink-0"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -109,9 +109,9 @@
           </svg>
           Miễn phí &amp; Mã nguồn mở MIT
         </span>
-        <span class="flex items-center gap-1.5">
+        <span class="flex items-center gap-1.5 whitespace-nowrap">
           <svg
-            class="w-3.5 h-3.5 text-[#00c07a]"
+            class="w-3.5 h-3.5 text-[#00c07a] shrink-0"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -123,11 +123,11 @@
               d="M5 13l4 4L19 7"
             />
           </svg>
-          Xử lý cục bộ
+          Xử lý cục bộ 100%
         </span>
-        <span class="flex items-center gap-1.5">
+        <span class="flex items-center gap-1.5 whitespace-nowrap">
           <svg
-            class="w-3.5 h-3.5 text-[#00c07a]"
+            class="w-3.5 h-3.5 text-[#00c07a] shrink-0"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -139,7 +139,7 @@
               d="M5 13l4 4L19 7"
             />
           </svg>
-          Hội đồng Khoa CNTT&amp;TT nghiệm thu
+          Khoa CNTT&amp;TT nghiệm thu
         </span>
       </motion.div>
 
@@ -174,7 +174,7 @@
 
             <div class="flex items-center gap-3 text-xs text-[#71717a]">
               <span
-                class="px-2 py-0.5 rounded-full bg-[#ecfdf5] text-[#00c07a] font-bold text-[10px] border border-[#a7f3d0]"
+                class="px-2 py-0.5 rounded-full bg-[#ecfdf5] text-[#00c07a] font-bold text-[11px] border border-[#a7f3d0] whitespace-nowrap shrink-0"
               >
                 ONLINE SYNC
               </span>

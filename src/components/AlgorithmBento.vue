@@ -9,10 +9,10 @@
         :transition="{ duration: 0.45, ease: [0.33, 1, 0.68, 1] }"
         class="max-w-2xl mx-auto text-center mb-14"
       >
-        <h2 class="text-3xl sm:text-4xl lg:text-[40px] font-bold tracking-[-0.03em] leading-[1.15] text-[#090c1d] mb-3.5 font-display text-balance">
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-[-0.03em] leading-[1.15] text-[#090c1d] mb-3.5 font-display text-balance">
           Sức mạnh công nghệ đằng sau từng phương án xếp lịch.
         </h2>
-        <p class="text-[#52525b] text-base sm:text-lg leading-relaxed font-normal text-pretty">
+        <p class="text-[#52525b] text-sm sm:text-base leading-relaxed font-normal text-pretty">
           Đề tài Nghiên cứu Khoa học Sinh viên được Hội đồng khoa học Khoa Công nghệ Thông tin &amp; Truyền thông — Đại học Cần Thơ chính thức nghiệm thu và đánh giá xuất sắc.
         </p>
       </motion.div>
@@ -28,10 +28,10 @@
           class="lg:col-span-7 clickup-card p-5 sm:p-7 flex flex-col justify-between"
         >
           <div>
-            <h3 class="text-xl font-bold tracking-[-0.02em] leading-snug text-[#18181b] mb-2 font-display text-balance">
+            <h3 class="text-lg sm:text-xl font-bold tracking-[-0.02em] leading-snug text-[#18181b] mb-2 font-display text-balance">
               Thuật toán duyệt tổ hợp &amp; Khử xung đột ma trận
             </h3>
-            <p class="text-[#52525b] text-sm leading-relaxed mb-5 font-normal text-pretty">
+            <p class="text-[#52525b] text-xs sm:text-sm leading-relaxed mb-5 font-normal text-pretty">
               Tự động kiểm tra hàng chục ngàn tổ hợp môn học, giải quyết triệt để các ràng buộc đăng ký:
             </p>
 
@@ -39,37 +39,37 @@
             <div class="space-y-2.5 text-xs sm:text-sm">
               <div class="flex items-center justify-between gap-3 p-3 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7]">
                 <span class="font-medium text-[#18181b] leading-tight">Khử 100% trùng tiết học</span>
-                <span class="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
+                <span class="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0 whitespace-nowrap">
                   Bắt buộc
                 </span>
               </div>
 
               <div class="flex items-center justify-between gap-3 p-3 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7]">
                 <span class="font-medium text-[#18181b] leading-tight">Khử 100% trùng ngày thi</span>
-                <span class="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
+                <span class="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0 whitespace-nowrap">
                   Bắt buộc
                 </span>
               </div>
 
               <div class="flex items-center justify-between gap-3 p-3 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7]">
                 <span class="font-medium text-[#18181b] leading-tight">Tránh đổi cơ sở cùng buổi</span>
-                <span class="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-blue-50 text-[#00529c] border border-blue-200 shrink-0">
+                <span class="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-blue-50 text-[#00529c] border border-blue-200 shrink-0 whitespace-nowrap">
                   Tối ưu
                 </span>
               </div>
 
               <div class="flex items-center justify-between gap-3 p-3 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7]">
                 <span class="font-medium text-[#18181b] leading-tight">Bảo lưu giờ nghỉ trưa</span>
-                <span class="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-blue-50 text-[#00529c] border border-blue-200 shrink-0">
+                <span class="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-blue-50 text-[#00529c] border border-blue-200 shrink-0 whitespace-nowrap">
                   Tối ưu
                 </span>
               </div>
             </div>
           </div>
 
-          <div class="mt-6 pt-4 border-t border-[#e4e4e7] flex items-center justify-between gap-2 text-xs text-[#71717a]">
+          <div class="mt-6 pt-4 border-t border-[#e4e4e7] flex flex-wrap items-center justify-between gap-2 text-xs text-[#71717a]">
             <span>Thực nghiệm tại ĐH Cần Thơ</span>
-            <span class="text-emerald-700 font-semibold uppercase text-[11px] tracking-wide shrink-0">
+            <span class="text-emerald-700 font-semibold uppercase text-[11px] tracking-wide shrink-0 whitespace-nowrap">
               Nghiệm thu chính thức
             </span>
           </div>
@@ -84,10 +84,10 @@
           class="lg:col-span-5 clickup-card p-5 sm:p-7 flex flex-col justify-between"
         >
           <div>
-            <h3 class="text-xl font-bold tracking-[-0.02em] leading-snug text-[#18181b] mb-2 font-display text-balance">
+            <h3 class="text-lg sm:text-xl font-bold tracking-[-0.02em] leading-snug text-[#18181b] mb-2 font-display text-balance">
               Chứng Nhận Khoa CNTT&amp;TT
             </h3>
-            <p class="text-[#52525b] text-sm leading-relaxed mb-5 font-normal text-pretty">
+            <p class="text-[#52525b] text-xs sm:text-sm leading-relaxed mb-5 font-normal text-pretty">
               Biên bản số 02/TB-CN&amp;CNTT-SV do Hội đồng khoa học thẩm định và thông qua:
             </p>
 
@@ -147,12 +147,12 @@
             class="relative w-full max-w-4xl max-h-[92vh] flex flex-col bg-white rounded-2xl shadow-2xl border border-[#e4e4e7] overflow-hidden"
           >
             <!-- Modal Header -->
-            <div class="flex items-center justify-between px-5 py-3.5 border-b border-[#e4e4e7] bg-[#f8f9fa] shrink-0">
-              <div>
-                <h4 id="modal-doc-title" class="text-sm font-bold text-[#18181b] leading-tight">
+            <div class="flex items-center justify-between px-4 sm:px-5 py-3 sm:py-3.5 border-b border-[#e4e4e7] bg-[#f8f9fa] shrink-0 gap-2">
+              <div class="min-w-0 flex-1">
+                <h4 id="modal-doc-title" class="text-xs sm:text-sm font-bold text-[#18181b] leading-tight truncate sm:whitespace-normal">
                   Biên bản nghiệm thu đề tài NCKH Sinh viên
                 </h4>
-                <p class="text-[11px] text-[#71717a]">
+                <p class="text-[11px] text-[#71717a] truncate sm:whitespace-normal">
                   Số 02/TB-CN&amp;CNTT-SV • Khoa Công nghệ Thông tin &amp; Truyền thông
                 </p>
               </div>
@@ -238,9 +238,9 @@
             </div>
 
             <!-- Modal Footer Advice -->
-            <div class="px-4 py-2 border-t border-[#e4e4e7] bg-[#f8f9fa] flex items-center justify-between text-[11px] text-[#71717a] shrink-0">
-              <span>Mẹo: Dùng con lăn chuột để phóng to/thu nhỏ, kéo chuột để di chuyển ảnh.</span>
-              <span class="hidden sm:inline">Nhấn phím <kbd class="px-1.5 py-0.5 rounded bg-white border border-[#e4e4e7] text-[#18181b] font-semibold text-[10px]">Esc</kbd> để đóng</span>
+            <div class="px-4 py-2 border-t border-[#e4e4e7] bg-[#f8f9fa] flex items-center justify-between text-[11px] text-[#71717a] shrink-0 gap-2">
+              <span class="truncate sm:whitespace-normal">Mẹo: Cuộn chuột hoặc chạm 2 ngón để phóng to/thu nhỏ ảnh.</span>
+              <span class="hidden sm:inline shrink-0">Nhấn phím <kbd class="px-1.5 py-0.5 rounded bg-white border border-[#e4e4e7] text-[#18181b] font-semibold text-[11px]">Esc</kbd> để đóng</span>
             </div>
           </motion.div>
         </motion.div>

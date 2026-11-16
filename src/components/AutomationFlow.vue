@@ -9,36 +9,36 @@
         class="max-w-3xl mx-auto text-center mb-14"
       >
         <h2
-          class="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold tracking-[-0.035em] text-[#090c1d] mb-4 font-display"
+          class="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-[-0.035em] text-[#090c1d] mb-3.5 font-display text-balance"
         >
           Từ cổng MyCTU đến Thời khóa biểu hoàn hảo.
         </h2>
-        <p class="text-[#52525b] text-base sm:text-lg leading-relaxed">
+        <p class="text-[#52525b] text-sm sm:text-base leading-relaxed text-pretty">
           Mọi dữ liệu học phần được xử lý độc lập và chạy trên phần cứng máy
           tính của bạn — không rò rỉ cookie hay tài khoản.
         </p>
       </motion.div>
 
       <!-- 3-Stage Diagram Flow -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 relative">
         <!-- Stage 1 -->
         <motion.div
           :initial="{ opacity: 0, y: 16 }"
           :whileInView="{ opacity: 1, y: 0 }"
           :inViewOptions="{ once: true }"
           :transition="{ duration: 0.45, delay: 0.05, ease: [0.33, 1, 0.68, 1] }"
-          class="clickup-card p-6 sm:p-7 relative flex flex-col justify-between hover-lift"
+          class="clickup-card p-5 sm:p-7 relative flex flex-col justify-between hover-lift"
         >
           <div>
             <div
-              class="w-12 h-12 rounded-2xl bg-[#f0f7ff] text-[#00529c] border border-[#bae0fd] flex items-center justify-center text-xl mb-5 shadow-sm"
+              class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#f0f7ff] text-[#00529c] border border-[#bae0fd] flex items-center justify-center text-lg sm:text-xl mb-4 sm:mb-5 shadow-2xs"
             >
               <i class="fa-solid fa-cloud-arrow-down" aria-hidden="true"></i>
             </div>
-            <h3 class="text-lg font-bold text-[#18181b] mb-2 font-display">
+            <h3 class="text-base sm:text-lg font-bold text-[#18181b] mb-2 font-display text-balance">
               Trích Xuất Danh Sách MyCTU
             </h3>
-            <p class="text-[#52525b] text-sm leading-relaxed">
+            <p class="text-[#52525b] text-xs sm:text-sm leading-relaxed text-pretty">
               Mở phiên làm việc bảo mật ngầm để đọc mã lớp, danh sách học phần
               mở, phòng học và sĩ số thời gian thực từ Cổng thông tin sinh viên
               Đại học Cần Thơ.
@@ -47,8 +47,8 @@
           <div
             class="mt-6 pt-4 border-t border-[#e4e4e7] text-xs font-semibold text-[#00c07a] flex items-center gap-2"
           >
-            <span class="w-2 h-2 rounded-full bg-[#00c07a]"></span>
-            <span>Mật khẩu tự tiêu hủy sau phiên sử dụng</span>
+            <span class="w-2 h-2 rounded-full bg-[#00c07a] shrink-0"></span>
+            <span class="text-[11px] sm:text-xs">Mật khẩu tự tiêu hủy sau phiên sử dụng</span>
           </div>
         </motion.div>
 
@@ -58,18 +58,18 @@
           :whileInView="{ opacity: 1, y: 0 }"
           :inViewOptions="{ once: true }"
           :transition="{ duration: 0.45, delay: 0.12, ease: [0.33, 1, 0.68, 1] }"
-          class="clickup-card p-6 sm:p-7 relative flex flex-col justify-between hover-lift"
+          class="clickup-card p-5 sm:p-7 relative flex flex-col justify-between hover-lift"
         >
           <div>
             <div
-              class="w-12 h-12 rounded-2xl bg-[#f0f7ff] text-[#00529c] border border-[#bae0fd] flex items-center justify-center text-xl mb-5 shadow-sm"
+              class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#f0f7ff] text-[#00529c] border border-[#bae0fd] flex items-center justify-center text-lg sm:text-xl mb-4 sm:mb-5 shadow-2xs"
             >
               <i class="fa-solid fa-microchip" aria-hidden="true"></i>
             </div>
-            <h3 class="text-lg font-bold text-[#18181b] mb-2 font-display">
+            <h3 class="text-base sm:text-lg font-bold text-[#18181b] mb-2 font-display text-balance">
               Thuật Toán Tổ Hợp Cục Bộ
             </h3>
-            <p class="text-[#52525b] text-sm leading-relaxed">
+            <p class="text-[#52525b] text-xs sm:text-sm leading-relaxed text-pretty">
               Duyệt qua hàng triệu nhánh tổ hợp lớp học phần, tự động gạt bỏ
               100% xung đột giờ học, trùng ngày thi và xếp lịch theo bộ tiêu
               chuẩn cá nhân hóa của bạn.
@@ -78,8 +78,8 @@
           <div
             class="mt-6 pt-4 border-t border-[#e4e4e7] text-xs font-semibold text-[#00529c] flex items-center gap-2"
           >
-            <span class="w-2 h-2 rounded-full bg-[#00529c]"></span>
-            <span>Tốc độ xử lý &lt; 0.5 giây</span>
+            <span class="w-2 h-2 rounded-full bg-[#00529c] shrink-0"></span>
+            <span class="text-[11px] sm:text-xs">Tốc độ xử lý &lt; 0.5 giây</span>
           </div>
         </motion.div>
 
@@ -89,18 +89,18 @@
           :whileInView="{ opacity: 1, y: 0 }"
           :inViewOptions="{ once: true }"
           :transition="{ duration: 0.45, delay: 0.18, ease: [0.33, 1, 0.68, 1] }"
-          class="clickup-card p-6 sm:p-7 relative flex flex-col justify-between hover-lift"
+          class="clickup-card p-5 sm:p-7 relative flex flex-col justify-between hover-lift"
         >
           <div>
             <div
-              class="w-12 h-12 rounded-2xl bg-[#ecfdf5] text-[#00c07a] border border-[#a7f3d0] flex items-center justify-center text-xl mb-5 shadow-sm"
+              class="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#ecfdf5] text-[#00c07a] border border-[#a7f3d0] flex items-center justify-center text-lg sm:text-xl mb-4 sm:mb-5 shadow-2xs"
             >
               <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
             </div>
-            <h3 class="text-lg font-bold text-[#18181b] mb-2 font-display">
+            <h3 class="text-base sm:text-lg font-bold text-[#18181b] mb-2 font-display text-balance">
               Đồng Bộ Lịch &amp; Xem Offline
             </h3>
-            <p class="text-[#52525b] text-sm leading-relaxed">
+            <p class="text-[#52525b] text-xs sm:text-sm leading-relaxed text-pretty">
               Xuất trực tiếp sang Google Calendar / Apple iCal (.ics), bảng tính
               Excel, hoặc lưu trữ để mở tra cứu ngoại tuyến mọi lúc mọi nơi mà
               không cần Internet.
@@ -109,8 +109,8 @@
           <div
             class="mt-6 pt-4 border-t border-[#e4e4e7] text-xs font-semibold text-[#00529c] flex items-center gap-2"
           >
-            <span class="w-2 h-2 rounded-full bg-[#00529c]"></span>
-            <span>Hỗ trợ đa định dạng 1-click</span>
+            <span class="w-2 h-2 rounded-full bg-[#00529c] shrink-0"></span>
+            <span class="text-[11px] sm:text-xs">Hỗ trợ đa định dạng 1-click</span>
           </div>
         </motion.div>
       </div>

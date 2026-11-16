@@ -70,7 +70,7 @@
           <!-- Ca Sáng -->
           <tr>
             <td class="p-3 text-[#646464] text-center font-bold bg-[#f8f9fa] border-r border-[#e8e8e8]">
-              Sáng<br /><span class="text-[10px] text-[#838383] font-normal">Tiết 1-5</span>
+              Sáng<br /><span class="text-[11px] text-[#838383] font-normal">Tiết 1-5</span>
             </td>
             <td class="p-2 border-r border-[#e8e8e8]">
               <div
@@ -79,10 +79,10 @@
               >
                 <div class="flex items-center justify-between">
                   <span class="font-extrabold text-[#202020]">CT176</span>
-                  <span class="text-[10px] font-bold px-1.5 py-0.2 bg-[#f0f7ff] text-[#00529c] rounded">3TC</span>
+                  <span class="text-[11px] font-bold px-1.5 py-0.2 bg-[#f0f7ff] text-[#00529c] rounded">3TC</span>
                 </div>
                 <div class="text-[11px] text-[#646464] mt-0.5">Lập trình HĐT</div>
-                <div class="text-[10px] text-[#838383] mt-1">Phòng 102/DI · Khu II</div>
+                <div class="text-[11px] text-[#838383] mt-1">Phòng 102/DI · Khu II</div>
               </div>
             </td>
             <td class="p-2 border-r border-[#e8e8e8]"><div class="text-[#cbd5e1] text-center py-4 font-sans">-</div></td>
@@ -93,10 +93,10 @@
               >
                 <div class="flex items-center justify-between">
                   <span class="font-extrabold text-[#202020]">CT103</span>
-                  <span class="text-[10px] font-bold px-1.5 py-0.2 bg-[#f0f7ff] text-[#00529c] rounded">4TC</span>
+                  <span class="text-[11px] font-bold px-1.5 py-0.2 bg-[#f0f7ff] text-[#00529c] rounded">4TC</span>
                 </div>
                 <div class="text-[11px] text-[#646464] mt-0.5">Cấu trúc Dữ Liệu</div>
-                <div class="text-[10px] text-[#838383] mt-1">Phòng 204/DI · Khu II</div>
+                <div class="text-[11px] text-[#838383] mt-1">Phòng 204/DI · Khu II</div>
               </div>
             </td>
             <td class="p-2 border-r border-[#e8e8e8]"><div class="text-[#cbd5e1] text-center py-4 font-sans">-</div></td>
@@ -105,7 +105,7 @@
           <!-- Ca Chiều -->
           <tr>
             <td class="p-3 text-[#646464] text-center font-bold bg-[#f8f9fa] border-r border-[#e8e8e8]">
-              Chiều<br /><span class="text-[10px] text-[#838383] font-normal">Tiết 6-10</span>
+              Chiều<br /><span class="text-[11px] text-[#838383] font-normal">Tiết 6-10</span>
             </td>
             <td class="p-2 border-r border-[#e8e8e8]"><div class="text-[#cbd5e1] text-center py-4 font-sans">-</div></td>
             <td class="p-2 border-r border-[#e8e8e8]">
@@ -115,10 +115,10 @@
               >
                 <div class="flex items-center justify-between">
                   <span class="font-extrabold text-[#202020]">CT112</span>
-                  <span class="text-[10px] font-bold px-1.5 py-0.2 bg-[#e6f4ff] text-[#0091ff] rounded">3TC</span>
+                  <span class="text-[11px] font-bold px-1.5 py-0.2 bg-[#e6f4ff] text-[#0091ff] rounded">3TC</span>
                 </div>
                 <div class="text-[11px] text-[#646464] mt-0.5">Mạng Máy Tính</div>
-                <div class="text-[10px] text-[#838383] mt-1">Phòng 301/DI · Khu II</div>
+                <div class="text-[11px] text-[#838383] mt-1">Phòng 301/DI · Khu II</div>
               </div>
             </td>
             <td class="p-2 border-r border-[#e8e8e8]">
@@ -128,10 +128,10 @@
               >
                 <div class="flex items-center justify-between">
                   <span class="font-extrabold text-[#202020]">CT178</span>
-                  <span class="text-[10px] font-bold px-1.5 py-0.2 bg-[#e6f4ff] text-[#0091ff] rounded">3TC</span>
+                  <span class="text-[11px] font-bold px-1.5 py-0.2 bg-[#e6f4ff] text-[#0091ff] rounded">3TC</span>
                 </div>
                 <div class="text-[11px] text-[#646464] mt-0.5">Nguyên Lý HĐH</div>
-                <div class="text-[10px] text-[#838383] mt-1">Phòng 105/DI · Khu II</div>
+                <div class="text-[11px] text-[#838383] mt-1">Phòng 105/DI · Khu II</div>
               </div>
             </td>
             <td class="p-2 border-r border-[#e8e8e8]">
@@ -141,10 +141,10 @@
               >
                 <div class="flex items-center justify-between">
                   <span class="font-extrabold text-[#202020]">ML014</span>
-                  <span class="text-[10px] font-bold px-1.5 py-0.2 bg-[#ecfdf5] text-[#00c07a] rounded">2TC</span>
+                  <span class="text-[11px] font-bold px-1.5 py-0.2 bg-[#ecfdf5] text-[#00c07a] rounded">2TC</span>
                 </div>
                 <div class="text-[11px] text-[#646464] mt-0.5">Triết Học MLN</div>
-                <div class="text-[10px] text-[#838383] mt-1">Phòng 101/Khoa Luật</div>
+                <div class="text-[11px] text-[#838383] mt-1">Phòng 101/Khoa Luật</div>
               </div>
             </td>
             <td class="p-2"><div class="text-[#cbd5e1] text-center py-4 font-sans">-</div></td>
@@ -165,19 +165,19 @@
       <div
         v-for="course in courseList"
         :key="course.code"
-        class="p-3.5 flex items-center justify-between hover:bg-[#f8f9fa] transition-colors"
+        class="p-3 sm:p-3.5 flex items-center justify-between gap-3 hover:bg-[#f8f9fa] transition-colors"
       >
-        <div class="flex items-center gap-3">
-          <span class="w-8 h-8 rounded-full bg-[#f0f7ff] text-[#00529c] font-extrabold flex items-center justify-center text-xs">
+        <div class="flex items-center gap-3 min-w-0 flex-1">
+          <span class="w-8 h-8 rounded-full bg-[#f0f7ff] text-[#00529c] font-extrabold flex items-center justify-center text-xs shrink-0">
             {{ course.credits }}
           </span>
-          <div>
-            <div class="font-bold text-[#202020] text-sm">{{ course.code }} — {{ course.name }}</div>
-            <div class="text-xs text-[#838383] mt-0.5">Lớp: {{ course.classGroup }} · Giảng viên: {{ course.lecturer }} · Phòng: {{ course.room }}</div>
+          <div class="min-w-0 flex-1">
+            <div class="font-bold text-[#202020] text-xs sm:text-sm truncate">{{ course.code }} — {{ course.name }}</div>
+            <div class="text-[11px] sm:text-xs text-[#838383] mt-0.5 truncate">Lớp: {{ course.classGroup }} · Giảng viên: {{ course.lecturer }} · Phòng: {{ course.room }}</div>
           </div>
         </div>
-        <div class="text-right">
-          <span class="px-2 py-0.5 text-[11px] font-bold rounded-full bg-[#ecfdf5] text-[#00c07a] border border-[#a7f3d0]">
+        <div class="text-right shrink-0">
+          <span class="px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-[#ecfdf5] text-[#00c07a] border border-[#a7f3d0] whitespace-nowrap">
             Còn {{ course.slots }}
           </span>
         </div>
@@ -187,24 +187,24 @@
     <!-- Live Status Toolbar (Hairline Divider Row) -->
     <div class="pt-3 border-t border-[#e8e8e8] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
       <div class="grid grid-cols-3 divide-x divide-[#e8e8e8] text-center sm:text-left flex-1">
-        <div class="pr-3">
-          <span class="text-[#838383] block text-[10px] font-bold uppercase">Trùng Lịch</span>
-          <span class="font-extrabold text-[#00c07a] flex items-center gap-1 justify-center sm:justify-start">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+        <div class="pr-2 sm:pr-3">
+          <span class="text-[#838383] block text-[11px] font-bold uppercase tracking-wider">Trùng Lịch</span>
+          <span class="font-extrabold text-[#00c07a] flex items-center gap-1 justify-center sm:justify-start whitespace-nowrap">
+            <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
             {{ currentStats.conflicts }}
           </span>
         </div>
-        <div class="px-3">
-          <span class="text-[#838383] block text-[10px] font-bold uppercase">Sĩ Số CT176</span>
-          <span class="font-extrabold text-[#0091ff]">{{ currentStats.capacity }}</span>
+        <div class="px-2 sm:px-3">
+          <span class="text-[#838383] block text-[11px] font-bold uppercase tracking-wider whitespace-nowrap">Sĩ Số CT176</span>
+          <span class="font-extrabold text-[#0091ff] whitespace-nowrap">{{ currentStats.capacity }}</span>
         </div>
-        <div class="pl-3">
-          <span class="text-[#838383] block text-[10px] font-bold uppercase">Ngày Trống</span>
-          <span class="font-extrabold text-[#202020]">{{ currentStats.freeDays }}</span>
+        <div class="pl-2 sm:pl-3">
+          <span class="text-[#838383] block text-[11px] font-bold uppercase tracking-wider whitespace-nowrap">Ngày Trống</span>
+          <span class="font-extrabold text-[#202020] whitespace-nowrap">{{ currentStats.freeDays }}</span>
         </div>
       </div>
 
-      <div class="text-xs text-[#646464] bg-[#f8f9fa] px-3.5 py-2 rounded-lg border border-[#e8e8e8] flex-1">
+      <div class="text-xs text-[#646464] bg-[#f8f9fa] px-3.5 py-2 rounded-lg border border-[#e8e8e8] flex-1 text-pretty">
         <span class="font-bold text-[#202020]">Đánh giá phương án: </span>
         {{ currentStats.statusText }}
       </div>
