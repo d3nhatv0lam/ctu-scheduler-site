@@ -45,18 +45,16 @@
       </div>
     </div>
 
-    <!-- Calendar / List Views with AnimatePresence -->
-    <AnimatePresence mode="wait">
-      <!-- Calendar View -->
-      <motion.div
-        v-if="activeView === 'calendar'"
-        key="calendar"
-        :initial="{ opacity: 0, y: 6 }"
-        :animate="{ opacity: 1, y: 0 }"
-        :exit="{ opacity: 0, y: -6 }"
-        :transition="{ duration: 0.2, ease: [0.33, 1, 0.68, 1] }"
-        class="overflow-x-auto rounded-xl border border-[#e8e8e8] bg-[#f8f9fa]/40 tabular-nums"
-      >
+    <!-- Calendar / List Views -->
+    <!-- Calendar View -->
+    <motion.div
+      v-if="activeView === 'calendar'"
+      key="calendar"
+      :initial="{ opacity: 0 }"
+      :animate="{ opacity: 1 }"
+      :transition="{ duration: 0.2, ease: 'easeOut' }"
+      class="overflow-x-auto rounded-xl border border-[#e8e8e8] bg-[#f8f9fa]/40 tabular-nums"
+    >
       <table class="w-full text-left border-collapse text-xs">
         <thead>
           <tr class="border-b border-[#e8e8e8] bg-[#e9ebf0]/50 text-[#646464] font-bold">
@@ -159,10 +157,9 @@
     <motion.div
       v-else
       key="list"
-      :initial="{ opacity: 0, y: 6 }"
-      :animate="{ opacity: 1, y: 0 }"
-      :exit="{ opacity: 0, y: -6 }"
-      :transition="{ duration: 0.2, ease: [0.33, 1, 0.68, 1] }"
+      :initial="{ opacity: 0 }"
+      :animate="{ opacity: 1 }"
+      :transition="{ duration: 0.2, ease: 'easeOut' }"
       class="rounded-xl border border-[#e8e8e8] overflow-hidden divide-y divide-[#e8e8e8] bg-white text-xs tabular-nums"
     >
       <div
@@ -186,7 +183,6 @@
         </div>
       </div>
     </motion.div>
-  </AnimatePresence>
 
     <!-- Live Status Toolbar (Hairline Divider Row) -->
     <div class="pt-3 border-t border-[#e8e8e8] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">

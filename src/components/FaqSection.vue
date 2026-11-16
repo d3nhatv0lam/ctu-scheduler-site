@@ -50,23 +50,24 @@
             </motion.span>
           </button>
 
-          <!-- Motion-v Accordion Height & Opacity Expansion -->
-          <AnimatePresence :initial="false">
-            <motion.div
-              v-if="openIndex === index"
-              :initial="{ height: 0, opacity: 0 }"
-              :animate="{ height: 'auto', opacity: 1 }"
-              :exit="{ height: 0, opacity: 0 }"
-              :transition="{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }"
-              class="overflow-hidden"
-            >
-              <div
+          <!-- Smooth Height Expansion + motion-v content transition -->
+          <div
+            class="grid transition-[grid-template-rows] duration-250 ease-[cubic-bezier(0.33,1,0.68,1)]"
+            :class="openIndex === index ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
+          >
+            <div class="overflow-hidden">
+              <motion.div
+                :animate="{
+                  opacity: openIndex === index ? 1 : 0,
+                  y: openIndex === index ? 0 : -6,
+                }"
+                :transition="{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }"
                 class="px-4 sm:px-6 pb-5 pt-0 text-[#52525b] text-xs sm:text-sm leading-relaxed pl-[28px] sm:pl-[34px]"
               >
                 {{ item.answer }}
-              </div>
-            </motion.div>
-          </AnimatePresence>
+              </motion.div>
+            </div>
+          </div>
         </div>
       </motion.div>
     </div>

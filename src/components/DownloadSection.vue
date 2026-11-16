@@ -122,19 +122,17 @@
 
       <!-- Main Showcase Container -->
       <div v-else class="space-y-6 max-w-4xl mx-auto">
-        <AnimatePresence mode="wait">
-          <!-- ========================================== -->
-          <!-- TAB 1: WINDOWS (Cốt lõi chính thức)         -->
-          <!-- ========================================== -->
-          <motion.div
-            v-if="activeOsTab === 'windows'"
-            key="windows"
-            :initial="{ opacity: 0, y: 8 }"
-            :animate="{ opacity: 1, y: 0 }"
-            :exit="{ opacity: 0, y: -8 }"
-            :transition="{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }"
-            class="space-y-6"
-          >
+        <!-- ========================================== -->
+        <!-- TAB 1: WINDOWS (Cốt lõi chính thức)         -->
+        <!-- ========================================== -->
+        <motion.div
+          v-if="activeOsTab === 'windows'"
+          key="windows"
+          :initial="{ opacity: 0 }"
+          :animate="{ opacity: 1 }"
+          :transition="{ duration: 0.2, ease: 'easeOut' }"
+          class="space-y-6"
+        >
             <!-- Setup vs Portable 2-Column Cards -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch">
             <!-- EDITION 1: Setup Installer (Khuyên dùng cá nhân) -->
@@ -341,18 +339,17 @@
           </div>
         </motion.div>
 
-          <!-- ========================================== -->
-          <!-- TAB 2: MACOS (Thông tin & Giải pháp)        -->
-          <!-- ========================================== -->
-          <motion.div
-            v-else-if="activeOsTab === 'macos'"
-            key="macos"
-            :initial="{ opacity: 0, y: 8 }"
-            :animate="{ opacity: 1, y: 0 }"
-            :exit="{ opacity: 0, y: -8 }"
-            :transition="{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }"
-            class="p-6 rounded-2xl border border-[#e4e4e7] bg-white space-y-4"
-          >
+        <!-- ========================================== -->
+        <!-- TAB 2: MACOS (Thông tin & Giải pháp)        -->
+        <!-- ========================================== -->
+        <motion.div
+          v-else-if="activeOsTab === 'macos'"
+          key="macos"
+          :initial="{ opacity: 0 }"
+          :animate="{ opacity: 1 }"
+          :transition="{ duration: 0.2, ease: 'easeOut' }"
+          class="p-6 rounded-2xl border border-[#e4e4e7] bg-white space-y-4"
+        >
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
               <span
@@ -429,18 +426,17 @@
           </div>
         </motion.div>
 
-          <!-- ========================================== -->
-          <!-- TAB 3: LINUX (Thông tin & Mã nguồn)        -->
-          <!-- ========================================== -->
-          <motion.div
-            v-else-if="activeOsTab === 'linux'"
-            key="linux"
-            :initial="{ opacity: 0, y: 8 }"
-            :animate="{ opacity: 1, y: 0 }"
-            :exit="{ opacity: 0, y: -8 }"
-            :transition="{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }"
-            class="p-6 rounded-2xl border border-[#e4e4e7] bg-white space-y-4"
-          >
+        <!-- ========================================== -->
+        <!-- TAB 3: LINUX (Thông tin & Mã nguồn)        -->
+        <!-- ========================================== -->
+        <motion.div
+          v-else-if="activeOsTab === 'linux'"
+          key="linux"
+          :initial="{ opacity: 0 }"
+          :animate="{ opacity: 1 }"
+          :transition="{ duration: 0.2, ease: 'easeOut' }"
+          class="p-6 rounded-2xl border border-[#e4e4e7] bg-white space-y-4"
+        >
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
               <span
@@ -497,7 +493,6 @@
             </div>
           </div>
         </motion.div>
-      </AnimatePresence>
 
         <!-- Release Info & Secondary Drawers -->
         <div
@@ -545,17 +540,20 @@
           </div>
         </div>
 
-        <!-- Collapsible All Files Drawer (motion-v animated height) -->
-        <AnimatePresence>
-          <motion.div
-            v-if="showAllAssets"
-            :initial="{ height: 0, opacity: 0 }"
-            :animate="{ height: 'auto', opacity: 1 }"
-            :exit="{ height: 0, opacity: 0 }"
-            :transition="{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }"
-            class="overflow-hidden"
-          >
-            <div class="p-4 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] space-y-2 text-xs">
+        <!-- Collapsible All Files Drawer (Smooth expansion + motion-v content fade) -->
+        <div
+          class="grid transition-[grid-template-rows] duration-250 ease-[cubic-bezier(0.33,1,0.68,1)]"
+          :class="showAllAssets ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
+        >
+          <div class="overflow-hidden">
+            <motion.div
+              :animate="{
+                opacity: showAllAssets ? 1 : 0,
+                y: showAllAssets ? 0 : -8,
+              }"
+              :transition="{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }"
+              class="p-4 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] space-y-2 text-xs"
+            >
               <div class="font-semibold text-[#18181b] mb-1">
                 Tất cả tập tin phát hành:
               </div>
@@ -590,28 +588,31 @@
                   </a>
                 </div>
               </div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
+            </motion.div>
+          </div>
+        </div>
 
-        <!-- Collapsible Markdown Changelog Drawer (motion-v animated height) -->
-        <AnimatePresence>
-          <motion.div
-            v-if="showChangelog"
-            :initial="{ height: 0, opacity: 0 }"
-            :animate="{ height: 'auto', opacity: 1 }"
-            :exit="{ height: 0, opacity: 0 }"
-            :transition="{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }"
-            class="overflow-hidden"
-          >
-            <div class="p-4 sm:p-5 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] text-xs leading-relaxed overflow-x-auto markdown-prose">
+        <!-- Collapsible Markdown Changelog Drawer (Smooth expansion + motion-v content fade) -->
+        <div
+          class="grid transition-[grid-template-rows] duration-250 ease-[cubic-bezier(0.33,1,0.68,1)]"
+          :class="showChangelog ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
+        >
+          <div class="overflow-hidden">
+            <motion.div
+              :animate="{
+                opacity: showChangelog ? 1 : 0,
+                y: showChangelog ? 0 : -8,
+              }"
+              :transition="{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }"
+              class="p-4 sm:p-5 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] text-xs leading-relaxed overflow-x-auto markdown-prose"
+            >
               <div class="font-semibold text-[#18181b] text-sm mb-2">
                 Nhật ký phiên bản {{ currentRelease.tag_name }}
               </div>
               <div v-html="renderedMarkdownBody"></div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
+            </motion.div>
+          </div>
+        </div>
 
         <!-- Quiet Disclaimers (Collapsible / Concise) -->
         <div

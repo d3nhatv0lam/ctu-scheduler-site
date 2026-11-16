@@ -96,7 +96,7 @@
               type="button"
               :whilePress="{ scale: 0.98 }"
               @click="openModal"
-              class="group relative w-full flex flex-col items-center justify-center p-3 sm:p-4 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] hover:border-[#00529c] hover:bg-[#f0f7ff]/40 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00529c]/50"
+              class="group relative w-full flex flex-col items-center justify-center p-3 sm:p-4 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] hover:border-[#00529c] hover:bg-[#f0f7ff]/40 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#00529c]/50"
               aria-haspopup="dialog"
               aria-label="Xem biên bản nghiệm thu phóng to"
             >

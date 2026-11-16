@@ -196,7 +196,7 @@
   background-color: var(--color-signal-white);
   border: 1px solid var(--color-bone);
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.33, 1, 0.68, 1);
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
   user-select: none;
 }
 
@@ -268,7 +268,7 @@
   padding: 8px 10px;
   font-size: 12px;
   line-height: 1.35;
-  transition: all 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .slot-course {
