@@ -2,26 +2,30 @@
   <div class="space-y-4">
     <!-- View Switcher Tabs (ClickUp Style) -->
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#e8e8e8]">
-      <div class="flex items-center gap-1.5 p-1 bg-[#f8f9fa] rounded-full border border-[#e8e8e8] self-start">
+      <div class="relative grid grid-cols-2 p-1 bg-[#f4f4f5] rounded-full border border-[#e8e8e8] self-start w-52 sm:w-56 select-none">
+        <!-- Sliding Active Background Pill -->
+        <div
+          class="absolute top-1 bottom-1 left-1 rounded-full bg-[#18181b] shadow-2xs transition-transform duration-250 ease-[cubic-bezier(0.33,1,0.68,1)] pointer-events-none"
+          :style="{
+            width: 'calc((100% - 8px) / 2)',
+            transform: activeView === 'calendar' ? 'translateX(0%)' : 'translateX(100%)'
+          }"
+        ></div>
         <button
           type="button"
-          v-motion
-          :tapped="{ scale: 0.96, transition: { duration: 150 } }"
-          class="px-3.5 py-1 text-xs font-bold rounded-full transition-colors cursor-pointer"
-          :class="activeView === 'calendar' ? 'bg-[#202020] text-white shadow-sm' : 'text-[#646464] hover:text-[#202020]'"
+          class="relative z-10 py-1 px-3 text-xs font-semibold rounded-full transition-colors duration-200 text-center cursor-pointer"
+          :class="activeView === 'calendar' ? 'text-white font-bold' : 'text-[#71717a] hover:text-[#18181b]'"
           @click="activeView = 'calendar'"
         >
-          Lịch Tuần (Weekly)
+          Lịch Tuần
         </button>
         <button
           type="button"
-          v-motion
-          :tapped="{ scale: 0.96, transition: { duration: 150 } }"
-          class="px-3.5 py-1 text-xs font-bold rounded-full transition-colors cursor-pointer"
-          :class="activeView === 'list' ? 'bg-[#202020] text-white shadow-sm' : 'text-[#646464] hover:text-[#202020]'"
+          class="relative z-10 py-1 px-3 text-xs font-semibold rounded-full transition-colors duration-200 text-center cursor-pointer"
+          :class="activeView === 'list' ? 'text-white font-bold' : 'text-[#71717a] hover:text-[#18181b]'"
           @click="activeView = 'list'"
         >
-          Danh Sách Môn (List)
+          Danh Sách Môn
         </button>
       </div>
 

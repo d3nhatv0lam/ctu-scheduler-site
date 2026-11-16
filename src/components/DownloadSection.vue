@@ -36,21 +36,33 @@
         </div>
       </div>
 
-      <!-- OS Switcher (Clean, Quiet Segmented Control) -->
+      <!-- OS Switcher (Clean Segmented Control with Sliding Indicator) -->
       <div
         class="flex flex-col sm:flex-row items-center justify-between gap-3 max-w-3xl mx-auto mb-8"
       >
         <div
-          class="inline-flex p-1 bg-[#f4f4f5] rounded-full border border-[#e4e4e7] self-center sm:self-auto"
+          class="relative grid grid-cols-3 p-1 bg-[#f4f4f5] rounded-full border border-[#e4e4e7] w-full max-w-[340px] select-none"
         >
+          <!-- Sliding Background Indicator Pill -->
+          <div
+            class="absolute top-1 bottom-1 left-1 rounded-full bg-white shadow-2xs transition-transform duration-250 ease-[cubic-bezier(0.33,1,0.68,1)] pointer-events-none"
+            :style="{
+              width: 'calc((100% - 8px) / 3)',
+              transform:
+                activeOsTab === 'windows'
+                  ? 'translateX(0%)'
+                  : activeOsTab === 'macos'
+                    ? 'translateX(100%)'
+                    : 'translateX(200%)',
+            }"
+          ></div>
+
           <button
             type="button"
-            v-motion
-            :tapped="{ scale: 0.96, transition: { duration: 150 } }"
-            class="px-4 py-1.5 rounded-full text-xs font-semibold flex items-center gap-2 cursor-pointer"
+            class="relative z-10 py-1.5 px-3 rounded-full text-xs font-semibold transition-colors duration-200 flex items-center justify-center gap-1.5 cursor-pointer"
             :class="
               activeOsTab === 'windows'
-                ? 'bg-white text-[#18181b] shadow-2xs font-bold'
+                ? 'text-[#18181b] font-bold'
                 : 'text-[#71717a] hover:text-[#18181b]'
             "
             @click="activeOsTab = 'windows'"
@@ -60,12 +72,10 @@
           </button>
           <button
             type="button"
-            v-motion
-            :tapped="{ scale: 0.96, transition: { duration: 150 } }"
-            class="px-4 py-1.5 rounded-full text-xs font-semibold flex items-center gap-2 cursor-pointer"
+            class="relative z-10 py-1.5 px-3 rounded-full text-xs font-semibold transition-colors duration-200 flex items-center justify-center gap-1.5 cursor-pointer"
             :class="
               activeOsTab === 'macos'
-                ? 'bg-white text-[#18181b] shadow-2xs font-bold'
+                ? 'text-[#18181b] font-bold'
                 : 'text-[#71717a] hover:text-[#18181b]'
             "
             @click="activeOsTab = 'macos'"
@@ -75,12 +85,10 @@
           </button>
           <button
             type="button"
-            v-motion
-            :tapped="{ scale: 0.96, transition: { duration: 150 } }"
-            class="px-4 py-1.5 rounded-full text-xs font-semibold flex items-center gap-2 cursor-pointer"
+            class="relative z-10 py-1.5 px-3 rounded-full text-xs font-semibold transition-colors duration-200 flex items-center justify-center gap-1.5 cursor-pointer"
             :class="
               activeOsTab === 'linux'
-                ? 'bg-white text-[#18181b] shadow-2xs font-bold'
+                ? 'text-[#18181b] font-bold'
                 : 'text-[#71717a] hover:text-[#18181b]'
             "
             @click="activeOsTab = 'linux'"
@@ -91,7 +99,9 @@
         </div>
 
         <!-- Detected Device Context (Subtle text) -->
-        <div class="text-xs text-[#71717a] flex items-center gap-2">
+        <div
+          class="text-[11px] sm:text-xs text-[#71717a] flex items-center gap-2"
+        >
           <span class="w-1.5 h-1.5 rounded-full bg-[#00529c]"></span>
           <span
             >Thiết bị hiện tại:
@@ -122,7 +132,11 @@
           key="windows"
           v-motion
           :initial="{ opacity: 0, y: 10 }"
-          :enter="{ opacity: 1, y: 0, transition: { duration: 250, ease: [0.33, 1, 0.68, 1] } }"
+          :enter="{
+            opacity: 1,
+            y: 0,
+            transition: { duration: 250, ease: [0.33, 1, 0.68, 1] },
+          }"
           class="space-y-6"
         >
           <!-- Setup vs Portable 2-Column Cards -->
@@ -154,46 +168,36 @@
                 </div>
 
                 <p class="text-xs text-[#52525b] leading-relaxed">
-                  Phù hợp cho <strong>Laptop / Máy tính cá nhân</strong> dùng
-                  lâu dài. Tự động kiểm tra và nâng cấp phiên bản mới khi trường
-                  đổi dữ liệu MyCTU.
+                  Dành cho <strong>Laptop / Máy tính cá nhân</strong>. Tự động
+                  kiểm tra và nâng cấp phiên bản mới.
                 </p>
 
                 <!-- Restrained Feature List -->
-                <ul class="space-y-2 text-xs text-[#52525b] pt-1">
+                <ul class="space-y-1.5 text-xs text-[#52525b] pt-1">
                   <li class="flex items-start gap-2">
                     <span class="text-[#00529c] font-bold mt-0.5">•</span>
-                    <span
-                      >Tự động cập nhật phiên bản mới, không cần tải lại.</span
-                    >
+                    <span>Tự động cập nhật phiên bản mới</span>
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-[#00529c] font-bold mt-0.5">•</span>
-                    <span
-                      >Tự tạo lối tắt ngoài màn hình Desktop &amp; Start
-                      Menu.</span
-                    >
+                    <span>Tạo lối tắt Desktop &amp; Start Menu</span>
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-[#00529c] font-bold mt-0.5">•</span>
-                    <span
-                      >Lưu giữ cấu hình và danh sách môn học qua các kỳ.</span
-                    >
+                    <span>Lưu cấu hình và lịch học qua các kỳ</span>
                   </li>
                 </ul>
               </div>
 
               <div class="pt-2 space-y-3">
                 <div
-                  class="text-[11px] text-[#71717a] flex items-center justify-between tabular-nums"
+                  class="text-[11px] text-[#71717a] flex items-center justify-between gap-2 tabular-nums"
                 >
-                  <span class="truncate max-w-[180px]">{{
+                  <span class="truncate max-w-[130px] sm:max-w-[180px]">{{
                     recommendedSetupAsset?.name || "CTU-Scheduler-Setup.exe"
                   }}</span>
-                  <span
-                    >{{
-                      formatBytes(recommendedSetupAsset?.size || 78500000)
-                    }}
+                  <span class="shrink-0"
+                    >{{ formatBytes(recommendedSetupAsset?.size || 78500000) }}
                     ·
                     {{
                       (
@@ -222,7 +226,7 @@
                 >
                   <span>1. Tải về</span>
                   <span class="text-[#d4d4d8]">&rarr;</span>
-                  <span>2. Mở cài đặt (5s)</span>
+                  <span>2. Cài đặt (5s)</span>
                   <span class="text-[#d4d4d8]">&rarr;</span>
                   <span>3. Xếp lịch ngay</span>
                 </div>
@@ -231,7 +235,7 @@
 
             <!-- EDITION 2: Portable Edition (Không cần Admin) -->
             <div
-              class="p-6 rounded-2xl border border-[#e4e4e7] bg-white flex flex-col justify-between space-y-5"
+              class="p-5 sm:p-6 rounded-2xl border border-[#e4e4e7] bg-white flex flex-col justify-between space-y-5"
             >
               <div class="space-y-4">
                 <div class="flex items-center justify-between">
@@ -253,45 +257,35 @@
                 </div>
 
                 <p class="text-xs text-[#52525b] leading-relaxed">
-                  Phù hợp cho <strong>Máy tính phòng thực hành</strong> (Khu II,
-                  Hòa An), máy mượn hoặc tài khoản máy tính bị khóa quyền
-                  Administrator.
+                  Dành cho <strong>máy phòng thực hành</strong> (Khu II, Hòa An)
+                  hoặc máy bị giới hạn quyền Admin.
                 </p>
 
                 <!-- Restrained Feature List -->
-                <ul class="space-y-2 text-xs text-[#52525b] pt-1">
+                <ul class="space-y-1.5 text-xs text-[#52525b] pt-1">
                   <li class="flex items-start gap-2">
                     <span class="text-[#71717a] font-bold mt-0.5">•</span>
-                    <span
-                      >Không cần cài đặt, không cần mật khẩu quản trị
-                      viên.</span
-                    >
+                    <span>Chạy trực tiếp, không cần quyền Admin</span>
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-[#71717a] font-bold mt-0.5">•</span>
-                    <span
-                      >Không ghi Registry hệ thống, xóa thư mục là sạch
-                      máy.</span
-                    >
+                    <span>Không ghi Registry, xóa thư mục là sạch</span>
                   </li>
                   <li class="flex items-start gap-2">
                     <span class="text-[#71717a] font-bold mt-0.5">•</span>
-                    <span
-                      >Chép vào USB mang đi sử dụng linh hoạt trên mọi
-                      máy.</span
-                    >
+                    <span>Chép vào USB dùng linh hoạt mọi máy</span>
                   </li>
                 </ul>
               </div>
 
               <div class="pt-2 space-y-3">
                 <div
-                  class="text-[11px] text-[#71717a] flex items-center justify-between tabular-nums"
+                  class="text-[11px] text-[#71717a] flex items-center justify-between gap-2 tabular-nums"
                 >
-                  <span class="truncate max-w-[180px]">{{
+                  <span class="truncate max-w-[130px] sm:max-w-[180px]">{{
                     portableAsset?.name || "CTU-Scheduler-Portable.zip"
                   }}</span>
-                  <span
+                  <span class="shrink-0"
                     >{{ formatBytes(portableAsset?.size || 82100000) }} ·
                     {{
                       (portableAsset?.download_count || 198).toLocaleString(
@@ -323,7 +317,7 @@
                 >
                   <span>1. Tải .zip</span>
                   <span class="text-[#d4d4d8]">&rarr;</span>
-                  <span>2. Giải nén (Extract)</span>
+                  <span>2. Giải nén</span>
                   <span class="text-[#d4d4d8]">&rarr;</span>
                   <span>3. Mở chạy ngay</span>
                 </div>
@@ -333,7 +327,7 @@
 
           <!-- Windows SmartScreen Guide (Quiet, Compact Notice) -->
           <div
-            class="p-4 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7] text-xs text-[#52525b] flex items-start gap-3"
+            class="p-3.5 sm:p-4 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7] text-xs text-[#52525b] flex items-start gap-2.5"
           >
             <i
               class="fa-solid fa-shield-halved text-[#71717a] mt-0.5 shrink-0"
@@ -341,13 +335,12 @@
             ></i>
             <div class="leading-relaxed">
               <strong class="text-[#18181b] font-semibold"
-                >Lưu ý lần đầu khởi chạy:</strong
+                >Lưu ý lần đầu:</strong
               >
               Nếu Windows hiển thị thông báo bảo vệ
-              <em>"Windows protected your PC"</em> (do phần mềm sinh viên chưa
-              mua chữ ký số thương mại), bạn chỉ cần bấm vào dòng chữ
+              <em>"Windows protected your PC"</em>, bấm vào chữ
               <strong>"More info"</strong> rồi chọn
-              <strong>"Run anyway"</strong> để mở ứng dụng bình thường.
+              <strong>"Run anyway"</strong> để mở.
             </div>
           </div>
         </div>
@@ -360,7 +353,11 @@
           key="macos"
           v-motion
           :initial="{ opacity: 0, y: 10 }"
-          :enter="{ opacity: 1, y: 0, transition: { duration: 250, ease: [0.33, 1, 0.68, 1] } }"
+          :enter="{
+            opacity: 1,
+            y: 0,
+            transition: { duration: 250, ease: [0.33, 1, 0.68, 1] },
+          }"
           class="p-6 rounded-2xl border border-[#e4e4e7] bg-white space-y-4"
         >
           <div class="flex items-center justify-between">
@@ -447,7 +444,11 @@
           key="linux"
           v-motion
           :initial="{ opacity: 0, y: 10 }"
-          :enter="{ opacity: 1, y: 0, transition: { duration: 250, ease: [0.33, 1, 0.68, 1] } }"
+          :enter="{
+            opacity: 1,
+            y: 0,
+            transition: { duration: 250, ease: [0.33, 1, 0.68, 1] },
+          }"
           class="p-6 rounded-2xl border border-[#e4e4e7] bg-white space-y-4"
         >
           <div class="flex items-center justify-between">
@@ -509,21 +510,23 @@
 
         <!-- Release Info & Secondary Drawers -->
         <div
-          class="pt-2 border-t border-[#e4e4e7] flex flex-wrap items-center justify-between gap-3 text-xs text-[#71717a]"
+          class="pt-3 border-t border-[#e4e4e7] flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs text-[#71717a]"
         >
-          <div>
-            Phiên bản:
-            <strong class="text-[#18181b]">{{
-              currentRelease.tag_name
-            }}</strong>
-            · Tổng:
-            <strong class="text-[#00529c] font-semibold tabular-nums"
-              >{{ totalDownloads.toLocaleString("vi-VN") }} lượt tải</strong
+          <div class="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <span
+              >Phiên bản:
+              <strong class="text-[#18181b]">{{
+                currentRelease.tag_name
+              }}</strong></span
             >
-            · Ngày: {{ formatDate(currentRelease.published_at) }} · Giấy phép:
-            MIT
+            <span class="text-[#d4d4d8]">·</span>
+            <span class="text-[#00529c] font-medium tabular-nums"
+              >{{ totalDownloads.toLocaleString("vi-VN") }} lượt tải</span
+            >
+            <span class="text-[#d4d4d8]">·</span>
+            <span>{{ formatDate(currentRelease.published_at) }}</span>
           </div>
-          <div class="flex items-center gap-3">
+          <div class="flex items-center gap-3 self-start sm:self-auto">
             <button
               type="button"
               v-motion
@@ -553,63 +556,70 @@
           </div>
         </div>
 
-        <!-- Collapsible All Files Drawer -->
+        <!-- Collapsible All Files Drawer (Smooth Grid Height Expansion) -->
         <div
-          v-if="showAllAssets"
-          v-motion
-          :initial="{ opacity: 0, y: -8 }"
-          :enter="{ opacity: 1, y: 0, transition: { duration: 220, ease: [0.33, 1, 0.68, 1] } }"
-          :leave="{ opacity: 0, y: -8, transition: { duration: 160, ease: [0.33, 1, 0.68, 1] } }"
-          class="p-4 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] space-y-2 text-xs"
+          class="grid transition-[grid-template-rows] duration-250 ease-[cubic-bezier(0.33,1,0.68,1)]"
+          :class="showAllAssets ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
         >
-          <div class="font-semibold text-[#18181b] mb-1">
-            Tất cả tập tin phát hành:
-          </div>
-          <div
-            class="divide-y divide-[#e4e4e7] bg-white border border-[#e4e4e7] rounded-lg overflow-hidden"
-          >
+          <div class="overflow-hidden">
             <div
-              v-for="asset in validAssets"
-              :key="asset.id"
-              class="p-2.5 px-3 flex items-center justify-between hover:bg-[#f8f9fa] transition-colors"
+              class="p-4 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] space-y-2 text-xs transition-opacity duration-200"
+              :class="showAllAssets ? 'opacity-100' : 'opacity-0'"
             >
-              <div class="flex items-center gap-2.5 min-w-0">
-                <i
-                  :class="getAssetIcon(asset.name)"
-                  class="text-xs text-[#71717a]"
-                  aria-hidden="true"
-                ></i>
-                <span class="text-xs font-medium text-[#18181b] truncate">{{
-                  asset.name
-                }}</span>
-                <span class="text-[11px] text-[#71717a] tabular-nums shrink-0"
-                  >({{ formatBytes(asset.size) }})</span
-                >
+              <div class="font-semibold text-[#18181b] mb-1">
+                Tất cả tập tin phát hành:
               </div>
-              <a
-                :href="asset.browser_download_url"
-                target="_blank"
-                class="text-xs text-[#00529c] hover:underline font-medium ml-2 shrink-0"
+              <div
+                class="divide-y divide-[#e4e4e7] bg-white border border-[#e4e4e7] rounded-lg overflow-hidden"
               >
-                Tải xuống
-              </a>
+                <div
+                  v-for="asset in validAssets"
+                  :key="asset.id"
+                  class="p-2.5 px-3 flex items-center justify-between hover:bg-[#f8f9fa] transition-colors"
+                >
+                  <div class="flex items-center gap-2.5 min-w-0">
+                    <i
+                      :class="getAssetIcon(asset.name)"
+                      class="text-xs text-[#71717a]"
+                      aria-hidden="true"
+                    ></i>
+                    <span class="text-xs font-medium text-[#18181b] truncate">{{
+                      asset.name
+                    }}</span>
+                    <span
+                      class="text-[11px] text-[#71717a] tabular-nums shrink-0"
+                      >({{ formatBytes(asset.size) }})</span
+                    >
+                  </div>
+                  <a
+                    :href="asset.browser_download_url"
+                    target="_blank"
+                    class="text-xs text-[#00529c] hover:underline font-medium ml-2 shrink-0"
+                  >
+                    Tải xuống
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Collapsible Markdown Changelog Drawer -->
+        <!-- Collapsible Markdown Changelog Drawer (Smooth Grid Height Expansion) -->
         <div
-          v-if="showChangelog"
-          v-motion
-          :initial="{ opacity: 0, y: -8 }"
-          :enter="{ opacity: 1, y: 0, transition: { duration: 240, ease: [0.33, 1, 0.68, 1] } }"
-          :leave="{ opacity: 0, y: -8, transition: { duration: 160, ease: [0.33, 1, 0.68, 1] } }"
-          class="p-5 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] text-xs leading-relaxed overflow-x-auto markdown-prose"
+          class="grid transition-[grid-template-rows] duration-250 ease-[cubic-bezier(0.33,1,0.68,1)]"
+          :class="showChangelog ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
         >
-          <div class="font-semibold text-[#18181b] text-sm mb-2">
-            Nhật ký phiên bản {{ currentRelease.tag_name }}
+          <div class="overflow-hidden">
+            <div
+              class="p-4 sm:p-5 rounded-xl border border-[#e4e4e7] bg-[#f8f9fa] text-xs leading-relaxed overflow-x-auto markdown-prose transition-opacity duration-200"
+              :class="showChangelog ? 'opacity-100' : 'opacity-0'"
+            >
+              <div class="font-semibold text-[#18181b] text-sm mb-2">
+                Nhật ký phiên bản {{ currentRelease.tag_name }}
+              </div>
+              <div v-html="renderedMarkdownBody"></div>
+            </div>
           </div>
-          <div v-html="renderedMarkdownBody"></div>
         </div>
 
         <!-- Quiet Disclaimers (Collapsible / Concise) -->

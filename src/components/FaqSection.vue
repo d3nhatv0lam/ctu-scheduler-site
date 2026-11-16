@@ -28,34 +28,37 @@
         >
           <button
             type="button"
-            v-motion
-            :tapped="{ scale: 0.995, transition: { duration: 150 } }"
-            class="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 hover:bg-[#f8f9fa] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00529c]/50"
+            class="w-full p-4 sm:p-6 text-left flex items-center justify-between gap-4 hover:bg-[#f8f9fa] cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#00529c]/50 transition-colors"
             :aria-expanded="openIndex === index"
             @click="toggleFaq(index)"
           >
-            <h3 class="font-bold text-[#090c1d] text-base font-display flex items-center gap-2.5">
+            <h3 class="font-bold text-[#090c1d] text-sm sm:text-base font-display flex items-center gap-2.5">
               <span class="w-2 h-2 rounded-full bg-[#00529c] shrink-0"></span>
               <span>{{ item.question }}</span>
             </h3>
             <span
-              v-motion
-              :initial="{ rotate: openIndex === index ? 180 : 0 }"
-              :enter="{ rotate: openIndex === index ? 180 : 0, transition: { duration: 200, ease: [0.33, 1, 0.68, 1] } }"
-              class="text-[#71717a] shrink-0 text-xs w-6 h-6 flex items-center justify-center rounded-full bg-[#f4f4f5]"
+              class="w-7 h-7 rounded-full bg-[#f4f4f5] text-[#52525b] flex items-center justify-center shrink-0 transition-transform duration-250 ease-out origin-center"
+              :class="{ 'rotate-180 bg-[#f0f7ff] text-[#00529c]': openIndex === index }"
             >
-              <i class="fa-solid fa-chevron-down"></i>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+              </svg>
             </span>
           </button>
+
+          <!-- Smooth Grid Height Expansion -->
           <div
-            v-if="openIndex === index"
-            v-motion
-            :initial="{ opacity: 0, y: -6 }"
-            :enter="{ opacity: 1, y: 0, transition: { duration: 200, ease: [0.33, 1, 0.68, 1] } }"
-            :leave="{ opacity: 0, y: -6, transition: { duration: 150, ease: [0.33, 1, 0.68, 1] } }"
-            class="px-5 sm:px-6 pb-6 pt-0 text-[#52525b] text-sm leading-relaxed pl-[34px]"
+            class="grid transition-[grid-template-rows] duration-250 ease-[cubic-bezier(0.33,1,0.68,1)]"
+            :class="openIndex === index ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
           >
-            {{ item.answer }}
+            <div class="overflow-hidden">
+              <div
+                class="px-4 sm:px-6 pb-5 pt-0 text-[#52525b] text-xs sm:text-sm leading-relaxed pl-[28px] sm:pl-[34px] transition-opacity duration-200"
+                :class="openIndex === index ? 'opacity-100' : 'opacity-0'"
+              >
+                {{ item.answer }}
+              </div>
+            </div>
           </div>
         </div>
       </div>
