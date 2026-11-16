@@ -3,12 +3,51 @@
     id="home"
     class="pt-16 pb-20 md:pt-24 md:pb-28 border-b border-[#e4e4e7] bg-white overflow-hidden relative"
   >
+    <!-- Interactive Background Particles -->
+    <div
+      class="absolute inset-0 pointer-events-none overflow-hidden z-0"
+      aria-hidden="true"
+    >
+      <Particles
+        :particle-colors="['#00529c', '#38bdf8', '#818cf8', '#34d399']"
+        :move-particles-on-hover="true"
+        :particle-count="200"
+        :particle-spread="10"
+        :speed="0.1"
+        :particle-base-size="100"
+        :alpha-particles="false"
+        :disable-rotation="false"
+      />
+    </div>
+
+    <!-- Interactive Background Particles -->
+    <div
+      class="absolute inset-0 pointer-events-none overflow-hidden z-0"
+      aria-hidden="true"
+    >
+      <Particles
+        :particle-colors="['#00529c', '#38bdf8', '#818cf8', '#34d399']"
+        :particle-count="140"
+        :particle-spread="12"
+        :speed="0.08"
+        :particle-base-size="80"
+        :move-particles-on-hover="true"
+        :particle-hover-factor="0.6"
+        :alpha-particles="true"
+        :size-randomness="0.8"
+        :camera-distance="20"
+        :disable-rotation="false"
+      />
+    </div>
+
     <!-- Subtle Background Ambient Elevation -->
     <div
       class="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[450px] bg-gradient-to-b from-[#f0f7ff] via-[#e0f2fe]/40 to-transparent blur-3xl pointer-events-none -z-10"
     ></div>
 
-    <div class="container mx-auto max-w-clickup px-4 sm:px-6 text-center">
+    <div
+      class="container mx-auto max-w-clickup px-4 sm:px-6 text-center relative z-10"
+    >
       <!-- Mega Keynote Centered Headline -->
       <motion.h1
         :initial="false"
@@ -204,6 +243,7 @@
 import { ref, onMounted } from "vue";
 import { motion } from "motion-v";
 import TimetableSimulator from "./TimetableSimulator.vue";
+import Particles from "./Particles.vue";
 import { detectDevice, OS } from "../../js/detector.js";
 
 const isMobileDevice = ref(false);
