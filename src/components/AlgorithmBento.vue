@@ -8,14 +8,10 @@
       <!-- Section Header -->
       <div
         v-motion
-        :initial="{ opacity: 0, y: 20 }"
+        :initial="{ opacity: 0, y: 16 }"
         :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, ease: [0.33, 1, 0.68, 1] } }"
         class="max-w-3xl mx-auto text-center mb-16"
       >
-        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 text-[#6ee7b7] border border-white/15 text-xs font-bold uppercase tracking-wider mb-4 backdrop-blur-md">
-          <span class="w-2 h-2 rounded-full bg-[#00c07a] animate-pulse"></span>
-          Bảo Chứng Học Thuật &amp; Thuật Toán Đột Phá
-        </div>
         <h2 class="text-3xl sm:text-5xl font-extrabold tracking-[-0.035em] text-white mb-4 font-display">
           Sức mạnh công nghệ đằng sau từng phương án xếp lịch.
         </h2>
@@ -29,14 +25,11 @@
         <!-- Bento Item 1: Core Solver Capabilities (7 cols) -->
         <div
           v-motion
-          :initial="{ opacity: 0, y: 20 }"
+          :initial="{ opacity: 0, y: 16 }"
           :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 50, ease: [0.33, 1, 0.68, 1] } }"
           class="lg:col-span-7 dark-bento-card p-8 flex flex-col justify-between"
         >
           <div>
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00529c]/30 text-[#93c5fd] border border-[#00529c]/50 text-xs font-bold mb-5">
-              <span>ĐỘ CHÍNH XÁC 100%</span>
-            </div>
             <h3 class="text-2xl font-bold text-white mb-3 font-display">
               Thuật toán duyệt tổ hợp &amp; Khử xung đột ma trận
             </h3>
@@ -81,14 +74,11 @@
         <!-- Bento Item 2: Document Certification Preview (5 cols) -->
         <div
           v-motion
-          :initial="{ opacity: 0, y: 20 }"
-          :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 150, ease: [0.33, 1, 0.68, 1] } }"
+          :initial="{ opacity: 0, y: 16 }"
+          :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 120, ease: [0.33, 1, 0.68, 1] } }"
           class="lg:col-span-5 dark-bento-card p-8 flex flex-col justify-between"
         >
           <div>
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#00c07a]/20 text-[#6ee7b7] border border-[#00c07a]/30 text-xs font-bold mb-4">
-              <span>BIÊN BẢN NGHIỆM THU NCKH</span>
-            </div>
             <h3 class="text-xl font-bold text-white mb-2 font-display">
               Chứng Nhận Khoa CNTT&amp;TT
             </h3>
@@ -98,7 +88,7 @@
 
             <div class="flex justify-center my-3">
               <a
-                href="/assets/images/02_TB Cong nghệ va CNTT_SV_Bien ban_duoc duyet-images-48.webp"
+                href="/assets/images/02_TB Cong nghe va CNTT_SV_Bien ban_duoc duyet-images-48.webp"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="group block rounded-xl overflow-hidden border border-white/20 bg-white/5 p-2 shadow-2xl hover:border-[#0091ff] transition-all"

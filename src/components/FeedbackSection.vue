@@ -7,10 +7,6 @@
         :visibleOnce="{ opacity: 1, scale: 1, transition: { duration: 450, ease: [0.33, 1, 0.68, 1] } }"
         class="clickup-card-elevated text-center p-8 sm:p-12 space-y-4 bg-white border border-[#e4e4e7] shadow-card hover-lift"
       >
-        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#f0f7ff] text-[#00529c] border border-[#bae0fd] text-xs font-bold tracking-wider uppercase">
-          <span class="w-1.5 h-1.5 rounded-full bg-[#00529c]"></span>
-          Góp Ý &amp; Báo Cáo Sự Cố
-        </div>
         <h2 class="text-2xl sm:text-3xl font-extrabold text-[#090c1d] font-display">
           Bạn gặp sự cố hoặc có ý tưởng cải tiến?
         </h2>

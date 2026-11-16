@@ -3,14 +3,10 @@
     <div class="container mx-auto max-w-clickup px-4 sm:px-6">
       <div
         v-motion
-        :initial="{ opacity: 0, y: 20 }"
+        :initial="{ opacity: 0, y: 16 }"
         :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, ease: [0.33, 1, 0.68, 1] } }"
         class="max-w-3xl mx-auto text-center mb-14"
       >
-        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white text-[#00529c] border border-[#bae0fd] text-xs font-bold uppercase tracking-wider mb-4 shadow-sm">
-          <span class="w-2 h-2 rounded-full bg-[#00529c]"></span>
-          Kiến Trúc Luồng Dữ Liệu Khép Kín
-        </div>
         <h2 class="text-3xl sm:text-4xl lg:text-[2.75rem] font-extrabold tracking-[-0.035em] text-[#090c1d] mb-4 font-display">
           Từ cổng MyCTU đến Thời khóa biểu hoàn hảo.
         </h2>
@@ -19,21 +15,18 @@
         </p>
       </div>
 
-      <!-- Interactive 3-Stage Diagram Flow -->
+      <!-- 3-Stage Diagram Flow -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
         <!-- Stage 1 -->
         <div
           v-motion
-          :initial="{ opacity: 0, y: 20 }"
+          :initial="{ opacity: 0, y: 16 }"
           :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 50, ease: [0.33, 1, 0.68, 1] } }"
           class="clickup-card p-6 sm:p-7 relative flex flex-col justify-between hover-lift"
         >
           <div>
             <div class="w-12 h-12 rounded-2xl bg-[#f0f7ff] text-[#00529c] border border-[#bae0fd] flex items-center justify-center text-xl mb-5 shadow-sm">
               <i class="fa-solid fa-cloud-arrow-down" aria-hidden="true"></i>
-            </div>
-            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#f8f9fa] text-[#52525b] border border-[#e4e4e7] text-[11px] font-bold mb-3">
-              Bước 01 · Kết Nối
             </div>
             <h3 class="text-lg font-bold text-[#18181b] mb-2 font-display">Trích Xuất Danh Sách MyCTU</h3>
             <p class="text-[#52525b] text-sm leading-relaxed">
@@ -49,16 +42,13 @@
         <!-- Stage 2 -->
         <div
           v-motion
-          :initial="{ opacity: 0, y: 20 }"
-          :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 150, ease: [0.33, 1, 0.68, 1] } }"
-          class="clickup-card p-6 sm:p-7 relative flex flex-col justify-between hover-lift border-t-4 border-t-[#00529c]"
+          :initial="{ opacity: 0, y: 16 }"
+          :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 120, ease: [0.33, 1, 0.68, 1] } }"
+          class="clickup-card p-6 sm:p-7 relative flex flex-col justify-between hover-lift"
         >
           <div>
             <div class="w-12 h-12 rounded-2xl bg-[#f0f7ff] text-[#00529c] border border-[#bae0fd] flex items-center justify-center text-xl mb-5 shadow-sm">
               <i class="fa-solid fa-microchip" aria-hidden="true"></i>
-            </div>
-            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#e0f2fe] text-[#0284c7] border border-[#bae6fd] text-[11px] font-bold mb-3">
-              Bước 02 · Tối Ưu Hóa
             </div>
             <h3 class="text-lg font-bold text-[#18181b] mb-2 font-display">Thuật Toán Tổ Hợp Cục Bộ</h3>
             <p class="text-[#52525b] text-sm leading-relaxed">
@@ -74,18 +64,15 @@
         <!-- Stage 3 -->
         <div
           v-motion
-          :initial="{ opacity: 0, y: 20 }"
-          :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 250, ease: [0.33, 1, 0.68, 1] } }"
+          :initial="{ opacity: 0, y: 16 }"
+          :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, delay: 180, ease: [0.33, 1, 0.68, 1] } }"
           class="clickup-card p-6 sm:p-7 relative flex flex-col justify-between hover-lift"
         >
           <div>
             <div class="w-12 h-12 rounded-2xl bg-[#ecfdf5] text-[#00c07a] border border-[#a7f3d0] flex items-center justify-center text-xl mb-5 shadow-sm">
               <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
             </div>
-            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#f8f9fa] text-[#52525b] border border-[#e4e4e7] text-[11px] font-bold mb-3">
-              Bước 03 · Xuất &amp; Xem Offline
-            </div>
-            <h3 class="text-lg font-bold text-[#18181b] mb-2 font-display">Đồng Bộ Lịch &amp; Theo Dõi Sĩ Số</h3>
+            <h3 class="text-lg font-bold text-[#18181b] mb-2 font-display">Đồng Bộ Lịch &amp; Xem Offline</h3>
             <p class="text-[#52525b] text-sm leading-relaxed">
               Xuất trực tiếp sang Google Calendar / Apple iCal (.ics), bảng tính Excel, hoặc lưu trữ để mở tra cứu ngoại tuyến mọi lúc mọi nơi mà không cần Internet.
             </p>

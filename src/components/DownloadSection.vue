@@ -4,14 +4,10 @@
       <!-- Section Header -->
       <div
         v-motion
-        :initial="{ opacity: 0, y: 20 }"
+        :initial="{ opacity: 0, y: 16 }"
         :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, ease: [0.33, 1, 0.68, 1] } }"
         class="max-w-3xl mx-auto text-center mb-14"
       >
-        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#f0f7ff] text-[#00529c] border border-[#bae0fd] text-xs font-bold uppercase tracking-wider mb-4 shadow-sm">
-          <span class="w-2 h-2 rounded-full bg-[#00529c]"></span>
-          Bản Phát Hành Chính Thức
-        </div>
         <h2 class="text-3xl sm:text-5xl font-extrabold tracking-[-0.035em] text-[#090c1d] mb-4 font-display">
           Tải phần mềm CTU Scheduler
         </h2>

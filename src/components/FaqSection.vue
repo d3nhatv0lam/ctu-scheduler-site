@@ -3,14 +3,10 @@
     <div class="container mx-auto max-w-clickup px-4 sm:px-6">
       <div
         v-motion
-        :initial="{ opacity: 0, y: 20 }"
+        :initial="{ opacity: 0, y: 16 }"
         :visibleOnce="{ opacity: 1, y: 0, transition: { duration: 450, ease: [0.33, 1, 0.68, 1] } }"
         class="max-w-2xl text-left mb-12"
       >
-        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-[#00529c] border border-[#bae0fd] text-xs font-bold tracking-wider uppercase mb-3">
-          <span class="w-1.5 h-1.5 rounded-full bg-[#00529c]"></span>
-          Hỏi Đáp &amp; Thắc Mắc
-        </div>
         <h2 class="text-3xl sm:text-4xl font-extrabold tracking-[-0.03em] text-[#090c1d] mb-3 font-display">
           Câu hỏi thường gặp
         </h2>
