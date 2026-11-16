@@ -967,26 +967,26 @@ const CACHE_DURATION = 10 * 60 * 1000;
 
 // High-confidence fallback release if GitHub API is throttled/offline
 const FALLBACK_RELEASE = {
-  tag_name: "v4.0.0",
-  name: "CTU Scheduler v4.0.0",
-  published_at: "2026-03-01T00:00:00Z",
-  body: "### Nhật ký phiên bản v4.0.0\n- Nâng cấp thuật toán duyệt tổ hợp tự động khử 100% trùng tiết học và trùng ngày thi.\n- Tích hợp bộ lọc tiêu chí: né ca sáng, dồn lịch cuối tuần, cố định cơ sở Khu II.\n- Tự động cập nhật sĩ số thời gian thực trực tiếp từ MyCTU.\n- Cải tiến giao diện trực quan chuẩn ClickUp Light Theme.",
+  tag_name: "latest",
+  name: "CTU Scheduler",
+  published_at: new Date().toISOString(),
+  body: "### Thông tin phiên bản mới nhất\n- Tự động hóa xếp lịch học thông minh, loại trừ 100% trùng tiết.\n- Tự động cập nhật sĩ số thời gian thực trực tiếp từ MyCTU.\n- Xem chi tiết toàn bộ các bản phát hành tại GitHub Releases.",
   assets: [
     {
       id: 1,
-      name: "CTU-Scheduler-Setup-4.0.0.exe",
+      name: "CTU-Scheduler-Setup.exe",
       size: 78540000,
       download_count: 265,
       browser_download_url:
-        "https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest/download/CTU-Scheduler-Setup-4.0.0.exe",
+        "https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest",
     },
     {
       id: 2,
-      name: "CTU-Scheduler-4.0.0-win-portable.zip",
+      name: "CTU-Scheduler-win-portable.zip",
       size: 82150000,
       download_count: 198,
       browser_download_url:
-        "https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest/download/CTU-Scheduler-4.0.0-win-portable.zip",
+        "https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest",
     },
   ],
 };

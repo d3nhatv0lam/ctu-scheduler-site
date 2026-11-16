@@ -51,9 +51,11 @@
       <motion.h1
         :initial="false"
         :animate="{ opacity: 1, y: 0 }"
-        class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-[-0.035em] text-[#090c1d] leading-[1.14] sm:leading-[1.08] font-display max-w-4xl mx-auto text-balance"
+        class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-[-0.035em] text-[#090c1d] leading-[1.14] sm:leading-[1.08] font-display max-w-4xl mx-auto"
       >
-        Một không gian xếp lịch thông minh cho sinh viên Đại học Cần Thơ.
+        Một không gian xếp lịch thông minh cho sinh viên
+        <br />
+        <span>Đại học Cần Thơ.</span>
       </motion.h1>
 
       <!-- Centered Subtitle -->
@@ -65,18 +67,6 @@
         Tự động hóa hoàn toàn việc sắp xếp lịch học, loại trừ khả năng xung đột
         lịch học và cập nhật sĩ số trực tiếp từ hệ thống MyCTU.
       </motion.p>
-
-      <!-- Mobile Visitor Context Banner -->
-      <div
-        v-if="isMobileDevice"
-        class="mt-6 max-w-md mx-auto px-4 py-2.5 rounded-2xl sm:rounded-full bg-[#f0f7ff] border border-[#bae0fd] text-xs text-[#00529c] flex items-center justify-center gap-2 shadow-2xs font-medium text-pretty text-center"
-      >
-        <i class="fa-solid fa-mobile-screen-button shrink-0"></i>
-        <span
-          >Đang mở trên điện thoại: Hãy lưu liên kết để tải trên máy tính
-          Windows.</span
-        >
-      </div>
 
       <!-- Centered Confident Action Buttons -->
       <motion.div
@@ -101,7 +91,7 @@
               d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
             />
           </svg>
-          <span>Tải Bản Mới Nhất (v4.0.0)</span>
+          <span>Tải Ngay Bản Mới Nhất</span>
         </a>
 
         <a

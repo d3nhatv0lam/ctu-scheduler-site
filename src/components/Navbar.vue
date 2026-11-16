@@ -14,7 +14,6 @@
         />
         <div class="flex items-center gap-2">
           <span class="text-base font-extrabold tracking-tight text-[#18181b] font-display">CTU Scheduler</span>
-          <span class="hidden sm:inline-flex px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-[#f0f7ff] text-[#00529c] border border-[#bae0fd]">v4.0</span>
         </div>
       </a>
 
