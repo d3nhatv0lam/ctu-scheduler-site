@@ -1,154 +1,160 @@
 ---
-name: CTU Scheduler Design System
-description: Modern Academic & Engineering Interface for Can Tho University Course Scheduling
+name: CTU Scheduler — Slash Edition
+description: Midnight vault with gilded ledger lines for academic timetable optimization
 colors:
-  primary: "#1a56db"
-  primary-hover: "#1e40af"
-  primary-dark: "#0f2942"
-  secondary: "#0284c7"
-  bg-main: "#0a0f1d"
-  bg-card: "#111a2e"
-  bg-card-hover: "#16223d"
-  border-subtle: "#1e293b"
-  border-card: "#334155"
-  text-main: "#f8fafc"
-  text-secondary: "#94a3b8"
-  text-muted: "#64748b"
-  success: "#059669"
-  warning: "#d97706"
+  obsidian: "#08080a"
+  onyx: "#040406"
+  carbon: "#121317"
+  graphite: "#1c1d22"
+  slate: "#2e3038"
+  smoke: "#464853"
+  ash: "#5e616e"
+  steel: "#777a88"
+  fog: "#9194a1"
+  mist: "#acafb9"
+  silver: "#c7c9d1"
+  bone: "#e2e3e9"
+  paper-white: "#ffffff"
+  copper: "#cc9166"
+  gilded: "#ae9357"
 typography:
   display:
-    fontFamily: "Inter, system-ui, sans-serif"
-    fontSize: "2.75rem"
-    fontWeight: 800
-    lineHeight: 1.15
-    letterSpacing: "-0.025em"
+    fontFamily: "Playfair Display, Georgia, serif"
+    fontSize: "4rem"
+    fontWeight: 500
+    lineHeight: 1.1
+    letterSpacing: "0.01em"
   headline:
-    fontFamily: "Inter, system-ui, sans-serif"
-    fontSize: "2rem"
-    fontWeight: 700
-    lineHeight: 1.25
-    letterSpacing: "-0.02em"
+    fontFamily: "Playfair Display, Georgia, serif"
+    fontSize: "2.5rem"
+    fontWeight: 500
+    lineHeight: 1.2
+    letterSpacing: "0.01em"
   title:
+    fontFamily: "Playfair Display, Georgia, serif"
+    fontSize: "1.75rem"
+    fontWeight: 500
+    lineHeight: 1.3
+    letterSpacing: "0.01em"
+  h4:
     fontFamily: "Inter, system-ui, sans-serif"
-    fontSize: "1.5rem"
+    fontSize: "1.125rem"
     fontWeight: 600
-    lineHeight: 1.35
-    letterSpacing: "-0.015em"
+    lineHeight: 1.4
+    letterSpacing: "-0.01em"
   body:
     fontFamily: "Inter, system-ui, sans-serif"
     fontSize: "1rem"
     fontWeight: 400
     lineHeight: 1.6
-  mono:
-    fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
-    fontSize: "0.75rem"
+  category:
+    fontFamily: "Inter, system-ui, sans-serif"
+    fontSize: "0.8125rem"
+    fontWeight: 600
+    letterSpacing: "-0.02em"
+  caption:
+    fontFamily: "Inter, system-ui, sans-serif"
+    fontSize: "0.6875rem"
+    fontWeight: 500
+  micro:
+    fontFamily: "Inter, system-ui, sans-serif"
+    fontSize: "0.625rem"
     fontWeight: 500
 rounded:
-  sm: "0.375rem"
-  md: "0.5rem"
-  lg: "0.75rem"
-  full: "9999px"
+  sm: "2px"
+  card: "10px"
+  pill: "9999px"
 spacing:
-  xs: "0.25rem"
-  sm: "0.5rem"
-  md: "1rem"
-  lg: "1.5rem"
-  xl: "2rem"
+  xs: "4px"
+  sm: "8px"
+  md: "16px"
+  lg: "24px"
+  xl: "32px"
+  gap: "120px"
 components:
   button-primary:
-    backgroundColor: "{colors.primary}"
-    textColor: "{colors.text-main}"
-    rounded: "{rounded.md}"
-    padding: "0.75rem 1.5rem"
-  button-primary-hover:
-    backgroundColor: "{colors.primary-hover}"
-  button-secondary:
-    backgroundColor: "{colors.bg-card}"
-    textColor: "{colors.text-main}"
-    rounded: "{rounded.md}"
-    padding: "0.75rem 1.5rem"
+    backgroundColor: "{colors.paper-white}"
+    textColor: "#000000"
+    rounded: "{rounded.pill}"
+    padding: "10px 20px"
+  button-ghost:
+    backgroundColor: "transparent"
+    textColor: "{colors.paper-white}"
+    rounded: "{rounded.pill}"
+    padding: "10px 20px"
   card:
-    backgroundColor: "{colors.bg-card}"
-    rounded: "{rounded.lg}"
-    padding: "1.5rem"
+    backgroundColor: "{colors.onyx}"
+    rounded: "{rounded.card}"
+    padding: "24px"
 ---
 
 # Design System
 
 ## Overview
 
-The visual design system for **CTU Scheduler** embodies modern academic precision, functional engineering clarity, and student-focused utility. It deliberately rejects noisy AI-generated "slop" (chaotic rotating blur blobs, over-saturated cyan glows, unconstrained glassmorphism) in favor of crisp structural hairline borders, disciplined typographic scales, and high-performance rendered components centered around a living weekly timetable.
+CTU Scheduler — Slash Edition operates in midnight gallery mode: an almost-black obsidian canvas (`#08080a`), bone typography (`#e2e3e9`), and a single warm copper accent (`#cc9166`) that functions as editorial punctuation. Display headings are set in high-contrast didone serif (`Playfair Display`), creating a serif-versus-sans collision with functional `Inter` body text. Hairline graphite borders (`#1c1d22`), pill-shaped controls (9999px), and gilded ledger lines elevate the academic tool into a high-precision, luxury engineering utility.
 
 ## Colors
 
-- **Primary (`#1a56db` / `#0f2942`):** Academic CTU Blue representing institutional authority, trust, and engineering pedigree.
-- **Background Ground (`#0a0f1d`):** Deep slate ground providing a distraction-free, high-contrast canvas.
-- **Card Surfaces (`#111a2e` / hover `#16223d`):** Solid, purposeful containers with crisp 1px borders (`#1e293b` / `#334155`).
-- **Semantic Accents:**
-  - Emerald Success (`#059669`): Used for verified zero conflicts, active capacity, and official NCKH acceptance tags.
-  - Amber Warning (`#d97706`): Used for portable releases and attention-requiring items.
-  - Slate Neutrals (`#f8fafc`, `#94a3b8`, `#64748b`): High-contrast text hierarchy exceeding WCAG AA standards.
+- **Obsidian (`#08080a`):** Page canvas, deepest background.
+- **Onyx (`#040406`):** Card surface, timetable showcase background.
+- **Carbon (`#121317`):** Elevated panels, input fields, active pill backgrounds.
+- **Graphite (`#1c1d22`):** Primary hairline border defining all card and container edges.
+- **Slate (`#2e3038`):** Secondary dividers and control borders.
+- **Fog (`#9194a1`):** Subdued descriptions, inactive navigation links.
+- **Bone (`#e2e3e9`):** Default readable body text.
+- **Paper White (`#ffffff`):** Display headings and the single high-contrast primary pill button.
+- **Copper (`#cc9166`):** Category labels, editorial punctuation, research topic tags.
+- **Gilded Accent (`#ae9357` / gradient):** Timetable data visualization lines.
 
 ## Typography
 
-- **Scale Ratio:** 1.25x – 1.33x distinct typographic step ratio.
-  - `h1`: 2.75rem (44px) / Bold 800
-  - `h2`: 2.0rem (32px) / Bold 700
-  - `h3`: 1.5rem (24px) / Semi-bold 600
-  - `h4`: 1.1875rem (19px) / Semi-bold 600
-  - `body`: 1.0rem (16px) / Regular 400
-  - `mono`: Monospaced data tags and timetable codes
-- **Bans:** No gradient text, no fuzzy drop-shadows on text, no flat heading-to-body ratios.
+- **Serif vs. Sans Collision:**
+  - `Playfair Display`: Used exclusively for headings at 28px and above. Letter-spacing: `+0.01em`.
+  - `Inter`: Used for all functional UI text below 28px (body, navigation, buttons, tags).
+- **Scale:**
+  - `display`: 56px – 64px (`h1`)
+  - `headline`: 40px (`h2`)
+  - `title`: 28px (`h3`)
+  - `h4`: 18px Inter
+  - `body`: 16px Inter
+  - `category`: 13px Inter semi-bold uppercase in Copper
 
 ## Layout
 
-- **Long-scroll All-in-One Structure:**
-  1. Sticky accessible navigation header with quick CTA.
-  2. Hero with value proposition on the left and Living Timetable Simulator on the right.
-  3. 3-step sequence ("Cách thức hoạt động").
-  4. Core capabilities ("Tính năng hỗ trợ chuyên sâu").
-  5. Scientific Research Accreditation ("Nghiệm thu NCKH").
-  6. Complementary Ecosystem ("CTU Student's Tools").
-  7. GitHub Releases & Verified Download Cards ("Tải xuống & Điều khoản").
-  8. FAQ Accordion / List ("Hỏi đáp").
-  9. Core Development Team ("Đội ngũ phát triển").
-  10. Bug Report / Feedback Banner ("Góp ý & Báo lỗi").
-  11. Compact, transparent footer.
+- Max-width: 1216px centered container.
+- Section gap: 120px to 160px generous vertical breathing room.
+- Single-page application structure with smooth view switching and anchor navigation.
 
 ## Elevation & Depth
 
-- **Shadows with Offset:** Natural directional lighting `box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4)`.
-- **Zero-offset Halo Ban:** No zero-offset fluorescent glows (`drop-shadow(0 0 20px ...)`).
-- **Surface Elevation:** Depth is achieved via tonal contrast between `--bg-main` (`#0a0f1d`) and `--bg-card` (`#111a2e`), framed by clean hairline borders.
+- **Zero Drop-Shadows:** No blur shadows on cards or buttons.
+- **Hairline Framing:** Depth is achieved exclusively through surface stepping (`#08080a` -> `#040406` -> `#121317`) bounded by 1px `#1c1d22` graphite borders.
 
 ## Shapes
 
-- **Border Radius:**
-  - Cards: `0.75rem` (`rounded-xl`)
-  - Buttons: `0.5rem` (`rounded-lg`)
-  - Pills / Status Badges: `9999px` (`rounded-full`)
-- **Micro-grid Background:** Lightweight 40px x 40px CSS grid lines replacing heavy GPU-bound mesh blobs.
+- Pill Controls: 9999px border-radius for buttons, filter tags, and inputs.
+- Cards: 10px border-radius (`rounded-[10px]`).
+- Nav: 2px border-radius.
 
 ## Components
 
-- **Academic Card (`.academic-card`):** Solid dark card with 1px hairline border, subtle natural elevation, and smooth hover feedback.
-- **Button Primary (`.btn-primary`):** Solid blue button with defined offset shadow and accessible contrast.
-- **Button Secondary (`.btn-secondary`):** Slate-800 button with subtle border for secondary actions.
-- **Interactive Timetable Grid:** Responsive daily/shift schedule matrix showcasing real-time slot optimization, conflict checking, and seat capacity.
-- **Release Download Card:** High-information-density cards dynamically populated from GitHub Releases, supporting Velopack auto-updates and portable zips.
+- **Primary Action Button:** 9999px pill, pure white (`#ffffff`) background with `#000000` text, 14px Inter 500, padding 10px 20px.
+- **Ghost Outline Button:** 9999px pill, transparent fill, 1px white border, white text.
+- **Pill Filter:** 9999px pill, 1px slate border, muted text, active state in carbon.
+- **Slash Card:** Onyx background, 1px graphite border, 10px radius, 24px padding.
+- **Ledger Timetable Matrix:** Clean weekly schedule matrix with carbon slot cells and gilded highlight indicators.
 
 ## Do's and Don'ts
 
 ### Do
-- Maintain high contrast ratios (≥4.5:1 for body copy).
-- Support `prefers-reduced-motion` across all transitions and entrance reveals.
-- Ensure all interactive buttons have descriptive `aria-label` and `aria-expanded` attributes.
-- Use explicit semantic tags (`h1`-`h4`, `nav`, `main`, `section`, `footer`).
+- Use Playfair Display for headings at 28px and above.
+- Reserve pure white pill buttons for the primary conversion point.
+- Keep Copper (`#cc9166`) strictly as an editorial punctuation or category tag.
+- Maintain 1px hairline borders for all structural divisions.
 
 ### Don't
-- Do not introduce rotating blur mesh blobs or heavy continuous CSS animations.
-- Do not use gradient text (`background-clip: text`) or neon cyan text drops.
-- Do not nest bordered cards inside cards.
-- Do not use touch targets smaller than 44x44px for primary mobile actions.
-
+- Do not introduce drop shadows, colored halos, or glassmorphism blurs.
+- Do not use gradient text on general headings.
+- Do not use serif fonts on body text under 20px.
+- Do not use colorful badges or rainbow course tags.

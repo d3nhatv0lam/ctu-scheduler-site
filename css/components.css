@@ -1,129 +1,123 @@
-.academic-card {
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-card);
-  border-radius: 0.75rem;
-  padding: 1.5rem;
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+.slash-card {
+  background-color: var(--color-onyx);
+  border: 1px solid var(--color-graphite);
+  border-radius: var(--radius-card);
+  padding: 24px;
+  transition: border-color 0.2s ease;
 }
 
-.academic-card:hover {
-  background-color: var(--bg-card-hover);
-  border-color: var(--border-card-hover);
-  transform: translateY(-2px);
+.slash-card:hover {
+  border-color: var(--color-slate);
 }
 
-.btn-primary {
+.btn-pill-primary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  font-size: 0.9375rem;
-  color: #ffffff;
-  background-color: var(--color-primary);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(26, 86, 219, 0.25);
-  transition: all 0.15s ease-in-out;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: #000000;
+  background-color: var(--color-paper-white);
+  border: none;
+  cursor: pointer;
   text-decoration: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
 }
 
-.btn-primary:hover {
-  background-color: var(--color-primary-hover);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 6px 16px rgba(26, 86, 219, 0.35);
+.btn-pill-primary:hover {
+  opacity: 0.92;
   transform: translateY(-1px);
 }
 
-.btn-primary:active {
-  transform: translateY(0);
-}
-
-.btn-secondary {
+.btn-pill-ghost {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: 14px;
   font-weight: 500;
-  font-size: 0.9375rem;
-  color: var(--text-main);
-  background-color: #1e293b;
-  border: 1px solid #334155;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  transition: all 0.15s ease-in-out;
+  color: var(--color-paper-white);
+  background-color: transparent;
+  border: 1px solid var(--color-paper-white);
+  cursor: pointer;
   text-decoration: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
-.btn-secondary:hover {
-  background-color: #273548;
-  border-color: #475569;
-  color: #ffffff;
+.btn-pill-ghost:hover {
+  background-color: rgba(255, 255, 255, 0.08);
 }
 
-.badge-tech {
+.pill-filter {
   display: inline-flex;
   align-items: center;
-  gap: 0.375rem;
-  padding: 0.25rem 0.625rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
+  justify-content: center;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: 13px;
   font-weight: 500;
-  background-color: rgba(30, 41, 59, 0.8);
-  border: 1px solid rgba(51, 65, 85, 0.8);
-  color: #cbd5e1;
+  color: var(--color-fog);
+  background-color: transparent;
+  border: 1px solid var(--color-slate);
+  cursor: pointer;
+  transition: all 0.15s ease;
 }
 
-.badge-success {
-  background-color: rgba(5, 150, 105, 0.15);
-  border-color: rgba(5, 150, 105, 0.3);
-  color: #34d399;
+.pill-filter:hover {
+  color: var(--color-paper-white);
+  border-color: var(--color-steel);
 }
 
-/* Timetable simulation UI components */
+.pill-filter.active {
+  color: var(--color-paper-white);
+  background-color: var(--color-carbon);
+  border-color: var(--color-paper-white);
+}
+
+.copper-tag {
+  color: var(--color-copper);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+/* Timetable simulation in Slash style */
 .timetable-cell {
-  border: 1px solid rgba(51, 65, 85, 0.6);
-  padding: 0.5rem 0.25rem;
+  border: 1px solid var(--color-graphite);
+  padding: 8px 4px;
   min-height: 48px;
-  transition: all 0.2s ease;
 }
 
 .timetable-slot {
-  border-radius: 0.375rem;
-  padding: 0.375rem 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 600;
+  border-radius: 4px;
+  padding: 6px 8px;
+  font-size: 12px;
   line-height: 1.25;
-  transition: all 0.25s ease;
+  transition: opacity 0.2s ease, border-color 0.2s ease;
 }
 
-.slot-blue {
-  background-color: rgba(26, 86, 219, 0.25);
-  border: 1px solid rgba(59, 130, 246, 0.5);
-  color: #93c5fd;
-}
-
-.slot-emerald {
-  background-color: rgba(5, 150, 105, 0.25);
-  border: 1px solid rgba(16, 185, 129, 0.5);
-  color: #a7f3d0;
-}
-
-.slot-amber {
-  background-color: rgba(217, 119, 6, 0.25);
-  border: 1px solid rgba(245, 158, 11, 0.5);
-  color: #fde68a;
-}
-
-.slot-purple {
-  background-color: rgba(124, 58, 237, 0.25);
-  border: 1px solid rgba(139, 92, 246, 0.5);
-  color: #ddd6fe;
+.slot-course {
+  background-color: var(--color-carbon);
+  border: 1px solid var(--color-slate);
+  color: var(--color-bone);
 }
 
 .slot-dimmed {
-  opacity: 0.25;
-  filter: grayscale(80%);
+  opacity: 0.15;
+}
+
+.gilded-highlight {
+  background: var(--gradient-gilded);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
