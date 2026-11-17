@@ -20,20 +20,20 @@
         <p
           class="text-[#52525b] text-sm sm:text-base leading-relaxed text-pretty"
         >
-          Phần mềm mã nguồn mở phục vụ sinh viên Đại học Cần Thơ. Lựa chọn hệ
-          điều hành và gói cài đặt phù hợp với thiết bị của bạn.
+          Phần mềm mã nguồn mở phục vụ sinh viên Đại học Cần Thơ. Hỗ trợ đầy đủ
+          Windows, macOS và Linux.
         </p>
-        <div class="mt-4 flex items-center justify-center gap-2">
+        <div
+          class="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs text-[#71717a]"
+        >
           <span
-            class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#f0f7ff] text-[#00529c] border border-[#bae0fd] text-xs font-semibold tabular-nums whitespace-nowrap shadow-2xs"
+            class="inline-flex items-center gap-1.5 font-medium tabular-nums"
           >
             <i
-              class="fa-solid fa-download text-[11px] shrink-0"
+              class="fa-solid fa-download text-[11px] text-[#00529c]"
               aria-hidden="true"
             ></i>
-            <span
-              >{{ totalDownloads.toLocaleString("vi-VN") }} lượt tải về</span
-            >
+            <span>{{ totalDownloads.toLocaleString("vi-VN") }} lượt tải</span>
           </span>
         </div>
       </motion.div>
@@ -50,42 +50,33 @@
 
       <!-- Main Master Download Container -->
       <div v-else class="max-w-5xl mx-auto space-y-6">
-        <!-- Mobile Device Warning Card (Tự động hiển thị khi khách truy cập bằng Android hoặc iOS) -->
+        <!-- Mobile Device Notice (Tự động hiển thị khi khách truy cập bằng Android hoặc iOS) -->
         <motion.div
           v-if="isMobileUser"
-          :initial="{ opacity: 0, y: -8 }"
+          :initial="{ opacity: 0, y: -6 }"
           :animate="{ opacity: 1, y: 0 }"
-          :transition="{ duration: 0.3, ease: [0.33, 1, 0.68, 1] }"
-          class="p-4 sm:p-5 rounded-2xl bg-[#fffbeb] border border-[#fef3c7] text-[#92400e] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-2xs"
+          :transition="{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }"
+          class="p-4 rounded-xl bg-[#fffbeb] border border-[#fef3c7] text-[#92400e] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs"
         >
-          <div class="flex items-start gap-3">
-            <div
-              class="w-8 h-8 rounded-lg bg-[#fde68a] text-[#b45309] flex items-center justify-center shrink-0 text-sm mt-0.5"
-            >
+          <div class="space-y-0.5">
+            <div class="font-bold text-[#78350f] flex items-center gap-1.5">
               <i
-                class="fa-solid fa-mobile-screen-button"
+                class="fa-solid fa-circle-exclamation text-xs"
                 aria-hidden="true"
               ></i>
+              <span>Chưa hỗ trợ {{ detectedDeviceLabel }}</span>
             </div>
-            <div class="space-y-1">
-              <div
-                class="font-bold text-sm text-[#78350f] flex items-center gap-2"
-              >
-                <span>Chưa hỗ trợ thiết bị di động ({{ detectedDeviceLabel }})</span>
-              </div>
-              <p class="text-xs text-[#92400e] leading-relaxed text-pretty">
-                CTU Scheduler hiện được thiết kế và tối ưu riêng cho môi trường
-                máy tính (Windows, macOS, Linux) để phân tích ma trận lịch học.
-                Bạn có thể sao chép liên kết để mở tải về trên máy tính.
-              </p>
-            </div>
+            <p class="text-[#92400e] text-[11px] leading-relaxed text-pretty">
+              CTU Scheduler chạy trên môi trường máy tính (Windows, macOS,
+              Linux). Hãy sao chép liên kết để mở tải về trên máy tính của bạn.
+            </p>
           </div>
 
           <motion.button
             type="button"
             :whileHover="{ scale: 1.02 }"
-            :whilePress="{ scale: 0.96 }"
-            class="shrink-0 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#fde68a] hover:bg-[#fef9c3] text-[#78350f] text-xs font-semibold shadow-2xs transition-all cursor-pointer whitespace-nowrap self-stretch sm:self-auto justify-center"
+            :whilePress="{ scale: 0.97 }"
+            class="shrink-0 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-white border border-[#fde68a] hover:bg-[#fef9c3] text-[#78350f] text-xs font-semibold cursor-pointer whitespace-nowrap self-stretch sm:self-auto justify-center transition-colors"
             @click="copyDownloadLink"
           >
             <i
@@ -97,954 +88,796 @@
               aria-hidden="true"
             ></i>
             <span>{{
-              linkCopied ? "Đã sao chép liên kết!" : "Chép link mở trên PC"
+              linkCopied ? "Đã sao chép!" : "Chép link mở trên PC"
             }}</span>
           </motion.button>
         </motion.div>
 
-        <!-- System Architecture & Current Device Detection Banner -->
+        <!-- ======================================================== -->
+        <!-- MASTER GRID WORKBENCH (Khung Grid Phân Khu Rõ Ràng)       -->
+        <!-- ======================================================== -->
         <div
-          class="p-3.5 sm:p-4 rounded-2xl bg-[#f8f9fa] border border-[#e4e4e7] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 text-xs select-none"
+          class="rounded-2xl border border-[#e4e4e7] bg-white overflow-hidden shadow-2xs divide-y divide-[#e4e4e7]"
         >
-          <div class="flex items-center gap-2.5">
-            <span
-              class="w-6 h-6 rounded-lg bg-white border border-[#e4e4e7] text-[#00529c] flex items-center justify-center text-xs shrink-0 shadow-2xs"
-            >
-              <i class="fa-solid fa-laptop-code" aria-hidden="true"></i>
-            </span>
-            <div class="text-[#52525b]">
-              <span>Hệ thống nhận diện: </span>
-              <strong class="text-[#18181b] font-bold">{{
+          <!-- 1. TOP UTILITY HEADER: Device & Architecture Bar -->
+          <div
+            class="px-5 sm:px-6 py-3.5 bg-[#f8f9fa] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs select-none"
+          >
+            <div class="flex items-center gap-2.5">
+              <span class="w-2 h-2 rounded-full bg-[#00c07a] shrink-0"></span>
+              <span class="text-[#71717a]"
+                >Thiết hiện tại &amp; Kiến trúc:</span
+              >
+              <strong class="text-[#18181b] font-semibold">{{
                 currentDeviceFullLabel
               }}</strong>
             </div>
           </div>
 
+          <!-- 2. CORE WORKBENCH GRID: Left 3 OS Tabs + Right Content Canvas -->
           <div
-            class="text-[11px] text-[#71717a] flex items-center gap-1.5 self-start sm:self-auto"
+            class="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-[#e4e4e7]"
           >
-            <span class="w-1.5 h-1.5 rounded-full bg-[#00c07a]"></span>
-            <span>Tự động chọn hệ điều hành phù hợp</span>
-          </div>
-        </div>
-
-        <!-- Master 2-Column Layout (Left: 3 OS Tabs Stack / Right: OS Content & Notes) -->
-        <div
-          class="flex flex-col lg:flex-row items-start gap-5 lg:gap-6"
-        >
-          <!-- ==================================================== -->
-          <!-- LEFT COLUMN: 3 OS Navigation Tabs                   -->
-          <!-- ==================================================== -->
-          <!-- Desktop: Vertical stack / Mobile: 3-column top grid -->
-          <div
-            class="w-full lg:w-72 shrink-0 grid grid-cols-3 lg:flex lg:flex-col gap-2.5 sm:gap-3"
-          >
-            <motion.button
-              v-for="tab in osTabs"
-              :key="tab.id"
-              type="button"
-              :whileHover="{ scale: 1.01 }"
-              :whilePress="{ scale: 0.98 }"
-              class="relative w-full text-left p-3.5 sm:p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex flex-col sm:flex-row lg:flex-row items-center sm:items-center justify-between gap-2.5 sm:gap-3 group select-none overflow-hidden"
-              :class="
-                activeOsTab === tab.id
-                  ? 'border-[#00529c] bg-[#f0f7ff] text-[#00529c] shadow-xs ring-1 ring-[#00529c]/20'
-                  : 'border-[#e4e4e7] bg-white hover:bg-[#f8f9fa] text-[#52525b] hover:border-[#cbd5e1]'
-              "
-              @click="selectOsTab(tab.id)"
+            <!-- ==================================================== -->
+            <!-- LEFT COLUMN: 3 OS Navigation Tabs (Full Height Grid) -->
+            <!-- ==================================================== -->
+            <div
+              class="lg:col-span-4 xl:col-span-3 bg-[#fafafa] flex flex-col justify-stretch"
             >
-              <div class="flex flex-col sm:flex-row items-center sm:items-center gap-2 sm:gap-3.5 min-w-0 text-center sm:text-left">
-                <div
-                  class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center text-base sm:text-lg transition-colors shrink-0"
+              <div
+                class="grid grid-cols-3 lg:flex lg:flex-col lg:h-full divide-x lg:divide-x-0 lg:divide-y divide-[#e4e4e7]"
+              >
+                <button
+                  v-for="tab in osTabs"
+                  :key="tab.id"
+                  type="button"
+                  class="relative text-left p-4 sm:p-5 lg:p-6 lg:flex-1 flex flex-col justify-center transition-all duration-150 cursor-pointer select-none group"
                   :class="
                     activeOsTab === tab.id
-                      ? 'bg-[#00529c] text-white shadow-xs'
-                      : 'bg-[#f4f4f5] text-[#52525b] group-hover:bg-[#e4e4e7] group-hover:text-[#18181b]'
+                      ? 'bg-white text-[#18181b] font-semibold shadow-2xs'
+                      : 'bg-transparent text-[#71717a] hover:bg-[#f1f2f4] hover:text-[#18181b]'
                   "
+                  @click="selectOsTab(tab.id)"
                 >
-                  <i :class="tab.icon" aria-hidden="true"></i>
-                </div>
-                <div class="min-w-0">
-                  <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-1.5">
-                    <span
-                      class="font-bold text-xs sm:text-sm font-display leading-tight truncate"
+                  <!-- Active Accent Bar (Left on Desktop, Bottom on Mobile) -->
+
+                  <div
+                    class="flex flex-col sm:flex-row items-center sm:items-start lg:items-center justify-between gap-2.5"
+                  >
+                    <div
+                      class="flex flex-col sm:flex-row items-center sm:items-start lg:items-center gap-3 min-w-0 text-center sm:text-left"
+                    >
+                      <div
+                        class="w-10 h-10 rounded-xl flex items-center justify-center text-lg shrink-0 transition-colors"
+                      >
+                        <i :class="tab.icon" aria-hidden="true"></i>
+                      </div>
+                      <div class="min-w-0">
+                        <div
+                          class="flex items-center gap-1.5 justify-center sm:justify-start"
+                        >
+                          <span
+                            class="font-bold text-xs sm:text-sm font-display truncate"
+                          >
+                            {{ tab.label }}
+                          </span>
+                        </div>
+                        <p
+                          class="hidden sm:block text-[11px] text-[#71717a] truncate mt-0.5 font-normal"
+                        >
+                          {{ tab.desc }}
+                        </p>
+                      </div>
+                    </div>
+
+                    <i
+                      class="hidden lg:block fa-solid fa-chevron-right text-xs shrink-0 transition-transform duration-150"
                       :class="
                         activeOsTab === tab.id
-                          ? 'text-[#00529c]'
-                          : 'text-[#18181b]'
+                          ? 'text-[#00529c] translate-x-0.5'
+                          : 'text-[#d4d4d8] group-hover:text-[#a1a1aa]'
                       "
-                    >
-                      {{ tab.label }}
-                    </span>
-                    <span
-                      v-if="userDevice.os === tab.osKey"
-                      class="text-[11px] font-semibold px-1.5 py-0.2 rounded-full bg-[#00c07a]/15 text-[#047857] border border-[#a7f3d0] whitespace-nowrap inline-block self-center"
-                    >
-                      Của bạn
-                    </span>
+                      aria-hidden="true"
+                    ></i>
                   </div>
-                  <p
-                    class="hidden sm:block text-[11px] truncate mt-0.5"
-                    :class="
-                      activeOsTab === tab.id
-                        ? 'text-[#00529c]/80'
-                        : 'text-[#71717a]'
-                    "
-                  >
-                    {{ tab.desc }}
-                  </p>
-                </div>
+                </button>
               </div>
+            </div>
 
-              <!-- Desktop Indicator Chevron -->
-              <i
-                class="hidden lg:block fa-solid fa-chevron-right text-xs transition-transform duration-200 shrink-0"
-                :class="
-                  activeOsTab === tab.id
-                    ? 'text-[#00529c] translate-x-0.5'
-                    : 'text-[#d4d4d8] group-hover:text-[#a1a1aa]'
-                "
-                aria-hidden="true"
-              ></i>
-            </motion.button>
-          </div>
-
-          <!-- ==================================================== -->
-          <!-- RIGHT COLUMN: Active OS Content & Notes Panel       -->
-          <!-- ==================================================== -->
-          <div class="w-full flex-1 min-w-0">
-            <AnimatePresence mode="wait">
-              <!-- ========================================== -->
-              <!-- TAB 1: WINDOWS                            -->
-              <!-- ========================================== -->
-              <motion.div
-                v-if="activeOsTab === 'windows'"
-                key="windows"
-                :initial="{ opacity: 0, y: 8 }"
-                :animate="{ opacity: 1, y: 0 }"
-                :exit="{ opacity: 0, y: -8 }"
-                :transition="{ duration: 0.22, ease: [0.33, 1, 0.68, 1] }"
-                class="space-y-5"
-              >
-                <!-- Windows Setup vs Portable Cards -->
-                <div
-                  class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 items-stretch"
+            <!-- ==================================================== -->
+            <!-- RIGHT COLUMN: Content Canvas with 2 Separated Zones -->
+            <!-- ==================================================== -->
+            <div
+              class="lg:col-span-8 xl:col-span-9 bg-white min-w-0 flex flex-col"
+            >
+              <AnimatePresence mode="wait">
+                <!-- ========================================== -->
+                <!-- WINDOWS CANVAS                            -->
+                <!-- ========================================== -->
+                <motion.div
+                  v-if="activeOsTab === 'windows'"
+                  key="windows"
+                  :initial="{ opacity: 0, x: 8 }"
+                  :animate="{ opacity: 1, x: 0 }"
+                  :exit="{ opacity: 0, x: -8 }"
+                  :transition="{ duration: 0.2, ease: [0.33, 1, 0.68, 1] }"
+                  class="flex flex-col h-full divide-y divide-[#e4e4e7]"
                 >
-                  <!-- EDITION 1: Setup Installer (Khuyên dùng cá nhân) -->
-                  <div
-                    class="p-5 sm:p-6 rounded-2xl border border-[#e4e4e7] bg-white flex flex-col justify-between space-y-5 shadow-2xs hover:border-[#cbd5e1] transition-colors"
-                  >
-                    <div class="space-y-4">
-                      <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-2.5">
-                          <span
-                            class="w-7 h-7 rounded-lg bg-[#f0f7ff] text-[#00529c] flex items-center justify-center text-xs shrink-0"
+                  <!-- Zone A: Download Files & Options -->
+                  <div class="p-6 sm:p-8 space-y-5">
+                    <div class="flex items-baseline justify-between gap-2">
+                      <div>
+                        <h3
+                          class="text-base sm:text-lg font-bold text-[#18181b] font-display"
+                        >
+                          Tải CTU Scheduler cho Windows
+                        </h3>
+                        <p class="text-xs text-[#71717a] mt-0.5">
+                          Tương thích hoàn toàn Windows 10 &amp; Windows 11
+                          (64-bit)
+                        </p>
+                      </div>
+                    </div>
+
+                    <!-- 2 Editions in clean grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+                      <!-- Setup Edition -->
+                      <div
+                        class="p-5 sm:p-6 rounded-xl border border-[#e4e4e7] bg-[#fafafa]/50 flex flex-col justify-between space-y-4 hover:border-[#cbd5e1] transition-colors"
+                      >
+                        <div class="space-y-2">
+                          <div
+                            class="flex items-baseline justify-between gap-2"
                           >
-                            <i
-                              class="fa-solid fa-cloud-arrow-down"
-                              aria-hidden="true"
-                            ></i>
-                          </span>
-                          <h3
-                            class="text-base font-bold text-[#18181b] font-display"
+                            <h4
+                              class="text-sm sm:text-base font-bold text-[#18181b]"
+                            >
+                              Bản Cài Đặt (Setup)
+                            </h4>
+                            <span
+                              class="text-[11px] text-[#00529c] font-semibold"
+                              >Tự cập nhật</span
+                            >
+                          </div>
+                          <p
+                            class="text-xs text-[#52525b] leading-relaxed text-pretty"
                           >
-                            Bản Cài Đặt (Setup)
-                          </h3>
+                            Khuyên dùng cho máy tính cá nhân. Tự động kiểm tra
+                            và nâng cấp phiên bản mới mỗi khi khởi chạy.
+                          </p>
+                          <div
+                            class="text-[11px] text-[#71717a] pt-1 tabular-nums font-mono"
+                          >
+                            {{
+                              formatBytes(
+                                recommendedSetupAsset?.size || 78500000,
+                              )
+                            }}
+                            ·
+                            {{ setupTotalDownloads.toLocaleString("vi-VN") }}
+                            lượt tải
+                          </div>
                         </div>
-                        <span
-                          class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[#f0f7ff] text-[#00529c] border border-[#bae0fd] shrink-0 whitespace-nowrap"
+
+                        <motion.a
+                          :href="
+                            recommendedSetupAsset?.browser_download_url ||
+                            'https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest'
+                          "
+                          target="_blank"
+                          :whileHover="{ scale: 1.01 }"
+                          :whilePress="{ scale: 0.97 }"
+                          class="btn-clickup-primary w-full text-center justify-center !py-2.5 !text-xs whitespace-nowrap"
                         >
-                          Tự cập nhật
-                        </span>
+                          <i
+                            class="fa-brands fa-windows mr-1.5 shrink-0"
+                            aria-hidden="true"
+                          ></i>
+                          <span>Tải Bản Cài Đặt (.exe)</span>
+                        </motion.a>
                       </div>
 
-                      <p
-                        class="text-xs text-[#52525b] leading-relaxed text-pretty"
-                      >
-                        Dành cho <strong>Laptop / Máy tính cá nhân</strong>. Tự
-                        động kiểm tra và nâng cấp phiên bản mới khi có cập nhật.
-                      </p>
-
-                      <ul class="space-y-1.5 text-xs text-[#52525b] pt-1">
-                        <li class="flex items-start gap-2">
-                          <span
-                            class="text-[#00529c] font-bold mt-0.5 shrink-0"
-                            >•</span
-                          >
-                          <span>Tự động cập nhật phiên bản mới</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                          <span
-                            class="text-[#00529c] font-bold mt-0.5 shrink-0"
-                            >•</span
-                          >
-                          <span>Tạo lối tắt Desktop &amp; Start Menu</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                          <span
-                            class="text-[#00529c] font-bold mt-0.5 shrink-0"
-                            >•</span
-                          >
-                          <span>Lưu cấu hình và lịch học qua các kỳ</span>
-                        </li>
-                      </ul>
-                    </div>
-
-                    <div class="pt-2 space-y-3">
+                      <!-- Portable Edition -->
                       <div
-                        class="text-[11px] text-[#71717a] flex flex-wrap items-center justify-between gap-1.5 tabular-nums"
+                        class="p-5 sm:p-6 rounded-xl border border-[#e4e4e7] bg-[#fafafa]/50 flex flex-col justify-between space-y-4 hover:border-[#cbd5e1] transition-colors"
                       >
-                        <span class="truncate max-w-[130px] sm:max-w-[180px]">{{
-                          recommendedSetupAsset?.name || "CTU-Scheduler-Setup.exe"
-                        }}</span>
-                        <span class="shrink-0 whitespace-nowrap"
-                          >{{
-                            formatBytes(recommendedSetupAsset?.size || 78500000)
-                          }}
-                          ·
-                          {{
-                            setupTotalDownloads.toLocaleString("vi-VN")
-                          }}
-                          lượt tải</span
-                        >
-                      </div>
-
-                      <motion.a
-                        :href="
-                          recommendedSetupAsset?.browser_download_url ||
-                          'https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest'
-                        "
-                        target="_blank"
-                        :whileHover="{ scale: 1.01 }"
-                        :whilePress="{ scale: 0.97 }"
-                        class="btn-clickup-primary w-full text-center justify-center !py-2.5 !text-xs whitespace-nowrap shadow-xs"
-                      >
-                        <i
-                          class="fa-brands fa-windows mr-1.5 shrink-0"
-                          aria-hidden="true"
-                        ></i>
-                        <span>Tải Bản Cài Đặt (.exe)</span>
-                      </motion.a>
-
-                      <div
-                        class="pt-2 text-[11px] text-[#71717a] flex items-center justify-between text-center border-t border-[#f4f4f5] gap-1"
-                      >
-                        <span class="whitespace-nowrap">1. Tải về</span>
-                        <span class="text-[#d4d4d8] shrink-0">&rarr;</span>
-                        <span class="whitespace-nowrap">2. Cài đặt (5s)</span>
-                        <span class="text-[#d4d4d8] shrink-0">&rarr;</span>
-                        <span class="whitespace-nowrap">3. Xếp lịch ngay</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- EDITION 2: Portable Edition (Không cần Admin) -->
-                  <div
-                    class="p-5 sm:p-6 rounded-2xl border border-[#e4e4e7] bg-white flex flex-col justify-between space-y-5 shadow-2xs hover:border-[#cbd5e1] transition-colors"
-                  >
-                    <div class="space-y-4">
-                      <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-2.5">
-                          <span
-                            class="w-7 h-7 rounded-lg bg-[#f4f4f5] text-[#52525b] flex items-center justify-center text-xs shrink-0"
+                        <div class="space-y-2">
+                          <div
+                            class="flex items-baseline justify-between gap-2"
                           >
-                            <i
-                              class="fa-solid fa-box-archive"
-                              aria-hidden="true"
-                            ></i>
-                          </span>
-                          <h3
-                            class="text-base font-bold text-[#18181b] font-display"
+                            <h4
+                              class="text-sm sm:text-base font-bold text-[#18181b]"
+                            >
+                              Bản Chạy Ngay (Portable)
+                            </h4>
+                            <span
+                              class="text-[11px] text-[#71717a] font-semibold"
+                              >Không cần Admin</span
+                            >
+                          </div>
+                          <p
+                            class="text-xs text-[#52525b] leading-relaxed text-pretty"
                           >
-                            Bản Chạy Ngay (Portable)
-                          </h3>
+                            Chạy trực tiếp không cần quyền Administrator. Thích
+                            hợp dùng trên máy phòng thực hành hoặc USB.
+                          </p>
+                          <div
+                            class="text-[11px] text-[#71717a] pt-1 tabular-nums font-mono"
+                          >
+                            {{ formatBytes(portableAsset?.size || 82100000) }}
+                            ·
+                            {{ portableTotalDownloads.toLocaleString("vi-VN") }}
+                            lượt tải
+                          </div>
                         </div>
-                        <span
-                          class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-[#f4f4f5] text-[#52525b] border border-[#e4e4e7] shrink-0 whitespace-nowrap"
+
+                        <motion.a
+                          :href="
+                            portableAsset?.browser_download_url ||
+                            'https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest'
+                          "
+                          target="_blank"
+                          :whileHover="{ scale: 1.01 }"
+                          :whilePress="{ scale: 0.97 }"
+                          class="btn-clickup-ghost w-full text-center justify-center !py-2.5 !text-xs hover:border-[#18181b] hover:text-[#18181b] whitespace-nowrap"
                         >
-                          Không cần Admin
-                        </span>
-                      </div>
-
-                      <p
-                        class="text-xs text-[#52525b] leading-relaxed text-pretty"
-                      >
-                        Dành cho <strong>máy phòng thực hành</strong> (Khu II,
-                        Hòa An) hoặc máy bị giới hạn quyền Administrator.
-                      </p>
-
-                      <ul class="space-y-1.5 text-xs text-[#52525b] pt-1">
-                        <li class="flex items-start gap-2">
-                          <span
-                            class="text-[#71717a] font-bold mt-0.5 shrink-0"
-                            >•</span
-                          >
-                          <span>Chạy trực tiếp, không cần quyền Admin</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                          <span
-                            class="text-[#71717a] font-bold mt-0.5 shrink-0"
-                            >•</span
-                          >
-                          <span>Không ghi Registry, xóa thư mục là sạch</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                          <span
-                            class="text-[#71717a] font-bold mt-0.5 shrink-0"
-                            >•</span
-                          >
-                          <span>Chép vào USB dùng linh hoạt mọi máy</span>
-                        </li>
-                      </ul>
-                    </div>
-
-                    <div class="pt-2 space-y-3">
-                      <div
-                        class="text-[11px] text-[#71717a] flex flex-wrap items-center justify-between gap-1.5 tabular-nums"
-                      >
-                        <span class="truncate max-w-[130px] sm:max-w-[180px]">{{
-                          portableAsset?.name || "CTU-Scheduler-Portable.zip"
-                        }}</span>
-                        <span class="shrink-0 whitespace-nowrap"
-                          >{{
-                            formatBytes(portableAsset?.size || 82100000)
-                          }}
-                          ·
-                          {{
-                            portableTotalDownloads.toLocaleString("vi-VN")
-                          }}
-                          lượt tải</span
-                        >
-                      </div>
-
-                      <motion.a
-                        :href="
-                          portableAsset?.browser_download_url ||
-                          'https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest'
-                        "
-                        target="_blank"
-                        :whileHover="{ scale: 1.01 }"
-                        :whilePress="{ scale: 0.97 }"
-                        class="btn-clickup-ghost w-full text-center justify-center !py-2.5 !text-xs hover:border-[#18181b] hover:text-[#18181b] whitespace-nowrap shadow-2xs"
-                      >
-                        <i
-                          class="fa-solid fa-file-zipper mr-1.5 shrink-0"
-                          aria-hidden="true"
-                        ></i>
-                        <span>Tải Bản Portable (.zip)</span>
-                      </motion.a>
-
-                      <div
-                        class="pt-2 text-[11px] text-[#71717a] flex items-center justify-between text-center border-t border-[#f4f4f5] gap-1"
-                      >
-                        <span class="whitespace-nowrap">1. Tải .zip</span>
-                        <span class="text-[#d4d4d8] shrink-0">&rarr;</span>
-                        <span class="whitespace-nowrap">2. Giải nén</span>
-                        <span class="text-[#d4d4d8] shrink-0">&rarr;</span>
-                        <span class="whitespace-nowrap">3. Mở chạy ngay</span>
+                          <i
+                            class="fa-solid fa-file-zipper mr-1.5 shrink-0"
+                            aria-hidden="true"
+                          ></i>
+                          <span>Tải Bản Portable (.zip)</span>
+                        </motion.a>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <!-- Windows SmartScreen & Antivirus Guide Note -->
-                <div
-                  class="p-4 sm:p-5 rounded-2xl bg-[#f8f9fa] border border-[#e4e4e7] space-y-3.5"
-                >
-                  <div class="flex items-center gap-2.5">
-                    <div>
-                      <h4 class="text-xs sm:text-sm font-bold text-[#18181b]">
-                        Hướng dẫn cài đặt &amp; Vượt cảnh báo bảo vệ Windows
-                        SmartScreen
-                      </h4>
-                    </div>
-                  </div>
-
-                  <div
-                    class="p-3 rounded-xl bg-white border border-[#e4e4e7] text-xs text-[#52525b] leading-relaxed space-y-1"
-                  >
-                    <div
-                      class="font-semibold text-[#18181b] flex items-center gap-1.5"
+                  <!-- Zone B: Notes theo phiên bản OS (Windows SmartScreen) -->
+                  <div class="p-6 sm:p-8 bg-[#fcfcfd] space-y-3.5">
+                    <h4 class="text-xs sm:text-sm font-bold text-[#18181b]">
+                      Lưu ý cài đặt &amp; Vượt cảnh báo Windows Defender
+                      SmartScreen
+                    </h4>
+                    <p
+                      class="text-xs text-[#52525b] leading-relaxed text-pretty"
                     >
-                      <i
-                        class="fa-solid fa-circle-info text-[#00529c] text-xs"
-                      ></i>
-                      <span>Vì sao có cảnh báo phần mềm lạ / virus?</span>
-                    </div>
-                    <p class="text-[11px] text-[#52525b] text-pretty">
                       CTU Scheduler là dự án mã nguồn mở phi lợi nhuận do sinh
-                      viên phát triển, chưa mua chứng chỉ số doanh nghiệp (EV
-                      Code Signing $400+/năm từ Microsoft). Do đó, Windows
-                      Defender SmartScreen và một số trình diệt virus sẽ hiện
-                      cảnh báo phòng ngừa (false-positive). Mã nguồn ứng dụng
-                      hoàn toàn công khai 100% trên GitHub và tuyệt đối an toàn.
+                      viên phát triển, chưa mua chứng chỉ số doanh nghiệp
+                      Microsoft EV ($400+/năm). Do đó, Windows SmartScreen sẽ
+                      hiện cảnh báo phòng ngừa (false-positive). Mã nguồn ứng
+                      dụng hoàn toàn công khai 100% trên GitHub và an toàn tuyệt
+                      đối.
                     </p>
-                  </div>
-
-                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                     <div
-                      class="p-3 rounded-xl bg-white border border-[#e4e4e7] space-y-1"
+                      class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs pt-1"
                     >
                       <div
-                        class="font-semibold text-[#18181b] flex items-center gap-1.5"
+                        class="p-3.5 rounded-lg bg-white border border-[#e4e4e7] space-y-1"
                       >
-                        <span
-                          class="w-5 h-5 rounded-full bg-[#f4f4f5] text-[#18181b] flex items-center justify-center text-[11px] font-bold shrink-0"
-                          >1</span
+                        <div
+                          class="font-semibold text-[#18181b] flex items-center gap-1.5"
                         >
-                        <span>Màn hình SmartScreen</span>
+                          <span
+                            class="w-4 h-4 rounded-full bg-[#e4e4e7] text-[#18181b] flex items-center justify-center text-[11px] font-bold shrink-0"
+                            >1</span
+                          >
+                          <span>Màn hình SmartScreen</span>
+                        </div>
+                        <p
+                          class="text-[#71717a] text-[11px] leading-relaxed pl-5.5 text-pretty"
+                        >
+                          Nếu thấy thông báo
+                          <em>"Windows protected your PC"</em>, hãy bấm vào dòng
+                          chữ gạch chân <strong>"More info"</strong> (Thông tin
+                          khác).
+                        </p>
                       </div>
-                      <p
-                        class="text-[#71717a] text-[11px] leading-relaxed pl-6.5 text-pretty"
-                      >
-                        Nếu thấy bảng xanh <em>"Windows protected your PC"</em>,
-                        hãy bấm vào dòng chữ gạch chân <strong>"More info"</strong> (hoặc
-                        <em>Thông tin khác</em>).
-                      </p>
-                    </div>
-
-                    <div
-                      class="p-3 rounded-xl bg-white border border-[#e4e4e7] space-y-1"
-                    >
                       <div
-                        class="font-semibold text-[#18181b] flex items-center gap-1.5"
+                        class="p-3.5 rounded-lg bg-white border border-[#e4e4e7] space-y-1"
                       >
-                        <span
-                          class="w-5 h-5 rounded-full bg-[#f4f4f5] text-[#18181b] flex items-center justify-center text-[11px] font-bold shrink-0"
-                          >2</span
+                        <div
+                          class="font-semibold text-[#18181b] flex items-center gap-1.5"
                         >
-                        <span>Xác nhận khởi chạy</span>
+                          <span
+                            class="w-4 h-4 rounded-full bg-[#e4e4e7] text-[#18181b] flex items-center justify-center text-[11px] font-bold shrink-0"
+                            >2</span
+                          >
+                          <span>Xác nhận khởi chạy</span>
+                        </div>
+                        <p
+                          class="text-[#71717a] text-[11px] leading-relaxed pl-5.5 text-pretty"
+                        >
+                          Bấm nút <strong>"Run anyway"</strong> (Vẫn chạy) ở góc
+                          dưới để bắt đầu sử dụng phần mềm.
+                        </p>
                       </div>
-                      <p
-                        class="text-[#71717a] text-[11px] leading-relaxed pl-6.5 text-pretty"
-                      >
-                        Bấm nút <strong>"Run anyway"</strong> (hoặc <em>Vẫn chạy</em>)
-                        xuất hiện ở góc dưới để bắt đầu sử dụng. Nếu dùng phần
-                        mềm diệt virus bên thứ 3, hãy chọn <em>"Cho phép / Allow"</em>.
-                      </p>
                     </div>
                   </div>
-                </div>
-              </motion.div>
+                </motion.div>
 
-              <!-- ========================================== -->
-              <!-- TAB 2: MACOS                              -->
-              <!-- ========================================== -->
-              <motion.div
-                v-else-if="activeOsTab === 'macos'"
-                key="macos"
-                :initial="{ opacity: 0, y: 8 }"
-                :animate="{ opacity: 1, y: 0 }"
-                :exit="{ opacity: 0, y: -8 }"
-                :transition="{ duration: 0.22, ease: [0.33, 1, 0.68, 1] }"
-                class="p-6 rounded-2xl border border-[#e4e4e7] bg-white space-y-5 shadow-2xs"
-              >
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-3">
-                    <span
-                      class="w-9 h-9 rounded-xl bg-[#f4f4f5] text-[#18181b] flex items-center justify-center text-base shrink-0"
-                    >
-                      <i class="fa-brands fa-apple" aria-hidden="true"></i>
-                    </span>
+                <!-- ========================================== -->
+                <!-- MACOS CANVAS                              -->
+                <!-- ========================================== -->
+                <motion.div
+                  v-else-if="activeOsTab === 'macos'"
+                  key="macos"
+                  :initial="{ opacity: 0, x: 8 }"
+                  :animate="{ opacity: 1, x: 0 }"
+                  :exit="{ opacity: 0, x: -8 }"
+                  :transition="{ duration: 0.2, ease: [0.33, 1, 0.68, 1] }"
+                  class="flex flex-col h-full divide-y divide-[#e4e4e7]"
+                >
+                  <!-- Zone A: macOS Download / Build -->
+                  <div class="p-6 sm:p-8 space-y-5">
                     <div>
                       <h3
-                        class="text-base font-bold text-[#18181b] font-display"
+                        class="text-base sm:text-lg font-bold text-[#18181b] font-display"
                       >
                         CTU Scheduler cho macOS
                       </h3>
-                      <p class="text-xs text-[#71717a]">
-                        Tương thích Apple Silicon (M1–M4) &amp; Intel 64-bit
+                      <p class="text-xs text-[#71717a] mt-0.5">
+                        Tương thích Apple Silicon (M1–M4) &amp; Intel 64-bit ·
+                        Đang hoàn thiện chữ ký số Apple
                       </p>
                     </div>
-                  </div>
-                  <span
-                    class="text-xs px-2.5 py-0.5 rounded-full bg-[#f4f4f5] text-[#52525b] border border-[#e4e4e7] font-medium"
-                  >
-                    Đang thử nghiệm
-                  </span>
-                </div>
 
-                <p class="text-xs text-[#52525b] leading-relaxed">
-                  Phiên bản macOS đang trong giai đoạn hoàn thiện chữ ký số. Sinh
-                  viên dùng Mac có thể chạy trực tiếp từ mã nguồn hoặc thông qua
-                  máy ảo Windows:
-                </p>
+                    <div
+                      class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5 text-xs"
+                    >
+                      <div
+                        class="p-5 sm:p-6 rounded-xl border border-[#e4e4e7] bg-[#fafafa]/50 space-y-2.5"
+                      >
+                        <div class="font-bold text-[#18181b]">
+                          Cách 1: Chạy từ mã nguồn Node.js
+                        </div>
+                        <p class="text-[11px] text-[#71717a]">
+                          Dành cho sinh viên ngành CNTT có cài sẵn Node.js:
+                        </p>
+                        <div
+                          class="p-2.5 rounded-lg bg-white border border-[#e4e4e7] text-[11px] font-mono space-y-0.5 text-[#27272a] select-all"
+                        >
+                          <div>
+                            git clone
+                            https://github.com/d3nhatv0lam/CTU-Scheduler.git
+                          </div>
+                          <div>
+                            cd CTU-Scheduler &amp;&amp; npm install &amp;&amp;
+                            npm start
+                          </div>
+                        </div>
+                      </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-1">
-                  <div
-                    class="p-3.5 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7] space-y-2"
-                  >
-                    <div class="font-semibold text-[#18181b]">
-                      Cách 1: Chạy từ mã nguồn Node.js
+                      <div
+                        class="p-5 sm:p-6 rounded-xl border border-[#e4e4e7] bg-[#fafafa]/50 space-y-2.5 flex flex-col justify-between"
+                      >
+                        <div class="space-y-1.5">
+                          <div class="font-bold text-[#18181b]">
+                            Cách 2: Máy ảo Windows trên Mac
+                          </div>
+                          <p
+                            class="text-[11px] text-[#52525b] leading-relaxed text-pretty"
+                          >
+                            Sử dụng VMware Fusion Pro (miễn phí cá nhân) hoặc
+                            Parallels Desktop để chạy trực tiếp bản Cài đặt của
+                            Windows.
+                          </p>
+                        </div>
+                        <a
+                          href="https://github.com/d3nhatv0lam/CTU-Scheduler/wiki"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="text-[#00529c] font-semibold text-xs hover:underline inline-flex items-center gap-1 pt-2"
+                        >
+                          <span>Xem tài liệu hướng dẫn</span>
+                          <i
+                            class="fa-solid fa-arrow-right text-[11px]"
+                            aria-hidden="true"
+                          ></i>
+                        </a>
+                      </div>
                     </div>
-                    <p class="text-[#71717a] text-[11px]">
-                      Dành cho sinh viên ngành CNTT có cài sẵn Node.js:
+                  </div>
+
+                  <!-- Zone B: macOS Gatekeeper Guidance -->
+                  <div class="p-6 sm:p-8 bg-[#fcfcfd] space-y-3.5">
+                    <h4 class="text-xs sm:text-sm font-bold text-[#18181b]">
+                      Lưu ý bảo mật &amp; Vượt cảnh báo Apple Gatekeeper
+                    </h4>
+                    <p
+                      class="text-xs text-[#52525b] leading-relaxed text-pretty"
+                    >
+                      Apple yêu cầu chứng chỉ Apple Developer ($99/năm) để công
+                      chứng app (Notarization). Là ứng dụng sinh viên miễn phí,
+                      CTU Scheduler chưa mua chứng chỉ này nên Gatekeeper có thể
+                      chặn mở file. Bạn có thể mở ứng dụng theo các cách sau:
                     </p>
                     <div
-                      class="p-2 rounded bg-white border border-[#e4e4e7] text-[11px] font-sans space-y-0.5 text-[#27272a]"
+                      class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-1"
                     >
-                      <div>
-                        <code
-                          >git clone
-                          https://github.com/d3nhatv0lam/CTU-Scheduler.git</code
+                      <div
+                        class="p-3.5 rounded-lg bg-white border border-[#e4e4e7] space-y-1"
+                      >
+                        <div
+                          class="font-semibold text-[#18181b] flex items-center gap-1.5"
                         >
+                          <span
+                            class="w-4 h-4 rounded-full bg-[#e4e4e7] text-[#18181b] flex items-center justify-center text-[11px] font-bold shrink-0"
+                            >1</span
+                          >
+                          <span>Control + Click</span>
+                        </div>
+                        <p
+                          class="text-[#71717a] text-[11px] leading-relaxed pl-5.5 text-pretty"
+                        >
+                          Giữ phím <strong>Control</strong> &rarr; Click file
+                          app &rarr; chọn <strong>Open</strong> &rarr; bấm
+                          <strong>Open</strong> xác nhận.
+                        </p>
                       </div>
-                      <div><code>npm install &amp;&amp; npm start</code></div>
+                      <div
+                        class="p-3.5 rounded-lg bg-white border border-[#e4e4e7] space-y-1"
+                      >
+                        <div
+                          class="font-semibold text-[#18181b] flex items-center gap-1.5"
+                        >
+                          <span
+                            class="w-4 h-4 rounded-full bg-[#e4e4e7] text-[#18181b] flex items-center justify-center text-[11px] font-bold shrink-0"
+                            >2</span
+                          >
+                          <span>Cài đặt hệ thống</span>
+                        </div>
+                        <p
+                          class="text-[#71717a] text-[11px] leading-relaxed pl-5.5 text-pretty"
+                        >
+                          Vào <strong>System Settings</strong> &rarr;
+                          <strong>Privacy &amp; Security</strong> &rarr; cuộn
+                          xuống bấm <strong>Open Anyway</strong>.
+                        </p>
+                      </div>
+                      <div
+                        class="p-3.5 rounded-lg bg-white border border-[#e4e4e7] space-y-1"
+                      >
+                        <div
+                          class="font-semibold text-[#18181b] flex items-center gap-1.5"
+                        >
+                          <span
+                            class="w-4 h-4 rounded-full bg-[#e4e4e7] text-[#18181b] flex items-center justify-center text-[11px] font-bold shrink-0"
+                            >3</span
+                          >
+                          <span>Gỡ cách ly</span>
+                        </div>
+                        <p
+                          class="text-[#71717a] text-[11px] leading-relaxed pl-5.5 text-pretty"
+                        >
+                          Nếu báo file hỏng, mở Terminal chạy:
+                          <code
+                            class="text-[#18181b] font-mono bg-[#f4f4f5] px-1 py-0.5 rounded text-[11px]"
+                            >xattr -cr /Applications/CTU-Scheduler.app</code
+                          >.
+                        </p>
+                      </div>
                     </div>
                   </div>
+                </motion.div>
 
-                  <div
-                    class="p-3.5 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7] space-y-2 flex flex-col justify-between"
-                  >
-                    <div>
-                      <div class="font-semibold text-[#18181b]">
-                        Cách 2: Máy ảo Windows trên Mac
-                      </div>
-                      <p class="text-[#71717a] text-[11px]">
-                        Sử dụng VMware Fusion Pro (miễn phí) hoặc Parallels để
-                        chạy file Setup của Windows.
-                      </p>
-                    </div>
-                    <a
-                      href="https://github.com/d3nhatv0lam/CTU-Scheduler/wiki"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="text-[#00529c] font-semibold text-[11px] hover:underline flex items-center gap-1"
-                    >
-                      <span>Xem hướng dẫn chi tiết</span>
-                      <i class="fa-solid fa-arrow-right text-[11px]" aria-hidden="true"></i>
-                    </a>
-                  </div>
-                </div>
-
-                <!-- macOS Gatekeeper Guidance Note -->
-                <div
-                  class="p-4 sm:p-5 rounded-2xl bg-[#f8f9fa] border border-[#e4e4e7] space-y-3.5 mt-2"
+                <!-- ========================================== -->
+                <!-- LINUX CANVAS                              -->
+                <!-- ========================================== -->
+                <motion.div
+                  v-else-if="activeOsTab === 'linux'"
+                  key="linux"
+                  :initial="{ opacity: 0, x: 8 }"
+                  :animate="{ opacity: 1, x: 0 }"
+                  :exit="{ opacity: 0, x: -8 }"
+                  :transition="{ duration: 0.2, ease: [0.33, 1, 0.68, 1] }"
+                  class="flex flex-col h-full divide-y divide-[#e4e4e7]"
                 >
-                  <div class="flex items-center gap-2.5">
-                    <div>
-                      <h4 class="text-xs sm:text-sm font-bold text-[#18181b]">
-                        Lưu ý bảo mật &amp; Vượt cảnh báo Apple Gatekeeper trên
-                        macOS
-                      </h4>
-                      <p class="text-[11px] text-[#71717a]">
-                        Xử lý cảnh báo "App cannot be opened because developer
-                        cannot be verified" hoặc "is damaged"
-                      </p>
-                    </div>
-                  </div>
-
-                  <div
-                    class="p-3 rounded-xl bg-white border border-[#e4e4e7] text-xs text-[#52525b] leading-relaxed space-y-1"
-                  >
-                    <div
-                      class="font-semibold text-[#18181b] flex items-center gap-1.5"
-                    >
-                      <i
-                        class="fa-solid fa-circle-info text-[#00529c] text-xs"
-                      ></i>
-                      <span>Vì sao macOS chặn mở ứng dụng?</span>
-                    </div>
-                    <p class="text-[11px] text-[#52525b] text-pretty">
-                      Apple yêu cầu mọi phần mềm phải đăng ký chứng chỉ Apple
-                      Developer ($99/năm) và qua quy trình công chứng
-                      (Notarization). Là ứng dụng phi lợi nhuận cho sinh viên,
-                      CTU Scheduler chưa mua chứng chỉ này nên hệ thống
-                      Gatekeeper sẽ tự động chặn hoặc báo file hỏng. Mã nguồn
-                      100% công khai và an toàn tuyệt đối.
-                    </p>
-                  </div>
-
-                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-                    <div
-                      class="p-3 rounded-xl bg-white border border-[#e4e4e7] space-y-1"
-                    >
-                      <div
-                        class="font-semibold text-[#18181b] flex items-center gap-1.5"
-                      >
-                        <span
-                          class="w-5 h-5 rounded-full bg-[#f4f4f5] text-[#18181b] flex items-center justify-center text-[11px] font-bold shrink-0"
-                          >1</span
-                        >
-                        <span>Control + Click (Nhanh nhất)</span>
-                      </div>
-                      <p
-                        class="text-[#71717a] text-[11px] leading-relaxed pl-6.5 text-pretty"
-                      >
-                        Nhấn giữ phím <strong>Control</strong> rồi click vào file app
-                        &rarr; chọn <strong>Open</strong> &rarr; nhấn
-                        <strong>Open</strong> tại hộp thoại xác nhận.
-                      </p>
-                    </div>
-
-                    <div
-                      class="p-3 rounded-xl bg-white border border-[#e4e4e7] space-y-1"
-                    >
-                      <div
-                        class="font-semibold text-[#18181b] flex items-center gap-1.5"
-                      >
-                        <span
-                          class="w-5 h-5 rounded-full bg-[#f4f4f5] text-[#18181b] flex items-center justify-center text-[11px] font-bold shrink-0"
-                          >2</span
-                        >
-                        <span>Mở từ System Settings</span>
-                      </div>
-                      <p
-                        class="text-[#71717a] text-[11px] leading-relaxed pl-6.5 text-pretty"
-                      >
-                        Vào <strong>Cài đặt hệ thống</strong> &rarr;
-                        <strong>Quyền riêng tư &amp; Bảo mật</strong> &rarr;
-                        cuộn xuống mục Bảo mật và bấm
-                        <strong>Open Anyway</strong>.
-                      </p>
-                    </div>
-
-                    <div
-                      class="p-3 rounded-xl bg-white border border-[#e4e4e7] space-y-1"
-                    >
-                      <div
-                        class="font-semibold text-[#18181b] flex items-center gap-1.5"
-                      >
-                        <span
-                          class="w-5 h-5 rounded-full bg-[#f4f4f5] text-[#18181b] flex items-center justify-center text-[11px] font-bold shrink-0"
-                          >3</span
-                        >
-                        <span>Lệnh Terminal (Gỡ cách ly)</span>
-                      </div>
-                      <p
-                        class="text-[#71717a] text-[11px] leading-relaxed pl-6.5 text-pretty"
-                      >
-                        Nếu báo "is damaged", mở Terminal và chạy:
-                        <code
-                          class="text-[#090c1d] font-semibold bg-[#f4f4f5] px-1 py-0.5 rounded"
-                          >xattr -cr /Applications/CTU-Scheduler.app</code
-                        >.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
-              <!-- ========================================== -->
-              <!-- TAB 3: LINUX                              -->
-              <!-- ========================================== -->
-              <motion.div
-                v-else-if="activeOsTab === 'linux'"
-                key="linux"
-                :initial="{ opacity: 0, y: 8 }"
-                :animate="{ opacity: 1, y: 0 }"
-                :exit="{ opacity: 0, y: -8 }"
-                :transition="{ duration: 0.22, ease: [0.33, 1, 0.68, 1] }"
-                class="p-6 rounded-2xl border border-[#e4e4e7] bg-white space-y-5 shadow-2xs"
-              >
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-3">
-                    <span
-                      class="w-9 h-9 rounded-xl bg-[#f4f4f5] text-[#18181b] flex items-center justify-center text-base shrink-0"
-                    >
-                      <i class="fa-brands fa-linux" aria-hidden="true"></i>
-                    </span>
+                  <!-- Zone A: Linux Build Instructions -->
+                  <div class="p-6 sm:p-8 space-y-5">
                     <div>
                       <h3
-                        class="text-base font-bold text-[#18181b] font-display"
+                        class="text-base sm:text-lg font-bold text-[#18181b] font-display"
                       >
                         CTU Scheduler cho Linux
                       </h3>
-                      <p class="text-xs text-[#71717a]">
+                      <p class="text-xs text-[#71717a] mt-0.5">
                         Tương thích Ubuntu, Debian, Fedora, Arch Linux
                       </p>
                     </div>
-                  </div>
-                </div>
 
-                <p class="text-xs text-[#52525b] leading-relaxed">
-                  Bạn có thể tự đóng gói bản <code>.AppImage</code> hoặc
-                  <code>.deb</code> trực tiếp từ repository với các lệnh đơn
-                  giản:
-                </p>
-
-                <div
-                  class="p-3.5 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7] space-y-2 text-xs"
-                >
-                  <div
-                    class="p-2.5 rounded bg-white border border-[#e4e4e7] text-[11px] font-sans space-y-1 text-[#27272a]"
-                  >
-                    <div>
-                      <code
-                        >git clone
-                        https://github.com/d3nhatv0lam/CTU-Scheduler.git</code
-                      >
-                    </div>
-                    <div>
-                      <code>cd CTU-Scheduler &amp;&amp; npm install</code>
-                    </div>
-                    <div><code>npm run build:linux</code></div>
-                  </div>
-                  <div class="pt-1">
-                    <a
-                      href="https://github.com/d3nhatv0lam/CTU-Scheduler"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="btn-clickup-ghost !py-1.5 !px-3 !text-xs inline-flex items-center gap-1.5"
-                    >
-                      <i
-                        class="fa-brands fa-github text-xs"
-                        aria-hidden="true"
-                      ></i>
-                      <span>Kho mã nguồn GitHub</span>
-                    </a>
-                  </div>
-                </div>
-
-                <!-- Linux Permission & FUSE Guidance Note -->
-                <div
-                  class="p-4 sm:p-5 rounded-2xl bg-[#f8f9fa] border border-[#e4e4e7] space-y-3.5 mt-2"
-                >
-                  <div class="flex items-center gap-2.5">
-                    <div>
-                      <h4 class="text-xs sm:text-sm font-bold text-[#18181b]">
-                        Hướng dẫn cấp quyền thực thi &amp; Cài đặt FUSE trên Linux
-                      </h4>
-                      <p class="text-[11px] text-[#71717a]">
-                        Khắc phục lỗi không mở được file .AppImage trên Ubuntu
-                        22.04+, Debian, Fedora
-                      </p>
-                    </div>
-                  </div>
-
-                  <div
-                    class="p-3 rounded-xl bg-white border border-[#e4e4e7] text-xs text-[#52525b] leading-relaxed space-y-1"
-                  >
                     <div
-                      class="font-semibold text-[#18181b] flex items-center gap-1.5"
+                      class="p-5 sm:p-6 rounded-xl border border-[#e4e4e7] bg-[#fafafa]/50 space-y-3 text-xs"
                     >
-                      <i
-                        class="fa-solid fa-circle-info text-[#00529c] text-xs"
-                      ></i>
-                      <span>Vì sao file tải về không chạy khi double-click?</span>
+                      <p class="text-xs text-[#52525b] leading-relaxed">
+                        Bạn có thể tự đóng gói bản <code>.AppImage</code> hoặc
+                        <code>.deb</code> trực tiếp từ repository:
+                      </p>
+                      <div
+                        class="p-2.5 rounded-lg bg-white border border-[#e4e4e7] text-[11px] font-mono space-y-0.5 text-[#27272a] select-all"
+                      >
+                        <div>
+                          git clone
+                          https://github.com/d3nhatv0lam/CTU-Scheduler.git
+                        </div>
+                        <div>cd CTU-Scheduler &amp;&amp; npm install</div>
+                        <div>npm run build:linux</div>
+                      </div>
+                      <div
+                        class="pt-1 flex flex-wrap items-center justify-between gap-2"
+                      >
+                        <span class="text-[11px] text-[#71717a]"
+                          >Gói tạo ra sẽ nằm trong thư mục
+                          <code>dist/</code></span
+                        >
+                        <a
+                          href="https://github.com/d3nhatv0lam/CTU-Scheduler"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="text-[#00529c] font-semibold text-xs hover:underline inline-flex items-center gap-1.5"
+                        >
+                          <i
+                            class="fa-brands fa-github text-xs"
+                            aria-hidden="true"
+                          ></i>
+                          <span>Mã nguồn trên GitHub</span>
+                        </a>
+                      </div>
                     </div>
-                    <p class="text-[11px] text-[#52525b] text-pretty">
-                      Linux mặc định không tự động cấp quyền thực thi (executable
-                      bit) cho file tải từ Internet để bảo vệ người dùng, đồng
-                      thời các bản phân phối mới (như Ubuntu 22.04 trở lên) chưa
-                      cài sẵn thư viện FUSE 2 cần cho AppImage.
+                  </div>
+
+                  <!-- Zone B: Linux Permission & FUSE Guidance -->
+                  <div class="p-6 sm:p-8 bg-[#fcfcfd] space-y-3.5">
+                    <h4 class="text-xs sm:text-sm font-bold text-[#18181b]">
+                      Cấp quyền thực thi &amp; Cài đặt FUSE trên Linux
+                    </h4>
+                    <p
+                      class="text-xs text-[#52525b] leading-relaxed text-pretty"
+                    >
+                      Linux mặc định không tự động cấp quyền thực thi cho file
+                      tải từ Internet, đồng thời các bản phân phối mới (Ubuntu
+                      22.04+) cần thư viện FUSE 2 để chạy AppImage:
                     </p>
-                  </div>
-
-                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                     <div
-                      class="p-3 rounded-xl bg-white border border-[#e4e4e7] space-y-1"
+                      class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs pt-1"
                     >
                       <div
-                        class="font-semibold text-[#18181b] flex items-center gap-1.5"
+                        class="p-3.5 rounded-lg bg-white border border-[#e4e4e7] space-y-1"
                       >
-                        <span
-                          class="w-5 h-5 rounded-full bg-[#f4f4f5] text-[#18181b] flex items-center justify-center text-[11px] font-bold shrink-0"
-                          >1</span
+                        <div
+                          class="font-semibold text-[#18181b] flex items-center gap-1.5"
                         >
-                        <span>Cấp quyền chạy (Executable)</span>
+                          <span
+                            class="w-4 h-4 rounded-full bg-[#e4e4e7] text-[#18181b] flex items-center justify-center text-[11px] font-bold shrink-0"
+                            >1</span
+                          >
+                          <span>Cấp quyền thực thi</span>
+                        </div>
+                        <p
+                          class="text-[#71717a] text-[11px] leading-relaxed pl-5.5 text-pretty"
+                        >
+                          Click chuột phải &rarr; Properties &rarr; Permissions
+                          &rarr; tích <em>Allow executing file as program</em>.
+                          Hoặc Terminal:
+                          <code
+                            class="text-[#18181b] font-mono bg-[#f4f4f5] px-1 py-0.5 rounded text-[11px]"
+                            >chmod +x *.AppImage</code
+                          >.
+                        </p>
                       </div>
-                      <p
-                        class="text-[#71717a] text-[11px] leading-relaxed pl-6.5 text-pretty"
+                      <div
+                        class="p-3.5 rounded-lg bg-white border border-[#e4e4e7] space-y-1"
                       >
-                        Click chuột phải vào file &rarr;
-                        <strong>Properties</strong> &rarr;
-                        <strong>Permissions</strong> &rarr; Tích chọn
-                        <em>"Allow executing file as program"</em>. Hoặc
-                        Terminal:
-                        <code
-                          class="text-[#090c1d] font-semibold bg-[#f4f4f5] px-1 py-0.5 rounded"
-                          >chmod +x CTU-Scheduler*.AppImage</code
-                        >.
-                      </p>
+                        <div
+                          class="font-semibold text-[#18181b] flex items-center gap-1.5"
+                        >
+                          <span
+                            class="w-4 h-4 rounded-full bg-[#e4e4e7] text-[#18181b] flex items-center justify-center text-[11px] font-bold shrink-0"
+                            >2</span
+                          >
+                          <span>Cài thư viện FUSE</span>
+                        </div>
+                        <p
+                          class="text-[#71717a] text-[11px] leading-relaxed pl-5.5 text-pretty"
+                        >
+                          Nếu nhấp đúp file không phản hồi trên Ubuntu/Debian,
+                          mở Terminal chạy:
+                          <code
+                            class="text-[#18181b] font-mono bg-[#f4f4f5] px-1 py-0.5 rounded text-[11px]"
+                            >sudo apt install libfuse2</code
+                          >.
+                        </p>
+                      </div>
                     </div>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
 
-                    <div
-                      class="p-3 rounded-xl bg-white border border-[#e4e4e7] space-y-1"
+          <!-- 3. BOTTOM DRAWER BAR: All Releases & Changelog -->
+          <div class="px-5 sm:px-6 py-4 bg-[#f8f9fa] space-y-4">
+            <div
+              class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs text-[#71717a]"
+            >
+              <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1">
+                <span>
+                  Phiên bản mới nhất:
+                  <strong class="text-[#18181b] font-bold">{{
+                    currentRelease.tag_name
+                  }}</strong>
+                </span>
+                <span class="text-[#d4d4d8]">·</span>
+                <span class="text-[#00529c] font-semibold tabular-nums"
+                  >{{ totalDownloads.toLocaleString("vi-VN") }} lượt tải</span
+                >
+                <span class="text-[#d4d4d8]">·</span>
+                <span
+                  >Ngày phát hành:
+                  {{ formatDate(currentRelease.published_at) }}</span
+                >
+              </div>
+
+              <div class="flex items-center gap-3 self-start sm:self-auto">
+                <motion.button
+                  type="button"
+                  :whileHover="{ scale: 1.02 }"
+                  :whilePress="{ scale: 0.96 }"
+                  class="text-[#52525b] hover:text-[#00529c] font-semibold cursor-pointer flex items-center gap-1.5 transition-colors"
+                  @click="showAllAssets = !showAllAssets"
+                >
+                  <i
+                    :class="
+                      showAllAssets
+                        ? 'fa-solid fa-folder-open'
+                        : 'fa-solid fa-folder'
+                    "
+                    class="text-[11px]"
+                    aria-hidden="true"
+                  ></i>
+                  <span>{{
+                    showAllAssets
+                      ? "Đóng danh sách file"
+                      : `Xem tất cả ${validAssets.length} file phát hành`
+                  }}</span>
+                </motion.button>
+                <span>·</span>
+                <motion.button
+                  v-if="currentRelease.body"
+                  type="button"
+                  :whileHover="{ scale: 1.02 }"
+                  :whilePress="{ scale: 0.96 }"
+                  class="text-[#52525b] hover:text-[#00529c] font-semibold cursor-pointer flex items-center gap-1.5 transition-colors"
+                  @click="showChangelog = !showChangelog"
+                >
+                  <i
+                    :class="
+                      showChangelog
+                        ? 'fa-solid fa-chevron-up'
+                        : 'fa-solid fa-clock-rotate-left'
+                    "
+                    class="text-[11px]"
+                    aria-hidden="true"
+                  ></i>
+                  <span>{{
+                    showChangelog
+                      ? "Đóng nhật ký cập nhật"
+                      : "Xem nhật ký cập nhật"
+                  }}</span>
+                </motion.button>
+              </div>
+            </div>
+
+            <!-- Collapsible All Files Drawer -->
+            <AnimatePresence :initial="false">
+              <motion.div
+                v-if="showAllAssets"
+                :initial="{ height: 0, opacity: 0 }"
+                :animate="{ height: 'auto', opacity: 1 }"
+                :exit="{ height: 0, opacity: 0 }"
+                :transition="{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }"
+                class="overflow-hidden"
+              >
+                <div
+                  class="p-4 sm:p-5 rounded-xl border border-[#e4e4e7] bg-white space-y-3 text-xs"
+                >
+                  <div class="font-bold text-[#18181b] flex items-center gap-2">
+                    <i
+                      class="fa-solid fa-box-open text-[#00529c]"
+                      aria-hidden="true"
+                    ></i>
+                    <span
+                      >Tất cả tập tin phát hành của phiên bản
+                      {{ currentRelease.tag_name }}:</span
                     >
-                      <div
-                        class="font-semibold text-[#18181b] flex items-center gap-1.5"
-                      >
+                  </div>
+                  <div
+                    class="divide-y divide-[#e4e4e7] bg-white border border-[#e4e4e7] rounded-lg overflow-hidden"
+                  >
+                    <div
+                      v-for="asset in validAssets"
+                      :key="asset.id"
+                      class="p-3 px-4 flex items-center justify-between hover:bg-[#f8fafc] transition-colors"
+                    >
+                      <div class="flex items-center gap-3 min-w-0">
+                        <i
+                          :class="getAssetIcon(asset.name)"
+                          class="text-sm text-[#71717a] shrink-0"
+                          aria-hidden="true"
+                        ></i>
                         <span
-                          class="w-5 h-5 rounded-full bg-[#f4f4f5] text-[#18181b] flex items-center justify-center text-[11px] font-bold shrink-0"
-                          >2</span
+                          class="text-xs font-semibold text-[#18181b] truncate"
+                          >{{ asset.name }}</span
                         >
-                        <span>Cài FUSE nếu không mở được</span>
+                        <span
+                          class="text-[11px] text-[#71717a] tabular-nums shrink-0"
+                          >({{ formatBytes(asset.size) }} ·
+                          {{
+                            (asset.download_count || 0).toLocaleString("vi-VN")
+                          }}
+                          lượt tải)</span
+                        >
                       </div>
-                      <p
-                        class="text-[#71717a] text-[11px] leading-relaxed pl-6.5 text-pretty"
+                      <a
+                        :href="asset.browser_download_url"
+                        target="_blank"
+                        class="text-xs text-[#00529c] hover:underline font-semibold ml-2 shrink-0 flex items-center gap-1"
                       >
-                        Nếu nhấn đúp không mở, mở Terminal và chạy lệnh:
-                        <code
-                          class="text-[#090c1d] font-semibold bg-[#f4f4f5] px-1 py-0.5 rounded"
-                          >sudo apt install libfuse2</code
-                        >
-                        (dành cho Ubuntu/Debian).
-                      </p>
+                        <span>Tải xuống</span>
+                        <i
+                          class="fa-solid fa-download text-[11px]"
+                          aria-hidden="true"
+                        ></i>
+                      </a>
                     </div>
                   </div>
                 </div>
               </motion.div>
             </AnimatePresence>
-          </div>
-        </div>
 
-        <!-- ==================================================== -->
-        <!-- BOTTOM DRAWER: All Releases & Changelog Updates      -->
-        <!-- ==================================================== -->
-        <div
-          class="pt-5 border-t border-[#e4e4e7] space-y-4"
-        >
-          <div
-            class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs text-[#71717a]"
-          >
-            <div class="flex flex-wrap items-center gap-x-2.5 gap-y-1">
-              <span>
-                Phiên bản mới nhất:
-                <strong class="text-[#18181b] font-bold">{{
-                  currentRelease.tag_name
-                }}</strong>
-              </span>
-              <span class="text-[#d4d4d8]">·</span>
-              <span class="text-[#00529c] font-semibold tabular-nums"
-                >{{ totalDownloads.toLocaleString("vi-VN") }} lượt tải</span
+            <!-- Collapsible Markdown Changelog Drawer -->
+            <AnimatePresence :initial="false">
+              <motion.div
+                v-if="showChangelog"
+                :initial="{ height: 0, opacity: 0 }"
+                :animate="{ height: 'auto', opacity: 1 }"
+                :exit="{ height: 0, opacity: 0 }"
+                :transition="{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }"
+                class="overflow-hidden"
               >
-              <span class="text-[#d4d4d8]">·</span>
-              <span>Ngày phát hành: {{ formatDate(currentRelease.published_at) }}</span>
-            </div>
-
-            <div class="flex items-center gap-3 self-start sm:self-auto">
-              <motion.button
-                type="button"
-                :whileHover="{ scale: 1.02 }"
-                :whilePress="{ scale: 0.96 }"
-                class="text-[#52525b] hover:text-[#00529c] font-semibold cursor-pointer flex items-center gap-1.5"
-                @click="showAllAssets = !showAllAssets"
-              >
-                <i
-                  :class="showAllAssets ? 'fa-solid fa-folder-open' : 'fa-solid fa-folder'"
-                  class="text-[11px]"
-                  aria-hidden="true"
-                ></i>
-                <span>{{
-                  showAllAssets
-                    ? "Đóng danh sách file"
-                    : `Xem tất cả ${validAssets.length} file phát hành`
-                }}</span>
-              </motion.button>
-              <span>·</span>
-              <motion.button
-                v-if="currentRelease.body"
-                type="button"
-                :whileHover="{ scale: 1.02 }"
-                :whilePress="{ scale: 0.96 }"
-                class="text-[#52525b] hover:text-[#00529c] font-semibold cursor-pointer flex items-center gap-1.5"
-                @click="showChangelog = !showChangelog"
-              >
-                <i
-                  :class="showChangelog ? 'fa-solid fa-chevron-up' : 'fa-solid fa-clock-rotate-left'"
-                  class="text-[11px]"
-                  aria-hidden="true"
-                ></i>
-                <span>{{
-                  showChangelog
-                    ? "Đóng nhật ký cập nhật"
-                    : "Xem nhật ký cập nhật"
-                }}</span>
-              </motion.button>
-            </div>
-          </div>
-
-          <!-- Collapsible All Files Drawer -->
-          <AnimatePresence :initial="false">
-            <motion.div
-              v-if="showAllAssets"
-              :initial="{ height: 0, opacity: 0 }"
-              :animate="{ height: 'auto', opacity: 1 }"
-              :exit="{ height: 0, opacity: 0 }"
-              :transition="{ duration: 0.28, ease: [0.33, 1, 0.68, 1] }"
-              class="overflow-hidden"
-            >
-              <div
-                class="p-4 sm:p-5 rounded-2xl border border-[#e4e4e7] bg-[#f8f9fa] space-y-3 text-xs"
-              >
-                <div class="font-bold text-[#18181b] flex items-center gap-2">
-                  <i class="fa-solid fa-box-open text-[#00529c]" aria-hidden="true"></i>
-                  <span>Tất cả tập tin phát hành của phiên bản {{ currentRelease.tag_name }}:</span>
-                </div>
                 <div
-                  class="divide-y divide-[#e4e4e7] bg-white border border-[#e4e4e7] rounded-xl overflow-hidden shadow-2xs"
+                  class="p-5 sm:p-6 rounded-xl border border-[#e4e4e7] bg-white text-xs leading-relaxed overflow-x-auto markdown-prose space-y-3"
                 >
                   <div
-                    v-for="asset in validAssets"
-                    :key="asset.id"
-                    class="p-3 px-4 flex items-center justify-between hover:bg-[#f8fafc] transition-colors"
+                    class="font-bold text-[#18181b] text-sm flex items-center gap-2 border-b border-[#e4e4e7] pb-2"
                   >
-                    <div class="flex items-center gap-3 min-w-0">
-                      <i
-                        :class="getAssetIcon(asset.name)"
-                        class="text-sm text-[#71717a] shrink-0"
-                        aria-hidden="true"
-                      ></i>
-                      <span
-                        class="text-xs font-semibold text-[#18181b] truncate"
-                        >{{ asset.name }}</span
-                      >
-                      <span
-                        class="text-[11px] text-[#71717a] tabular-nums shrink-0"
-                        >({{ formatBytes(asset.size) }} · {{ (asset.download_count || 0).toLocaleString("vi-VN") }} lượt tải)</span
-                      >
-                    </div>
-                    <a
-                      :href="asset.browser_download_url"
-                      target="_blank"
-                      class="text-xs text-[#00529c] hover:underline font-semibold ml-2 shrink-0 flex items-center gap-1"
+                    <i
+                      class="fa-solid fa-scroll text-[#00529c]"
+                      aria-hidden="true"
+                    ></i>
+                    <span
+                      >Nhật ký phát hành phiên bản
+                      {{ currentRelease.tag_name }}</span
                     >
-                      <span>Tải xuống</span>
-                      <i class="fa-solid fa-download text-[11px]" aria-hidden="true"></i>
-                    </a>
                   </div>
+                  <div v-html="renderedMarkdownBody"></div>
                 </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+              </motion.div>
+            </AnimatePresence>
 
-          <!-- Collapsible Markdown Changelog Drawer -->
-          <AnimatePresence :initial="false">
-            <motion.div
-              v-if="showChangelog"
-              :initial="{ height: 0, opacity: 0 }"
-              :animate="{ height: 'auto', opacity: 1 }"
-              :exit="{ height: 0, opacity: 0 }"
-              :transition="{ duration: 0.28, ease: [0.33, 1, 0.68, 1] }"
-              class="overflow-hidden"
+            <!-- Security & Open Source Disclaimer -->
+            <div
+              class="pt-3 text-[11px] text-[#71717a] leading-relaxed border-t border-[#f4f4f5] space-y-1"
             >
-              <div
-                class="p-5 sm:p-6 rounded-2xl border border-[#e4e4e7] bg-[#f8f9fa] text-xs leading-relaxed overflow-x-auto markdown-prose shadow-2xs space-y-3"
-              >
-                <div class="font-bold text-[#18181b] text-sm flex items-center gap-2 border-b border-[#e4e4e7] pb-2">
-                  <i class="fa-solid fa-scroll text-[#00529c]" aria-hidden="true"></i>
-                  <span>Nhật ký phát hành phiên bản {{ currentRelease.tag_name }}</span>
-                </div>
-                <div v-html="renderedMarkdownBody"></div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-
-          <!-- Security & Open Source Disclaimer -->
-          <div
-            class="pt-3 text-[11px] text-[#71717a] leading-relaxed border-t border-[#f4f4f5] space-y-1"
-          >
-            <p>
-              <strong class="text-[#52525b]"
-                >Bảo mật &amp; Miễn trừ trách nhiệm:</strong
-              >
-              Mọi thao tác trích xuất và kết nối diễn ra trực tiếp giữa máy tính
-              cá nhân của bạn và hệ thống MyCTU qua giao thức HTTPS bảo mật,
-              không chuyển qua bất kỳ máy chủ trung gian nào. Mật khẩu không bao
-              giờ bị ghi lại. Phần mềm phát hành phi lợi nhuận theo giấy phép MIT
-              "AS IS".
-            </p>
+              <p>
+                <strong class="text-[#52525b]"
+                  >Bảo mật &amp; Miễn trừ trách nhiệm:</strong
+                >
+                Mọi thao tác trích xuất và kết nối diễn ra trực tiếp giữa máy
+                tính cá nhân của bạn và hệ thống MyCTU qua giao thức HTTPS bảo
+                mật, không chuyển qua bất kỳ máy chủ trung gian nào. Mật khẩu
+                không bao giờ bị ghi lại. Phần mềm phát hành phi lợi nhuận theo
+                giấy phép MIT "AS IS".
+              </p>
+            </div>
           </div>
         </div>
       </div>
