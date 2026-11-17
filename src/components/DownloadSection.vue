@@ -253,7 +253,7 @@
                     ·
                     {{
                       (
-                        recommendedSetupAsset?.download_count || 264
+                        setupTotalDownloads
                       ).toLocaleString("vi-VN")
                     }}
                     lượt tải</span
@@ -349,7 +349,7 @@
                   <span class="shrink-0 whitespace-nowrap"
                     >{{ formatBytes(portableAsset?.size || 82100000) }} ·
                     {{
-                      (portableAsset?.download_count || 198).toLocaleString(
+                      (portableTotalDownloads).toLocaleString(
                         "vi-VN",
                       )
                     }}
@@ -950,6 +950,7 @@ import { detectDevice, OS, ARCH } from "../../js/detector.js";
 
 const loading = ref(true);
 const latestRelease = ref(null);
+const allReleases = ref([]);
 const showChangelog = ref(false);
 const showAllAssets = ref(false);
 const activeOsTab = ref("windows");
@@ -963,30 +964,30 @@ function selectOsTab(tab) {
   }
 }
 
-const CACHE_KEY = "ctu_release_data_v2";
-const CACHE_TIME_KEY = "ctu_release_timestamp";
+const CACHE_KEY = "ctu_release_data_v3";
+const CACHE_TIME_KEY = "ctu_release_timestamp_v3";
 const CACHE_DURATION = 10 * 60 * 1000;
 
 // High-confidence fallback release if GitHub API is throttled/offline
 const FALLBACK_RELEASE = {
-  tag_name: "latest",
-  name: "CTU Scheduler",
-  published_at: new Date().toISOString(),
+  tag_name: "v1.2.0",
+  name: "CTU Scheduler v1.2.0",
+  published_at: "2026-11-08T00:00:00Z",
   body: "### Thông tin phiên bản mới nhất\n- Tự động hóa xếp lịch học thông minh, loại trừ 100% trùng tiết.\n- Tự động cập nhật sĩ số thời gian thực trực tiếp từ MyCTU.\n- Xem chi tiết toàn bộ các bản phát hành tại GitHub Releases.",
   assets: [
     {
       id: 1,
-      name: "CTU-Scheduler-Setup.exe",
+      name: "ctu-scheduler-win-Setup.exe",
       size: 78540000,
-      download_count: 265,
+      download_count: 48,
       browser_download_url:
         "https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest",
     },
     {
       id: 2,
-      name: "CTU-Scheduler-win-portable.zip",
+      name: "ctu-scheduler-win-Portable.zip",
       size: 82150000,
-      download_count: 198,
+      download_count: 401,
       browser_download_url:
         "https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest",
     },
@@ -997,13 +998,68 @@ const currentRelease = computed(() => {
   return latestRelease.value || FALLBACK_RELEASE;
 });
 
+// Calculate total downloads across ALL releases (excluding internal auto-update manifests)
 const totalDownloads = computed(() => {
-  if (!validAssets.value.length) return 463;
-  const count = validAssets.value.reduce(
-    (sum, a) => sum + (a.download_count || 0),
-    0,
-  );
-  return count > 0 ? count : 463;
+  if (allReleases.value && allReleases.value.length > 0) {
+    let count = 0;
+    for (const rel of allReleases.value) {
+      if (!rel.assets) continue;
+      for (const a of rel.assets) {
+        if (!isIgnoredAsset(a.name)) {
+          count += a.download_count || 0;
+        }
+      }
+    }
+    if (count > 0) return count;
+  }
+  return 449;
+});
+
+// Cumulative downloads for Setup edition across all releases
+const setupTotalDownloads = computed(() => {
+  if (allReleases.value && allReleases.value.length > 0) {
+    let count = 0;
+    for (const rel of allReleases.value) {
+      if (!rel.assets) continue;
+      for (const a of rel.assets) {
+        if (isIgnoredAsset(a.name)) continue;
+        const n = a.name.toLowerCase();
+        if (
+          n.includes("setup") ||
+          (n.endsWith(".exe") && !n.includes("portable")) ||
+          n.endsWith(".pkg")
+        ) {
+          count += a.download_count || 0;
+        }
+      }
+    }
+    if (count > 0) return count;
+  }
+  return recommendedSetupAsset.value?.download_count || 48;
+});
+
+// Cumulative downloads for Portable / Archive edition across all releases
+const portableTotalDownloads = computed(() => {
+  if (allReleases.value && allReleases.value.length > 0) {
+    let count = 0;
+    for (const rel of allReleases.value) {
+      if (!rel.assets) continue;
+      for (const a of rel.assets) {
+        if (isIgnoredAsset(a.name)) continue;
+        const n = a.name.toLowerCase();
+        if (
+          n.includes("portable") ||
+          n.endsWith(".zip") ||
+          n.endsWith(".tar.gz") ||
+          n.endsWith(".appimage")
+        ) {
+          count += a.download_count || 0;
+        }
+      }
+    }
+    if (count > 0) return count;
+  }
+  return portableAsset.value?.download_count || 401;
 });
 
 const detectedDeviceLabel = computed(() => {
@@ -1137,7 +1193,13 @@ async function fetchReleases() {
       Date.now() - parseInt(cachedTime, 10) < CACHE_DURATION
     ) {
       const data = JSON.parse(cached);
-      latestRelease.value = Array.isArray(data) ? data[0] : data;
+      if (Array.isArray(data)) {
+        allReleases.value = data;
+        latestRelease.value = data[0];
+      } else {
+        allReleases.value = [data];
+        latestRelease.value = data;
+      }
       loading.value = false;
       return;
     }
@@ -1151,13 +1213,20 @@ async function fetchReleases() {
     );
     if (!res.ok) throw new Error("Network error");
     const data = await res.json();
-    latestRelease.value = Array.isArray(data) ? data[0] : data;
+    if (Array.isArray(data)) {
+      allReleases.value = data;
+      latestRelease.value = data[0];
+    } else {
+      allReleases.value = [data];
+      latestRelease.value = data;
+    }
     try {
       localStorage.setItem(CACHE_KEY, JSON.stringify(data));
       localStorage.setItem(CACHE_TIME_KEY, Date.now().toString());
     } catch {}
   } catch (err) {
     latestRelease.value = FALLBACK_RELEASE;
+    allReleases.value = [FALLBACK_RELEASE];
   } finally {
     loading.value = false;
   }
