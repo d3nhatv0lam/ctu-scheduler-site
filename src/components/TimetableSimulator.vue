@@ -1,286 +1,583 @@
 <template>
-  <div class="space-y-4">
-    <!-- View Switcher Tabs (ClickUp Style) -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-[#e8e8e8]">
-      <div class="relative grid grid-cols-2 p-1 bg-[#f4f4f5] rounded-full border border-[#e8e8e8] self-start w-[260px] sm:w-[272px] select-none">
-        <!-- Sliding Active Background Pill (motion-v animated) -->
-        <motion.div
-          class="absolute top-1 bottom-1 left-1 rounded-full bg-[#18181b] shadow-2xs pointer-events-none"
-          :style="{ width: 'calc((100% - 8px) / 2)' }"
-          :animate="{ x: activeView === 'calendar' ? '0%' : '100%' }"
-          :transition="{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }"
-        />
-        <button
-          type="button"
-          class="relative z-10 py-1.5 px-3 text-xs font-semibold rounded-full transition-colors duration-200 text-center cursor-pointer whitespace-nowrap flex items-center justify-center shrink-0"
-          :class="activeView === 'calendar' ? 'text-white font-bold' : 'text-[#71717a] hover:text-[#18181b]'"
-          @click="selectView('calendar')"
-        >
-          Lịch Tuần
-        </button>
-        <button
-          type="button"
-          class="relative z-10 py-1.5 px-3 text-xs font-semibold rounded-full transition-colors duration-200 text-center cursor-pointer whitespace-nowrap flex items-center justify-center shrink-0"
-          :class="activeView === 'list' ? 'text-white font-bold' : 'text-[#71717a] hover:text-[#18181b]'"
-          @click="selectView('list')"
-        >
-          Danh Sách Môn
-        </button>
+  <!-- Desktop Application Window Frame (CTU Scheduler Native App Replica) -->
+  <div class="rounded-2xl border border-[#cbd5e1] bg-[#0a3156] shadow-float overflow-hidden">
+    <!-- Window Header / Titlebar -->
+    <div class="h-10 bg-[#072440] border-b border-[#051c33] px-3 sm:px-4 flex items-center justify-between select-none">
+      <div class="flex items-center gap-3">
+        <!-- CTU Crest Badge -->
+        <div class="flex items-center gap-2">
+          <div class="w-5 h-5 rounded-md bg-[#00529c] flex items-center justify-center text-white text-[11px] font-bold shadow-xs">
+            <i class="fa-solid fa-graduation-cap text-[11px]" aria-hidden="true"></i>
+          </div>
+          <span class="text-xs font-semibold text-white/90 font-display">Đại học Cần Thơ</span>
+        </div>
+
+        <span class="text-white/30 text-xs hidden sm:inline">|</span>
+
+        <!-- Active View Tab -->
+        <div class="hidden sm:flex items-center gap-1.5 text-xs font-bold text-white tracking-wide">
+          <span class="px-2.5 py-1 rounded-md bg-white/10 text-white border border-white/15">
+            Học phần
+          </span>
+        </div>
       </div>
 
-      <!-- Quick Criteria Filters (ClickUp 9999px Pill Filters) -->
-      <div class="flex flex-wrap items-center gap-1.5">
-        <span class="text-xs text-[#838383] font-semibold mr-1">Tiêu chí:</span>
-        <motion.button
-          v-for="item in filterList"
-          :key="item.key"
-          type="button"
-          :whilePress="{ scale: 0.95 }"
-          class="pill-filter !py-1 !px-3 !text-xs cursor-pointer"
-          :class="{ active: currentFilter === item.key }"
-          @click="currentFilter = item.key"
-        >
-          {{ item.label }}
-        </motion.button>
+      <!-- Window Controls (Minimize, Maximize, Close) -->
+      <div class="flex items-center gap-3 text-xs text-white/70">
+        <span class="hidden md:inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#00c07a]/20 text-[#6ee7b7] text-[11px] font-semibold border border-[#00c07a]/30">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#6ee7b7] animate-pulse"></span>
+          Đồng bộ MyCTU
+        </span>
+        <div class="flex items-center gap-3 ml-2 text-white/60">
+          <button type="button" class="hover:text-white transition-colors cursor-pointer text-sm" aria-label="Thu nhỏ">─</button>
+          <button type="button" class="hover:text-white transition-colors cursor-pointer text-xs" aria-label="Phóng to">□</button>
+          <button type="button" class="hover:text-[#f87171] transition-colors cursor-pointer text-sm" aria-label="Đóng">✕</button>
+        </div>
       </div>
     </div>
 
-    <!-- Calendar / List Views with AnimatePresence (Smooth Transition) -->
-    <AnimatePresence mode="wait">
-      <!-- Calendar View -->
-      <motion.div
-        v-if="activeView === 'calendar'"
-        key="calendar"
-        :initial="{ opacity: 0, y: 8 }"
-        :animate="{ opacity: 1, y: 0 }"
-        :exit="{ opacity: 0, y: -8 }"
-        :transition="{ duration: 0.22, ease: [0.33, 1, 0.68, 1] }"
-        class="overflow-x-auto rounded-xl border border-[#e8e8e8] bg-[#f8f9fa]/40 tabular-nums"
-      >
-      <table class="w-full text-left border-collapse text-xs">
-        <thead>
-          <tr class="border-b border-[#e8e8e8] bg-[#e9ebf0]/50 text-[#646464] font-bold">
-            <th class="p-2.5 w-16 text-center">Buổi</th>
-            <th class="p-2.5 text-center">Thứ 2</th>
-            <th class="p-2.5 text-center">Thứ 3</th>
-            <th class="p-2.5 text-center">Thứ 4</th>
-            <th class="p-2.5 text-center">Thứ 5</th>
-            <th class="p-2.5 text-center">Thứ 6</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-[#e8e8e8] bg-white">
-          <!-- Ca Sáng -->
-          <tr>
-            <td class="p-3 text-[#646464] text-center font-bold bg-[#f8f9fa] border-r border-[#e8e8e8]">
-              Sáng<br /><span class="text-[11px] text-[#838383] font-normal">Tiết 1-5</span>
-            </td>
-            <td class="p-2 border-r border-[#e8e8e8]">
-              <div
-                class="timetable-slot slot-course p-2.5 rounded-lg border border-[#e8e8e8] transition-colors"
-                :class="{ 'slot-dimmed': !isSlotActive('slot-ct176-m') }"
-              >
-                <div class="flex items-center justify-between">
-                  <span class="font-extrabold text-[#202020]">CT176</span>
-                  <span class="text-[11px] font-bold px-1.5 py-0.2 bg-[#f0f7ff] text-[#00529c] rounded">3TC</span>
-                </div>
-                <div class="text-[11px] text-[#646464] mt-0.5">Lập trình HĐT</div>
-                <div class="text-[11px] text-[#838383] mt-1">Phòng 102/DI · Khu II</div>
-              </div>
-            </td>
-            <td class="p-2 border-r border-[#e8e8e8]"><div class="text-[#cbd5e1] text-center py-4 font-sans">-</div></td>
-            <td class="p-2 border-r border-[#e8e8e8]">
-              <div
-                class="timetable-slot slot-course p-2.5 rounded-lg border border-[#e8e8e8] transition-colors"
-                :class="{ 'slot-dimmed': !isSlotActive('slot-ct103-m') }"
-              >
-                <div class="flex items-center justify-between">
-                  <span class="font-extrabold text-[#202020]">CT103</span>
-                  <span class="text-[11px] font-bold px-1.5 py-0.2 bg-[#f0f7ff] text-[#00529c] rounded">4TC</span>
-                </div>
-                <div class="text-[11px] text-[#646464] mt-0.5">Cấu trúc Dữ Liệu</div>
-                <div class="text-[11px] text-[#838383] mt-1">Phòng 204/DI · Khu II</div>
-              </div>
-            </td>
-            <td class="p-2 border-r border-[#e8e8e8]"><div class="text-[#cbd5e1] text-center py-4 font-sans">-</div></td>
-            <td class="p-2"><div class="text-[#cbd5e1] text-center py-4 font-sans">-</div></td>
-          </tr>
-          <!-- Ca Chiều -->
-          <tr>
-            <td class="p-3 text-[#646464] text-center font-bold bg-[#f8f9fa] border-r border-[#e8e8e8]">
-              Chiều<br /><span class="text-[11px] text-[#838383] font-normal">Tiết 6-10</span>
-            </td>
-            <td class="p-2 border-r border-[#e8e8e8]"><div class="text-[#cbd5e1] text-center py-4 font-sans">-</div></td>
-            <td class="p-2 border-r border-[#e8e8e8]">
-              <div
-                class="timetable-slot slot-course p-2.5 rounded-lg border border-[#e8e8e8] transition-colors"
-                :class="{ 'slot-dimmed': !isSlotActive('slot-ct112-a') }"
-              >
-                <div class="flex items-center justify-between">
-                  <span class="font-extrabold text-[#202020]">CT112</span>
-                  <span class="text-[11px] font-bold px-1.5 py-0.2 bg-[#e6f4ff] text-[#0091ff] rounded">3TC</span>
-                </div>
-                <div class="text-[11px] text-[#646464] mt-0.5">Mạng Máy Tính</div>
-                <div class="text-[11px] text-[#838383] mt-1">Phòng 301/DI · Khu II</div>
-              </div>
-            </td>
-            <td class="p-2 border-r border-[#e8e8e8]">
-              <div
-                class="timetable-slot slot-course p-2.5 rounded-lg border border-[#e8e8e8] transition-colors"
-                :class="{ 'slot-dimmed': !isSlotActive('slot-ct178-a') }"
-              >
-                <div class="flex items-center justify-between">
-                  <span class="font-extrabold text-[#202020]">CT178</span>
-                  <span class="text-[11px] font-bold px-1.5 py-0.2 bg-[#e6f4ff] text-[#0091ff] rounded">3TC</span>
-                </div>
-                <div class="text-[11px] text-[#646464] mt-0.5">Nguyên Lý HĐH</div>
-                <div class="text-[11px] text-[#838383] mt-1">Phòng 105/DI · Khu II</div>
-              </div>
-            </td>
-            <td class="p-2 border-r border-[#e8e8e8]">
-              <div
-                class="timetable-slot slot-course p-2.5 rounded-lg border border-[#e8e8e8] transition-colors"
-                :class="{ 'slot-dimmed': !isSlotActive('slot-ml014-a') }"
-              >
-                <div class="flex items-center justify-between">
-                  <span class="font-extrabold text-[#202020]">ML014</span>
-                  <span class="text-[11px] font-bold px-1.5 py-0.2 bg-[#ecfdf5] text-[#00c07a] rounded">2TC</span>
-                </div>
-                <div class="text-[11px] text-[#646464] mt-0.5">Triết Học MLN</div>
-                <div class="text-[11px] text-[#838383] mt-1">Phòng 101/Khoa Luật</div>
-              </div>
-            </td>
-            <td class="p-2"><div class="text-[#cbd5e1] text-center py-4 font-sans">-</div></td>
-          </tr>
-        </tbody>
-      </table>
-    </motion.div>
+    <!-- Application Body with Sidebar Rail + Modal Area -->
+    <div class="flex flex-col sm:flex-row bg-[#0e3b68]">
+      <!-- Left Sidebar Navigation Rail (Desktop Only) -->
+      <div class="hidden sm:flex w-12 py-4 flex-col items-center justify-between bg-[#072440]/80 border-r border-[#051c33]/70 shrink-0">
+        <div class="flex flex-col items-center gap-3 text-white/60 text-xs">
+          <button type="button" class="w-8 h-8 rounded-lg flex items-center justify-center hover:text-white hover:bg-white/10 transition-colors" title="Chương trình đào tạo">
+            <i class="fa-solid fa-graduation-cap text-sm" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="w-8 h-8 rounded-lg flex items-center justify-center hover:text-white hover:bg-white/10 transition-colors" title="Trang chủ">
+            <i class="fa-solid fa-house text-xs" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="w-8 h-8 rounded-lg flex items-center justify-center bg-[#00529c] text-white shadow-sm" title="Thời khóa biểu (Đang mở)">
+            <i class="fa-solid fa-calendar-days text-xs" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="w-8 h-8 rounded-lg flex items-center justify-center hover:text-white hover:bg-white/10 transition-colors" title="Thông báo học phần">
+            <i class="fa-regular fa-envelope text-xs" aria-hidden="true"></i>
+          </button>
+        </div>
 
-    <!-- List View -->
-      <motion.div
-        v-else
-        key="list"
-        :initial="{ opacity: 0, y: 8 }"
-        :animate="{ opacity: 1, y: 0 }"
-        :exit="{ opacity: 0, y: -8 }"
-        :transition="{ duration: 0.22, ease: [0.33, 1, 0.68, 1] }"
-        class="rounded-xl border border-[#e8e8e8] overflow-hidden divide-y divide-[#e8e8e8] bg-white text-xs tabular-nums"
-      >
-        <div
-          v-for="course in courseList"
-          :key="course.code"
-          class="p-3 sm:p-3.5 flex items-center justify-between gap-3 hover:bg-[#f8f9fa] transition-colors"
-        >
-          <div class="flex items-center gap-3 min-w-0 flex-1">
-            <span class="w-8 h-8 rounded-full bg-[#f0f7ff] text-[#00529c] font-extrabold flex items-center justify-center text-xs shrink-0">
-              {{ course.credits }}
-            </span>
-            <div class="min-w-0 flex-1">
-              <div class="font-bold text-[#202020] text-xs sm:text-sm truncate">{{ course.code }} — {{ course.name }}</div>
-              <div class="text-[11px] sm:text-xs text-[#838383] mt-0.5 truncate">Lớp: {{ course.classGroup }} · Giảng viên: {{ course.lecturer }} · Phòng: {{ course.room }}</div>
-            </div>
-          </div>
-          <div class="text-right shrink-0">
-            <span class="px-2.5 py-0.5 text-[11px] font-bold rounded-full bg-[#ecfdf5] text-[#00c07a] border border-[#a7f3d0] whitespace-nowrap">
-              Còn {{ course.slots }}
-            </span>
-          </div>
-        </div>
-      </motion.div>
-    </AnimatePresence>
-
-    <!-- Live Status Toolbar (Hairline Divider Row) -->
-    <div class="pt-3 border-t border-[#e8e8e8] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
-      <div class="grid grid-cols-3 divide-x divide-[#e8e8e8] text-center sm:text-left flex-1">
-        <div class="pr-2 sm:pr-3">
-          <span class="text-[#838383] block text-[11px] font-bold uppercase tracking-wider">Trùng Lịch</span>
-          <span class="font-extrabold text-[#00c07a] flex items-center gap-1 justify-center sm:justify-start whitespace-nowrap">
-            <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-            {{ currentStats.conflicts }}
-          </span>
-        </div>
-        <div class="px-2 sm:px-3">
-          <span class="text-[#838383] block text-[11px] font-bold uppercase tracking-wider whitespace-nowrap">Sĩ Số CT176</span>
-          <span class="font-extrabold text-[#0091ff] whitespace-nowrap">{{ currentStats.capacity }}</span>
-        </div>
-        <div class="pl-2 sm:pl-3">
-          <span class="text-[#838383] block text-[11px] font-bold uppercase tracking-wider whitespace-nowrap">Ngày Trống</span>
-          <span class="font-extrabold text-[#202020] whitespace-nowrap">{{ currentStats.freeDays }}</span>
+        <div>
+          <button type="button" class="w-8 h-8 rounded-lg flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition-colors" title="Thoát">
+            <i class="fa-solid fa-arrow-right-from-bracket text-xs" aria-hidden="true"></i>
+          </button>
         </div>
       </div>
 
-      <div class="text-xs text-[#646464] bg-[#f8f9fa] px-3.5 py-2 rounded-lg border border-[#e8e8e8] flex-1 text-pretty">
-        <span class="font-bold text-[#202020]">Đánh giá phương án: </span>
-        {{ currentStats.statusText }}
+      <!-- Main Stage: Centered Timetable Generation Modal -->
+      <div class="flex-1 p-3 sm:p-5 md:p-6 flex items-center justify-center bg-[#0c3156]/50">
+        <div class="w-full bg-white rounded-2xl border border-[#e2e8f0] shadow-2xl overflow-hidden text-left flex flex-col">
+          <!-- Modal Top Bar -->
+          <div class="px-4 py-2.5 border-b border-[#f1f5f9] flex items-center justify-between bg-white select-none">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#00529c]"></span>
+              <span class="text-xs font-bold text-[#0f172a] font-display">Hộp thoại sắp xếp thời khóa biểu tự động</span>
+            </div>
+            <button
+              type="button"
+              class="w-6 h-6 rounded-md flex items-center justify-center text-[#94a3b8] hover:text-[#0f172a] hover:bg-[#f1f5f9] transition-colors text-xs"
+              aria-label="Đóng hộp thoại"
+            >
+              ✕
+            </button>
+          </div>
+
+          <!-- Modal 2-Column Content Grid -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 divide-y lg:divide-y-0 lg:divide-x divide-[#e2e8f0]">
+            <!-- ============================================== -->
+            <!-- LEFT COLUMN: SẮP XẾP THỜI KHÓA BIỂU (~40%)      -->
+            <!-- ============================================== -->
+            <div class="lg:col-span-5 p-4 sm:p-5 space-y-4 bg-white">
+              <div>
+                <h3 class="text-base sm:text-lg font-bold text-[#0f172a] font-display">
+                  Sắp xếp thời khóa biểu
+                </h3>
+              </div>
+
+              <!-- Priority Criteria Dropdown Selector -->
+              <div class="space-y-1.5 relative">
+                <label class="text-xs font-semibold text-[#64748b] block">
+                  Tiêu chí ưu tiên
+                </label>
+                <button
+                  type="button"
+                  class="w-full p-2.5 rounded-xl border border-[#cbd5e1] bg-white flex items-center justify-between text-xs sm:text-sm font-semibold text-[#1e293b] hover:border-[#00529c] focus:outline-none focus:ring-2 focus:ring-[#00529c]/20 transition-all cursor-pointer shadow-2xs"
+                  @click="isDropdownOpen = !isDropdownOpen"
+                >
+                  <span class="flex items-center gap-2 truncate">
+                    <span>{{ activeCriteria.icon }}</span>
+                    <span>{{ activeCriteria.label }}</span>
+                  </span>
+                  <i
+                    class="fa-solid fa-chevron-down text-xs text-[#94a3b8] transition-transform duration-200"
+                    :class="{ 'rotate-180': isDropdownOpen }"
+                    aria-hidden="true"
+                  ></i>
+                </button>
+
+                <!-- Dropdown Menu -->
+                <div
+                  v-if="isDropdownOpen"
+                  class="absolute top-full left-0 right-0 mt-1 z-30 bg-white border border-[#cbd5e1] rounded-xl shadow-lg overflow-hidden py-1 divide-y divide-[#f1f5f9]"
+                >
+                  <button
+                    v-for="item in criteriaList"
+                    :key="item.id"
+                    type="button"
+                    class="w-full px-3 py-2 text-left text-xs flex items-center justify-between hover:bg-[#f8fafc] transition-colors cursor-pointer"
+                    :class="activeCriteria.id === item.id ? 'bg-[#f0f7ff] text-[#00529c] font-bold' : 'text-[#334155]'"
+                    @click="selectCriteria(item)"
+                  >
+                    <span class="flex items-center gap-2">
+                      <span>{{ item.icon }}</span>
+                      <span>{{ item.label }}</span>
+                    </span>
+                    <i v-if="activeCriteria.id === item.id" class="fa-solid fa-check text-[11px]" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- 3 Course Cards (Exact from Screenshot) -->
+              <div class="space-y-2.5">
+                <!-- Course 1: CT112 (Môn thay thế) -->
+                <div class="p-3 rounded-xl border border-[#e2e8f0] bg-[#fafafa]/60 hover:bg-white hover:border-[#cbd5e1] transition-all space-y-2.5">
+                  <div class="flex items-center justify-between">
+                    <span class="font-bold text-xs sm:text-sm text-[#0f172a] font-display">
+                      CT112 - Mạng máy tính
+                    </span>
+                    <span class="px-2 py-0.5 rounded-md bg-[#f1f5f9] text-[#475569] font-bold text-[11px] border border-[#e2e8f0]">
+                      3 TC
+                    </span>
+                  </div>
+                  <div class="text-[11px] text-[#64748b]">
+                    Số lượng nhóm đã chọn: 1
+                  </div>
+                  <div class="flex items-center gap-4 text-xs text-[#334155] font-medium">
+                    <label class="flex items-center gap-1.5 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="course-ct112"
+                        class="accent-[#00529c] cursor-pointer"
+                        :checked="course1Type === 'main'"
+                        @change="course1Type = 'main'"
+                      />
+                      <span>Môn chính</span>
+                    </label>
+                    <label class="flex items-center gap-1.5 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="course-ct112"
+                        class="accent-[#00529c] cursor-pointer"
+                        :checked="course1Type === 'alt'"
+                        @change="course1Type = 'alt'"
+                      />
+                      <span class="font-semibold text-[#00529c]">Môn thay thế</span>
+                    </label>
+                  </div>
+                  <!-- Alternative Subject Selector (Active) -->
+                  <div class="pt-1">
+                    <div class="w-full px-2.5 py-1.5 rounded-lg border border-[#cbd5e1] bg-white text-xs text-[#334155] flex items-center justify-between shadow-2xs font-medium">
+                      <span class="truncate">ML016 - Kinh tế chính trị Mác - Lênin</span>
+                      <i class="fa-solid fa-chevron-down text-[11px] text-[#94a3b8] shrink-0 ml-1" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Course 2: CT179 (Môn chính) -->
+                <div class="p-3 rounded-xl border border-[#e2e8f0] bg-[#fafafa]/60 hover:bg-white hover:border-[#cbd5e1] transition-all space-y-2">
+                  <div class="flex items-center justify-between">
+                    <span class="font-bold text-xs sm:text-sm text-[#0f172a] font-display">
+                      CT179 - Quản trị hệ thống
+                    </span>
+                    <span class="px-2 py-0.5 rounded-md bg-[#f1f5f9] text-[#475569] font-bold text-[11px] border border-[#e2e8f0]">
+                      3 TC
+                    </span>
+                  </div>
+                  <div class="text-[11px] text-[#64748b]">
+                    Số lượng nhóm đã chọn: 1
+                  </div>
+                  <div class="flex items-center gap-4 text-xs text-[#334155] font-medium">
+                    <label class="flex items-center gap-1.5 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="course-ct179"
+                        class="accent-[#00529c] cursor-pointer"
+                        checked
+                      />
+                      <span class="font-semibold text-[#00529c]">Môn chính</span>
+                    </label>
+                    <label class="flex items-center gap-1.5 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="course-ct179"
+                        class="accent-[#00529c] cursor-pointer"
+                      />
+                      <span>Môn thay thế</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- Course 3: ML016 (Môn chính) -->
+                <div class="p-3 rounded-xl border border-[#e2e8f0] bg-[#fafafa]/60 hover:bg-white hover:border-[#cbd5e1] transition-all space-y-2">
+                  <div class="flex items-center justify-between">
+                    <span class="font-bold text-xs sm:text-sm text-[#0f172a] font-display">
+                      ML016 - Kinh tế chính trị Mác - Lênin
+                    </span>
+                    <span class="px-2 py-0.5 rounded-md bg-[#f1f5f9] text-[#475569] font-bold text-[11px] border border-[#e2e8f0]">
+                      2 TC
+                    </span>
+                  </div>
+                  <div class="text-[11px] text-[#64748b]">
+                    Số lượng nhóm đã chọn: 1
+                  </div>
+                  <div class="flex items-center gap-4 text-xs text-[#334155] font-medium">
+                    <label class="flex items-center gap-1.5 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="course-ml016"
+                        class="accent-[#00529c] cursor-pointer"
+                        checked
+                      />
+                      <span class="font-semibold text-[#00529c]">Môn chính</span>
+                    </label>
+                    <label class="flex items-center gap-1.5 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="course-ml016"
+                        class="accent-[#00529c] cursor-pointer"
+                      />
+                      <span>Môn thay thế</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- RIGHT COLUMN: LƯỚI THỜI KHÓA BIỂU (~60%)        -->
+            <!-- ============================================== -->
+            <div class="lg:col-span-7 p-4 sm:p-5 space-y-3.5 bg-white flex flex-col justify-between">
+              <!-- Top Row: Title, Selection Counter & Action Button -->
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-[#f1f5f9]">
+                <div>
+                  <h3 class="text-base sm:text-lg font-bold text-[#0f172a] font-display inline-block">
+                    Thời Khóa Biểu
+                  </h3>
+                  <span class="text-xs text-[#64748b] font-medium ml-2">
+                    Đã chọn 1/9 thời khóa biểu
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  class="px-3.5 py-1.5 rounded-lg bg-[#00529c] text-white text-xs font-bold hover:bg-[#003b7a] transition-colors flex items-center gap-1.5 shadow-xs shrink-0 cursor-pointer self-start sm:self-auto"
+                >
+                  <i class="fa-solid fa-plus text-[11px]" aria-hidden="true"></i>
+                  <span>Tạo thời khóa biểu</span>
+                </button>
+              </div>
+
+              <!-- Result Metrics Card Summary (from Screenshot 1) -->
+              <div class="p-2.5 sm:p-3 rounded-xl border border-[#cbd5e1] bg-[#f8fafc] flex flex-wrap items-center justify-between gap-3 text-xs">
+                <div class="flex items-center gap-2">
+                  <label class="flex items-center gap-1.5 cursor-pointer font-semibold text-[#0f172a]">
+                    <input type="checkbox" checked class="accent-[#00529c] w-3.5 h-3.5 rounded cursor-pointer" />
+                    <span>Chọn</span>
+                  </label>
+                </div>
+                <div class="flex items-center gap-4 text-[#475569] font-medium">
+                  <span>Số môn học: <strong class="text-[#0f172a]">2</strong></span>
+                  <span>·</span>
+                  <span>Số tín chỉ: <strong class="text-[#0f172a]">6</strong></span>
+                  <span>·</span>
+                  <span>Điểm đánh giá: <strong class="text-[#e11d48] font-bold">0.71</strong></span>
+                </div>
+              </div>
+
+              <!-- Full Weekly Timetable Grid (Matching Screenshot 2 Exactly) -->
+              <div class="overflow-x-auto rounded-xl border border-[#e2e8f0] bg-white shadow-2xs">
+                <table class="w-full text-left border-collapse text-xs min-w-[540px]">
+                  <thead>
+                    <tr class="border-b border-[#e2e8f0] bg-[#f8fafc] text-[#475569] font-bold text-center">
+                      <th class="p-2 border-r border-[#e2e8f0] font-semibold text-[11px] w-[90px] shrink-0">
+                        Thời khóa biểu
+                      </th>
+                      <th class="p-2 border-r border-[#e2e8f0] font-semibold text-[11px] w-[15%]">Thứ 2</th>
+                      <th class="p-2 border-r border-[#e2e8f0] font-semibold text-[11px] w-[15%]">Thứ 3</th>
+                      <th class="p-2 border-r border-[#e2e8f0] font-semibold text-[11px] w-[15%]">Thứ 4</th>
+                      <th class="p-2 border-r border-[#e2e8f0] font-semibold text-[11px] w-[15%]">Thứ 5</th>
+                      <th class="p-2 border-r border-[#e2e8f0] font-semibold text-[11px] w-[15%]">Thứ 6</th>
+                      <th class="p-2 font-semibold text-[11px] w-[15%]">Thứ 7</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- CA SÁNG: Tiết 1 -->
+                    <tr class="border-b border-[#f1f5f9] h-[34px]">
+                      <td class="p-1.5 border-r border-[#e2e8f0] text-center text-[11px] font-semibold text-[#64748b] bg-[#fafafa]">
+                        Tiết 1
+                      </td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td></td>
+                    </tr>
+
+                    <!-- CA SÁNG: Tiết 2 (Spans Tiết 2 - Tiết 4 on Thứ 2 & Thứ 3) -->
+                    <tr class="border-b border-[#f1f5f9] h-[34px]">
+                      <td class="p-1.5 border-r border-[#e2e8f0] text-center text-[11px] font-semibold text-[#64748b] bg-[#fafafa]">
+                        Tiết 2
+                      </td>
+                      <!-- THỨ 2: CT179 (Rowspan 3) -->
+                      <td rowspan="3" class="p-1 border-r border-[#f1f5f9] align-top bg-[#fdf2f8]/40">
+                        <div class="h-full rounded-xl border border-[#fbcfe8] bg-[#fce7f3]/80 p-2 text-left space-y-1 shadow-2xs flex flex-col justify-between">
+                          <div class="space-y-1">
+                            <div>
+                              <span class="inline-block px-2 py-0.5 rounded-full bg-[#0f172a] text-white font-extrabold text-[11px] tracking-wide">
+                                CT179 • 3 TC
+                              </span>
+                            </div>
+                            <div class="text-[11px] text-[#64748b] font-medium leading-tight">
+                              Nhóm H01 - P.203HA5
+                            </div>
+                            <div class="text-xs font-bold text-[#0f172a] leading-tight font-display">
+                              Quản trị hệ thống
+                            </div>
+                            <div class="text-[11px] text-[#475569] flex items-center gap-1 leading-tight">
+                              <i class="fa-regular fa-user text-[11px] text-[#64748b]" aria-hidden="true"></i>
+                              <span>ThS. Lê Huỳnh Quốc Bảo</span>
+                            </div>
+                          </div>
+                          <!-- Sĩ số Bar -->
+                          <div class="pt-1.5 space-y-1">
+                            <div class="flex items-center justify-between text-[11px] text-[#475569]">
+                              <span>Sĩ số</span>
+                              <span class="font-bold text-[#0f172a]">15/40</span>
+                            </div>
+                            <div class="h-1 rounded-full bg-[#e2e8f0] overflow-hidden">
+                              <div class="h-full rounded-full bg-[#0f172a] w-[37.5%]"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+
+                      <!-- THỨ 3: CT179 (Rowspan 3) -->
+                      <td rowspan="3" class="p-1 border-r border-[#f1f5f9] align-top bg-[#fdf2f8]/40">
+                        <div class="h-full rounded-xl border border-[#fbcfe8] bg-[#fce7f3]/80 p-2 text-left space-y-1 shadow-2xs flex flex-col justify-between">
+                          <div class="space-y-1">
+                            <div>
+                              <span class="inline-block px-2 py-0.5 rounded-full bg-[#0f172a] text-white font-extrabold text-[11px] tracking-wide">
+                                CT179 • 3 TC
+                              </span>
+                            </div>
+                            <div class="text-[11px] text-[#64748b] font-medium leading-tight">
+                              Nhóm H01 - P.203HA5
+                            </div>
+                            <div class="text-xs font-bold text-[#0f172a] leading-tight font-display">
+                              Quản trị hệ thống
+                            </div>
+                            <div class="text-[11px] text-[#475569] flex items-center gap-1 leading-tight">
+                              <i class="fa-regular fa-user text-[11px] text-[#64748b]" aria-hidden="true"></i>
+                              <span>ThS. Lê Huỳnh Quốc Bảo</span>
+                            </div>
+                          </div>
+                          <!-- Sĩ số Bar -->
+                          <div class="pt-1.5 space-y-1">
+                            <div class="flex items-center justify-between text-[11px] text-[#475569]">
+                              <span>Sĩ số</span>
+                              <span class="font-bold text-[#0f172a]">15/40</span>
+                            </div>
+                            <div class="h-1 rounded-full bg-[#e2e8f0] overflow-hidden">
+                              <div class="h-full rounded-full bg-[#0f172a] w-[37.5%]"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td></td>
+                    </tr>
+
+                    <!-- Tiết 3 -->
+                    <tr class="border-b border-[#f1f5f9] h-[34px]">
+                      <td class="p-1.5 border-r border-[#e2e8f0] text-center text-[11px] font-semibold text-[#64748b] bg-[#fafafa]">
+                        Tiết 3
+                      </td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td></td>
+                    </tr>
+
+                    <!-- Tiết 4 -->
+                    <tr class="border-b border-[#f1f5f9] h-[34px]">
+                      <td class="p-1.5 border-r border-[#e2e8f0] text-center text-[11px] font-semibold text-[#64748b] bg-[#fafafa]">
+                        Tiết 4
+                      </td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td></td>
+                    </tr>
+
+                    <!-- Tiết 5 -->
+                    <tr class="border-b border-[#e2e8f0] h-[34px]">
+                      <td class="p-1.5 border-r border-[#e2e8f0] text-center text-[11px] font-semibold text-[#64748b] bg-[#fafafa]">
+                        Tiết 5
+                      </td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td></td>
+                    </tr>
+
+                    <!-- DẢI PHÂN CÁCH TRƯA (Sáng / Chiều) -->
+                    <tr class="h-2.5 bg-[#f1f5f9]/80 border-b border-[#e2e8f0]">
+                      <td colspan="7" class="p-0"></td>
+                    </tr>
+
+                    <!-- CA CHIỀU: Tiết 6 (Spans Tiết 6 - Tiết 9 on Thứ 6) -->
+                    <tr class="border-b border-[#f1f5f9] h-[34px]">
+                      <td class="p-1.5 border-r border-[#e2e8f0] text-center text-[11px] font-semibold text-[#64748b] bg-[#fafafa]">
+                        Tiết 6
+                      </td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+
+                      <!-- THỨ 6: CT112 (Rowspan 4) -->
+                      <td rowspan="4" class="p-1 border-r border-[#f1f5f9] align-top bg-[#f0f9ff]/50">
+                        <div class="h-full rounded-xl border border-[#bae6fd] bg-[#e0f2fe] p-2 text-left space-y-1 shadow-2xs flex flex-col justify-between">
+                          <div class="space-y-1">
+                            <div>
+                              <span class="inline-block px-2 py-0.5 rounded-full bg-[#0f172a] text-white font-extrabold text-[11px] tracking-wide">
+                                CT112 • 3 TC
+                              </span>
+                            </div>
+                            <div class="text-[11px] text-[#64748b] font-medium leading-tight">
+                              Nhóm 01 - P.011/K3
+                            </div>
+                            <div class="text-xs font-bold text-[#0f172a] leading-tight font-display">
+                              Mạng máy tính
+                            </div>
+                            <div class="text-[11px] text-[#475569] flex items-center gap-1 leading-tight">
+                              <i class="fa-regular fa-user text-[11px] text-[#64748b]" aria-hidden="true"></i>
+                              <span>TS. Nguyễn Hữu Văn Long</span>
+                            </div>
+                          </div>
+                          <!-- Sĩ số Bar -->
+                          <div class="pt-1.5 space-y-1">
+                            <div class="flex items-center justify-between text-[11px] text-[#475569]">
+                              <span>Sĩ số</span>
+                              <span class="font-bold text-[#0f172a]">3/40</span>
+                            </div>
+                            <div class="h-1 rounded-full bg-[#cbd5e1] overflow-hidden">
+                              <div class="h-full rounded-full bg-[#0f172a] w-[7.5%]"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+
+                      <td></td>
+                    </tr>
+
+                    <!-- Tiết 7 -->
+                    <tr class="border-b border-[#f1f5f9] h-[34px]">
+                      <td class="p-1.5 border-r border-[#e2e8f0] text-center text-[11px] font-semibold text-[#64748b] bg-[#fafafa]">
+                        Tiết 7
+                      </td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td></td>
+                    </tr>
+
+                    <!-- Tiết 8 -->
+                    <tr class="border-b border-[#f1f5f9] h-[34px]">
+                      <td class="p-1.5 border-r border-[#e2e8f0] text-center text-[11px] font-semibold text-[#64748b] bg-[#fafafa]">
+                        Tiết 8
+                      </td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td></td>
+                    </tr>
+
+                    <!-- Tiết 9 -->
+                    <tr class="h-[34px]">
+                      <td class="p-1.5 border-r border-[#e2e8f0] text-center text-[11px] font-semibold text-[#64748b] bg-[#fafafa]">
+                        Tiết 9
+                      </td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td class="border-r border-[#f1f5f9]"></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Modal Bottom Navigation (Pagination & Actions) -->
+              <div class="pt-3 border-t border-[#f1f5f9] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+                <!-- Pagination Control -->
+                <div class="flex items-center gap-2 text-[#64748b]">
+                  <button type="button" class="w-6 h-6 rounded-md border border-[#cbd5e1] flex items-center justify-center hover:bg-[#f8fafc] disabled:opacity-40" disabled>
+                    <i class="fa-solid fa-chevron-left text-[11px]" aria-hidden="true"></i>
+                  </button>
+                  <span class="font-semibold text-[#0f172a] px-1">1 / 9</span>
+                  <button type="button" class="w-6 h-6 rounded-md border border-[#cbd5e1] flex items-center justify-center hover:bg-[#f8fafc]">
+                    <i class="fa-solid fa-chevron-right text-[11px]" aria-hidden="true"></i>
+                  </button>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex items-center gap-2">
+                  <button
+                    type="button"
+                    class="px-4 py-1.5 rounded-lg border border-[#cbd5e1] bg-white text-[#475569] font-semibold hover:bg-[#f8fafc] transition-colors cursor-pointer"
+                  >
+                    Quay lại
+                  </button>
+                  <button
+                    type="button"
+                    class="px-5 py-1.5 rounded-lg bg-[#00529c] text-white font-bold hover:bg-[#003b7a] transition-colors cursor-pointer shadow-xs"
+                  >
+                    Hoàn thành
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { motion, AnimatePresence } from 'motion-v';
+import { ref } from 'vue';
 
-const activeView = ref('calendar');
-const hasSwitchedView = ref(false);
+const course1Type = ref('alt'); // Default: Môn thay thế
+const isDropdownOpen = ref(false);
 
-function selectView(view) {
-  if (activeView.value !== view) {
-    hasSwitchedView.value = true;
-    activeView.value = view;
-  }
-}
-
-const filterList = [
-  { key: 'all', label: 'Cân bằng' },
-  { key: 'afternoon', label: 'Né ca sáng' },
-  { key: 'condensed', label: 'Dồn lịch T6-7' },
-  { key: 'campus', label: 'Chỉ Khu II' },
+const criteriaList = [
+  { id: 'deadline', label: 'Chiến thần deadline', icon: '🚀' },
+  { id: 'balance', label: 'Cân bằng tiết học', icon: '⚡' },
+  { id: 'morning', label: 'Né ca sáng 1-3', icon: '☕' },
+  { id: 'weekend', label: 'Dồn lịch trống T6-T7', icon: '🏖️' },
+  { id: 'campus2', label: 'Chỉ học Khu II', icon: '📍' },
 ];
 
-const currentFilter = ref('all');
+const activeCriteria = ref(criteriaList[0]);
 
-const presets = {
-  all: {
-    activeSlots: ['slot-ct176-m', 'slot-ct112-a', 'slot-ct103-m', 'slot-ct178-a', 'slot-ml014-a'],
-    conflicts: '0 môn trùng',
-    freeDays: 'Chủ nhật',
-    capacity: 'Còn 42/45 chỗ',
-    statusText: 'Phương án cân bằng tiêu chuẩn: Rải đều các buổi sáng/chiều, tối ưu hóa giờ giải lao giữa các tiết.',
-  },
-  afternoon: {
-    activeSlots: ['slot-ct112-a', 'slot-ct178-a', 'slot-ml014-a'],
-    conflicts: '0 môn trùng',
-    freeDays: 'Tất cả buổi sáng',
-    capacity: 'Còn 38/40 chỗ',
-    statusText: 'Đã né 100% ca sáng: Toàn bộ môn học chuyển sang tiết 6 - 10, sáng ngủ thoải mái.',
-  },
-  condensed: {
-    activeSlots: ['slot-ct176-m', 'slot-ct112-a', 'slot-ct103-m', 'slot-ct178-a'],
-    conflicts: '0 môn trùng',
-    freeDays: 'Thứ 6 & Thứ 7',
-    capacity: 'Còn 35/40 chỗ',
-    statusText: 'Đã dồn lịch: Thứ 6 & Thứ 7 trống hoàn toàn, phù hợp đi thực tập hoặc làm thêm.',
-  },
-  campus: {
-    activeSlots: ['slot-ct176-m', 'slot-ct112-a', 'slot-ct103-m', 'slot-ct178-a', 'slot-ml014-a'],
-    conflicts: '0 môn trùng',
-    freeDays: 'Chủ nhật',
-    capacity: '100% Khu II',
-    statusText: 'Đã khóa cơ sở: 0km di chuyển phát sinh, toàn bộ diễn ra tại Khu II ĐH Cần Thơ.',
-  },
-};
-
-const courseList = [
-  { code: 'CT176', name: 'Lập trình Hướng đối tượng', credits: '3TC', classGroup: '01', lecturer: 'TS. Nguyễn Văn A', room: '102/DI', slots: '42/45' },
-  { code: 'CT103', name: 'Cấu trúc Dữ liệu', credits: '4TC', classGroup: '02', lecturer: 'ThS. Trần Thị B', room: '204/DI', slots: '39/40' },
-  { code: 'CT112', name: 'Mạng Máy Tính', credits: '3TC', classGroup: '01', lecturer: 'TS. Lê Hoàng C', room: '301/DI', slots: '41/45' },
-  { code: 'CT178', name: 'Nguyên Lý Hệ Điều Hành', credits: '3TC', classGroup: '03', lecturer: 'ThS. Phạm Văn D', room: '105/DI', slots: '35/40' },
-  { code: 'ML014', name: 'Triết Học Mác - Lênin', credits: '2TC', classGroup: '05', lecturer: 'GVC. Vũ Thị E', room: '101/Khoa Luật', slots: '65/70' },
-];
-
-const currentStats = computed(() => presets[currentFilter.value] || presets.all);
-
-function isSlotActive(slotId) {
-  return currentStats.value.activeSlots.includes(slotId);
+function selectCriteria(item) {
+  activeCriteria.value = item;
+  isDropdownOpen.value = false;
 }
 </script>

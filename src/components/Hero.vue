@@ -175,53 +175,16 @@
       <motion.div
         :initial="false"
         :animate="{ opacity: 1, y: 0, scale: 1 }"
-        class="mt-12 max-w-5xl mx-auto relative text-left"
+        class="mt-12 max-w-6xl mx-auto relative text-left"
       >
         <!-- Mockup Ambient Shadow -->
         <div
           class="absolute -inset-1 bg-gradient-to-r from-[#00529c]/15 via-[#0091ff]/15 to-[#00c07a]/15 rounded-2xl blur-lg opacity-70"
         ></div>
 
-        <!-- Window Container with Authentic Windows Titlebar -->
-        <div
-          class="relative bg-white rounded-2xl border border-[#d4d4d8] shadow-float overflow-hidden hover-lift"
-        >
-          <!-- Window Header / Authentic Windows Controls -->
-          <div
-            class="h-10 bg-[#f8f9fa] border-b border-[#e4e4e7] px-4 flex items-center justify-between select-none"
-          >
-            <div
-              class="flex items-center gap-2 text-xs font-bold text-[#18181b]"
-            >
-              <span>Thời khóa biểu của bạn</span>
-            </div>
-
-            <div class="flex items-center gap-3 text-xs text-[#71717a]">
-              <span
-                class="px-2 py-0.5 rounded-full bg-[#ecfdf5] text-[#00c07a] font-bold text-[11px] border border-[#a7f3d0] whitespace-nowrap shrink-0"
-              >
-                ONLINE SYNC
-              </span>
-              <div
-                class="hidden sm:flex items-center gap-3 text-[#71717a] ml-2"
-              >
-                <span class="hover:text-[#18181b] cursor-pointer text-sm"
-                  >─</span
-                >
-                <span class="hover:text-[#18181b] cursor-pointer text-xs"
-                  >□</span
-                >
-                <span class="hover:text-[#ef4444] cursor-pointer text-sm"
-                  >✕</span
-                >
-              </div>
-            </div>
-          </div>
-
-          <!-- Inside Application Dashboard -->
-          <div class="p-4 sm:p-6 bg-white">
-            <TimetableSimulator />
-          </div>
+        <!-- Desktop Application Window Showcase -->
+        <div class="relative hover-lift">
+          <TimetableSimulator />
         </div>
       </motion.div>
     </div>
