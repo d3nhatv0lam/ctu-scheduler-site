@@ -175,7 +175,7 @@
       <motion.div
         :initial="false"
         :animate="{ opacity: 1, y: 0, scale: 1 }"
-        class="mt-12 max-w-6xl mx-auto relative text-left"
+        class="mt-12 max-w-7xl mx-auto relative text-left"
       >
         <!-- Mockup Ambient Shadow -->
         <div
