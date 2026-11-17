@@ -138,19 +138,25 @@ const init = () => {
   const camera = new Camera(gl, { fov: 15 });
   camera.position.set(0, 0, props.cameraDistance);
 
+  let isIntersecting = true;
+  let io: IntersectionObserver | null = null;
+  let cachedRect: DOMRect | null = null;
+
   const resize = () => {
     const width = container.clientWidth;
     const height = container.clientHeight;
     renderer.setSize(width, height);
     camera.perspective({ aspect: gl.canvas.width / gl.canvas.height });
+    cachedRect = container.getBoundingClientRect();
   };
   window.addEventListener("resize", resize, false);
   resize();
 
   const handleMouseMove = (e: MouseEvent) => {
-    const rect = container.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-    const y = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
+    if (!isIntersecting) return;
+    if (!cachedRect) cachedRect = container.getBoundingClientRect();
+    const x = ((e.clientX - cachedRect.left) / (cachedRect.width || 1)) * 2 - 1;
+    const y = -(((e.clientY - cachedRect.top) / (cachedRect.height || 1)) * 2 - 1);
     mouseRef.value = { x, y };
   };
 
@@ -204,11 +210,12 @@ const init = () => {
 
   const particles = new Mesh(gl, { mode: gl.POINTS, geometry, program });
 
-  let animationFrameId: number;
+  let animationFrameId: number | null = null;
   let lastTime = performance.now();
   let elapsed = 0;
 
   const update = (t: number) => {
+    if (!isIntersecting) return;
     animationFrameId = requestAnimationFrame(update);
     const delta = t - lastTime;
     lastTime = t;
@@ -233,14 +240,48 @@ const init = () => {
     renderer.render({ scene: particles, camera });
   };
 
-  animationFrameId = requestAnimationFrame(update);
+  const startLoop = () => {
+    if (animationFrameId === null) {
+      lastTime = performance.now();
+      animationFrameId = requestAnimationFrame(update);
+    }
+  };
+
+  const stopLoop = () => {
+    if (animationFrameId !== null) {
+      cancelAnimationFrame(animationFrameId);
+      animationFrameId = null;
+    }
+  };
+
+  if ("IntersectionObserver" in window) {
+    io = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        isIntersecting = entry.isIntersecting;
+        if (isIntersecting) {
+          startLoop();
+        } else {
+          stopLoop();
+        }
+      },
+      { threshold: 0 }
+    );
+    io.observe(container);
+  } else {
+    startLoop();
+  }
 
   cleanup = () => {
+    if (io) io.disconnect();
     window.removeEventListener("resize", resize);
     if (props.moveParticlesOnHover) {
       window.removeEventListener("mousemove", handleMouseMove);
     }
-    cancelAnimationFrame(animationFrameId);
+    if (animationFrameId !== null) {
+      cancelAnimationFrame(animationFrameId);
+      animationFrameId = null;
+    }
     if (container.contains(gl.canvas)) {
       container.removeChild(gl.canvas);
     }

@@ -236,12 +236,16 @@ const init = () => {
   container.appendChild(renderer.domElement);
 
   const clock = new THREE.Clock();
+  let isIntersecting = true;
+  let io: IntersectionObserver | null = null;
+  let cachedRect: DOMRect | null = null;
 
   const handleResize = () => {
     const w = container.clientWidth || 1;
     const h = container.clientHeight || 1;
     renderer.setSize(w, h, false);
     (material.uniforms.uCanvas.value as THREE.Vector2).set(w, h);
+    cachedRect = container.getBoundingClientRect();
   };
 
   handleResize();
@@ -255,19 +259,10 @@ const init = () => {
   }
 
   const loop = () => {
+    if (!isIntersecting) return;
     const dt = clock.getDelta();
     const elapsed = clock.elapsedTime;
     material.uniforms.uTime.value = elapsed;
-
-    if (container.clientWidth > 0 && container.clientHeight > 0) {
-      const uCanvas = material.uniforms.uCanvas.value as THREE.Vector2;
-      if (
-        Math.abs(uCanvas.x - container.clientWidth) > 1 ||
-        Math.abs(uCanvas.y - container.clientHeight) > 1
-      ) {
-        handleResize();
-      }
-    }
 
     const deg = (rotationRef.value % 360) + autoRotateRef.value * elapsed;
     const rad = (deg * Math.PI) / 180;
@@ -283,19 +278,56 @@ const init = () => {
     renderer.render(scene, camera);
     rafRef.value = requestAnimationFrame(loop);
   };
-  rafRef.value = requestAnimationFrame(loop);
+
+  const startLoop = () => {
+    if (rafRef.value === null) {
+      clock.start();
+      rafRef.value = requestAnimationFrame(loop);
+    }
+  };
+
+  const stopLoop = () => {
+    if (rafRef.value !== null) {
+      cancelAnimationFrame(rafRef.value);
+      rafRef.value = null;
+      clock.stop();
+    }
+  };
+
+  if ("IntersectionObserver" in window) {
+    io = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        isIntersecting = entry.isIntersecting;
+        if (isIntersecting) {
+          startLoop();
+        } else {
+          stopLoop();
+        }
+      },
+      { threshold: 0 }
+    );
+    io.observe(container);
+  } else {
+    startLoop();
+  }
 
   const handlePointerMove = (e: PointerEvent) => {
-    const rect = container.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / (rect.width || 1)) * 2 - 1;
-    const y = -(((e.clientY - rect.top) / (rect.height || 1)) * 2 - 1);
+    if (!isIntersecting) return;
+    if (!cachedRect) cachedRect = container.getBoundingClientRect();
+    const x = ((e.clientX - cachedRect.left) / (cachedRect.width || 1)) * 2 - 1;
+    const y = -(((e.clientY - cachedRect.top) / (cachedRect.height || 1)) * 2 - 1);
     pointerTargetRef.value.set(x, y);
   };
 
   window.addEventListener("pointermove", handlePointerMove, { passive: true });
 
   cleanup = () => {
-    if (rafRef.value !== null) cancelAnimationFrame(rafRef.value);
+    if (io) io.disconnect();
+    if (rafRef.value !== null) {
+      cancelAnimationFrame(rafRef.value);
+      rafRef.value = null;
+    }
     if (resizeObserverRef.value) resizeObserverRef.value.disconnect();
     else (window as Window).removeEventListener("resize", handleResize);
     geometry.dispose();
