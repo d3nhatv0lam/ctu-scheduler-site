@@ -171,11 +171,11 @@
         </span>
       </motion.div>
 
-      <!-- Centered Epic Product Interface Window Showcase -->
+      <!-- Centered Epic Product Interface Window Showcase (Hidden on Mobile, Visible on Desktop) -->
       <motion.div
         :initial="false"
         :animate="{ opacity: 1, y: 0, scale: 1 }"
-        class="mt-12 max-w-7xl mx-auto relative text-left"
+        class="mt-12 max-w-7xl mx-auto relative text-left hidden lg:block"
       >
         <!-- Mockup Ambient Shadow -->
         <div
