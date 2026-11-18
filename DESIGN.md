@@ -1,5 +1,5 @@
 ---
-name: CTU Scheduler — CTU Academic Edition
+name: CTU Scheduler – CTU Academic Edition
 description: Modern academic dashboard on white marble infused with Can Tho University Blue (#00529c) and high-trust institutional precision
 colors:
   signal-white: "#ffffff"
@@ -101,11 +101,11 @@ components:
     padding: "24px"
 ---
 
-# CTU Scheduler — Academic Design System
+# CTU Scheduler – Academic Design System
 
 ## Overview
 
-CTU Scheduler — CTU Academic Edition brings together the ergonomic clarity of high-end dashboards with the proud academic identity of Can Tho University:
+CTU Scheduler – CTU Academic Edition brings together the ergonomic clarity of high-end dashboards with the proud academic identity of Can Tho University:
 - **Canvas:** Clean Signal White (`#ffffff`) canvas layered with soft neutral section bands (`#f1f5f9` Plaster).
 - **Core Identity:** CTU Academic Blue (`#00529c`) and Deep Navy (`#003b7a`) as institutional trust anchors, paired with Signal Blue (`#0091ff`) for interactive links and Emerald (`#00c07a`) for verified conflict-free states.
 - **Typography:** Bold `Plus Jakarta Sans` headings paired with ergonomic, high-contrast `Inter` body text (strictly complying with WCAG 2.1 AA ratio $\ge$ 4.5:1).

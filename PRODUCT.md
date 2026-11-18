@@ -36,8 +36,8 @@ The authoritative, student-focused web portal for Can Tho University's premier a
 - **Name:** CTU Scheduler
 - **Voice & Tone:** Helpful, trustworthy, transparent, student-centric, and technically reliable.
 - **Core Team:**
-  - Dương Minh Đức (Founder, Developer, Idea Provider — d3nhatv0lam / RxAmethyst)
-  - Nguyễn Phước Lộc (Maintainer, Designer, Tester — Lexipit3268)
+  - Dương Minh Đức (Founder, Developer, Idea Provider – d3nhatv0lam / RxAmethyst)
+  - Nguyễn Phước Lộc (Maintainer, Designer, Tester – Lexipit3268)
   - Trần Trọng Phúc (Maintainer, Designer, Tester)
 - **License:** Open Source under the MIT License.
 
