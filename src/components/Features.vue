@@ -26,9 +26,9 @@
           class="clickup-card p-5 sm:p-6 flex flex-col justify-between hover-lift"
         >
           <div>
-            <h3 class="text-base sm:text-lg font-bold text-[#18181b] mb-2 font-display text-balance">Tự Động Sinh &amp; Tối Ưu Hóa</h3>
+            <h3 class="text-base sm:text-lg font-bold text-[#18181b] mb-2 font-display text-balance">Tự động tạo và tối ưu thời khóa biểu</h3>
             <p class="text-[#52525b] text-xs sm:text-sm leading-relaxed text-pretty">
-              Tự động tính toán hàng ngàn tổ hợp lịch học và trả về hàng loạt phương án khả thi nhất, loại bỏ hoàn toàn tình trạng trùng giờ môn học và trùng lịch thi kết thúc học phần.
+              Tự động tính toán các tổ hợp lớp học phần khả thi nhất, giúp bạn tránh hoàn toàn tình trạng trùng giờ môn học và trùng lịch thi kết thúc học phần.
             </p>
           </div>
         </motion.div>
@@ -42,7 +42,7 @@
           class="clickup-card p-5 sm:p-6 flex flex-col justify-between hover-lift"
         >
           <div>
-            <h3 class="text-base sm:text-lg font-bold text-[#18181b] mb-2 font-display text-balance">Bộ Lọc Tiêu Chí Chuyên Sâu</h3>
+            <h3 class="text-base sm:text-lg font-bold text-[#18181b] mb-2 font-display text-balance">Bộ lọc tiêu chí linh hoạt</h3>
             <p class="text-[#52525b] text-xs sm:text-sm leading-relaxed text-pretty">
               Bộ lọc đa chiều: ưu tiên dồn lịch, chỉ học ca sáng hoặc ca chiều, né ngày cuối tuần, đảm bảo thời gian ăn trưa và hạn chế di chuyển giữa các cơ sở (Khu II, Hòa An).
             </p>
@@ -58,7 +58,7 @@
           class="clickup-card p-5 sm:p-6 flex flex-col justify-between hover-lift"
         >
           <div>
-            <h3 class="text-base sm:text-lg font-bold text-[#18181b] mb-2 font-display text-balance">Theo Dõi Biến Động Sĩ Số</h3>
+            <h3 class="text-base sm:text-lg font-bold text-[#18181b] mb-2 font-display text-balance">Cập nhật biến động sĩ số</h3>
             <p class="text-[#52525b] text-xs sm:text-sm leading-relaxed text-pretty">
               Tự động cập nhật sĩ số của từng lớp học phần trực tiếp từ hệ thống MyCTU. Nhận biết tức thời lớp nào còn chỗ hoặc đã đầy để kịp thời chuyển đổi phương án dự phòng.
             </p>
@@ -74,7 +74,7 @@
           class="clickup-card p-5 sm:p-6 flex flex-col justify-between hover-lift"
         >
           <div>
-            <h3 class="text-base sm:text-lg font-bold text-[#18181b] mb-2 font-display text-balance">Quản Lý &amp; So Sánh Lịch</h3>
+            <h3 class="text-base sm:text-lg font-bold text-[#18181b] mb-2 font-display text-balance">Quản lý và so sánh nhiều phương án</h3>
             <p class="text-[#52525b] text-xs sm:text-sm leading-relaxed text-pretty">
               Hỗ trợ quản lý, lưu trữ, tải lại và so sánh nhiều bộ thời khóa biểu song song. Sinh viên luôn chủ động sẵn sàng phương án thay thế khi cổng đăng ký mở.
             </p>
@@ -90,9 +90,9 @@
           class="clickup-card p-5 sm:p-6 md:col-span-2 flex flex-col justify-between hover-lift"
         >
           <div>
-            <h3 class="text-base sm:text-lg font-bold text-[#18181b] mb-2 font-display text-balance">Bảo Mật Cục Bộ Tuyệt Đối &amp; Hỗ Trợ Offline</h3>
+            <h3 class="text-base sm:text-lg font-bold text-[#18181b] mb-2 font-display text-balance">Bảo mật cục bộ và hỗ trợ xem ngoại tuyến</h3>
             <p class="text-[#52525b] text-xs sm:text-sm leading-relaxed text-pretty">
-              Hoạt động hoàn toàn trên máy tính cá nhân qua trình duyệt nhúng ngầm. Dữ liệu học phần và tài khoản MyCTU được mã hóa và bảo mật cục bộ, mật khẩu tự hủy sau khi phiên kết thúc. Sinh viên có thể tra cứu lịch học đã lưu mọi lúc mọi nơi ngay cả khi không có kết nối mạng Internet.
+              Mọi thao tác trích xuất và tính toán đều diễn ra trực tiếp giữa máy tính cá nhân của bạn và hệ thống MyCTU qua giao thức HTTPS bảo mật, không qua máy chủ trung gian. Thông tin tài khoản không bao giờ bị ghi lại. Sinh viên có thể tra cứu lịch học đã lưu mọi lúc mọi nơi ngay cả khi không có kết nối mạng Internet.
             </p>
           </div>
         </motion.div>
