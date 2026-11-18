@@ -70,9 +70,8 @@
               Thuật toán xếp lịch thông minh
             </h3>
             <p class="text-[#52525b] text-xs sm:text-sm leading-relaxed text-pretty">
-              Tự động tìm kiếm và loại bỏ các phương án bị trùng giờ học hoặc trùng
-              lịch thi, sắp xếp thời khóa biểu theo đúng nguyện vọng và thời gian
-              biểu của bạn.
+              Tự động tìm kiếm và loại bỏ các phương án bị trùng giờ học, sắp xếp
+              thời khóa biểu theo đúng nguyện vọng và thời gian biểu của bạn.
             </p>
           </div>
           <div

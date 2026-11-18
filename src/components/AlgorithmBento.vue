@@ -10,10 +10,10 @@
         class="max-w-2xl mx-auto text-center mb-14"
       >
         <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-[-0.03em] leading-[1.15] text-[#090c1d] mb-3.5 font-display text-balance">
-          Sức mạnh công nghệ đằng sau từng phương án xếp lịch.
+          Nền tảng thuật toán tối ưu cho sinh viên.
         </h2>
         <p class="text-[#52525b] text-sm sm:text-base leading-relaxed font-normal text-pretty">
-          Đề tài Nghiên cứu Khoa học Sinh viên được Hội đồng khoa học Khoa Công nghệ Thông tin &amp; Truyền thông — Đại học Cần Thơ chính thức nghiệm thu và đánh giá xuất sắc.
+          Phát triển từ Đề tài Nghiên cứu Khoa học Sinh viên mã số TSV2026-121 tại Trường Công nghệ Thông tin &amp; Truyền thông – Đại học Cần Thơ.
         </p>
       </motion.div>
 
@@ -29,37 +29,37 @@
         >
           <div>
             <h3 class="text-lg sm:text-xl font-bold tracking-[-0.02em] leading-snug text-[#18181b] mb-2 font-display text-balance">
-              Thuật toán duyệt tổ hợp &amp; Khử xung đột ma trận
+              Tối ưu hóa thời khóa biểu theo tiêu chí sinh viên
             </h3>
             <p class="text-[#52525b] text-xs sm:text-sm leading-relaxed mb-5 font-normal text-pretty">
-              Tự động kiểm tra hàng chục ngàn tổ hợp môn học, giải quyết triệt để các ràng buộc đăng ký:
+              Tự động kiểm tra các tổ hợp lớp học phần và sắp xếp theo các tiêu chí thực tế:
             </p>
 
             <!-- Flat, Clean Constraint List (No Icons, No Overflow on Mobile) -->
             <div class="space-y-2.5 text-xs sm:text-sm">
               <div class="flex items-center justify-between gap-3 p-3 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7]">
-                <span class="font-medium text-[#18181b] leading-tight">Khử 100% trùng tiết học</span>
+                <span class="font-medium text-[#18181b] leading-tight">Tránh trùng lịch học</span>
                 <span class="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0 whitespace-nowrap">
                   Bắt buộc
                 </span>
               </div>
 
               <div class="flex items-center justify-between gap-3 p-3 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7]">
-                <span class="font-medium text-[#18181b] leading-tight">Khử 100% trùng ngày thi</span>
-                <span class="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0 whitespace-nowrap">
-                  Bắt buộc
-                </span>
-              </div>
-
-              <div class="flex items-center justify-between gap-3 p-3 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7]">
-                <span class="font-medium text-[#18181b] leading-tight">Tránh đổi cơ sở cùng buổi</span>
+                <span class="font-medium text-[#18181b] leading-tight">Gom gọn ngày học trong tuần</span>
                 <span class="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-blue-50 text-[#00529c] border border-blue-200 shrink-0 whitespace-nowrap">
                   Tối ưu
                 </span>
               </div>
 
               <div class="flex items-center justify-between gap-3 p-3 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7]">
-                <span class="font-medium text-[#18181b] leading-tight">Bảo lưu giờ nghỉ trưa</span>
+                <span class="font-medium text-[#18181b] leading-tight">Hạn chế tiết trống giữa các buổi</span>
+                <span class="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-blue-50 text-[#00529c] border border-blue-200 shrink-0 whitespace-nowrap">
+                  Tối ưu
+                </span>
+              </div>
+
+              <div class="flex items-center justify-between gap-3 p-3 rounded-xl bg-[#f8f9fa] border border-[#e4e4e7]">
+                <span class="font-medium text-[#18181b] leading-tight">Ưu tiên ca học (Sáng hoặc Chiều)</span>
                 <span class="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-blue-50 text-[#00529c] border border-blue-200 shrink-0 whitespace-nowrap">
                   Tối ưu
                 </span>
@@ -85,10 +85,10 @@
         >
           <div>
             <h3 class="text-lg sm:text-xl font-bold tracking-[-0.02em] leading-snug text-[#18181b] mb-2 font-display text-balance">
-              Chứng Nhận Khoa CNTT&amp;TT
+              Đề Tài NCKH Sinh Viên TSV2026-121
             </h3>
             <p class="text-[#52525b] text-xs sm:text-sm leading-relaxed mb-5 font-normal text-pretty">
-              Biên bản số 02/TB-CN&amp;CNTT-SV do Hội đồng khoa học thẩm định và thông qua:
+              Đề tài đã được Hội đồng khoa học thẩm định và nghiệm thu chính thức:
             </p>
 
             <!-- Document Click-to-Modal Trigger -->
@@ -118,7 +118,7 @@
           </div>
 
           <div class="mt-6 pt-4 border-t border-[#e4e4e7] flex items-center justify-center gap-1.5 text-xs text-[#52525b]">
-            <span>Xếp loại: <strong class="text-[#090c1d] font-semibold">Xuất sắc</strong> • Khoa CNTT&amp;TT — ĐH Cần Thơ</span>
+            <span>Mã đề tài: <strong class="text-[#090c1d] font-semibold">TSV2026-121</strong> • Trường CNTT&amp;TT – ĐH Cần Thơ</span>
           </div>
         </motion.div>
       </div>
@@ -150,10 +150,10 @@
             <div class="flex items-center justify-between px-4 sm:px-5 py-3 sm:py-3.5 border-b border-[#e4e4e7] bg-[#f8f9fa] shrink-0 gap-2">
               <div class="min-w-0 flex-1">
                 <h4 id="modal-doc-title" class="text-xs sm:text-sm font-bold text-[#18181b] leading-tight truncate sm:whitespace-normal">
-                  Biên bản nghiệm thu đề tài NCKH Sinh viên
+                  Báo cáo tổng kết đề tài NCKH Sinh viên
                 </h4>
                 <p class="text-[11px] text-[#71717a] truncate sm:whitespace-normal">
-                  Số 02/TB-CN&amp;CNTT-SV • Khoa Công nghệ Thông tin &amp; Truyền thông
+                  Mã số TSV2026-121 • Trường Công nghệ Thông tin &amp; Truyền thông – ĐH Cần Thơ
                 </p>
               </div>
 

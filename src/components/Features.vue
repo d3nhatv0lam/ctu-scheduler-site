@@ -28,7 +28,7 @@
           <div>
             <h3 class="text-base sm:text-lg font-bold text-[#18181b] mb-2 font-display text-balance">Tự động tạo và tối ưu thời khóa biểu</h3>
             <p class="text-[#52525b] text-xs sm:text-sm leading-relaxed text-pretty">
-              Tự động tính toán các tổ hợp lớp học phần khả thi nhất, giúp bạn tránh hoàn toàn tình trạng trùng giờ môn học và trùng lịch thi kết thúc học phần.
+              Tự động tính toán các tổ hợp lớp học phần khả thi nhất, giúp bạn tránh hoàn toàn tình trạng trùng giờ học giữa các môn.
             </p>
           </div>
         </motion.div>
@@ -44,7 +44,7 @@
           <div>
             <h3 class="text-base sm:text-lg font-bold text-[#18181b] mb-2 font-display text-balance">Bộ lọc tiêu chí linh hoạt</h3>
             <p class="text-[#52525b] text-xs sm:text-sm leading-relaxed text-pretty">
-              Bộ lọc đa chiều: ưu tiên dồn lịch, chỉ học ca sáng hoặc ca chiều, né ngày cuối tuần, đảm bảo thời gian ăn trưa và hạn chế di chuyển giữa các cơ sở (Khu II, Hòa An).
+              Lựa chọn tiêu chí phù hợp: gom gọn ngày học, hạn chế tiết trống giữa các buổi, ưu tiên ca sáng hoặc ca chiều và cân bằng số tiết mỗi ngày.
             </p>
           </div>
         </motion.div>

@@ -167,7 +167,7 @@
               d="M5 13l4 4L19 7"
             />
           </svg>
-          Khoa CNTT&amp;TT nghiệm thu
+          Đề tài NCKH TSV2026-121
         </span>
       </motion.div>
 

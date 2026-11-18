@@ -42,7 +42,7 @@
             <h3
               class="text-xl sm:text-2xl font-bold text-[#090c1d] font-display"
             >
-              CTUST — Tiện ích học tập toàn diện cho sinh viên CTU
+              CTUST – Tiện ích học tập toàn diện cho sinh viên CTU
             </h3>
             <p class="text-xs sm:text-sm text-[#52525b] leading-relaxed">
               Tích hợp các thuật toán chuẩn hóa điểm số theo quy chế đào tạo tín
@@ -78,7 +78,7 @@
           </div>
         </div>
 
-        <!-- 4 Core Capabilities (Hairline Divided Grid — No Nested Cards, No Rainbow Badges) -->
+        <!-- 4 Core Capabilities (Hairline Divided Grid – No Nested Cards, No Rainbow Badges) -->
         <div
           class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-[#e4e4e7] bg-white"
         >

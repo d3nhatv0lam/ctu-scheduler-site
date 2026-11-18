@@ -9,7 +9,7 @@
         />
         <span class="font-bold text-sm text-[#18181b] font-display">CTU Scheduler</span>
       </div>
-      <p class="text-[#52525b]">&copy; 2026 CTU Scheduler Team · Đề tài Nghiên cứu Khoa học Sinh viên Khoa CNTT&amp;TT - Đại học Cần Thơ.</p>
+      <p class="text-[#52525b]">&copy; 2026 CTU Scheduler Team · Đề tài NCKH Sinh viên TSV2026-121 – Trường Công nghệ Thông tin &amp; Truyền thông, Đại học Cần Thơ.</p>
       <p>
         Phát hành phi lợi nhuận theo Giấy phép mã nguồn mở MIT. Thiết kế và bảo trì bởi
         <a

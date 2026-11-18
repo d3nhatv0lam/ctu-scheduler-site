@@ -187,7 +187,7 @@ const pillStyle = ref({
 
 const navItems = [
   { id: "features", label: "Tính Năng" },
-  { id: "certification", label: "Nghiệm Thu NCKH" },
+  { id: "certification", label: "Đề Tài NCKH" },
   { id: "ecosystem", label: "Hệ Sinh Thái" },
   { id: "download", label: "Tải Xuống" },
   { id: "faq", label: "Hỏi Đáp" },
