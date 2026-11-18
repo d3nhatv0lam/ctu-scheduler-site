@@ -15,7 +15,7 @@
         </h2>
         <p class="text-[#52525b] text-sm sm:text-base leading-relaxed text-pretty">
           Dữ liệu học phần được kết nối trực tiếp qua HTTPS và xử lý ngay trên
-          máy tính của bạn, không gửi thông tin qua máy chủ trung gian.
+          máy tính của bạn, không gửi thông tin qua máy chủ trung gian của nhóm phát triển hay bên thứ ba.
         </p>
       </motion.div>
 

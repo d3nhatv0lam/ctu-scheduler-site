@@ -1000,9 +1000,9 @@
                 >
                 Mọi thao tác trích xuất và kết nối diễn ra trực tiếp giữa máy
                 tính cá nhân của bạn và hệ thống MyCTU qua giao thức HTTPS bảo
-                mật, không chuyển qua bất kỳ máy chủ trung gian nào. Mật khẩu
-                không bao giờ bị ghi lại. Phần mềm phát hành phi lợi nhuận theo
-                giấy phép MIT "AS IS".
+                mật, không chuyển qua bất kỳ máy chủ trung gian nào của nhóm phát
+                triển hay bên thứ ba. Mật khẩu không bao giờ bị ghi lại. Phần mềm
+                phát hành phi lợi nhuận theo giấy phép MIT "AS IS".
               </p>
             </div>
           </div>

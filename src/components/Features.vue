@@ -90,9 +90,9 @@
           class="clickup-card p-5 sm:p-6 md:col-span-2 flex flex-col justify-between hover-lift"
         >
           <div>
-            <h3 class="text-base sm:text-lg font-bold text-[#18181b] mb-2 font-display text-balance">Bảo mật cục bộ và hỗ trợ xem ngoại tuyến</h3>
+            <h3 class="text-base sm:text-lg font-bold text-[#18181b] mb-2 font-display text-balance">Bảo mật dữ liệu trên máy tính</h3>
             <p class="text-[#52525b] text-xs sm:text-sm leading-relaxed text-pretty">
-              Mọi thao tác trích xuất và tính toán đều diễn ra trực tiếp giữa máy tính cá nhân của bạn và hệ thống MyCTU qua giao thức HTTPS bảo mật, không qua máy chủ trung gian. Thông tin tài khoản không bao giờ bị ghi lại. Sinh viên có thể tra cứu lịch học đã lưu mọi lúc mọi nơi ngay cả khi không có kết nối mạng Internet.
+              Mọi thao tác trích xuất và tính toán đều diễn ra trực tiếp giữa máy tính cá nhân của bạn và hệ thống MyCTU qua giao thức HTTPS bảo mật, không qua máy chủ trung gian của nhóm phát triển hay bên thứ ba. Thông tin tài khoản không bao giờ bị ghi lại.
             </p>
           </div>
         </motion.div>

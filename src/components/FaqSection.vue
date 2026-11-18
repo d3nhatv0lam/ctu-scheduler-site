@@ -86,24 +86,28 @@ const toggleFaq = (index) => {
 
 const faqList = [
   {
-    question: 'Tại sao lại là ứng dụng Desktop mà không phải một trang Web?',
-    answer: 'Ứng dụng Desktop giúp tận dụng tối đa tài nguyên máy tính cá nhân để chạy mượt mà thuật toán sinh tổ hợp lịch học phức tạp. Quan trọng hơn, nó bảo đảm tính riêng tư tuyệt đối cho tài khoản MyCTU của bạn (vì không gửi qua máy chủ trung gian) và cho phép bạn xem lại thời khóa biểu mọi lúc ngay cả khi mất mạng.'
+    question: 'Ứng dụng có lưu mật khẩu hoặc thông tin tài khoản của tôi không?',
+    answer: 'Hoàn toàn không. Thông tin đăng nhập chỉ được lưu tạm thời trong bộ nhớ RAM trên máy tính của bạn trong lúc gửi yêu cầu xác thực trực tiếp đến MyCTU. Phần mềm không bao giờ ghi mật khẩu xuống đĩa cứng và tuyệt đối không gửi dữ liệu qua bất kỳ máy chủ trung gian nào của nhóm phát triển hay bên thứ ba.'
+  },
+  {
+    question: 'Tại sao lại là ứng dụng máy tính mà không phải một trang web?',
+    answer: 'Ứng dụng máy tính giúp tận dụng sức mạnh xử lý trên thiết bị của bạn để xếp lịch nhanh chóng. Quan trọng hơn, mọi kết nối đều diễn ra trực tiếp từ máy của bạn đến hệ thống MyCTU mà không qua máy chủ trung gian của nhóm phát triển hay bên thứ ba, bảo đảm an toàn dữ liệu và cho phép bạn xem lại lịch học bất cứ lúc nào khi cần.'
   },
   {
     question: 'Nếu hệ thống trường đột ngột đổi giao diện hoặc cấu trúc dữ liệu thì sao?',
-    answer: 'CTU Scheduler được thiết kế thông minh theo dạng mô-đun. Khi có thay đổi, nhóm chỉ cần cập nhật riêng mô-đun thu thập dữ liệu là ứng dụng có thể hoạt động bình thường mà không cần lập trình lại toàn bộ hệ thống.'
-  },
-  {
-    question: 'Ứng dụng có phiên bản dành cho điện thoại di động (Mobile) không?',
-    answer: 'Hiện tại dự án tập trung hoàn thiện phiên bản Desktop cho máy tính. Vì được xây dựng trên công nghệ đa nền tảng, một phiên bản thu gọn dành cho Mobile có thể được nhóm nghiên cứu phát triển trong tương lai nếu có đủ điều kiện.'
+    answer: 'CTU Scheduler được thiết kế theo dạng mô-đun độc lập. Khi có thay đổi từ phía trường, nhóm chỉ cần cập nhật mô-đun kết nối và phát hành phiên bản mới qua hệ thống cập nhật tự động của phần mềm.'
   },
   {
     question: 'Tại sao ứng dụng đôi khi bị chậm hoặc báo lỗi kết nối khi đăng nhập?',
-    answer: 'Nguyên nhân chủ yếu do máy chủ MyCTU của trường bị quá tải vào giờ cao điểm đăng ký, hoặc đường truyền mạng chập chờn. Bạn nên kiểm tra lại kết nối mạng, hoàn thành xác thực Captcha trên cửa sổ trình duyệt ngầm nếu có yêu cầu, hoặc thử chuyển sang mạng 4G/5G / bật ứng dụng 1.1.1.1 để kết nối ổn định hơn.'
+    answer: 'Nguyên nhân chủ yếu do máy chủ MyCTU của trường thường bị quá tải vào các khung giờ cao điểm đăng ký học phần, hoặc đường truyền mạng chập chờn. Bạn có thể kiểm tra lại kết nối mạng, thử chuyển sang mạng 4G/5G hoặc kiên nhẫn thử lại sau vài phút.'
   },
   {
     question: 'Ứng dụng có tự động bấm đăng ký môn học thay cho sinh viên không?',
-    answer: 'Không. CTU Scheduler tập trung hoàn toàn vào việc giúp sinh viên lên lịch học tối ưu, cá nhân hóa tiêu chí và theo dõi biến động sĩ số lớp học phần, không can thiệp vào hành động bấm nút đăng ký chính thức của bạn trên MyCTU.'
+    answer: 'Không. CTU Scheduler tập trung vào việc giúp sinh viên chuẩn bị trước thời khóa biểu tối ưu và theo dõi tình trạng sĩ số lớp học phần. Ứng dụng không can thiệp hay tự động bấm đăng ký môn học thay bạn trên cổng trường.'
+  },
+  {
+    question: 'Ứng dụng có phiên bản dành cho điện thoại di động không?',
+    answer: 'Hiện tại dự án tập trung tối ưu trải nghiệm trên máy tính để phục vụ việc xem và xếp thời khóa biểu trực quan nhất. Bạn có thể sao chép liên kết tải về trên điện thoại để gửi qua laptop sử dụng.'
   }
 ];
 </script>
