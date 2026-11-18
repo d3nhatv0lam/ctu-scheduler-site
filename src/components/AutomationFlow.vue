@@ -40,8 +40,8 @@
             </h3>
             <p class="text-[#52525b] text-xs sm:text-sm leading-relaxed text-pretty">
               Kết nối an toàn trực tiếp đến cổng thông tin MyCTU qua HTTPS để lấy
-              danh sách lớp học phần, phòng học và sĩ số cập nhật theo thời gian
-              thực.
+              danh sách lớp học phần, phòng học và sĩ số mới nhất từ hệ thống của
+              trường.
             </p>
           </div>
           <div

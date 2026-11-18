@@ -28,7 +28,7 @@
           <span
             class="w-1.5 h-1.5 rounded-full bg-[#6ee7b7] animate-pulse"
           ></span>
-          Đồng bộ MyCTU thời gian thực
+          Đồng bộ trực tiếp từ MyCTU
         </span>
         <div class="flex items-center gap-3 ml-2 text-white/60">
           <button
