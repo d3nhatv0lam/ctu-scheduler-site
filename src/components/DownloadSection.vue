@@ -99,18 +99,31 @@
         <div
           class="rounded-2xl border border-[#e4e4e7] bg-white overflow-hidden shadow-2xs divide-y divide-[#e4e4e7]"
         >
-          <!-- 1. TOP UTILITY HEADER: Device & Architecture Bar -->
+          <!-- 1. TOP UTILITY HEADER: Device & Architecture Bar + Version Highlight -->
           <div
-            class="px-5 sm:px-6 py-3.5 bg-[#f8f9fa] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs select-none"
+            class="px-5 sm:px-6 py-3.5 bg-[#f8f9fa] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 text-xs select-none"
           >
             <div class="flex items-center gap-2.5">
               <span class="w-2 h-2 rounded-full bg-[#00c07a] shrink-0"></span>
               <span class="text-[#71717a]"
-                >Thiết bị hiện tại &amp; Kiến trúc:</span
+                >Thiết bị &amp; Kiến trúc:</span
               >
               <strong class="text-[#18181b] font-semibold">{{
                 currentDeviceFullLabel
               }}</strong>
+            </div>
+
+            <div class="flex items-center gap-2 text-xs">
+              <span class="text-[#71717a]">Bản mới nhất:</span>
+              <span
+                class="px-2.5 py-0.5 rounded-full bg-[#00529c]/10 text-[#00529c] font-bold font-mono text-[11px] border border-[#00529c]/20"
+              >
+                {{ currentRelease.tag_name }}
+              </span>
+              <span class="hidden sm:inline text-[#d4d4d8]">·</span>
+              <span class="hidden sm:inline text-[#71717a]"
+                >Phát hành {{ formatDate(currentRelease.published_at) }}</span
+              >
             </div>
           </div>
 
@@ -224,7 +237,7 @@
                       <h3
                         class="text-base sm:text-lg font-bold text-[#18181b] font-display"
                       >
-                        Tải CTU Scheduler cho Windows
+                        Tải CTU Scheduler {{ currentRelease.tag_name }} cho Windows
                       </h3>
                       <p class="text-xs text-[#71717a] mt-0.5">
                         Tương thích Windows 10 &amp; Windows 11 ({{
@@ -252,11 +265,7 @@
                             </h4>
                             <span
                               class="text-[11px] text-[#00529c] font-semibold"
-                              >{{
-                                userDevice.arch === ARCH.ARM64
-                                  ? 'Bản ARM64 · Tự cập nhật'
-                                  : 'Tự cập nhật'
-                              }}</span
+                              >Tự cập nhật</span
                             >
                           </div>
                           <p
@@ -312,11 +321,7 @@
                             </h4>
                             <span
                               class="text-[11px] text-[#71717a] font-semibold"
-                              >{{
-                                userDevice.arch === ARCH.ARM64
-                                  ? 'Bản ARM64'
-                                  : 'Không cần Admin'
-                              }}</span
+                              >Không cần Admin</span
                             >
                           </div>
                           <p
@@ -441,10 +446,10 @@
                       <h3
                         class="text-base sm:text-lg font-bold text-[#18181b] font-display"
                       >
-                        Tải CTU Scheduler cho macOS
+                        Tải CTU Scheduler {{ currentRelease.tag_name }} cho macOS
                       </h3>
                       <p class="text-xs text-[#71717a] mt-0.5">
-                        Tương thích chip Apple Silicon (M1, M2, M3, M4) · Cài đặt trực tiếp
+                        Tương thích chip Apple Silicon (M1, M2, M3, M4) · Chọn gói cài đặt hoặc gói chạy ngay
                       </p>
                     </div>
 
@@ -462,31 +467,31 @@
                             <h4
                               class="text-sm sm:text-base font-bold text-[#18181b]"
                             >
-                              Gói Cài Đặt Cho Mac
+                              Bản Cài Đặt (Setup)
                             </h4>
                             <span
                               class="text-[11px] text-[#00529c] font-semibold"
-                              >Apple Silicon</span
+                              >Cài đặt tự động</span
                             >
                           </div>
                           <p
                             class="text-xs text-[#52525b] leading-relaxed text-pretty"
                           >
-                            Bản cài đặt tối ưu cho máy Mac chạy chip M1 đến M4. Tải về và mở file để cài đặt trực tiếp.
+                            Bản cài đặt tự động (.pkg) tối ưu cho máy Mac chạy chip M1 đến M4. Mở file để cài đặt trực tiếp vào hệ thống.
                           </p>
                           <div
                             class="text-[11px] text-[#71717a] pt-1 tabular-nums font-mono"
                           >
-                            {{ formatBytes(macAsset?.size || 79200000) }}
+                            {{ formatBytes(macSetupAsset?.size || 79200000) }}
                             ·
-                            {{ macTotalDownloads.toLocaleString("vi-VN") }}
+                            {{ macSetupDownloads.toLocaleString("vi-VN") }}
                             lượt tải
                           </div>
                         </div>
 
                         <motion.a
                           :href="
-                            macAsset?.browser_download_url ||
+                            macSetupAsset?.browser_download_url ||
                             'https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest'
                           "
                           target="_blank"
@@ -498,11 +503,11 @@
                             class="fa-brands fa-apple mr-1.5 shrink-0"
                             aria-hidden="true"
                           ></i>
-                          <span>Tải Bản Cho Mac (.pkg)</span>
+                          <span>Tải Bản Cài Đặt (.pkg)</span>
                         </motion.a>
                       </div>
 
-                      <!-- Option 2: All GitHub Releases -->
+                      <!-- Option 2: macOS Portable Zip -->
                       <div
                         class="p-5 rounded-xl border border-[#e4e4e7] bg-[#fafafa]/50 flex flex-col justify-between space-y-3 hover:border-[#cbd5e1] transition-colors"
                       >
@@ -513,36 +518,43 @@
                             <h4
                               class="text-sm sm:text-base font-bold text-[#18181b]"
                             >
-                              Tất Cả Bản Phát Hành
+                              Bản Chạy Ngay (Portable)
                             </h4>
                             <span
                               class="text-[11px] text-[#71717a] font-semibold"
-                              >GitHub</span
+                              >Giải nén dùng ngay</span
                             >
                           </div>
                           <p
                             class="text-xs text-[#52525b] leading-relaxed text-pretty"
                           >
-                            Xem toàn bộ các gói phát hành, ghi chú phiên bản và lịch sử cập nhật trên GitHub.
+                            Chứa trực tiếp ứng dụng CTU Scheduler. Tải về giải nén và kéo vào thư mục Applications để dùng ngay không cần cài đặt.
                           </p>
-                          <div class="text-[11px] text-[#71717a] pt-1">
-                            Cập nhật liên tục theo tiến trình phát triển
+                          <div
+                            class="text-[11px] text-[#71717a] pt-1 tabular-nums font-mono"
+                          >
+                            {{ formatBytes(macPortableAsset?.size || 83500000) }}
+                            ·
+                            {{ macPortableDownloads.toLocaleString("vi-VN") }}
+                            lượt tải
                           </div>
                         </div>
 
                         <motion.a
-                          href="https://github.com/d3nhatv0lam/CTU-Scheduler/releases"
+                          :href="
+                            macPortableAsset?.browser_download_url ||
+                            'https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest'
+                          "
                           target="_blank"
-                          rel="noopener noreferrer"
                           :whileHover="{ scale: 1.02 }"
                           :whilePress="{ scale: 0.96 }"
                           class="btn-clickup-ghost w-full text-center justify-center !py-2.5 !text-xs hover:border-[#18181b] hover:text-[#18181b] whitespace-nowrap"
                         >
                           <i
-                            class="fa-brands fa-github mr-1.5 shrink-0"
+                            class="fa-solid fa-file-zipper mr-1.5 shrink-0"
                             aria-hidden="true"
                           ></i>
-                          <span>Xem Trên GitHub Releases</span>
+                          <span>Tải Bản Portable (.zip)</span>
                         </motion.a>
                       </div>
                     </div>
@@ -628,10 +640,12 @@
                       <h3
                         class="text-base sm:text-lg font-bold text-[#18181b] font-display"
                       >
-                        CTU Scheduler cho Linux
+                        Tải CTU Scheduler {{ currentRelease.tag_name }} cho Linux
                       </h3>
                       <p class="text-xs text-[#71717a] mt-0.5">
-                        Tương thích Ubuntu, Debian, Fedora, Arch Linux · Gói AppImage chạy ngay
+                        Tương thích Ubuntu, Debian, Fedora, Arch Linux ({{
+                          userDevice.arch === ARCH.ARM64 ? 'ARM64' : 'x64'
+                        }}) · Gói AppImage chạy ngay
                       </p>
                     </div>
 
@@ -653,7 +667,7 @@
                             </h4>
                             <span
                               class="text-[11px] text-[#00529c] font-semibold"
-                              >{{ userDevice.arch === 'arm64' ? 'ARM64' : 'x64' }}</span
+                              >Chạy ngay không cần cài</span
                             >
                           </div>
                           <p
@@ -689,7 +703,7 @@
                         </motion.a>
                       </div>
 
-                      <!-- Option 2: Build from Source (.NET SDK) -->
+                      <!-- Option 2: All GitHub Releases -->
                       <div
                         class="p-5 rounded-xl border border-[#e4e4e7] bg-[#fafafa]/50 flex flex-col justify-between space-y-3 hover:border-[#cbd5e1] transition-colors"
                       >
@@ -700,33 +714,25 @@
                             <h4
                               class="text-sm sm:text-base font-bold text-[#18181b]"
                             >
-                              Chạy từ mã nguồn (.NET SDK)
+                              Tất Cả Bản Phát Hành
                             </h4>
                             <span
                               class="text-[11px] text-[#71717a] font-semibold"
-                              >.NET 10</span
+                              >GitHub Releases</span
                             >
                           </div>
                           <p
                             class="text-xs text-[#52525b] leading-relaxed text-pretty"
                           >
-                            Dành cho nhà phát triển muốn chạy thử hoặc tự biên dịch bằng .NET SDK 10:
+                            Xem toàn bộ các gói phát hành, ghi chú phiên bản, mã nguồn và lịch sử cập nhật trên GitHub.
                           </p>
-                          <div
-                            class="p-2.5 rounded-lg bg-white border border-[#e4e4e7] text-[11px] font-mono space-y-0.5 text-[#27272a] select-all"
-                          >
-                            <div>
-                              git clone
-                              https://github.com/d3nhatv0lam/CTU-Scheduler.git
-                            </div>
-                            <div>
-                              cd CTU-Scheduler &amp;&amp; dotnet run --project CTUScheduler.Desktop
-                            </div>
+                          <div class="text-[11px] text-[#71717a] pt-1">
+                            Kho lưu trữ mã nguồn mở minh bạch trên GitHub
                           </div>
                         </div>
 
                         <motion.a
-                          href="https://github.com/d3nhatv0lam/CTU-Scheduler"
+                          href="https://github.com/d3nhatv0lam/CTU-Scheduler/releases"
                           target="_blank"
                           rel="noopener noreferrer"
                           :whileHover="{ scale: 1.02 }"
@@ -737,7 +743,7 @@
                             class="fa-brands fa-github mr-1.5 shrink-0"
                             aria-hidden="true"
                           ></i>
-                          <span>Mã nguồn trên GitHub</span>
+                          <span>Xem Trên GitHub Releases</span>
                         </motion.a>
                       </div>
                     </div>
@@ -1117,6 +1123,14 @@ const FALLBACK_RELEASE = {
     },
     {
       id: 6,
+      name: "ctu-scheduler-osx-Portable.zip",
+      size: 83500000,
+      download_count: 28,
+      browser_download_url:
+        "https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest",
+    },
+    {
+      id: 7,
       name: "ctu-scheduler-linux.AppImage",
       size: 81400000,
       download_count: 24,
@@ -1144,7 +1158,7 @@ const totalDownloads = computed(() => {
     }
     if (count > 0) return count;
   }
-  return 540;
+  return 568;
 });
 
 // Cumulative downloads for Setup edition across all releases
@@ -1191,8 +1205,27 @@ const portableTotalDownloads = computed(() => {
   return portableAsset.value?.download_count || 401;
 });
 
-// Cumulative downloads for macOS across all releases
-const macTotalDownloads = computed(() => {
+// Cumulative downloads for macOS Setup (.pkg)
+const macSetupDownloads = computed(() => {
+  if (allReleases.value && allReleases.value.length > 0) {
+    let count = 0;
+    for (const rel of allReleases.value) {
+      if (!rel.assets) continue;
+      for (const a of rel.assets) {
+        if (isIgnoredAsset(a.name)) continue;
+        const n = a.name.toLowerCase();
+        if (n.endsWith(".pkg") || (n.includes("setup") && n.includes("osx"))) {
+          count += a.download_count || 0;
+        }
+      }
+    }
+    if (count > 0) return count;
+  }
+  return macSetupAsset.value?.download_count || 36;
+});
+
+// Cumulative downloads for macOS Portable (.zip)
+const macPortableDownloads = computed(() => {
   if (allReleases.value && allReleases.value.length > 0) {
     let count = 0;
     for (const rel of allReleases.value) {
@@ -1201,9 +1234,9 @@ const macTotalDownloads = computed(() => {
         if (isIgnoredAsset(a.name)) continue;
         const n = a.name.toLowerCase();
         if (
-          n.endsWith(".pkg") ||
-          n.endsWith(".dmg") ||
-          (n.includes("osx") && !n.endsWith(".nupkg"))
+          n.includes("osx") &&
+          (n.includes("portable") || n.endsWith(".zip")) &&
+          !n.endsWith(".nupkg")
         ) {
           count += a.download_count || 0;
         }
@@ -1211,7 +1244,12 @@ const macTotalDownloads = computed(() => {
     }
     if (count > 0) return count;
   }
-  return macAsset.value?.download_count || 36;
+  return macPortableAsset.value?.download_count || 28;
+});
+
+// Cumulative downloads for macOS across all releases
+const macTotalDownloads = computed(() => {
+  return macSetupDownloads.value + macPortableDownloads.value;
 });
 
 // Cumulative downloads for Linux across all releases
@@ -1369,17 +1407,40 @@ const portableAsset = computed(() => {
   );
 });
 
-// macOS Package Installer (.pkg or osx asset)
-const macAsset = computed(() => {
+// macOS Setup Installer (.pkg)
+const macSetupAsset = computed(() => {
   if (!validAssets.value.length) return null;
   return (
     validAssets.value.find((a) => {
       const n = a.name.toLowerCase();
-      return n.endsWith(".pkg") || (n.includes("osx") && !n.endsWith(".nupkg"));
+      return n.endsWith(".pkg") || (n.includes("setup") && n.includes("osx"));
     }) ||
+    validAssets.value.find((a) => a.name.toLowerCase().endsWith(".pkg")) ||
     validAssets.value.find((a) => a.name.toLowerCase().endsWith(".dmg"))
   );
 });
+
+// macOS Portable Edition (.zip)
+const macPortableAsset = computed(() => {
+  if (!validAssets.value.length) return null;
+  return (
+    validAssets.value.find((a) => {
+      const n = a.name.toLowerCase();
+      return (
+        n.includes("osx") &&
+        (n.includes("portable") || n.endsWith(".zip")) &&
+        !n.endsWith(".nupkg")
+      );
+    }) ||
+    validAssets.value.find((a) => {
+      const n = a.name.toLowerCase();
+      return n.includes("osx") && n.endsWith(".zip");
+    })
+  );
+});
+
+// Alias for general macOS asset reference
+const macAsset = computed(() => macSetupAsset.value);
 
 // Linux AppImage (.AppImage or linux asset)
 const linuxAsset = computed(() => {
