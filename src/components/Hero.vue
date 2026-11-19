@@ -44,18 +44,60 @@
       class="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[450px] bg-gradient-to-b from-[#f0f7ff] via-[#e0f2fe]/40 to-transparent blur-3xl pointer-events-none -z-10"
     ></div>
 
+    <!-- Central Studio Ambient Scrim (Ensures AAA Text Contrast against ColorBends) -->
+    <div
+      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[760px] max-w-[92vw] h-[380px] bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.92)_0%,rgba(255,255,255,0.55)_55%,transparent_80%)] pointer-events-none z-0"
+      aria-hidden="true"
+    ></div>
+
     <div
       class="container mx-auto max-w-clickup px-4 sm:px-6 text-center relative z-10"
     >
+      <!-- Eyebrow Pill (Academic NCKH TSV2026-121 + Dynamic Version) -->
+      <motion.div
+        :initial="false"
+        :animate="{ opacity: 1, y: 0 }"
+        class="inline-flex items-center justify-center mb-4 sm:mb-5"
+      >
+        <a
+          href="#download"
+          class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 border border-[#e4e4e7] hover:border-[#00529c]/40 shadow-xs backdrop-blur-md text-xs font-medium text-[#52525b] transition-all hover:bg-white cursor-pointer group"
+        >
+          <span class="inline-flex items-center gap-1.5 font-semibold text-[#00529c]">
+            🎓 Đề tài NCKH TSV2026-121
+          </span>
+          <span class="text-[#d4d4d8]">|</span>
+          <span class="inline-flex items-center gap-1 text-[#18181b] font-medium">
+            {{ releaseVersion ? `Phiên bản ${releaseVersion}` : "Bản mới nhất" }}
+            <svg
+              class="w-3.5 h-3.5 text-[#71717a] group-hover:text-[#00529c] group-hover:translate-x-0.5 transition-transform"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </span>
+        </a>
+      </motion.div>
+
       <!-- Mega Keynote Centered Headline -->
       <motion.h1
         :initial="false"
         :animate="{ opacity: 1, y: 0 }"
-        class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-[-0.035em] text-[#090c1d] leading-[1.14] sm:leading-[1.08] font-display max-w-4xl mx-auto"
+        class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-[-0.035em] text-[#090c1d] leading-[1.18] sm:leading-[1.12] font-display max-w-4xl mx-auto text-balance"
       >
-        Một không gian xếp lịch thông minh cho sinh viên
-        <br />
-        <span>Đại học Cần Thơ.</span>
+        <span>Xếp thời khóa biểu thông minh</span>
+        <span
+          class="block mt-1 sm:mt-1.5 bg-gradient-to-r from-[#00529c] via-[#0072ce] to-[#0091ff] bg-clip-text text-transparent"
+        >
+          cho sinh viên Đại học Cần Thơ.
+        </span>
       </motion.h1>
 
       <!-- Centered Subtitle -->
@@ -64,8 +106,8 @@
         :animate="{ opacity: 1, y: 0 }"
         class="text-sm sm:text-lg md:text-xl text-[#52525b] leading-relaxed max-w-2xl mx-auto mt-4 sm:mt-6 font-normal text-pretty"
       >
-        Tự động hóa hoàn toàn việc sắp xếp lịch học, loại trừ khả năng xung đột
-        lịch học và cập nhật sĩ số trực tiếp từ hệ thống MyCTU.
+        Tự động tìm kiếm các tổ hợp môn học tối ưu, tránh trùng lịch học và cập
+        nhật sĩ số mới nhất trực tiếp từ cổng MyCTU.
       </motion.p>
 
       <!-- Centered Confident Action Buttons -->
@@ -151,7 +193,7 @@
               d="M5 13l4 4L19 7"
             />
           </svg>
-          Xử lý cục bộ 100%
+          Bảo mật dữ liệu trên máy tính
         </span>
         <span class="flex items-center gap-1.5 whitespace-nowrap">
           <svg
@@ -167,7 +209,7 @@
               d="M5 13l4 4L19 7"
             />
           </svg>
-          Đề tài NCKH TSV2026-121
+          Nghiệm thu tháng 10/2026
         </span>
       </motion.div>
 
@@ -198,10 +240,21 @@ import TimetableSimulator from "./TimetableSimulator.vue";
 import ColorBends from "./ColorBends.vue";
 import Particles from "./Particles.vue";
 import { detectDevice, OS } from "../../js/detector.js";
+import { fetchReleaseData } from "../../js/github-release.js";
 
+const releaseVersion = ref("");
 const isMobileDevice = ref(false);
 
 onMounted(async () => {
+  try {
+    const data = await fetchReleaseData();
+    if (data?.releaseVersion) {
+      releaseVersion.value = data.releaseVersion;
+    }
+  } catch (err) {
+    console.error("Lỗi khi tải thông tin release tại Hero:", err);
+  }
+
   const device = await detectDevice();
   isMobileDevice.value =
     device.os === OS.ANDROID || device.os === OS.IOS || window.innerWidth < 768;
