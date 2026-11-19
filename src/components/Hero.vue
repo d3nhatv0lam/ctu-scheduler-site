@@ -53,39 +53,6 @@
     <div
       class="container mx-auto max-w-clickup px-4 sm:px-6 text-center relative z-10"
     >
-      <!-- Eyebrow Pill (Academic NCKH TSV2026-121 + Dynamic Version) -->
-      <motion.div
-        :initial="false"
-        :animate="{ opacity: 1, y: 0 }"
-        class="inline-flex items-center justify-center mb-4 sm:mb-5"
-      >
-        <a
-          href="#download"
-          class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 border border-[#e4e4e7] hover:border-[#00529c]/40 shadow-xs backdrop-blur-md text-xs font-medium text-[#52525b] transition-all hover:bg-white cursor-pointer group"
-        >
-          <span class="inline-flex items-center gap-1.5 font-semibold text-[#00529c]">
-            🎓 Đề tài NCKH TSV2026-121
-          </span>
-          <span class="text-[#d4d4d8]">|</span>
-          <span class="inline-flex items-center gap-1 text-[#18181b] font-medium">
-            {{ releaseVersion ? `Phiên bản ${releaseVersion}` : "Bản mới nhất" }}
-            <svg
-              class="w-3.5 h-3.5 text-[#71717a] group-hover:text-[#00529c] group-hover:translate-x-0.5 transition-transform"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </span>
-        </a>
-      </motion.div>
-
       <!-- Mega Keynote Centered Headline -->
       <motion.h1
         :initial="false"
@@ -93,9 +60,7 @@
         class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-[-0.035em] text-[#090c1d] leading-[1.18] sm:leading-[1.12] font-display max-w-4xl mx-auto text-balance"
       >
         <span>Xếp thời khóa biểu thông minh</span>
-        <span
-          class="block mt-1 sm:mt-1.5 bg-gradient-to-r from-[#00529c] via-[#0072ce] to-[#0091ff] bg-clip-text text-transparent"
-        >
+        <span class="block mt-1 sm:mt-1.5">
           cho sinh viên Đại học Cần Thơ.
         </span>
       </motion.h1>
