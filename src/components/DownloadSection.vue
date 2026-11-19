@@ -1040,7 +1040,12 @@ import { ref, computed, onMounted, onUnmounted } from "vue";
 import { motion, AnimatePresence } from "motion-v";
 import { marked } from "marked";
 import { detectDevice, OS, ARCH } from "../../js/detector.js";
-import { fetchReleaseData } from "../../js/github-release.js";
+import {
+  fetchReleaseData,
+  formatBytes,
+  formatDate,
+  isIgnoredAsset,
+} from "../../js/github-release.js";
 
 const loading = ref(true);
 const latestRelease = ref(null);
@@ -1285,16 +1290,6 @@ async function copyDownloadLink() {
   }
 }
 
-function isIgnoredAsset(filename) {
-  const name = filename.toLowerCase();
-  return (
-    name.endsWith(".nupkg") ||
-    name.endsWith(".json") ||
-    name === "releases" ||
-    name.endsWith(".blockmap")
-  );
-}
-
 const validAssets = computed(() => {
   if (!currentRelease.value?.assets) return [];
   return currentRelease.value.assets.filter((a) => !isIgnoredAsset(a.name));
@@ -1446,23 +1441,6 @@ function getAssetIcon(filename) {
   if (n.endsWith(".appimage") || n.endsWith(".deb"))
     return "fa-brands fa-linux";
   return "fa-solid fa-file";
-}
-
-function formatDate(dateStr) {
-  try {
-    const d = new Date(dateStr);
-    return `${String(d.getDate()).padStart(2, "0")}/${String(d.getMonth() + 1).padStart(2, "0")}/${d.getFullYear()}`;
-  } catch {
-    return dateStr;
-  }
-}
-
-function formatBytes(bytes) {
-  if (!bytes) return "0 B";
-  const k = 1024;
-  const sizes = ["B", "KB", "MB", "GB"];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(1))} ${sizes[i]}`;
 }
 
 async function fetchReleases() {
