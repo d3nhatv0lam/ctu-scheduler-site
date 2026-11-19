@@ -1,53 +1,101 @@
 body {
-  background-color: var(--mesh-color-4);
-  color: #f8fafc;
+  background-color: var(--color-signal-white);
+  color: var(--color-ink-black);
   overflow-x: hidden;
   scroll-behavior: smooth;
+  font-family: var(--font-inter);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Background mesh gradient container */
-.mesh-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-  background-color: var(--mesh-color-4);
-  overflow: hidden;
+/* Headings: Plus Jakarta Sans display typography with balanced wrap */
+h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: var(--font-plus-jakarta-sans);
+  text-wrap: balance;
 }
 
-.mesh-blob {
-  position: absolute;
-  filter: blur(80px);
-  opacity: 0.6;
-  border-radius: 50%;
-  animation: float 20s infinite ease-in-out alternate;
+h1 {
+  font-size: 3.75rem; /* 60px */
+  line-height: 1.08;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  color: var(--color-ink-black);
 }
 
-.blob-1 {
-  top: -10%;
-  left: -10%;
-  width: 60vw;
-  height: 60vw;
-  background: radial-gradient(circle, var(--mesh-color-1) 0%, transparent 70%);
-  animation-delay: 0s;
+h2 {
+  font-size: 2.5rem; /* 40px */
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--color-ink-black);
 }
 
-.blob-2 {
-  bottom: -20%;
-  right: -10%;
-  width: 70vw;
-  height: 70vw;
-  background: radial-gradient(circle, var(--mesh-color-2) 0%, transparent 70%);
-  animation-delay: -5s;
+h3 {
+  font-size: 1.75rem; /* 28px */
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: var(--color-ink-black);
 }
 
-.blob-3 {
-  top: 40%;
-  left: 30%;
-  width: 50vw;
-  height: 50vw;
-  background: radial-gradient(circle, var(--mesh-color-3) 0%, transparent 70%);
-  animation-delay: -10s;
+h4 {
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--color-ink-black);
+}
+
+/* Paragraphs & Prose: Pretty wrap to prevent orphan words */
+p, .prose p {
+  text-wrap: pretty;
+}
+
+/* Tabular figures for numerical alignment (timetable, metrics, dates, counts) */
+.tabular-nums,
+table,
+time,
+.slot-course {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Optical compensation for light text on dark surfaces (prevent halation & clipping) */
+.dark-bento-section p,
+.dark-bento-card p,
+.aurora-cta-banner p {
+  letter-spacing: 0.01em;
+  line-height: 1.65;
+}
+
+/* Custom scrollbar in ClickUp light theme */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-signal-white);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-cloud);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-fog);
+}
+
+/* Focus indicator */
+:focus-visible {
+  outline: 2px solid var(--color-ctu-blue);
+  outline-offset: 2px;
+}
+
+/* Text selection */
+::selection {
+  background-color: var(--color-ctu-blue);
+  color: var(--color-signal-white);
 }

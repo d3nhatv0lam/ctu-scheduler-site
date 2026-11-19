@@ -1,25 +1,406 @@
-.glass-card {
-  @apply bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-md shadow-xl transition-all duration-300;
+/* CTU Academic Component Primitives */
+
+.clickup-card {
+  background-color: var(--color-signal-white);
+  border: 1px solid var(--color-bone);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-subtle);
+  transition: box-shadow 0.2s cubic-bezier(0.33, 1, 0.68, 1), border-color 0.2s ease;
 }
 
-.glass-card:hover {
-  @apply bg-white/10 border-white/20 transform -translate-y-1;
+.clickup-card:hover {
+  box-shadow: var(--shadow-card);
+  border-color: #cbd5e1;
 }
 
-.btn-primary {
-  @apply px-6 py-3 rounded-full font-semibold text-white transition-all duration-300 relative overflow-hidden inline-flex items-center justify-center gap-2;
-  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-  background-size: 200% 200%;
+.clickup-card-elevated {
+  background-color: var(--color-signal-white);
+  border: 1px solid var(--color-bone);
+  border-radius: var(--radius-largecard);
+  box-shadow: var(--shadow-card);
+  transition: box-shadow 0.2s cubic-bezier(0.33, 1, 0.68, 1);
 }
 
-.btn-primary:hover {
-  background-position: right bottom;
-  box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
+.clickup-card-elevated:hover {
+  box-shadow: var(--shadow-float);
 }
 
-.text-gradient {
-  background: linear-gradient(to right, #ffffff, var(--color-secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* CTU 9999px Pill Buttons */
+.btn-clickup-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-plus-jakarta-sans);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-signal-white);
+  background-color: var(--color-ctu-blue);
+  border: 1px solid var(--color-ctu-blue);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-clickup-primary:hover {
+  background-color: var(--color-ctu-navy);
+  border-color: var(--color-ctu-navy);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.btn-clickup-primary:active {
+  background-color: #002b5c;
+}
+
+.btn-clickup-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-plus-jakarta-sans);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-signal-white);
+  background-color: var(--color-ink-black);
+  border: 1px solid var(--color-ink-black);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-clickup-dark:hover {
+  background-color: #27272a;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.btn-clickup-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-plus-jakarta-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-ink-black);
+  background-color: var(--color-signal-white);
+  border: 1px solid var(--color-bone);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-clickup-ghost:hover {
+  background-color: var(--color-mist);
+  border-color: var(--color-ctu-blue);
+  color: var(--color-ctu-blue);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.btn-clickup-ghost:active {
+  background-color: #e4e4e7;
+}
+
+.btn-clickup-blue {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-plus-jakarta-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-ctu-blue);
+  background-color: var(--color-signal-white);
+  border: 1px solid var(--color-ctu-blue);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-clickup-blue:hover {
+  background-color: #f0f7ff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.btn-clickup-blue:active {
+  background-color: #dbeafe;
+}
+
+/* Conic Animated Border Wrapper */
+.conic-border-wrapper {
+  position: relative;
+  display: inline-flex;
+  border-radius: var(--radius-pill);
+  padding: 2px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease;
+}
+
+.conic-border-wrapper:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.conic-border-wrapper::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: var(--gradient-rainbow-conic);
+  animation: rotate-conic 4s linear infinite;
+  z-index: 0;
+}
+
+.conic-border-inner {
+  position: relative;
+  z-index: 1;
+  background-color: var(--color-ctu-blue);
+  color: var(--color-signal-white);
+  border-radius: var(--radius-pill);
+  padding: 12px 28px;
+  font-family: var(--font-plus-jakarta-sans);
+  font-size: 14px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.conic-border-inner:hover {
+  background-color: var(--color-ctu-navy);
+}
+
+/* CTU 9999px Pill Filters and Tags */
+.pill-filter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-inter);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-slate);
+  background-color: var(--color-signal-white);
+  border: 1px solid var(--color-bone);
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  user-select: none;
+}
+
+.pill-filter:hover {
+  color: var(--color-ctu-blue);
+  border-color: #93c5fd;
+  background-color: #f8fafc;
+}
+
+.pill-filter.active {
+  color: var(--color-signal-white);
+  background-color: var(--color-ctu-blue);
+  border-color: var(--color-ctu-blue);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.pill-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-inter);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-carbon);
+  background-color: var(--color-mist);
+  border: 1px solid var(--color-bone);
+}
+
+.pill-tag-ctu {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 14px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-inter);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-ctu-blue);
+  background-color: #f0f7ff;
+  border: 1px solid #bae0fd;
+}
+
+.pill-tag-emerald {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 14px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-inter);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-emerald);
+  background-color: #ecfdf5;
+  border: 1px solid #a7f3d0;
+}
+
+/* Timetable simulation in CTU Academic dashboard style */
+.timetable-cell {
+  border-right: 1px solid var(--color-bone);
+  border-bottom: 1px solid var(--color-bone);
+  padding: 8px 6px;
+  min-height: 56px;
+}
+
+.timetable-slot {
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 12px;
+  line-height: 1.35;
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.slot-course {
+  background-color: var(--color-signal-white);
+  border: 1px solid var(--color-bone);
+  color: var(--color-ink-black);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.slot-course:hover {
+  border-color: var(--color-ctu-blue);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.slot-dimmed {
+  opacity: 0.45;
+  filter: grayscale(0.7);
+}
+
+/* Section Background Band */
+.bg-plaster-band {
+  background-color: var(--color-plaster);
+  border-top: 1px solid var(--color-bone);
+  border-bottom: 1px solid var(--color-bone);
+}
+
+/* Inverted Dark Section with Harmonized Deep Academic Navy */
+.dark-bento-section {
+  background-color: #040d1a;
+  color: var(--color-signal-white);
+  position: relative;
+  overflow: hidden;
+}
+
+.dark-bento-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-largecard);
+  backdrop-blur: 8px;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dark-bento-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(0, 145, 255, 0.5);
+  box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.4);
+}
+
+/* CTU Academic Gradient Banner */
+.aurora-cta-banner {
+  background: var(--gradient-aurora);
+  border-radius: var(--radius-largecard);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 48px -10px rgba(0, 0, 0, 0.25);
+}
+
+.aurora-cta-banner::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+  animation: float-slow 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Markdown Prose Styling for Release Notes */
+.markdown-prose {
+  font-family: var(--font-inter);
+  color: var(--color-ink-black);
+  line-height: 1.7;
+}
+
+.markdown-prose h1,
+.markdown-prose h2,
+.markdown-prose h3 {
+  font-family: var(--font-plus-jakarta-sans);
+  font-weight: 700;
+  color: var(--color-ink-black);
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  text-wrap: balance;
+}
+
+.markdown-prose h2 {
+  font-size: 1.125rem;
+  border-bottom: 1px solid var(--color-bone);
+  padding-bottom: 0.25rem;
+}
+
+.markdown-prose h3 {
+  font-size: 1rem;
+}
+
+.markdown-prose ul,
+.markdown-prose ol {
+  padding-left: 1.25rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.markdown-prose ul {
+  list-style-type: disc;
+}
+
+.markdown-prose ol {
+  list-style-type: decimal;
+}
+
+.markdown-prose li {
+  margin-bottom: 0.25rem;
+}
+
+.markdown-prose p {
+  margin-bottom: 0.75rem;
+  text-wrap: pretty;
+}
+
+.markdown-prose code {
+  background-color: #f1f5f9;
+  color: var(--color-ctu-blue);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-weight: 600;
+}
+
+.markdown-prose a {
+  color: var(--color-signal-blue);
+  text-decoration: underline;
+  font-weight: 500;
 }
