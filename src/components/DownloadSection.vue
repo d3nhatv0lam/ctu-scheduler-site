@@ -24,6 +24,7 @@
           Windows, macOS và Linux.
         </p>
         <div
+          v-if="totalDownloads > 0"
           class="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-xs text-[#71717a]"
         >
           <span
@@ -118,12 +119,14 @@
               <span
                 class="px-2.5 py-0.5 rounded-full bg-[#00529c]/10 text-[#00529c] font-bold font-mono text-[11px] border border-[#00529c]/20"
               >
-                {{ currentRelease.tag_name }}
+                {{ currentRelease?.tag_name || 'Bản mới nhất' }}
               </span>
-              <span class="hidden sm:inline text-[#d4d4d8]">·</span>
-              <span class="hidden sm:inline text-[#71717a]"
-                >Phát hành {{ formatDate(currentRelease.published_at) }}</span
-              >
+              <template v-if="currentRelease?.published_at">
+                <span class="hidden sm:inline text-[#d4d4d8]">·</span>
+                <span class="hidden sm:inline text-[#71717a]"
+                  >Phát hành {{ formatDate(currentRelease.published_at) }}</span
+                >
+              </template>
             </div>
           </div>
 
@@ -237,7 +240,7 @@
                       <h3
                         class="text-base sm:text-lg font-bold text-[#18181b] font-display"
                       >
-                        Tải CTU Scheduler {{ currentRelease.tag_name }} cho Windows
+                        Tải CTU Scheduler {{ currentRelease?.tag_name ? currentRelease.tag_name + ' ' : '' }}cho Windows
                       </h3>
                       <p class="text-xs text-[#71717a] mt-0.5">
                         Tương thích Windows 10 &amp; Windows 11 ({{
@@ -275,16 +278,16 @@
                             và nâng cấp phiên bản mới mỗi khi khởi chạy.
                           </p>
                           <div
+                            v-if="recommendedSetupAsset?.size || setupTotalDownloads > 0"
                             class="text-[11px] text-[#71717a] pt-1 tabular-nums font-mono"
                           >
-                            {{
-                              formatBytes(
-                                recommendedSetupAsset?.size || 78500000,
-                              )
-                            }}
-                            ·
-                            {{ setupTotalDownloads.toLocaleString("vi-VN") }}
-                            lượt tải
+                            <span v-if="recommendedSetupAsset?.size">
+                              {{ formatBytes(recommendedSetupAsset.size) }}
+                            </span>
+                            <span v-if="recommendedSetupAsset?.size && setupTotalDownloads > 0"> · </span>
+                            <span v-if="setupTotalDownloads > 0">
+                              {{ setupTotalDownloads.toLocaleString("vi-VN") }} lượt tải
+                            </span>
                           </div>
                         </div>
 
@@ -331,12 +334,16 @@
                             hợp dùng trên máy phòng thực hành hoặc USB.
                           </p>
                           <div
+                            v-if="portableAsset?.size || portableTotalDownloads > 0"
                             class="text-[11px] text-[#71717a] pt-1 tabular-nums font-mono"
                           >
-                            {{ formatBytes(portableAsset?.size || 82100000) }}
-                            ·
-                            {{ portableTotalDownloads.toLocaleString("vi-VN") }}
-                            lượt tải
+                            <span v-if="portableAsset?.size">
+                              {{ formatBytes(portableAsset.size) }}
+                            </span>
+                            <span v-if="portableAsset?.size && portableTotalDownloads > 0"> · </span>
+                            <span v-if="portableTotalDownloads > 0">
+                              {{ portableTotalDownloads.toLocaleString("vi-VN") }} lượt tải
+                            </span>
                           </div>
                         </div>
 
@@ -446,7 +453,7 @@
                       <h3
                         class="text-base sm:text-lg font-bold text-[#18181b] font-display"
                       >
-                        Tải CTU Scheduler {{ currentRelease.tag_name }} cho macOS
+                        Tải CTU Scheduler {{ currentRelease?.tag_name ? currentRelease.tag_name + ' ' : '' }}cho macOS
                       </h3>
                       <p class="text-xs text-[#71717a] mt-0.5">
                         Tương thích chip Apple Silicon (M1, M2, M3, M4) · Chọn gói cài đặt hoặc gói chạy ngay
@@ -480,12 +487,16 @@
                             Bản cài đặt tự động (.pkg) tối ưu cho máy Mac chạy chip M1 đến M4. Mở file để cài đặt trực tiếp vào hệ thống.
                           </p>
                           <div
+                            v-if="macSetupAsset?.size || macSetupDownloads > 0"
                             class="text-[11px] text-[#71717a] pt-1 tabular-nums font-mono"
                           >
-                            {{ formatBytes(macSetupAsset?.size || 79200000) }}
-                            ·
-                            {{ macSetupDownloads.toLocaleString("vi-VN") }}
-                            lượt tải
+                            <span v-if="macSetupAsset?.size">
+                              {{ formatBytes(macSetupAsset.size) }}
+                            </span>
+                            <span v-if="macSetupAsset?.size && macSetupDownloads > 0"> · </span>
+                            <span v-if="macSetupDownloads > 0">
+                              {{ macSetupDownloads.toLocaleString("vi-VN") }} lượt tải
+                            </span>
                           </div>
                         </div>
 
@@ -531,12 +542,16 @@
                             Chứa trực tiếp ứng dụng CTU Scheduler. Tải về giải nén và kéo vào thư mục Applications để dùng ngay không cần cài đặt.
                           </p>
                           <div
+                            v-if="macPortableAsset?.size || macPortableDownloads > 0"
                             class="text-[11px] text-[#71717a] pt-1 tabular-nums font-mono"
                           >
-                            {{ formatBytes(macPortableAsset?.size || 83500000) }}
-                            ·
-                            {{ macPortableDownloads.toLocaleString("vi-VN") }}
-                            lượt tải
+                            <span v-if="macPortableAsset?.size">
+                              {{ formatBytes(macPortableAsset.size) }}
+                            </span>
+                            <span v-if="macPortableAsset?.size && macPortableDownloads > 0"> · </span>
+                            <span v-if="macPortableDownloads > 0">
+                              {{ macPortableDownloads.toLocaleString("vi-VN") }} lượt tải
+                            </span>
                           </div>
                         </div>
 
@@ -640,7 +655,7 @@
                       <h3
                         class="text-base sm:text-lg font-bold text-[#18181b] font-display"
                       >
-                        Tải CTU Scheduler {{ currentRelease.tag_name }} cho Linux
+                        Tải CTU Scheduler {{ currentRelease?.tag_name ? currentRelease.tag_name + ' ' : '' }}cho Linux
                       </h3>
                       <p class="text-xs text-[#71717a] mt-0.5">
                         Tương thích Ubuntu, Debian, Fedora, Arch Linux ({{
@@ -676,12 +691,16 @@
                             Chạy trực tiếp trên hầu hết các bản phân phối Linux mà không cần cài đặt dependencies phức tạp.
                           </p>
                           <div
+                            v-if="linuxAsset?.size || linuxTotalDownloads > 0"
                             class="text-[11px] text-[#71717a] pt-1 tabular-nums font-mono"
                           >
-                            {{ formatBytes(linuxAsset?.size || 81400000) }}
-                            ·
-                            {{ linuxTotalDownloads.toLocaleString("vi-VN") }}
-                            lượt tải
+                            <span v-if="linuxAsset?.size">
+                              {{ formatBytes(linuxAsset.size) }}
+                            </span>
+                            <span v-if="linuxAsset?.size && linuxTotalDownloads > 0"> · </span>
+                            <span v-if="linuxTotalDownloads > 0">
+                              {{ linuxTotalDownloads.toLocaleString("vi-VN") }} lượt tải
+                            </span>
                           </div>
                         </div>
 
@@ -829,18 +848,22 @@
                 <span>
                   Phiên bản mới nhất:
                   <strong class="text-[#18181b] font-bold">{{
-                    currentRelease.tag_name
+                    currentRelease?.tag_name || 'Bản mới nhất'
                   }}</strong>
                 </span>
-                <span class="text-[#d4d4d8]">·</span>
-                <span class="text-[#00529c] font-semibold tabular-nums"
-                  >{{ totalDownloads.toLocaleString("vi-VN") }} lượt tải</span
-                >
-                <span class="text-[#d4d4d8]">·</span>
-                <span
-                  >Ngày phát hành:
-                  {{ formatDate(currentRelease.published_at) }}</span
-                >
+                <template v-if="totalDownloads > 0">
+                  <span class="text-[#d4d4d8]">·</span>
+                  <span class="text-[#00529c] font-semibold tabular-nums"
+                    >{{ totalDownloads.toLocaleString("vi-VN") }} lượt tải</span
+                  >
+                </template>
+                <template v-if="currentRelease?.published_at">
+                  <span class="text-[#d4d4d8]">·</span>
+                  <span
+                    >Ngày phát hành:
+                    {{ formatDate(currentRelease.published_at) }}</span
+                  >
+                </template>
               </div>
 
               <div class="flex items-center gap-3 self-start sm:self-auto">
@@ -913,7 +936,7 @@
                     ></i>
                     <span
                       >Tất cả tập tin phát hành của phiên bản
-                      {{ currentRelease.tag_name }}:</span
+                      {{ currentRelease?.tag_name || "" }}:</span
                     >
                   </div>
                   <div
@@ -982,7 +1005,7 @@
                     ></i>
                     <span
                       >Nhật ký phát hành phiên bản
-                      {{ currentRelease.tag_name }}</span
+                      {{ currentRelease?.tag_name || "" }}</span
                     >
                   </div>
                   <div v-html="renderedMarkdownBody"></div>
@@ -1017,6 +1040,7 @@ import { ref, computed, onMounted, onUnmounted } from "vue";
 import { motion, AnimatePresence } from "motion-v";
 import { marked } from "marked";
 import { detectDevice, OS, ARCH } from "../../js/detector.js";
+import { fetchReleaseData } from "../../js/github-release.js";
 
 const loading = ref(true);
 const latestRelease = ref(null);
@@ -1070,78 +1094,8 @@ function selectOsTab(tab) {
   }
 }
 
-const CACHE_KEY = "ctu_release_data_v3";
-const CACHE_TIME_KEY = "ctu_release_timestamp_v3";
-const CACHE_DURATION = 10 * 60 * 1000;
-
-// High-confidence fallback release if GitHub API is throttled/offline
-const FALLBACK_RELEASE = {
-  tag_name: "v1.2.0",
-  name: "CTU Scheduler v1.2.0",
-  published_at: "2026-11-08T00:00:00Z",
-  body: "### Thông tin phiên bản mới nhất\n- Tự động hóa xếp lịch học thông minh, loại trừ trùng lịch và hỗ trợ tối ưu theo tiêu chí cá nhân.\n- Kết nối MyCTU qua HTTPS bảo mật, đồng bộ dữ liệu lớp học phần và sĩ số trực tiếp.\n- Xem chi tiết toàn bộ các bản phát hành tại GitHub Releases.",
-  assets: [
-    {
-      id: 1,
-      name: "ctu-scheduler-win-Setup.exe",
-      size: 78540000,
-      download_count: 48,
-      browser_download_url:
-        "https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest",
-    },
-    {
-      id: 2,
-      name: "ctu-scheduler-win-Portable.zip",
-      size: 82150000,
-      download_count: 401,
-      browser_download_url:
-        "https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest",
-    },
-    {
-      id: 3,
-      name: "ctu-scheduler-win-arm64-Setup.exe",
-      size: 74200000,
-      download_count: 12,
-      browser_download_url:
-        "https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest",
-    },
-    {
-      id: 4,
-      name: "ctu-scheduler-win-arm64-Portable.zip",
-      size: 77800000,
-      download_count: 19,
-      browser_download_url:
-        "https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest",
-    },
-    {
-      id: 5,
-      name: "ctu-scheduler-osx-Setup.pkg",
-      size: 79200000,
-      download_count: 36,
-      browser_download_url:
-        "https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest",
-    },
-    {
-      id: 6,
-      name: "ctu-scheduler-osx-Portable.zip",
-      size: 83500000,
-      download_count: 28,
-      browser_download_url:
-        "https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest",
-    },
-    {
-      id: 7,
-      name: "ctu-scheduler-linux.AppImage",
-      size: 81400000,
-      download_count: 24,
-      browser_download_url:
-        "https://github.com/d3nhatv0lam/CTU-Scheduler/releases/latest",
-    },
-  ],
-};
-
 const currentRelease = computed(() => {
-  return latestRelease.value || FALLBACK_RELEASE;
+  return latestRelease.value;
 });
 
 // Calculate total downloads across ALL releases (excluding internal auto-update manifests)
@@ -1156,9 +1110,9 @@ const totalDownloads = computed(() => {
         }
       }
     }
-    if (count > 0) return count;
+    return count;
   }
-  return 568;
+  return 0;
 });
 
 // Cumulative downloads for Setup edition across all releases
@@ -1178,9 +1132,9 @@ const setupTotalDownloads = computed(() => {
         }
       }
     }
-    if (count > 0) return count;
+    return count;
   }
-  return recommendedSetupAsset.value?.download_count || 48;
+  return recommendedSetupAsset.value?.download_count || 0;
 });
 
 // Cumulative downloads for Portable / Archive edition across all releases
@@ -1200,9 +1154,9 @@ const portableTotalDownloads = computed(() => {
         }
       }
     }
-    if (count > 0) return count;
+    return count;
   }
-  return portableAsset.value?.download_count || 401;
+  return portableAsset.value?.download_count || 0;
 });
 
 // Cumulative downloads for macOS Setup (.pkg)
@@ -1219,9 +1173,9 @@ const macSetupDownloads = computed(() => {
         }
       }
     }
-    if (count > 0) return count;
+    return count;
   }
-  return macSetupAsset.value?.download_count || 36;
+  return macSetupAsset.value?.download_count || 0;
 });
 
 // Cumulative downloads for macOS Portable (.zip)
@@ -1242,9 +1196,9 @@ const macPortableDownloads = computed(() => {
         }
       }
     }
-    if (count > 0) return count;
+    return count;
   }
-  return macPortableAsset.value?.download_count || 28;
+  return macPortableAsset.value?.download_count || 0;
 });
 
 // Cumulative downloads for macOS across all releases
@@ -1270,9 +1224,9 @@ const linuxTotalDownloads = computed(() => {
         }
       }
     }
-    if (count > 0) return count;
+    return count;
   }
-  return linuxAsset.value?.download_count || 24;
+  return linuxAsset.value?.download_count || 0;
 });
 
 const detectedDeviceLabel = computed(() => {
@@ -1513,50 +1467,12 @@ function formatBytes(bytes) {
 
 async function fetchReleases() {
   loading.value = true;
-
   try {
-    const cached = localStorage.getItem(CACHE_KEY);
-    const cachedTime = localStorage.getItem(CACHE_TIME_KEY);
-    if (
-      cached &&
-      cachedTime &&
-      Date.now() - parseInt(cachedTime, 10) < CACHE_DURATION
-    ) {
-      const data = JSON.parse(cached);
-      if (Array.isArray(data)) {
-        allReleases.value = data;
-        latestRelease.value = data[0];
-      } else {
-        allReleases.value = [data];
-        latestRelease.value = data;
-      }
-      loading.value = false;
-      return;
-    }
-  } catch (e) {
-    // ignore cache parse error
-  }
-
-  try {
-    const res = await fetch(
-      "https://api.github.com/repos/d3nhatv0lam/CTU-Scheduler/releases?per_page=100",
-    );
-    if (!res.ok) throw new Error("Network error");
-    const data = await res.json();
-    if (Array.isArray(data)) {
-      allReleases.value = data;
-      latestRelease.value = data[0];
-    } else {
-      allReleases.value = [data];
-      latestRelease.value = data;
-    }
-    try {
-      localStorage.setItem(CACHE_KEY, JSON.stringify(data));
-      localStorage.setItem(CACHE_TIME_KEY, Date.now().toString());
-    } catch {}
+    const data = await fetchReleaseData();
+    latestRelease.value = data.latestRelease;
+    allReleases.value = data.allReleases;
   } catch (err) {
-    latestRelease.value = FALLBACK_RELEASE;
-    allReleases.value = [FALLBACK_RELEASE];
+    console.error("Lỗi khi tải thông tin release từ GitHub:", err);
   } finally {
     loading.value = false;
   }

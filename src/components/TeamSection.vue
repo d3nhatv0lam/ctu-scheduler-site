@@ -12,7 +12,7 @@
           Đội ngũ phát triển
         </h2>
         <p class="text-[#52525b] text-sm sm:text-base leading-relaxed text-pretty">
-          Nhóm sinh viên Khoa CNTT&amp;TT - Đại học Cần Thơ trực tiếp nghiên cứu, lập trình và duy trì dự án.
+          Nhóm sinh viên Trường Công nghệ Thông tin &amp; Truyền thông – Đại học Cần Thơ trực tiếp nghiên cứu, lập trình và duy trì dự án.
         </p>
       </motion.div>
 

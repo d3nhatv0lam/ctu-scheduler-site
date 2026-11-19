@@ -171,6 +171,99 @@ function parseMarkdown(md) {
   return result.join("\n");
 }
 
+let inFlightFetchPromise = null;
+
+/**
+ * Lấy dữ liệu danh sách bản phát hành từ GitHub API kèm ETag & cache localStorage
+ * Hàm thuần (pure JS), không phụ thuộc vào DOM hay framework UI.
+ * @returns {Promise<{ latestRelease: object|null, allReleases: Array, releaseVersion: string }>}
+ */
+export async function fetchReleaseData() {
+  if (inFlightFetchPromise) {
+    return inFlightFetchPromise;
+  }
+
+  inFlightFetchPromise = (async () => {
+    try {
+      const cachedData = localStorage.getItem(CACHE_KEY_DATA);
+      const cachedEtag = localStorage.getItem(CACHE_KEY_ETAG);
+      const cachedTime = localStorage.getItem(CACHE_KEY_TIME);
+      const now = Date.now();
+
+      let releaseData = null;
+
+      if (
+        cachedData &&
+        cachedTime &&
+        now - parseInt(cachedTime, 10) < CACHE_DURATION
+      ) {
+        try {
+          releaseData = JSON.parse(cachedData);
+        } catch {
+          // ignore JSON parse error
+        }
+      }
+
+      if (!releaseData) {
+        const headers = {};
+        if (cachedEtag) {
+          headers["If-None-Match"] = cachedEtag;
+        }
+
+        try {
+          const response = await fetch(API_URL, { headers });
+
+          if (response.status === 304 && cachedData) {
+            releaseData = JSON.parse(cachedData);
+            localStorage.setItem(CACHE_KEY_TIME, now.toString());
+          } else if (response.ok) {
+            const data = await response.json();
+            const etag = response.headers.get("etag");
+
+            localStorage.setItem(CACHE_KEY_DATA, JSON.stringify(data));
+            localStorage.setItem(CACHE_KEY_TIME, now.toString());
+            if (etag) {
+              localStorage.setItem(CACHE_KEY_ETAG, etag);
+            } else {
+              localStorage.removeItem(CACHE_KEY_ETAG);
+            }
+            releaseData = data;
+          } else if (cachedData) {
+            releaseData = JSON.parse(cachedData);
+          }
+        } catch (fetchErr) {
+          if (cachedData) {
+            try {
+              releaseData = JSON.parse(cachedData);
+            } catch {}
+          }
+        }
+      }
+
+      const allReleases = Array.isArray(releaseData)
+        ? releaseData
+        : releaseData
+          ? [releaseData]
+          : [];
+
+      const latestRelease =
+        allReleases.find((r) => !r.prerelease && !r.draft) || allReleases[0] || null;
+
+      const releaseVersion = latestRelease?.tag_name || "";
+
+      return {
+        latestRelease,
+        allReleases,
+        releaseVersion,
+      };
+    } finally {
+      inFlightFetchPromise = null;
+    }
+  })();
+
+  return inFlightFetchPromise;
+}
+
 export async function initGithubRelease() {
   const loadingEl = document.getElementById("download-loading");
   const errorEl = document.getElementById("download-error");
@@ -179,65 +272,11 @@ export async function initGithubRelease() {
   if (!loadingEl || !errorEl || !contentEl) return;
 
   try {
-    const cachedData = localStorage.getItem(CACHE_KEY_DATA);
-    const cachedEtag = localStorage.getItem(CACHE_KEY_ETAG);
-    const cachedTime = localStorage.getItem(CACHE_KEY_TIME);
-    const now = Date.now();
+    const { latestRelease, allReleases } = await fetchReleaseData();
 
-    let releaseData = null;
-
-    // Nếu cache còn hạn trong vòng 10 phút, sử dụng trực tiếp không gọi API mạng
-    if (
-      cachedData &&
-      cachedTime &&
-      now - parseInt(cachedTime) < CACHE_DURATION
-    ) {
-      releaseData = JSON.parse(cachedData);
-    } else {
-      // Thiết lập Header đính kèm ETag nếu có để yêu cầu trả về 304 khi không thay đổi
-      const headers = {};
-      if (cachedEtag) {
-        headers["If-None-Match"] = cachedEtag;
-      }
-
-      const response = await fetch(API_URL, { headers });
-
-      if (response.status === 304 && cachedData) {
-        // Dữ liệu trên server chưa thay đổi (304 Not Modified), dùng lại cache cũ và gia hạn cache
-        releaseData = JSON.parse(cachedData);
-        localStorage.setItem(CACHE_KEY_TIME, now.toString());
-      } else if (response.status === 200) {
-        // Có dữ liệu mới từ Server
-        const data = await response.json();
-        const etag = response.headers.get("etag");
-
-        localStorage.setItem(CACHE_KEY_DATA, JSON.stringify(data));
-        localStorage.setItem(CACHE_KEY_TIME, now.toString());
-        if (etag) {
-          localStorage.setItem(CACHE_KEY_ETAG, etag);
-        } else {
-          localStorage.removeItem(CACHE_KEY_ETAG);
-        }
-        releaseData = data;
-      } else {
-        // Nếu lỗi mạng/quá rate limit mà trước đó đã từng có cache, ta dùng tạm cache cũ (cho dù hết hạn)
-        if (cachedData) {
-          releaseData = JSON.parse(cachedData);
-        } else {
-          throw new Error(`Lỗi fetch GitHub API: Status ${response.status}`);
-        }
-      }
-    }
-
-    if (releaseData) {
+    if (latestRelease) {
       const device = await detectDevice();
-      if (Array.isArray(releaseData)) {
-        // Tìm bản phát hành chính thức ổn định mới nhất (không phải pre-release hoặc nháp)
-        const latestRelease = releaseData.find((r) => !r.prerelease && !r.draft) || releaseData[0];
-        renderRelease(latestRelease, device, releaseData);
-      } else {
-        renderRelease(releaseData, device);
-      }
+      renderRelease(latestRelease, device, allReleases);
     } else {
       throw new Error("Không thể tải dữ liệu phát hành");
     }
