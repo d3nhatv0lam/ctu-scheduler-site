@@ -1,5 +1,5 @@
 <template>
-  <section id="feedback" class="py-20 border-b border-[#e4e4e7] bg-white">
+  <section id="feedback" class="scroll-mt-16 py-20 border-b border-[#e4e4e7] bg-white">
     <div class="container mx-auto max-w-4xl px-4 sm:px-6">
       <motion.div
         :initial="{ opacity: 0, scale: 0.96 }"

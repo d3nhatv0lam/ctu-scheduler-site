@@ -227,9 +227,7 @@ function onNavItemClick(id, event) {
 
   const el = document.getElementById(id);
   if (el) {
-    const yOffset = -70; // 64px header + 6px buffer
-    const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-    window.scrollTo({ top: y, behavior: "smooth" });
+    el.scrollIntoView({ behavior: "smooth" });
     try {
       history.pushState(null, "", "#" + id);
     } catch {}
@@ -253,9 +251,7 @@ function onMobileNavItemClick(id, event) {
 
   const el = document.getElementById(id);
   if (el) {
-    const yOffset = -70;
-    const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-    window.scrollTo({ top: y, behavior: "smooth" });
+    el.scrollIntoView({ behavior: "smooth" });
     try {
       history.pushState(null, "", "#" + id);
     } catch {}

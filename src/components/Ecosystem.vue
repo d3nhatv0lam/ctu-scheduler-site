@@ -1,7 +1,7 @@
 <template>
   <section
     id="ecosystem"
-    class="py-20 md:py-24 border-b border-[#e4e4e7] bg-[#f8f9fa]/60"
+    class="scroll-mt-16 py-20 md:py-24 border-b border-[#e4e4e7] bg-[#f8f9fa]/60"
   >
     <div class="container mx-auto max-w-clickup px-4 sm:px-6">
       <!-- Section Header -->

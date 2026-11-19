@@ -1,5 +1,5 @@
 <template>
-  <section id="certification" class="py-20 bg-plaster-band border-b border-[#e4e4e7] relative">
+  <section id="certification" class="scroll-mt-16 py-20 bg-plaster-band border-b border-[#e4e4e7] relative">
     <div class="container mx-auto max-w-clickup px-4 sm:px-6">
       <!-- Section Header -->
       <motion.div
@@ -250,7 +250,8 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted, onUnmounted } from 'vue';
+import { ref, watch } from 'vue';
+import { useScrollLock, useEventListener } from '@vueuse/core';
 import { motion, AnimatePresence } from 'motion-v';
 
 const isModalOpen = ref(false);
@@ -335,20 +336,10 @@ const handleKeyDown = (e) => {
   }
 };
 
+const isLocked = useScrollLock(document.body);
 watch(isModalOpen, (open) => {
-  if (open) {
-    document.body.style.overflow = 'hidden';
-  } else {
-    document.body.style.overflow = '';
-  }
+  isLocked.value = open;
 });
 
-onMounted(() => {
-  window.addEventListener('keydown', handleKeyDown);
-});
-
-onUnmounted(() => {
-  window.removeEventListener('keydown', handleKeyDown);
-  document.body.style.overflow = '';
-});
+useEventListener(window, 'keydown', handleKeyDown);
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <section id="faq" class="py-20 bg-plaster-band border-b border-[#e4e4e7]">
+  <section id="faq" class="scroll-mt-16 py-20 bg-plaster-band border-b border-[#e4e4e7]">
     <div class="container mx-auto max-w-clickup px-4 sm:px-6">
       <motion.div
         :initial="{ opacity: 0, y: 16 }"

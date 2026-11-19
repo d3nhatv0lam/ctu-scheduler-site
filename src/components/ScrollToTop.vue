@@ -27,37 +27,23 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, watch } from "vue";
+import { useWindowScroll } from "@vueuse/core";
 import { motion, AnimatePresence } from "motion-v";
 
+const { y } = useWindowScroll();
 const isVisible = ref(false);
-let ticking = false;
 
-function handleScroll() {
-  if (!ticking) {
-    window.requestAnimationFrame(() => {
-      const scrollY = window.scrollY;
-      // Hysteresis window (320px - 400px) prevents rapid toggling/flutter at threshold
-      if (!isVisible.value && scrollY > 400) {
-        isVisible.value = true;
-      } else if (isVisible.value && scrollY < 320) {
-        isVisible.value = false;
-      }
-      ticking = false;
-    });
-    ticking = true;
+watch(y, (currentY) => {
+  // Hysteresis window (320px - 400px) prevents rapid toggling/flutter at threshold
+  if (!isVisible.value && currentY > 400) {
+    isVisible.value = true;
+  } else if (isVisible.value && currentY < 320) {
+    isVisible.value = false;
   }
-}
+});
 
 function scrollToTop() {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
-
-onMounted(() => {
-  window.addEventListener("scroll", handleScroll, { passive: true });
-});
-
-onUnmounted(() => {
-  window.removeEventListener("scroll", handleScroll);
-});
 </script>

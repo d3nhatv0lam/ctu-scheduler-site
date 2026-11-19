@@ -1,7 +1,7 @@
 <template>
   <section
     id="download"
-    class="py-20 md:py-24 border-b border-[#e4e4e7] bg-white"
+    class="scroll-mt-16 py-20 md:py-24 border-b border-[#e4e4e7] bg-white"
   >
     <div class="container mx-auto max-w-clickup px-4 sm:px-6">
       <!-- Section Header -->
@@ -1036,7 +1036,8 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from "vue";
+import { ref, computed, onMounted } from "vue";
+import { useMediaQuery } from "@vueuse/core";
 import { motion, AnimatePresence } from "motion-v";
 import { marked } from "marked";
 import { detectDevice, OS, ARCH } from "../../js/detector.js";
@@ -1055,13 +1056,7 @@ const showAllAssets = ref(false);
 const activeOsTab = ref("windows");
 const hasSwitchedTab = ref(false);
 const userDevice = ref({ os: OS.WINDOWS, arch: ARCH.X64 });
-const isDesktop = ref(false);
-
-function updateIsDesktop() {
-  if (typeof window !== "undefined") {
-    isDesktop.value = window.innerWidth >= 1024;
-  }
-}
+const isDesktop = useMediaQuery("(min-width: 1024px)");
 
 const osTabs = [
   {
@@ -1457,11 +1452,6 @@ async function fetchReleases() {
 }
 
 onMounted(async () => {
-  updateIsDesktop();
-  if (typeof window !== "undefined") {
-    window.addEventListener("resize", updateIsDesktop, { passive: true });
-  }
-
   try {
     const device = await detectDevice();
     userDevice.value = device;
@@ -1477,11 +1467,5 @@ onMounted(async () => {
   }
 
   fetchReleases();
-});
-
-onUnmounted(() => {
-  if (typeof window !== "undefined") {
-    window.removeEventListener("resize", updateIsDesktop);
-  }
 });
 </script>
