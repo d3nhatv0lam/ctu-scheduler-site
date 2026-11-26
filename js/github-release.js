@@ -64,6 +64,63 @@ export function isIgnoredAsset(filename) {
   );
 }
 
+const WIN_TOKEN = /(?:^|[-_.])win(?:dows|64)?(?:[-_.]|$)/;
+const MAC_TOKEN = /(?:^|[-_.])(?:osx|macos|mac|darwin)(?:[-_.]|$)/;
+
+/**
+ * Quy tắc nhận diện từng loại gói phát hành theo tên file (đã lowercase)
+ */
+export const ASSET_MATCHERS = {
+  winSetup: (n) => WIN_TOKEN.test(n) && n.endsWith(".exe"),
+  winPortable: (n) =>
+    WIN_TOKEN.test(n) && n.includes("portable") && n.endsWith(".zip"),
+  macSetup: (n) => n.endsWith(".pkg") || n.endsWith(".dmg"),
+  macPortable: (n) =>
+    MAC_TOKEN.test(n) && !n.includes("setup") && n.endsWith(".zip"),
+  linux: (n) => n.endsWith(".appimage"),
+};
+
+function isArmAsset(filename) {
+  const n = filename.toLowerCase();
+  return n.includes("arm64") || n.includes("aarch64");
+}
+
+/**
+ * Chọn asset phù hợp nhất theo matcher và kiến trúc CPU (không fallback chéo OS)
+ */
+export function pickAsset(
+  assets,
+  match,
+  arch,
+  { allowNonArmFallback = false } = {},
+) {
+  const list = (assets || []).filter(
+    (a) => a?.name && !isIgnoredAsset(a.name) && match(a.name.toLowerCase()),
+  );
+  if (arch === "arm64") {
+    return (
+      list.find((a) => isArmAsset(a.name)) ??
+      (allowNonArmFallback ? list.find((a) => !isArmAsset(a.name)) ?? null : null)
+    );
+  }
+  return list.find((a) => !isArmAsset(a.name)) ?? null;
+}
+
+/**
+ * Tính tổng lượt tải của các asset hợp lệ khớp matcher qua toàn bộ bản phát hành
+ */
+export function countAssetDownloads(releases, match = () => true) {
+  let total = 0;
+  for (const rel of releases || []) {
+    for (const a of rel?.assets || []) {
+      if (a?.name && !isIgnoredAsset(a.name) && match(a.name.toLowerCase())) {
+        total += a.download_count || 0;
+      }
+    }
+  }
+  return total;
+}
+
 /**
  * Tải dữ liệu phát hành từ GitHub API (Hỗ trợ ETag 304, cache 10 phút và chống trùng request)
  */

@@ -891,7 +891,7 @@
                 </motion.button>
                 <span>·</span>
                 <motion.button
-                  v-if="currentRelease.body"
+                  v-if="currentRelease?.body"
                   type="button"
                   :whileHover="{ scale: 1.02 }"
                   :whilePress="{ scale: 0.96 }"
@@ -1042,10 +1042,13 @@ import { motion, AnimatePresence } from "motion-v";
 import { marked } from "marked";
 import { detectDevice, OS, ARCH } from "../../js/detector.js";
 import {
+  ASSET_MATCHERS,
+  countAssetDownloads,
   fetchReleaseData,
   formatBytes,
   formatDate,
   isIgnoredAsset,
+  pickAsset,
 } from "../../js/github-release.js";
 
 const loading = ref(true);
@@ -1099,135 +1102,32 @@ const currentRelease = computed(() => {
 });
 
 // Calculate total downloads across ALL releases (excluding internal auto-update manifests)
-const totalDownloads = computed(() => {
-  if (allReleases.value && allReleases.value.length > 0) {
-    let count = 0;
-    for (const rel of allReleases.value) {
-      if (!rel.assets) continue;
-      for (const a of rel.assets) {
-        if (!isIgnoredAsset(a.name)) {
-          count += a.download_count || 0;
-        }
-      }
-    }
-    return count;
-  }
-  return 0;
-});
+const totalDownloads = computed(() => countAssetDownloads(allReleases.value));
 
-// Cumulative downloads for Setup edition across all releases
-const setupTotalDownloads = computed(() => {
-  if (allReleases.value && allReleases.value.length > 0) {
-    let count = 0;
-    for (const rel of allReleases.value) {
-      if (!rel.assets) continue;
-      for (const a of rel.assets) {
-        if (isIgnoredAsset(a.name)) continue;
-        const n = a.name.toLowerCase();
-        if (
-          n.includes("setup") &&
-          n.endsWith(".exe")
-        ) {
-          count += a.download_count || 0;
-        }
-      }
-    }
-    return count;
-  }
-  return recommendedSetupAsset.value?.download_count || 0;
-});
+// Cumulative downloads for Windows Setup edition across all releases
+const setupTotalDownloads = computed(() =>
+  countAssetDownloads(allReleases.value, ASSET_MATCHERS.winSetup),
+);
 
-// Cumulative downloads for Portable / Archive edition across all releases
-const portableTotalDownloads = computed(() => {
-  if (allReleases.value && allReleases.value.length > 0) {
-    let count = 0;
-    for (const rel of allReleases.value) {
-      if (!rel.assets) continue;
-      for (const a of rel.assets) {
-        if (isIgnoredAsset(a.name)) continue;
-        const n = a.name.toLowerCase();
-        if (
-          n.includes("portable") &&
-          n.endsWith(".zip")
-        ) {
-          count += a.download_count || 0;
-        }
-      }
-    }
-    return count;
-  }
-  return portableAsset.value?.download_count || 0;
-});
+// Cumulative downloads for Windows Portable edition across all releases
+const portableTotalDownloads = computed(() =>
+  countAssetDownloads(allReleases.value, ASSET_MATCHERS.winPortable),
+);
 
 // Cumulative downloads for macOS Setup (.pkg)
-const macSetupDownloads = computed(() => {
-  if (allReleases.value && allReleases.value.length > 0) {
-    let count = 0;
-    for (const rel of allReleases.value) {
-      if (!rel.assets) continue;
-      for (const a of rel.assets) {
-        if (isIgnoredAsset(a.name)) continue;
-        const n = a.name.toLowerCase();
-        if (n.endsWith(".pkg") || (n.includes("setup") && n.includes("osx"))) {
-          count += a.download_count || 0;
-        }
-      }
-    }
-    return count;
-  }
-  return macSetupAsset.value?.download_count || 0;
-});
+const macSetupDownloads = computed(() =>
+  countAssetDownloads(allReleases.value, ASSET_MATCHERS.macSetup),
+);
 
 // Cumulative downloads for macOS Portable (.zip)
-const macPortableDownloads = computed(() => {
-  if (allReleases.value && allReleases.value.length > 0) {
-    let count = 0;
-    for (const rel of allReleases.value) {
-      if (!rel.assets) continue;
-      for (const a of rel.assets) {
-        if (isIgnoredAsset(a.name)) continue;
-        const n = a.name.toLowerCase();
-        if (
-          n.includes("osx") &&
-          (n.includes("portable") || n.endsWith(".zip")) &&
-          !n.endsWith(".nupkg")
-        ) {
-          count += a.download_count || 0;
-        }
-      }
-    }
-    return count;
-  }
-  return macPortableAsset.value?.download_count || 0;
-});
-
-// Cumulative downloads for macOS across all releases
-const macTotalDownloads = computed(() => {
-  return macSetupDownloads.value + macPortableDownloads.value;
-});
+const macPortableDownloads = computed(() =>
+  countAssetDownloads(allReleases.value, ASSET_MATCHERS.macPortable),
+);
 
 // Cumulative downloads for Linux across all releases
-const linuxTotalDownloads = computed(() => {
-  if (allReleases.value && allReleases.value.length > 0) {
-    let count = 0;
-    for (const rel of allReleases.value) {
-      if (!rel.assets) continue;
-      for (const a of rel.assets) {
-        if (isIgnoredAsset(a.name)) continue;
-        const n = a.name.toLowerCase();
-        if (
-          n.endsWith(".appimage") ||
-          (n.includes("linux") && !n.endsWith(".nupkg")) ||
-          n.endsWith(".deb")
-        ) {
-          count += a.download_count || 0;
-        }
-      }
-    }
-    return count;
-  }
-  return linuxAsset.value?.download_count || 0;
-});
+const linuxTotalDownloads = computed(() =>
+  countAssetDownloads(allReleases.value, ASSET_MATCHERS.linux),
+);
 
 const detectedDeviceLabel = computed(() => {
   const os = userDevice.value.os;
@@ -1291,132 +1191,43 @@ const validAssets = computed(() => {
 });
 
 // Setup Installer (Auto update)
-const recommendedSetupAsset = computed(() => {
-  if (!validAssets.value.length) return null;
-  const isArm = userDevice.value.arch === ARCH.ARM64;
-  if (isArm) {
-    const armSetup = validAssets.value.find((a) => {
-      const n = a.name.toLowerCase();
-      return n.includes("setup") && n.endsWith(".exe") && n.includes("arm64");
-    });
-    if (armSetup) return armSetup;
-  }
-  return (
-    validAssets.value.find((a) => {
-      const n = a.name.toLowerCase();
-      return n.includes("setup") && n.endsWith(".exe") && !n.includes("arm64");
-    }) ||
-    validAssets.value.find((a) => {
-      const n = a.name.toLowerCase();
-      return n.includes("setup") && n.endsWith(".exe");
-    }) ||
-    validAssets.value.find((a) => a.name.endsWith(".exe")) ||
-    validAssets.value[0]
-  );
-});
+const recommendedSetupAsset = computed(() =>
+  pickAsset(validAssets.value, ASSET_MATCHERS.winSetup, userDevice.value.arch, {
+    allowNonArmFallback: true,
+  }),
+);
 
-// Portable Edition (.zip or portable .exe)
-const portableAsset = computed(() => {
-  if (!validAssets.value.length) return null;
-  const isArm = userDevice.value.arch === ARCH.ARM64;
-  if (isArm) {
-    const armPort = validAssets.value.find((a) => {
-      const n = a.name.toLowerCase();
-      return (
-        (n.endsWith(".zip") || n.includes("portable")) &&
-        !n.includes("setup") &&
-        n.includes("arm64")
-      );
-    });
-    if (armPort) return armPort;
-  }
-  return (
-    validAssets.value.find((a) => {
-      const n = a.name.toLowerCase();
-      return (
-        (n.endsWith(".zip") || n.includes("portable")) &&
-        !n.includes("setup") &&
-        !n.includes("arm64")
-      );
-    }) ||
-    validAssets.value.find((a) => {
-      const n = a.name.toLowerCase();
-      return (
-        (n.endsWith(".zip") || n.includes("portable")) && !n.includes("setup")
-      );
-    }) ||
-    validAssets.value.find((a) => a.name.endsWith(".zip")) ||
-    validAssets.value[1] ||
-    validAssets.value[0]
-  );
-});
+// Portable Edition (.zip)
+const portableAsset = computed(() =>
+  pickAsset(
+    validAssets.value,
+    ASSET_MATCHERS.winPortable,
+    userDevice.value.arch,
+    { allowNonArmFallback: true },
+  ),
+);
 
 // macOS Setup Installer (.pkg)
-const macSetupAsset = computed(() => {
-  if (!validAssets.value.length) return null;
-  return (
-    validAssets.value.find((a) => {
-      const n = a.name.toLowerCase();
-      return n.endsWith(".pkg") || (n.includes("setup") && n.includes("osx"));
-    }) ||
-    validAssets.value.find((a) => a.name.toLowerCase().endsWith(".pkg")) ||
-    validAssets.value.find((a) => a.name.toLowerCase().endsWith(".dmg"))
-  );
-});
+const macSetupAsset = computed(() =>
+  pickAsset(validAssets.value, ASSET_MATCHERS.macSetup, userDevice.value.arch, {
+    allowNonArmFallback: true,
+  }),
+);
 
 // macOS Portable Edition (.zip)
-const macPortableAsset = computed(() => {
-  if (!validAssets.value.length) return null;
-  return (
-    validAssets.value.find((a) => {
-      const n = a.name.toLowerCase();
-      return (
-        n.includes("osx") &&
-        (n.includes("portable") || n.endsWith(".zip")) &&
-        !n.endsWith(".nupkg")
-      );
-    }) ||
-    validAssets.value.find((a) => {
-      const n = a.name.toLowerCase();
-      return n.includes("osx") && n.endsWith(".zip");
-    })
-  );
-});
+const macPortableAsset = computed(() =>
+  pickAsset(
+    validAssets.value,
+    ASSET_MATCHERS.macPortable,
+    userDevice.value.arch,
+    { allowNonArmFallback: true },
+  ),
+);
 
-// Alias for general macOS asset reference
-const macAsset = computed(() => macSetupAsset.value);
-
-// Linux AppImage (.AppImage or linux asset)
-const linuxAsset = computed(() => {
-  if (!validAssets.value.length) return null;
-  const isArm = userDevice.value.arch === ARCH.ARM64;
-  if (isArm) {
-    const armApp = validAssets.value.find((a) => {
-      const n = a.name.toLowerCase();
-      return (
-        (n.endsWith(".appimage") || n.includes("linux")) &&
-        !n.endsWith(".nupkg") &&
-        n.includes("arm64")
-      );
-    });
-    if (armApp) return armApp;
-  }
-  return (
-    validAssets.value.find((a) => {
-      const n = a.name.toLowerCase();
-      return (
-        (n.endsWith(".appimage") || n.includes("linux")) &&
-        !n.endsWith(".nupkg") &&
-        !n.includes("arm64")
-      );
-    }) ||
-    validAssets.value.find((a) => a.name.toLowerCase().endsWith(".appimage")) ||
-    validAssets.value.find(
-      (a) =>
-        a.name.toLowerCase().includes("linux") && !a.name.endsWith(".nupkg"),
-    )
-  );
-});
+// Linux AppImage (.AppImage)
+const linuxAsset = computed(() =>
+  pickAsset(validAssets.value, ASSET_MATCHERS.linux, userDevice.value.arch),
+);
 
 // Parse release notes markdown with marked
 const renderedMarkdownBody = computed(() => {
